@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- google_pixel_4__4xl___1 styles -->
+
+	<style name="Authapp" parent="Theme.AppCompat.Light.NoActionBar">
+		<item name="android:windowBackground">@color/Customgrey</item>
+		<item name="colorPrimary">@color/Customgrey</item>
+		<item name="colorPrimaryDark">@color/Customgrey</item>
+		<item name="colorAccent">@color/Customgrey</item>
+	</style>
+
+	<color name="colorPrimary">@color/Customgrey</color>
+	<color name="colorPrimaryDark">@color/Customgrey</color>
+	<color name="colorAccent">#1999CE</color>
+</resources>

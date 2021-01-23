@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "383146075149",
+    "firebase_url": "https://ingsw2020-4b5ec.firebaseio.com",
+    "project_id": "ingsw2020-4b5ec",
+    "storage_bucket": "ingsw2020-4b5ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383146075149:android:567eb1ca4d692da48aa144",
+        "android_client_info": {
+          "package_name": "com.example.authapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383146075149-sba5h6cm7n58h35so3uflv1e5smuehvh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjWoaN_E4_aNU1W8uOwFKS5SZi1r7YBe4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383146075149-sba5h6cm7n58h35so3uflv1e5smuehvh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
