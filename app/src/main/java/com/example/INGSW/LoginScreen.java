@@ -1,4 +1,4 @@
-package com.example.authapp;
+package com.example.INGSW;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,6 +1,4 @@
-package com.example.authapp;
-
-import android.provider.ContactsContract;
+package com.example.INGSW;
 
 public class User {
 

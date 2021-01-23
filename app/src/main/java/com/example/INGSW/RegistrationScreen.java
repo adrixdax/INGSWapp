@@ -1,7 +1,5 @@
-package com.example.authapp;
+package com.example.INGSW;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,20 +7,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,7 +44,8 @@ public class RegistrationScreen extends AppCompatActivity {
         ProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+                startActivity(new Intent(RegistrationScreen.this,AvatarScreen.class));
+                //openGallery();
             }
         });
 
@@ -71,7 +61,7 @@ public class RegistrationScreen extends AppCompatActivity {
 
 
     }
-
+/*
     private void openGallery() {
         Intent pickImage = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(pickImage,PICK_IMAGE);
@@ -92,7 +82,9 @@ public class RegistrationScreen extends AppCompatActivity {
             ProfileImage.setImageBitmap(bitmap);
 
         }
-    }
+
+
+    }*/
 
 
 }
