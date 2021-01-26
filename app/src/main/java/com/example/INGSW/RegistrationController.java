@@ -23,11 +23,11 @@ public class RegistrationController {
     private static Activity regActivity;
     private CircleImageView circle;
     private FirebaseAuth mAuth;
-    private String pic;
+    static private String pic;
 
     public RegistrationController(Activity current,String propic) {
-        this.regActivity = current;
-        this.circle = this.regActivity.findViewById(R.id.propic_image);
+        regActivity = current;
+        this.circle = regActivity.findViewById(R.id.propic_image);
         this.pic = propic;
 
         mAuth = FirebaseAuth.getInstance();
@@ -72,7 +72,7 @@ public class RegistrationController {
                 .addOnSuccessListener(regActivity, new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        User user = new User(nickname, email,propic);
+                        User user = new User(nickname, email,pic);
 
                         FirebaseDatabase.getInstance().getReference("Users")
                                 .child((FirebaseAuth.getInstance().getCurrentUser().getUid()))
@@ -96,9 +96,8 @@ public class RegistrationController {
 
     }
 
-    public static void setAvatar(String url) throws NoSuchFieldException, IllegalAccessException {
-        Field text = regActivity.getClass().getDeclaredField("propic");
-        text.set(text,url);
+    public static void setAvatar(String url) {
+        pic = url;
         Glide.with(regActivity).load(url).into((CircleImageView)regActivity.findViewById(R.id.propic_image));
     }
 }

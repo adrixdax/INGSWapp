@@ -3,6 +3,7 @@ package com.example.INGSW;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -58,6 +59,12 @@ public class AvatarScreen extends AppCompatActivity implements View.OnClickListe
 
         ironman.setOnClickListener(this);
         spiderman.setOnClickListener(this);
+        gamora.setOnClickListener(this);
+        thanos.setOnClickListener(this);
+        widow.setOnClickListener(this);
+        wonderwoman.setOnClickListener(this);
+
+
 
 
 
@@ -70,17 +77,36 @@ public class AvatarScreen extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.profile_image2 : {
-                try {
+            case R.id.profile_image :
+                RegistrationController.setAvatar(urlIron);
+                onBackPressed();
+                break;
+            case R.id.profile_image2 :
                     RegistrationController.setAvatar(urlSpider);
                     onBackPressed();
-                } catch (NoSuchFieldException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-            }
+                    break;
+            case R.id.profile_image3 :
+                RegistrationController.setAvatar(urlGamora);
+                onBackPressed();
+                break;
+            case R.id.profile_image4 :
+                RegistrationController.setAvatar(urlThanos);
+                onBackPressed();
+                break;
+            case R.id.profile_image5 :
+                RegistrationController.setAvatar(urlWidow);
+                onBackPressed();
+                break;
+
+            case R.id.profile_image6 :
+                RegistrationController.setAvatar(urlWonder);
+                onBackPressed();
+                break;
+
         }
     }
 }
