@@ -1,12 +1,17 @@
 package com.example.INGSW;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -17,7 +22,7 @@ import java.net.URL;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class AvatarScreen extends AppCompatActivity {
+public class AvatarScreen extends AppCompatActivity implements View.OnClickListener  {
 
 
     private CircleImageView ironman;
@@ -26,6 +31,8 @@ public class AvatarScreen extends AppCompatActivity {
     private CircleImageView thanos;
     private CircleImageView wonderwoman;
     private CircleImageView widow;
+
+    RegistrationController regcont;
 
 
     String urlIron = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
@@ -43,11 +50,12 @@ public class AvatarScreen extends AppCompatActivity {
         setContentView(R.layout.avatar_screen);
 
         ironman = (CircleImageView) findViewById(R.id.profile_image);
-        gamora = (CircleImageView) findViewById(R.id.profile_image3);
         spiderman = (CircleImageView) findViewById(R.id.profile_image2);
+        gamora = (CircleImageView) findViewById(R.id.profile_image3);
         thanos = (CircleImageView) findViewById(R.id.profile_image4);
         widow = (CircleImageView) findViewById(R.id.profile_image5);
         wonderwoman = (CircleImageView) findViewById(R.id.profile_image6);
+
 
 
         Glide.with(this).load(urlIron).into(ironman);
@@ -62,5 +70,11 @@ public class AvatarScreen extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }
+
+
 

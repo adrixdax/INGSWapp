@@ -8,22 +8,27 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class RegistrationController {
     private Activity regActivity;
     private FirebaseAuth mAuth;
+    private CircleImageView pic;
 
-    public RegistrationController(Activity current) {
+    public RegistrationController(Activity current,CircleImageView propic) {
         this.regActivity = current;
+        this.pic = propic;
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void registerUser(EditText editTextMail, EditText editTextPassword, EditText editTextNickName) {
+    public void registerUser(EditText editTextMail, EditText editTextPassword, EditText editTextNickName,String propic) {
         String email = editTextMail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String nickname = editTextNickName.getText().toString().trim();
@@ -62,7 +67,7 @@ public class RegistrationController {
                 .addOnSuccessListener(regActivity, new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        User user = new User(nickname, email);
+                        User user = new User(nickname, email,propic);
 
                         FirebaseDatabase.getInstance().getReference("Users")
                                 .child((FirebaseAuth.getInstance().getCurrentUser().getUid()))
@@ -84,5 +89,9 @@ public class RegistrationController {
                     }
                 });
 
+    }
+
+    public void setAvatar(String url){
+        Glide.with(regActivity).load(url).into(pic);
     }
 }
