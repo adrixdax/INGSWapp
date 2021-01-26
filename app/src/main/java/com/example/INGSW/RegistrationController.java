@@ -15,16 +15,21 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.lang.reflect.Field;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegistrationController {
-    private Activity regActivity;
+    private static Activity regActivity;
+    private CircleImageView circle;
     private FirebaseAuth mAuth;
-    private CircleImageView pic;
+    private String pic;
 
-    public RegistrationController(Activity current,CircleImageView propic) {
+    public RegistrationController(Activity current,String propic) {
         this.regActivity = current;
+        this.circle = this.regActivity.findViewById(R.id.propic_image);
         this.pic = propic;
+
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -91,7 +96,9 @@ public class RegistrationController {
 
     }
 
-    public void setAvatar(String url){
-        Glide.with(regActivity).load(url).into(pic);
+    public static void setAvatar(String url) throws NoSuchFieldException, IllegalAccessException {
+        Field text = regActivity.getClass().getDeclaredField("propic");
+        text.set(text,url);
+        Glide.with(regActivity).load(url).into((CircleImageView)regActivity.findViewById(R.id.propic_image));
     }
 }

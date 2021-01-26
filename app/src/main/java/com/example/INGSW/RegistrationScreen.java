@@ -49,7 +49,7 @@ public class RegistrationScreen extends AppCompatActivity {
             }
         });
 
-        RegistrationController registrationController = new RegistrationController(this,ProfileImage);
+        RegistrationController registrationController = new RegistrationController(this,propic);
 
         registerUser  = (Button) findViewById(R.id.registerUserButton);
         registerUser.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +61,8 @@ public class RegistrationScreen extends AppCompatActivity {
 
 
     }
+
+
 
 
 }

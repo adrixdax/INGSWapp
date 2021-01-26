@@ -56,6 +56,9 @@ public class AvatarScreen extends AppCompatActivity implements View.OnClickListe
         widow = (CircleImageView) findViewById(R.id.profile_image5);
         wonderwoman = (CircleImageView) findViewById(R.id.profile_image6);
 
+        ironman.setOnClickListener(this);
+        spiderman.setOnClickListener(this);
+
 
 
         Glide.with(this).load(urlIron).into(ironman);
@@ -64,15 +67,21 @@ public class AvatarScreen extends AppCompatActivity implements View.OnClickListe
         Glide.with(this).load(urlGamora).into(gamora);
         Glide.with(this).load(urlWidow).into(widow);
         Glide.with(this).load(urlWonder).into(wonderwoman);
-
-
-
     }
 
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.profile_image2 : {
+                try {
+                    RegistrationController.setAvatar(urlSpider);
+                    onBackPressed();
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }
 
