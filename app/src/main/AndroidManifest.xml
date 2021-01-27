@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Authapp">
-        <activity android:name=".AvatarScreen"></activity>
+        <activity android:name=".PersonalArea"></activity>
+        <activity android:name=".AvatarScreen" />
         <activity android:name=".HomepageScreen" />
         <activity android:name=".LoginScreen">
             <intent-filter>
