@@ -1,4 +1,4 @@
-package com.example.INGSW;
+package com.example.INGSW.Controllers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.INGSW.HomepageScreen;
+import com.example.INGSW.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

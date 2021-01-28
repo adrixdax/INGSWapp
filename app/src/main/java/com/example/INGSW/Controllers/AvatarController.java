@@ -1,4 +1,4 @@
-package com.example.INGSW;
+package com.example.INGSW.Controllers;
 
 public class AvatarController {
 

@@ -2,12 +2,12 @@ package com.example.INGSW;
 
 public class User {
 
-    public String Nickname, email,propic;
+    public String nickname, email,propic;
 
     public User(){}
 
-    public User(String Nickname, String email,String propic){
-        this.Nickname = Nickname;
+    public User(String nickname, String email,String propic){
+        this.nickname = nickname;
         this.email = email;
         this.propic = propic;
     }

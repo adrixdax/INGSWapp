@@ -1,4 +1,4 @@
-package com.example.INGSW;
+package com.example.INGSW.Controllers;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.example.INGSW.HomepageScreen;
+import com.example.INGSW.R;
+import com.example.INGSW.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;

@@ -1,25 +1,12 @@
 package com.example.INGSW;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
+import com.example.INGSW.Controllers.RegistrationController;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
