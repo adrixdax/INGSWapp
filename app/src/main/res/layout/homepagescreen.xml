@@ -10,22 +10,23 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="65dp"
+        android:layout_marginStart="128dp"
+        android:layout_marginTop="60dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/ultimi_usciti"
         android:textColor="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_width="390dp"
+        android:layout_height="185dp"
         android:layout_marginTop="5dp"
         android:scrollbars="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -39,12 +40,12 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="15dp"
+        android:layout_width="56dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/circle_obj"
-        android:src="@drawable/icons8_notification_30px_3"
+        android:src="@drawable/icons8_notification_30px_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
