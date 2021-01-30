@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "383146075149",
-    "firebase_url": "https://ingsw2020-4b5ec.firebaseio.com",
-    "project_id": "ingsw2020-4b5ec",
-    "storage_bucket": "ingsw2020-4b5ec.appspot.com"
+    "project_number": "208884801554",
+    "project_id": "ingsw2021",
+    "storage_bucket": "ingsw2021.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:383146075149:android:567eb1ca4d692da48aa144",
+        "mobilesdk_app_id": "1:208884801554:android:bc9bb514f02cfa982578cb",
         "android_client_info": {
-          "package_name": "com.example.authapp"
+          "package_name": "com.example.INGSW"
         }
       },
       "oauth_client": [
         {
-          "client_id": "383146075149-sba5h6cm7n58h35so3uflv1e5smuehvh.apps.googleusercontent.com",
+          "client_id": "208884801554-7v3sjgavtoj770pud2avt3dqrd614cs2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.INGSW",
+            "certificate_hash": "08fa68864f1c6f367fc3c3d14aecebbf41d308f3"
+          }
+        },
+        {
+          "client_id": "208884801554-penbkdmmboa4lkt88evt1isl4ubld4tf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDjWoaN_E4_aNU1W8uOwFKS5SZi1r7YBe4"
+          "current_key": "AIzaSyDhIwhjxzTRUFmCHlnX1oIlGKXGIZm7CZ4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "383146075149-ichlaso7839c9riv20l8c3p2j4svjgei.apps.googleusercontent.com",
+              "client_id": "208884801554-penbkdmmboa4lkt88evt1isl4ubld4tf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

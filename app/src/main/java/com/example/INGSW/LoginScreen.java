@@ -36,6 +36,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private EditText editTextEmail, editTextPassword;
     private Button signIn;
 
+
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
 
