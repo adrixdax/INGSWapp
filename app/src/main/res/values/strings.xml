@@ -14,4 +14,10 @@
     <string name="registrati">Registrati</string>
     <string name="non_hai_un_account">Non hai un account?</string>
     <string name="ultimi_usciti">Ultimi usciti</string>
+    <string name="title_home" />
+    <string name="title_dashboard" />
+    <string name="title_notifications" />
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

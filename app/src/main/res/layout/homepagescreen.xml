@@ -6,108 +6,47 @@
     android:layout_height="match_parent"
     tools:context=".HomepageScreen">
 
-    <include layout="@layout/toolbar" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="65dp"
+        android:fontFamily="@font/poppins_bold"
         android:text="@string/ultimi_usciti"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="410dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="5dp"
+        android:scrollbars="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/laiout">
-
-            <ImageButton
-                android:id="@+id/film1"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="5dp"
-                android:contentDescription="@string/todo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/profile" />
-
-            <ImageButton
-                android:id="@+id/film2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="15dp"
-                app:layout_constraintStart_toEndOf="@id/film1"
-                app:layout_constraintTop_toTopOf="@id/film1"
-                app:srcCompat="@drawable/profile" />
-
-            <ImageButton
-                android:id="@+id/film3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="15dp"
-                app:layout_constraintStart_toEndOf="@id/film2"
-                app:layout_constraintTop_toTopOf="@id/film2"
-                app:srcCompat="@drawable/profile" />
-
-            <ImageButton
-                android:id="@+id/film4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="15dp"
-                app:layout_constraintStart_toEndOf="@id/film3"
-                app:layout_constraintTop_toTopOf="@id/film3"
-                app:srcCompat="@drawable/profile" />
-
-            <ImageButton
-                android:id="@+id/film5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                app:layout_constraintStart_toEndOf="@id/film4"
-                app:layout_constraintTop_toTopOf="@id/film4"
-                app:srcCompat="@drawable/profile" />
-
-            <ImageButton
-                android:id="@+id/film6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="15dp"
-                app:layout_constraintStart_toEndOf="@id/film5"
-                app:layout_constraintTop_toTopOf="@id/film5"
-                app:srcCompat="@drawable/profile" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </HorizontalScrollView>
-
-    <com.denzcoskun.imageslider.ImageSlider
-        android:id="@+id/slider"
+    <include
+        android:id="@+id/news_title"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="210dp"
-        android:layout_marginTop="34dp"
-        app:auto_cycle="true"
-        app:corner_radius="0"
-        app:delay="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
-        app:period="1000">
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
-    </com.denzcoskun.imageslider.ImageSlider>
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/circle_obj"
+        android:src="@drawable/icons8_notification_30px_3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

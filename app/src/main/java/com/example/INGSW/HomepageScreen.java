@@ -1,20 +1,22 @@
 package com.example.INGSW;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.HorizontalScrollView;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.INGSW.Component.ListOfFilm;
+import com.example.INGSW.Component.ListOfFilmAdapter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +33,29 @@ public class HomepageScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepagescreen);
 
-        /*imageView = findViewById(R.id.imageView);
-        name = findViewById(R.id.textName);
-        email = findViewById(R.id.textEmail);
-        id = findViewById(R.id.textID);*/
+        List<ListOfFilm> listOfFilms = new ArrayList<>();
 
-        ImageSlider imageSlider = findViewById(R.id.slider);
+        ListOfFilm film = new ListOfFilm("https://pad.mymovies.it/filmclub/2018/12/029/locandinapg1.jpg");
+        listOfFilms.add(film);
+        //for(int i=0; i<10; i++) {
+        film = new ListOfFilm("https://pad.mymovies.it/filmclub/2019/10/160/locandina.jpg");
+        listOfFilms.add(film);
+        //}
 
-        List<SlideModel> slideModelList = new ArrayList<>();
-        for (int i=0 ; i<10; i++) {
-            slideModelList.add(new SlideModel("https://pad.mymovies.it/filmclub/2018/12/029/locandinapg1.jpg", i +"Film"));
-        }
-        imageSlider.setImageList(slideModelList, true);
+        film = new ListOfFilm("https://pad.mymovies.it/filmclub/2021/01/037/imm.jpg");
+        listOfFilms.add(film);
+
+        film = new ListOfFilm("https://pad.mymovies.it/filmclub/2019/02/007/imm.jpg");
+        listOfFilms.add(film);
+
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(listOfFilms);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
@@ -61,5 +74,33 @@ public class HomepageScreen extends AppCompatActivity {
             Glide.with(this).load(String.valueOf(personPhoto)).into(imageView);
         }
 */
+
+       BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+
+                    case R.id.search_screen:
+                        startActivity(new Intent(HomepageScreen.this,SearchFilmScreen.class));
+                        //Intent a = new Intent(HomepageScreen.this,SearchFilmScreen.class);
+                        //startActivity(a);
+                        break;
+                    case R.id.home_screen:
+                        break;
+                    case R.id.profile_screen:
+                        startActivity(new Intent(HomepageScreen.this,AvatarScreen.class));
+                        //Intent b = new Intent(HomepageScreen.this,ProfileScreen.class);
+                        //startActivity(b);
+
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+
     }
+
 }

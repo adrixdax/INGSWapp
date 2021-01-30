@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/search_screen"
+        android:enabled="true"
+        app:itemIconTint="#FFFFFF"
+        android:icon="@drawable/icons8_search_50px_1"
+        android:title="Cerca"/>
+    <item
+        android:id="@+id/home_screen"
+        android:enabled="true"
+        app:itemIconSize="50dp"
+        app:itemIconTint="#FFFFFF"
+        android:icon="@drawable/icons8_home_30px"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/profile_screen"
+        android:enabled="true"
+        app:itemIconSize="50dp"
+        app:itemIconTint="#FFFFFF"
+        android:icon="@drawable/icons8_user_30px"
+        android:title="Profilo"/>
+</menu>
