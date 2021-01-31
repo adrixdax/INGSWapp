@@ -83,16 +83,11 @@ public class HomepageScreen extends AppCompatActivity {
 
                     case R.id.search_screen:
                         startActivity(new Intent(HomepageScreen.this,SearchFilmScreen.class));
-                        //Intent a = new Intent(HomepageScreen.this,SearchFilmScreen.class);
-                        //startActivity(a);
                         break;
                     case R.id.home_screen:
                         break;
                     case R.id.profile_screen:
                         startActivity(new Intent(HomepageScreen.this,AvatarScreen.class));
-                        //Intent b = new Intent(HomepageScreen.this,ProfileScreen.class);
-                        //startActivity(b);
-
                         break;
                 }
 

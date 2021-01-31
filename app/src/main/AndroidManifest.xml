@@ -14,8 +14,10 @@
         android:theme="@style/Authapp">
         <activity android:name=".PersonalArea"></activity>
         <activity android:name=".AvatarScreen" />
+        <activity android:name=".SearchFilmScreen"/>
         <activity android:name=".HomepageScreen" />
         <activity android:name=".LoginScreen">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

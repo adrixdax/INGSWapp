@@ -49,5 +49,80 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/list_1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="21dp"
+        android:background="@drawable/rounded_list_obj"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Da vedere"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/list_2"
+        app:layout_constraintEnd_toStartOf="@+id/list_3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+
+    <Button
+        android:id="@+id/list_2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="45dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="I più recensiti"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_list_obj"
+        app:layout_constraintBottom_toTopOf="@+id/news_title"
+        app:layout_constraintEnd_toStartOf="@+id/list_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/list_1" />
+
+
+    <Button
+        android:id="@+id/list_3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="21dp"
+        android:background="@drawable/rounded_list_obj"
+        android:fontFamily="@font/poppins_bold"
+        android:text="I PIù visti"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/list_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/list_1"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+
+    <Button
+        android:id="@+id/list_4"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="45dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="i preferiti dagli utenti"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/rounded_list_obj"
+        app:layout_constraintBottom_toTopOf="@+id/news_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/list_2"
+        app:layout_constraintTop_toBottomOf="@+id/list_3" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
