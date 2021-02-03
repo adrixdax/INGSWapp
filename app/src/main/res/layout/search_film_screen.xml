@@ -28,7 +28,7 @@
         android:background="@drawable/circle_obj"/>
 
     <EditText
-        android:id="@+id/TextLoginEmail"
+        android:id="@+id/Text_of_search"
         android:layout_width="270dp"
         android:layout_height="38dp"
         android:layout_marginStart="25dp"

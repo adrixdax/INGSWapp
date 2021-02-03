@@ -37,6 +37,7 @@ public class AvatarScreen extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.avatar_screen);
 
+
         ironman = (CircleImageView) findViewById(R.id.profile_image);
         spiderman = (CircleImageView) findViewById(R.id.profile_image2);
         gamora = (CircleImageView) findViewById(R.id.profile_image3);

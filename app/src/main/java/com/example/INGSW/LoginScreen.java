@@ -117,6 +117,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             // Signed in successfully, show authenticated UI.
             Intent intent = new Intent(LoginScreen.this, HomepageScreen.class);
             startActivity(intent);
+            finish();
 
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.

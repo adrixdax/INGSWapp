@@ -1,10 +1,12 @@
 package com.example.INGSW;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -90,12 +92,25 @@ public class HomepageScreen extends AppCompatActivity {
                         startActivity(new Intent(HomepageScreen.this,AvatarScreen.class));
                         break;
                 }
-
                 return false;
             }
         });
 
 
     }
+    private long backPressedTime = 0;
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Vuoi chiudere l'applicazione?")
+                .setMessage("Sei sicuro di voler chiudere l'applicazione?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        HomepageScreen.super.onBackPressed();
+                    }
+                }).create().show();
+    }
 }
