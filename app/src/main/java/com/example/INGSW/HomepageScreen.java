@@ -1,11 +1,5 @@
 package com.example.INGSW;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,14 +7,25 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.INGSW.Component.ListOfFilm;
 import com.example.INGSW.Component.ListOfFilmAdapter;
+import com.example.INGSW.Controllers.FilmTestController;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class HomepageScreen extends AppCompatActivity {
 
@@ -34,9 +39,18 @@ public class HomepageScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepagescreen);
-
+        String latestJson = "";
+        FilmTestController con = new FilmTestController();
+        try {
+            latestJson = (String) con.execute("Latest").get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (latestJson.length() > 0) {
+            System.out.println(latestJson);
+        }
         List<ListOfFilm> listOfFilms = new ArrayList<>();
-
+/*
         ListOfFilm film = new ListOfFilm("https://pad.mymovies.it/filmclub/2018/12/029/locandinapg1.jpg");
         listOfFilms.add(film);
         //for(int i=0; i<10; i++) {
@@ -49,12 +63,18 @@ public class HomepageScreen extends AppCompatActivity {
 
         film = new ListOfFilm("https://pad.mymovies.it/filmclub/2019/02/007/imm.jpg");
         listOfFilms.add(film);
-
+*/
+        List<ListOfFilm> films = new ArrayList<>();
+        try {
+            films = (List<ListOfFilm>) getJsonToDecode(latestJson);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(listOfFilms);
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(films);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -98,7 +118,8 @@ public class HomepageScreen extends AppCompatActivity {
 
 
     }
-    private long backPressedTime = 0;
+
+    private final long backPressedTime = 0;
 
     @Override
     public void onBackPressed() {

@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.ViewHolder> {
 
-    private List<ListOfFilm> listOfData;
+    private final List<ListOfFilm> listOfData;
 
     public ListOfFilmAdapter(List<ListOfFilm> listOfData) {
         this.listOfData = listOfData;
@@ -35,13 +35,13 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ListOfFilmAdapter.ViewHolder holder, int position) {
         final ListOfFilm listOfFilm=listOfData.get(position);
-        Glide.with(holder.itemView).load(listOfData.get(position).getImageUrl()).into((ImageView) holder.itemView.findViewById(R.id.imageView));
+        Glide.with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.imageView));
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Toast.makeText(v.getContext(), "click on item: ", Toast.LENGTH_LONG).show();
-        }
-    });
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), "click on item: ", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -56,8 +56,8 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         public RelativeLayout relativeLayout;
         public ViewHolder(View itemView) {
             super(itemView);
-            this.imageView = (ImageView) itemView.findViewById(R.id.imageView);
-            relativeLayout = (RelativeLayout)itemView.findViewById(R.id.relativeLayout);
+            this.imageView = itemView.findViewById(R.id.imageView);
+            relativeLayout = itemView.findViewById(R.id.relativeLayout);
         }
     }
 }

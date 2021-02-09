@@ -67,5 +67,5 @@ dependencies {
     implementation ('info.movito:themoviedbapi:1.10'){
         exclude group: 'org.slf4j'
     }
-    implementation group: 'org.apache.httpcomponents', name: 'fluent-hc', version: '4.5.13'
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
 }
