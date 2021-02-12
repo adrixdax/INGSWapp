@@ -1,9 +1,11 @@
 package com.example.INGSW;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +29,7 @@ import java.util.concurrent.ExecutionException;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
-public class HomepageScreen extends AppCompatActivity {
+public class HomepageScreen extends AppCompatActivity implements View.OnClickListener {
 
 
     ImageView imageView;
@@ -42,7 +44,7 @@ public class HomepageScreen extends AppCompatActivity {
         String latestJson = "";
         FilmTestController con = new FilmTestController();
         try {
-            latestJson = (String) con.execute("Latest").get();
+            latestJson = (String) con.execute(new String("latest")).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -64,6 +66,7 @@ public class HomepageScreen extends AppCompatActivity {
         film = new ListOfFilm("https://pad.mymovies.it/filmclub/2019/02/007/imm.jpg");
         listOfFilms.add(film);
 */
+
         List<ListOfFilm> films = new ArrayList<>();
         try {
             films = (List<ListOfFilm>) getJsonToDecode(latestJson);
@@ -72,7 +75,6 @@ public class HomepageScreen extends AppCompatActivity {
         }
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(films);
         recyclerView.setHasFixedSize(true);
@@ -102,7 +104,6 @@ public class HomepageScreen extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
-
                     case R.id.search_screen:
                         startActivity(new Intent(HomepageScreen.this,SearchFilmScreen.class));
                         break;
@@ -121,6 +122,25 @@ public class HomepageScreen extends AppCompatActivity {
 
     private final long backPressedTime = 0;
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.toSee :
+                //toSeeQuery
+                break;
+            case R.id.mostViewed:
+                //mostViewedQuery
+                break;
+            case R.id.mostReviewed :
+                //mostReviewedQuery
+                break;
+            case R.id.userPrefered :
+                //userPreferedQuery
+                break;
+            }
+    }
+
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
@@ -134,4 +154,6 @@ public class HomepageScreen extends AppCompatActivity {
                     }
                 }).create().show();
     }
+
+
 }
