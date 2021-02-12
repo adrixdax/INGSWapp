@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -129,7 +131,7 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
             case R.id.toSee :
                 //toSeeQuery
                 break;
-            case R.id.mostViewed:
+            case R.id.mostSeen:
                 //mostViewedQuery
                 break;
             case R.id.mostReviewed :
@@ -139,7 +141,7 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
                 //userPreferedQuery
                 break;
             }
-    }
+        }
 
     @Override
     public void onBackPressed() {
@@ -150,7 +152,7 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        HomepageScreen.super.onBackPressed();
+                        HomepageScreen.super.finish();
                     }
                 }).create().show();
     }

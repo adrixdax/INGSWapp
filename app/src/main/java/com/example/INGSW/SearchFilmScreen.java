@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -46,11 +47,9 @@ public class SearchFilmScreen extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.search_screen:
-
                         break;
                     case R.id.home_screen:
-                        startActivity(new Intent(SearchFilmScreen.this, HomepageScreen.class));
-                        SearchFilmScreen.super.onBackPressed();
+                        onBackPressed();
                         break;
                     case R.id.profile_screen:
                         startActivity(new Intent(SearchFilmScreen.this, AvatarScreen.class));
