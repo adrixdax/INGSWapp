@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Authapp"
-        android:noHistory = "true">
+        android:noHistory = "true"
+        android:usesCleartextTraffic="true">
         <activity android:name=".PersonalArea"></activity>
         <activity android:name=".AvatarScreen" />
         <activity android:name=".SearchFilmScreen"/>

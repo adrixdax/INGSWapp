@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -49,9 +47,6 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
             latestJson = (String) con.execute(new String("latest")).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
-        }
-        if (latestJson.length() > 0) {
-            System.out.println(latestJson);
         }
         List<ListOfFilm> listOfFilms = new ArrayList<>();
 /*

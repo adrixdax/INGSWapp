@@ -26,7 +26,7 @@ public class FilmTestController extends AsyncTask {
         try {
             try (Response response = client.newCall(request).execute()) {
                 return Objects.requireNonNull(response.body()).string();
-                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,9 +44,7 @@ public class FilmTestController extends AsyncTask {
         try {
             try (Response response = client.newCall(request).execute()) {
                 return Objects.requireNonNull(response.body()).string();
-                //Request.Post("http://192.168.1.13:8080/film").bodyForm(Form.form().add("Type", "PostRequest").add("latest", "true").build()).execute().returnContent();
-                //return String.valueOf(Request.Get("http://87.13.160.80:8080/user?nickname=pao").execute().returnContent());
-            }
+               }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,9 +62,7 @@ public class FilmTestController extends AsyncTask {
         try {
             try (Response response = client.newCall(request).execute()) {
                 return Objects.requireNonNull(response.body()).string();
-                //Request.Post("http://192.168.1.13:8080/film").bodyForm(Form.form().add("Type", "PostRequest").add("latest", "true").build()).execute().returnContent();
-                //return String.valueOf(Request.Get("http://87.13.160.80:8080/user?nickname=pao").execute().returnContent());
-            }
+                }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,9 +80,7 @@ public class FilmTestController extends AsyncTask {
         try {
             try (Response response = client.newCall(request).execute()) {
                 return Objects.requireNonNull(response.body()).string();
-                //Request.Post("http://192.168.1.13:8080/film").bodyForm(Form.form().add("Type", "PostRequest").add("latest", "true").build()).execute().returnContent();
-                //return String.valueOf(Request.Get("http://87.13.160.80:8080/user?nickname=pao").execute().returnContent());
-            }
+                }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,15 +90,7 @@ public class FilmTestController extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
-            String[] strArr = new String[objects.length];
-            for (int i = 0; i < objects.length; i++) {
-                try {
-                    strArr[i] = objects[i].toString();
-                } catch (NullPointerException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            switch (strArr[0]) {
+            switch (objects[0].toString()) {
                 case "latest":
                     return getLatestFilms();
                 case "most":
@@ -114,9 +100,7 @@ public class FilmTestController extends AsyncTask {
                 case "mostReviewd":
                     return getMostReviewedFilms();
             }
-        } else {
-            return new String("Helooo");
         }
-        return null;
+        return new String("Helooo");
     }
 }
