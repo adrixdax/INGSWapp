@@ -158,15 +158,4 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/profile" />
 
-    <EditText
-        android:id="@+id/editTextTextPersonName3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="XHDPI"
-        android:textColor="@color/White"
-        tools:layout_editor_absoluteX="103dp"
-        tools:layout_editor_absoluteY="171dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
