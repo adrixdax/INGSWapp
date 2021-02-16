@@ -48,7 +48,6 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        List<ListOfFilm> listOfFilms = new ArrayList<>();
 /*
         ListOfFilm film = new ListOfFilm("https://pad.mymovies.it/filmclub/2018/12/029/locandinapg1.jpg");
         listOfFilms.add(film);
@@ -70,11 +69,10 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(films);
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
