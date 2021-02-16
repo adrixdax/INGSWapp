@@ -48,20 +48,8 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-/*
-        ListOfFilm film = new ListOfFilm("https://pad.mymovies.it/filmclub/2018/12/029/locandinapg1.jpg");
-        listOfFilms.add(film);
-        //for(int i=0; i<10; i++) {
-        film = new ListOfFilm("https://pad.mymovies.it/filmclub/2019/10/160/locandina.jpg");
-        listOfFilms.add(film);
-        //}
 
-        film = new ListOfFilm("https://pad.mymovies.it/filmclub/2021/01/037/imm.jpg");
-        listOfFilms.add(film);
-
-        film = new ListOfFilm("https://pad.mymovies.it/filmclub/2019/02/007/imm.jpg");
-        listOfFilms.add(film);
-*/
+        System.out.println(latestJson);
 
         List<ListOfFilm> films = new ArrayList<>();
         try {
