@@ -11,7 +11,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/ultimi_usciti"
         android:textColor="#FFFFFF"
@@ -22,8 +22,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="402dp"
-        android:layout_height="200dp"
+        android:layout_width="250dp"
+        android:layout_height="125dp"
         android:layout_marginTop="5dp"
         android:scrollbars="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,10 +41,10 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="56dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/circle_obj"
         android:src="@drawable/icons8_notification_30px_1"
         app:layout_constraintStart_toStartOf="parent"
@@ -52,10 +52,10 @@
 
     <Button
         android:id="@+id/toSee"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="31dp"
         android:layout_marginBottom="21dp"
         android:background="@drawable/rounded_list_obj"
@@ -71,8 +71,8 @@
 
     <Button
         android:id="@+id/mostReviewed"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="21dp"
         android:layout_marginEnd="31dp"
@@ -90,8 +90,8 @@
 
     <Button
         android:id="@+id/mostSeen"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="90dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="45dp"
         android:layout_marginEnd="60dp"
@@ -109,8 +109,8 @@
 
     <Button
         android:id="@+id/userPrefered"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="21dp"
         android:layout_marginEnd="60dp"
