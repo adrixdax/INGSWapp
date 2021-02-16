@@ -12,7 +12,6 @@ public class JSONDecoder {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-
     private static List<ListOfFilm> jsonFilmList(String json) throws JsonProcessingException {
         return Arrays.asList(mapper.readValue(json, ListOfFilm[].class));
     }

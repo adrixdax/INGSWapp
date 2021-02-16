@@ -8,7 +8,11 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Controllers.RegistrationController;
 
+
+import java.io.IOException;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class AvatarScreen extends AppCompatActivity implements View.OnClickListener  {
 
@@ -21,6 +25,7 @@ public class AvatarScreen extends AppCompatActivity implements View.OnClickListe
     private CircleImageView widow;
 
     RegistrationController regcont;
+
 
 
     String urlIron = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
@@ -51,8 +56,6 @@ public class AvatarScreen extends AppCompatActivity implements View.OnClickListe
         thanos.setOnClickListener(this);
         widow.setOnClickListener(this);
         wonderwoman.setOnClickListener(this);
-
-
 
 
 
