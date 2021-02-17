@@ -38,6 +38,7 @@
         android:importantForAutofill="no"
         android:inputType="text"
         android:singleLine="false"
+        android:imeOptions="actionSearch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

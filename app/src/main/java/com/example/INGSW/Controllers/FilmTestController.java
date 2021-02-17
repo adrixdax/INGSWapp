@@ -14,12 +14,13 @@ import okhttp3.Response;
 public class FilmTestController extends AsyncTask {
 
     private Exception exception;
+    String url = "http://87.16.144.72:8080/";
 
     private Object getLatestFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&latest=true");
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url("http://87.13.160.70:8080/film").post(body).build();
+        Request request = new Request.Builder().url(url+"film").post(body).build();
         try {
             try (Response response = client.newCall(request).execute()) {
                 return Objects.requireNonNull(response.body()).string();
@@ -35,7 +36,7 @@ public class FilmTestController extends AsyncTask {
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&most=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://87.13.160.70:8080/film")
+                .url(url+"film")
                 .post(body)
                 .build();
         try {
@@ -53,7 +54,7 @@ public class FilmTestController extends AsyncTask {
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&most=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://87.13.160.70:8080/film")
+                .url(url+"film")
                 .post(body)
                 .build();
         try {
@@ -71,7 +72,7 @@ public class FilmTestController extends AsyncTask {
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&most=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://87.13.160.70:8080/film")
+                .url(url+"film")
                 .post(body)
                 .build();
         try {

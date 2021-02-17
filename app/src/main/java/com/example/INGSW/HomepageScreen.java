@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -34,15 +36,15 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
 
     ImageView imageView;
     TextView name,email,id;
-
     GoogleSignInAccount mGoogleSIgn;
+    Button mostSeen,mostReviewed,tooSee,userPrefered;
+    FilmTestController con = new FilmTestController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepagescreen);
         String latestJson = "";
-        FilmTestController con = new FilmTestController();
         try {
             latestJson = (String) con.execute(new String("latest")).get();
         } catch (ExecutionException | InterruptedException e) {
@@ -67,20 +69,23 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
 
+        Button mostSeen = findViewById(R.id.mostSeen);
+        Button mostReviewed = findViewById(R.id.mostReviewed);
+        Button tooSee = findViewById(R.id.toSee);
+        Button userPrefered = findViewById(R.id.userPrefered);
 
-
-        /*if (acct != null) {
-            String personName = acct.getDisplayName();
-            String personEmail = acct.getEmail();
-            String personId = acct.getId();
-            Uri personPhoto = acct.getPhotoUrl();
-
-            name.setText(personName);
-            email.setText(personEmail);
-            id.setText(personId);
-            Glide.with(this).load(String.valueOf(personPhoto)).into(imageView);
-        }
-*/
+        mostSeen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomepageScreen.this, "Clicked most", Toast.LENGTH_SHORT).show();
+                FilmTestController f = new FilmTestController();
+                try {
+                    System.out.println(f.execute("most").get());
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -108,12 +113,13 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
+        System.out.println("Inside "+v.getId());
         switch (v.getId()){
             case R.id.toSee :
                 //toSeeQuery
                 break;
             case R.id.mostSeen:
-                //mostViewedQuery
+                mostSeen.performClick();
                 break;
             case R.id.mostReviewed :
                 //mostReviewedQuery
