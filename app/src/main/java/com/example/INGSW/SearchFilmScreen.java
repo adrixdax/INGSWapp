@@ -52,7 +52,6 @@ public class SearchFilmScreen extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-
                     case R.id.search_screen:
                         break;
                     case R.id.home_screen:
