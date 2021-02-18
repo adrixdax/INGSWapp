@@ -20,10 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.ListOfFilm;
 import com.example.INGSW.Component.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +58,7 @@ public class HomepageScreen extends AppCompatActivity implements View.OnClickLis
         List<ListOfFilm> films = new ArrayList<>();
         try {
             films = (List<ListOfFilm>) getJsonToDecode(latestJson);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
