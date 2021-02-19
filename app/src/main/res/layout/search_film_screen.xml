@@ -42,14 +42,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
+    <ImageView
         android:id="@+id/search_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="300dp"
         android:layout_marginTop="25dp"
         android:backgroundTint="#00FFFFFF"
-        android:tint="#00FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_search" />

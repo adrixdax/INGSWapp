@@ -9,7 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.INGSW.HomepageScreen;
+import com.example.INGSW.ToolBarActivity;
+import com.example.INGSW.home.HomepageScreen;
 import com.example.INGSW.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -64,7 +65,7 @@ public class LoginController{
                     progressBar.setVisibility(View.GONE);
 
                     Toast.makeText(loginscreen,"LOGIN EFFETTUATO",Toast.LENGTH_LONG).show();
-                    loginscreen.startActivity(new Intent(loginscreen, HomepageScreen.class));
+                    loginscreen.startActivity(new Intent(loginscreen, ToolBarActivity.class));
                     //manda al profilo utente/homepage dell' app
                 }
                 else{

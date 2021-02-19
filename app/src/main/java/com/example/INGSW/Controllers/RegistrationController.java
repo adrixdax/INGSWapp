@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
-import com.example.INGSW.HomepageScreen;
+import com.example.INGSW.home.HomepageScreen;
 import com.example.INGSW.R;
 import com.example.INGSW.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -17,8 +17,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.lang.reflect.Field;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
