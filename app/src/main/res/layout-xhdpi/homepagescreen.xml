@@ -49,7 +49,8 @@
         android:background="@drawable/circle_obj"
         android:src="@drawable/icons8_notification_30px_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo" />
 
     <Button
         android:id="@+id/toSee"
@@ -61,7 +62,7 @@
         android:layout_marginBottom="21dp"
         android:background="@drawable/rounded_list_obj"
         android:fontFamily="@font/poppins_bold"
-        android:text="Da vedere"
+        android:text="@string/da_vedere"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:clickable="true"
@@ -82,7 +83,7 @@
         android:layout_marginBottom="45dp"
         android:background="@drawable/rounded_list_obj"
         android:fontFamily="@font/poppins_bold"
-        android:text="I più recensiti"
+        android:text="@string/i_pi_recensiti"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:clickable="true"
@@ -103,7 +104,7 @@
         android:layout_marginBottom="21dp"
         android:background="@drawable/rounded_list_obj"
         android:fontFamily="@font/poppins_bold"
-        android:text="I PIù visti"
+        android:text="@string/i_pi_visti"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:clickable="true"
@@ -124,7 +125,7 @@
         android:layout_marginBottom="45dp"
         android:background="@drawable/rounded_list_obj"
         android:fontFamily="@font/poppins_bold"
-        android:text="i preferiti dagli utenti"
+        android:text="@string/i_preferiti_dagli_utenti"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:clickable="true"
