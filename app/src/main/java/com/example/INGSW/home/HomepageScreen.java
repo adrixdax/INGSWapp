@@ -49,6 +49,8 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
     Button mostSeen,mostReviewed,tooSee,userPrefered;
     FilmTestController con = new FilmTestController();
 
+    ListOfFilm film = new ListOfFilm((List<ListOfFilm>) null);
+
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -57,24 +59,28 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
 
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
 
-        String latestJson = "";
-        try {
-            latestJson = (String) con.execute(new String("latest")).get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
+
+        if(film.getListOfFilm()==null) {
+            String latestJson = "";
+            try {
+                latestJson = (String) con.execute(new String("latest")).get();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(latestJson);
+
+
+            try {
+                film.setListOfFilm((List<ListOfFilm>) getJsonToDecode(latestJson));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        System.out.println(latestJson);
-
-        List<ListOfFilm> films = new ArrayList<>();
-        try {
-            films = (List<ListOfFilm>) getJsonToDecode(latestJson);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(films);
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film.getListOfFilm());
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

@@ -21,12 +21,10 @@
         android:theme="@style/Authapp"
         android:noHistory = "true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PersonalArea"/>
         <activity android:name=".AvatarScreen" />
-        <activity android:name=".SearchFilmScreen"/>
+        <activity android:name=".ToolBarActivity"/>
+        <activity android:name=".LoginScreen">
 
-        <activity android:name=".LoginScreen"/>
-            <activity android:name=".ToolBarActivity">
 
 
             <intent-filter>
