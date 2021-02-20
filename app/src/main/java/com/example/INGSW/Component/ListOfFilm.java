@@ -17,15 +17,6 @@ public class ListOfFilm {
     private String[] genres;
     private Cast[] cast;
 
-    private List<ListOfFilm> listOfFilm=null;
-
-    public List<ListOfFilm> getListOfFilm() {
-        return listOfFilm;
-    }
-
-    public void setListOfFilm(List<ListOfFilm> listOfFilm) {
-        this.listOfFilm = listOfFilm;
-    }
 
     @JsonCreator
     public ListOfFilm(@JsonProperty("id_Film") int id_Film, @JsonProperty("film_Title") String film_Title, @JsonProperty("plot") String plot, @JsonProperty("posterPath") String posterPath, @JsonProperty("release_Date") String relase_Date, @JsonProperty("runtime") int runtime, @JsonProperty("genres") String[] genres, @JsonProperty("cast") Cast[] cast) {

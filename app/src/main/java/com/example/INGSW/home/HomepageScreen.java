@@ -30,6 +30,7 @@ import com.example.INGSW.Controllers.FilmTestController;
 
 import com.example.INGSW.R;
 import com.example.INGSW.SearchFilmScreen;
+import com.example.INGSW.ToolBarActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -49,18 +50,20 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
     Button mostSeen,mostReviewed,tooSee,userPrefered;
     FilmTestController con = new FilmTestController();
 
-    ListOfFilm film = new ListOfFilm((List<ListOfFilm>) null);
+    private List<ListOfFilm> listOfFilm=null;
 
-    private HomeViewModel homeViewModel;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                                ViewGroup container, Bundle savedInstanceState) {
+    private List<ListOfFilm> film = new ArrayList<>();
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
 
+        film = ((ToolBarActivity)getActivity()).getListOfFilm();;
 
-        if(film.getListOfFilm()==null) {
+        if(film ==null) {
+            System.out.println("LISTA VUOTAAAAAAAAAAAAAAA!!!!!!!!!!!!");
             String latestJson = "";
             try {
                 latestJson = (String) con.execute(new String("latest")).get();
@@ -72,7 +75,8 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
 
 
             try {
-                film.setListOfFilm((List<ListOfFilm>) getJsonToDecode(latestJson));
+                film = (List<ListOfFilm>) getJsonToDecode(latestJson);
+                ((ToolBarActivity)getActivity()).setListOfFilm(film);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -80,7 +84,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film.getListOfFilm());
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
