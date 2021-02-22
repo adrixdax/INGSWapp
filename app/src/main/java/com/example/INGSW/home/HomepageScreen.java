@@ -3,7 +3,9 @@ package com.example.INGSW.home;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,9 +52,6 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
     Button mostSeen,mostReviewed,tooSee,userPrefered;
     FilmTestController con = new FilmTestController();
 
-    private List<ListOfFilm> listOfFilm=null;
-
-
     private List<ListOfFilm> film = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,10 +59,10 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
 
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
 
-        film = ((ToolBarActivity)getActivity()).getListOfFilm();;
+
+        film = ((ToolBarActivity)getActivity()).getListOfFilm();
 
         if(film ==null) {
-            System.out.println("LISTA VUOTAAAAAAAAAAAAAAA!!!!!!!!!!!!");
             String latestJson = "";
             try {
                 latestJson = (String) con.execute(new String("latest")).get();

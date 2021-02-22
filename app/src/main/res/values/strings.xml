@@ -24,4 +24,9 @@
     <string name="i_pi_visti">I PIù visti</string>
     <string name="da_vedere">Da vedere</string>
     <string name="i_preferiti_dagli_utenti">i preferiti dagli utenti</string>
+    <string name="i_miei_preferiti">I MIEI PREFERITI</string>
+    <string name="text">BOG</string>
+    <string name="consigliati_dagli_utenti">CONSIGLIATI DAGLI UTENTI</string>
+    <string name="le_mie_liste">LE MIE LISTE</string>
+    <string name="nickname">NICKNAME</string>
 </resources>

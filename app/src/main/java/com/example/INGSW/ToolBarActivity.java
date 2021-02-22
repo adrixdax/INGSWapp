@@ -29,10 +29,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationscreen);
 
-        final int maxMemorySize = (int) Runtime.getRuntime().maxMemory() / 1024;
-        final int cacheSize = maxMemorySize / 10;
-
-
 
         loadFragment(new HomepageScreen(),"1");
 
