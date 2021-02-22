@@ -6,7 +6,136 @@
     android:layout_height="match_parent"
     tools:context=".PersonalArea">
 
-    <include layout="@layout/toolbar"/>
 
+    <Button
+        android:id="@+id/toSee3"
+        android:layout_width="362dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_list_obj"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/i_miei_preferiti"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toSee2" />
 
+    <Button
+        android:id="@+id/toSee4"
+        android:layout_width="125dp"
+        android:layout_height="78dp"
+        android:background="@drawable/rounded_list_obj"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/poppins_bold"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="548dp" />
+
+    <Button
+        android:id="@+id/toSee6"
+        android:layout_width="362dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_list_obj"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/text"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toSee5"
+        app:layout_constraintVertical_bias="0.014" />
+
+    <Button
+        android:id="@+id/toSee5"
+        android:layout_width="362dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_list_obj"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/consigliati_dagli_utenti"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toSee3" />
+
+    <Button
+        android:id="@+id/toSee2"
+        android:layout_width="362dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="192dp"
+        android:background="@drawable/rounded_list_obj"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/le_mie_liste"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/personal_profile_nick2"
+        android:layout_width="239dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/mail"
+        android:textColor="#817171"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.354"
+        app:layout_constraintStart_toEndOf="@+id/personal_profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/personal_profile_nick"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/personal_profile_image"
+        android:layout_width="126dp"
+        android:layout_height="122dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/profile_image2"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/personal_profile_nick"
+        android:layout_width="239dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="56dp"
+        android:text="@string/nickname"
+        android:textColor="#E6DDDD"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.354"
+        app:layout_constraintStart_toEndOf="@+id/personal_profile_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.042" />
 </androidx.constraintlayout.widget.ConstraintLayout>
