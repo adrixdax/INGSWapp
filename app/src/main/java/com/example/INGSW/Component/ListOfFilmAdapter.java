@@ -20,7 +20,6 @@ import static com.bumptech.glide.Glide.*;
 public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.ViewHolder> {
 
     private final List<ListOfFilm> listOfData;
-
     public ListOfFilmAdapter(List<ListOfFilm> listOfData) {
         this.listOfData = listOfData;
     }
@@ -61,5 +60,6 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             relativeLayout = itemView.findViewById(R.id.relativeLayout);
         }
     }
+
 }
 

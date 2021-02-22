@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.INGSW">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -20,11 +21,12 @@
         android:theme="@style/Authapp"
         android:noHistory = "true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PersonalArea"></activity>
         <activity android:name=".AvatarScreen" />
-        <activity android:name=".SearchFilmScreen"/>
-        <activity android:name=".HomepageScreen" />
+        <activity android:name=".ToolBarActivity"/>
         <activity android:name=".LoginScreen">
+
+
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

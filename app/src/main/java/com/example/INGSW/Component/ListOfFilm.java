@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
+import java.util.List;
+
 public class ListOfFilm {
 
     private int id_Film;
@@ -14,6 +16,7 @@ public class ListOfFilm {
     private int runtime;
     private String[] genres;
     private Cast[] cast;
+
 
     @JsonCreator
     public ListOfFilm(@JsonProperty("id_Film") int id_Film, @JsonProperty("film_Title") String film_Title, @JsonProperty("plot") String plot, @JsonProperty("posterPath") String posterPath, @JsonProperty("release_Date") String relase_Date, @JsonProperty("runtime") int runtime, @JsonProperty("genres") String[] genres, @JsonProperty("cast") Cast[] cast) {
@@ -39,6 +42,10 @@ public class ListOfFilm {
     public ListOfFilm(String imageUrl, String title) {
         this.posterPath = imageUrl;
         this.film_Title = title;
+    }
+
+    public ListOfFilm(List<ListOfFilm> listOfFilm){
+        listOfFilm=listOfFilm;
     }
 
 
