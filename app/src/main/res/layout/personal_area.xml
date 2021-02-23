@@ -28,6 +28,7 @@
         android:id="@+id/toSee4"
         android:layout_width="125dp"
         android:layout_height="78dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_list_obj"
         android:clickable="true"
         android:focusable="true"
@@ -35,9 +36,13 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="548dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toSee6"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/toSee6"
@@ -80,7 +85,7 @@
         android:id="@+id/toSee2"
         android:layout_width="362dp"
         android:layout_height="62dp"
-        android:layout_marginTop="192dp"
+        android:layout_marginTop="168dp"
         android:background="@drawable/rounded_list_obj"
         android:clickable="true"
         android:focusable="true"
@@ -94,7 +99,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/personal_profile_nick2"
+        android:id="@+id/personal_profile_mail"
         android:layout_width="239dp"
         android:layout_height="32dp"
         android:layout_marginStart="36dp"

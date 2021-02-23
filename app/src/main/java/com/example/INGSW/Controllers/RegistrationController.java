@@ -75,6 +75,7 @@ public class RegistrationController {
                     public void onSuccess(AuthResult authResult) {
                         User user = new User(nickname, email,pic);
 
+
                         FirebaseDatabase.getInstance().getReference("Users")
                                 .child((FirebaseAuth.getInstance().getCurrentUser().getUid()))
                                 .setValue(user).addOnSuccessListener(regActivity, new OnSuccessListener<Void>() {
