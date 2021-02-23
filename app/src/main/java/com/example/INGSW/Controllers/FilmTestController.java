@@ -14,6 +14,7 @@ import okhttp3.Response;
 public class FilmTestController extends AsyncTask {
 
     private Exception exception;
+    private String nameOfFilm = "";
     String url = "http://87.16.144.72:8080/";
 
     private Object getLatestFilms() {
@@ -23,6 +24,7 @@ public class FilmTestController extends AsyncTask {
         Request request = new Request.Builder().url(url+"film").post(body).build();
         try {
             try (Response response = client.newCall(request).execute()) {
+
                 return Objects.requireNonNull(response.body()).string();
             }
         } catch (IOException e) {
@@ -85,6 +87,24 @@ public class FilmTestController extends AsyncTask {
         return "";
     }
 
+    private Object getSearchFilms() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&name="+ nameOfFilm);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url+"film").post(body).build();
+        System.out.println("Stampo i film: ->" + request.toString());
+
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
@@ -97,8 +117,18 @@ public class FilmTestController extends AsyncTask {
                     return getTooSeeFilmList();
                 case "mostReviewd":
                     return getMostReviewedFilms();
+                case "search":
+                    return getSearchFilms();
             }
         }
         return new String("Helooo");
+    }
+
+    public String getNameOfFilm() {
+        return nameOfFilm;
+    }
+
+    public void setNameOfFilm(String nameOfFilm) {
+        this.nameOfFilm = nameOfFilm;
     }
 }
