@@ -45,6 +45,29 @@
         tools:ignore="MissingConstraints" />
 
     <Button
+        android:id="@+id/Logout_button"
+        android:layout_width="88dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="149dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_list_obj"
+        android:backgroundTint="#AC2525"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Logout"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/toSee2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/personal_profile_image"
+        app:layout_constraintTop_toBottomOf="@+id/personal_profile_mail"
+        tools:ignore="MissingConstraints" />
+
+    <Button
         android:id="@+id/toSee6"
         android:layout_width="362dp"
         android:layout_height="62dp"
@@ -68,7 +91,7 @@
         android:id="@+id/toSee5"
         android:layout_width="362dp"
         android:layout_height="62dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/rounded_list_obj"
         android:clickable="true"
         android:focusable="true"
