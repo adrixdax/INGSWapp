@@ -1,41 +1,30 @@
 package com.example.INGSW.home;
 
-import android.annotation.SuppressLint;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
+import android.app.Dialog;
 import android.os.Bundle;
-import android.util.LruCache;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.AvatarScreen;
-import com.example.INGSW.Component.ListOfFilm;
-import com.example.INGSW.Component.ListOfFilmAdapter;
+import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
-
+import com.example.INGSW.Controllers.NotifyTestController;
+import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
-import com.example.INGSW.SearchFilmScreen;
 import com.example.INGSW.ToolBarActivity;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,12 +39,26 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
     TextView name,email,id;
     GoogleSignInAccount mGoogleSIgn;
     Button mostSeen,mostReviewed,tooSee,userPrefered;
+    ImageButton bell;
     FilmTestController con = new FilmTestController();
+    Fragment fragment;
 
     private List<ListOfFilm> film = new ArrayList<>();
+    /*
+    private boolean loadFragment(Fragment fragment){
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
+        if(fragment!=null) {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.notifyPopUp, fragment).commit();
+                activeFragment= fragment;
+                return true;
+            }
+        return false;
+    }*/
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
 
@@ -74,13 +77,22 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
 
 
             try {
-                film = (List<ListOfFilm>) getJsonToDecode(latestJson);
+                film = (List<ListOfFilm>) getJsonToDecode(latestJson,ListOfFilm.class);
                 ((ToolBarActivity)getActivity()).setListOfFilm(film);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
+        bell = root.findViewById(R.id.notifyBell);
+        bell.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    System.out.println("Click on bell");
+                    fragment = new NotifyPopUp();
+                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                    fm.beginTransaction().replace(R.id.nav_host_fragment,fragment).commit();
+            }
+        });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(film);

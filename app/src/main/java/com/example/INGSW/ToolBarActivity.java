@@ -1,9 +1,6 @@
 package com.example.INGSW;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.LruCache;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -12,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 
-import com.example.INGSW.Component.ListOfFilm;
+import com.example.INGSW.Component.Films.ListOfFilm;
 import com.example.INGSW.home.HomepageScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -37,6 +34,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
 
     }
+
     private boolean loadFragment(Fragment fragment, String tag){
         FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
@@ -45,7 +43,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment, fragment,tag).commit();
-                activeFragment= fragment;
+                activeFragment = fragment;
                 return true;
             }
         }
