@@ -1,5 +1,6 @@
 package com.example.INGSW;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -22,7 +23,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
 
     Fragment activeFragment;
-    private List<ListOfFilm> listFilm= null;
+    private List<ListOfFilm> listFilm = null;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +32,23 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         setContentView(R.layout.navigationscreen);
 
 
-        loadFragment(new HomepageScreen(),"1");
+        loadFragment(new HomepageScreen(), "1");
 
         BottomNavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setOnNavigationItemSelectedListener(this);
 
 
     }
-    private boolean loadFragment(Fragment fragment, String tag){
+
+    private boolean loadFragment(Fragment fragment, String tag) {
         FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
-        if(fragment!=null) {
+        if (fragment != null) {
             if (!tag.equals(currentFragment.getTag())) {
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.nav_host_fragment, fragment,tag).commit();
-                activeFragment= fragment;
+                        .replace(R.id.nav_host_fragment, fragment, tag).commit();
+                activeFragment = fragment;
                 return true;
             }
         }
@@ -55,7 +58,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
-        String tag ="";
+        String tag = "";
 
         switch (item.getItemId()) {
             case R.id.navigation_home:
@@ -75,14 +78,27 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
         }
 
-        return loadFragment(fragment,tag);
+        return loadFragment(fragment, tag);
     }
 
-    public List<ListOfFilm> getListOfFilm(){
+    public void showProgressBar() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.custom_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+    }
+
+    public void stopProgressBar() {
+        progressDialog.dismiss();
+    }
+
+    public List<ListOfFilm> getListOfFilm() {
         return listFilm;
     }
 
-    public void setListOfFilm(List<ListOfFilm> tempList){
+    public void setListOfFilm(List<ListOfFilm> tempList) {
         listFilm = tempList;
     }
 

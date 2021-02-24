@@ -20,36 +20,37 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.Component.ListOfFilm;
+import com.example.INGSW.Component.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
+
+import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class SearchFilmScreen extends Fragment {
 
 
     private EditText Text_of_search;
-    private ProgressBar progressBar;
-    private ProgressDialog progressDialog;
+    private List<ListOfFilm> filmInSearch = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.search_film_screen, container, false);
 
-        progressBar=  (ProgressBar) root.findViewById(R.id.progressBar2);
+
         ImageView bt_search = root.findViewById(R.id.search_button);
         bt_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                progressDialog = new ProgressDialog(root.getContext());
-                progressDialog.show();
-                progressDialog.setContentView(R.layout.custom_dialog);
-                progressDialog.getWindow().setBackgroundDrawableResource(
-                        android.R.color.transparent
-                );
+                ((ToolBarActivity)getActivity()).showProgressBar();
                 Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
                 try {
 
@@ -58,15 +59,29 @@ public class SearchFilmScreen extends Fragment {
                     String film = filmTestController.getNameOfFilm();
                     System.out.println("Il film che stai cercando -> "+ film);
 
-                    String prova = (String) filmTestController.execute(new String("search")).get();
+                    String latestJson = (String) filmTestController.execute(new String("search")).get();
 
-                    System.out.println("I Film trovati -> "+ prova);
-                    boolean boh = filmTestController.isCancelled();
+                    System.out.println("I Film trovati -> "+ latestJson);
+                    filmTestController.isCancelled();
+
+                    filmInSearch = (List<ListOfFilm>) getJsonToDecode(latestJson);
+
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
+                    RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+                    ListOfFilmAdapter adapter = new ListOfFilmAdapter(filmInSearch);
+                    recyclerView.setHasFixedSize(false);
+                    recyclerView.setLayoutManager(layoutManager);
+                    recyclerView.setAdapter(adapter);
 
 
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    ((ToolBarActivity)getActivity()).stopProgressBar();
+
+
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
 

@@ -84,6 +84,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(film);
+        adapter.setImageListFilm(true);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
