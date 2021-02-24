@@ -1,4 +1,4 @@
-package com.example.INGSW.Component;
+package com.example.INGSW.Component.Films;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

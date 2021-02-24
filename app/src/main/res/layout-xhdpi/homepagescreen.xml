@@ -35,7 +35,7 @@
 
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/notifyBell"
         android:layout_width="56dp"
         android:layout_height="55dp"
         android:layout_marginStart="15dp"
@@ -44,7 +44,8 @@
         android:src="@drawable/icons8_notification_30px_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/todo" />
+        android:contentDescription="@string/todo"
+        />
 
 
     <Button
