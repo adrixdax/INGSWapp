@@ -23,8 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.ListOfFilm;
-import com.example.INGSW.Component.ListOfFilmAdapter;
+import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -64,7 +64,7 @@ public class SearchFilmScreen extends Fragment {
                     System.out.println("I Film trovati -> "+ latestJson);
                     filmTestController.isCancelled();
 
-                    filmInSearch = (List<ListOfFilm>) getJsonToDecode(latestJson);
+                    filmInSearch = (List<ListOfFilm>) getJsonToDecode(latestJson, ListOfFilm.class);
 
                     LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
                     RecyclerView recyclerView = root.findViewById(R.id.recyclerView);

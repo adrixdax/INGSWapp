@@ -13,11 +13,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 
-import com.example.INGSW.Component.ListOfFilm;
+import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Controllers.UserController;
 import com.example.INGSW.home.HomepageScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ToolBarActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -25,12 +30,16 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     Fragment activeFragment;
     private List<ListOfFilm> listFilm = null;
     private ProgressDialog progressDialog;
+    private Map<String, Object> contaiinerItem = new HashMap<>();
+    User user = null;
+    UserController userController = new UserController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationscreen);
-
+        getUser();
+        System.out.println("Sto caricando lo User ----------------------------------------------------------------");
 
         loadFragment(new HomepageScreen(), "1");
 
@@ -102,6 +111,31 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         listFilm = tempList;
     }
 
+    public Map<String, Object> getContaiinerItem() {
+        return contaiinerItem;
+    }
 
+    public void setContaiinerItem(Map<String, Object> contaiinerItem) {
+        this.contaiinerItem = contaiinerItem;
+    }
+
+    public void getUser() {
+        System.out.println("Sono nella ricerca user");
+        Object obj = null;
+        FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (mFirebaseUser != null) {
+            obj = userController.getUserprofile(mFirebaseUser);
+            if (obj != null) {
+                System.out.println("Trovato profilo proprietario");
+                contaiinerItem.put("userProfile", obj);
+            } else {
+                obj = userController.getAcct(this);
+                if (obj != null) {
+                    System.out.println("Trovato profilo Google");
+                    contaiinerItem.put("acct", obj);
+                }
+            }
+        }
+    }
 }
 

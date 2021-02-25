@@ -34,11 +34,9 @@ public class PersonalArea extends Fragment {
 
     private Button logout;
 
-    private FirebaseUser mFirebaseUser;
-    private DatabaseReference reference;
+
     GoogleSignInAccount acct;
 
-    private String userID;
     final String propic = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -47,45 +45,45 @@ public class PersonalArea extends Fragment {
 
         View root = inflater.inflate(R.layout.personal_area, container, false);
 
-        mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
-
 
         logout = (Button) root.findViewById(R.id.Logout_button);
         final TextView nicknameView = (TextView) root.findViewById(R.id.personal_profile_nick);
         final TextView mailView = (TextView) root.findViewById(R.id.personal_profile_mail);
         final CircleImageView propicView = (CircleImageView) root.findViewById(R.id.personal_profile_image);
 
+        User userProfile = null;
 
-        if (mFirebaseUser != null) {
-            userID = mFirebaseUser.getUid();
-            reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User userProfile = snapshot.getValue(User.class);
+        if (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null) {
+            userProfile = (User) ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile");
+            System.out.println("Ho trovato lo user proprietario");
 
-                if (userProfile != null) {
-                    String nickname = userProfile.nickname;
-                    String mail = userProfile.email;
-                    String propic = userProfile.propic;
+            if (userProfile != null) {
+                String nickname = userProfile.nickname;
+                String mail = userProfile.email;
+                String propic = userProfile.propic;
 
-                    nicknameView.setText(nickname);
-                    mailView.setText(mail);
-                    Glide.with(root.getContext()).load(propic).into(propicView);
-                }
+                nicknameView.setText(nickname);
+                mailView.setText(mail);
+                Glide.with(root.getContext()).load(propic).into(propicView);
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        } else if (((ToolBarActivity) getActivity()).getContaiinerItem().get("acct") != null) {
 
-            }
-        });
-    }else{
-            acct = GoogleSignIn.getLastSignedInAccount(PersonalArea.this.getContext());
-            if(acct != null){
+            acct = (GoogleSignInAccount) ((ToolBarActivity) getActivity()).getContaiinerItem().get("acct");
+            System.out.println("Ho trovato lo user proprietario");
+
+            if (acct != null) {
                 String nickname = acct.getDisplayName();
                 String mail = acct.getEmail();
-                String propic = acct.getPhotoUrl().toString();
+                try {
+                    if (acct.getPhotoUrl() != null) {
+                        String propic = acct.getPhotoUrl().toString();
+                    } else {
+                        String propic = "";
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 nicknameView.setText(nickname);
                 mailView.setText(mail);
@@ -98,7 +96,7 @@ public class PersonalArea extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                Intent logoutIntent = new Intent(PersonalArea.this.getActivity(),LoginScreen.class);
+                Intent logoutIntent = new Intent(PersonalArea.this.getActivity(), LoginScreen.class);
                 logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(logoutIntent);
             }
