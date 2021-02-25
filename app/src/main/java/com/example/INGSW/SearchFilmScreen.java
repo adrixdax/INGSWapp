@@ -3,12 +3,15 @@ package com.example.INGSW;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -79,6 +82,18 @@ public class SearchFilmScreen extends Fragment {
                     e.printStackTrace();
                 }
 
+            }
+        });
+        Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
+        System.out.println(Text_of_search != null);
+        Text_of_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    bt_search.callOnClick();
+                    return true;
+                }
+                return false;
             }
         });
 

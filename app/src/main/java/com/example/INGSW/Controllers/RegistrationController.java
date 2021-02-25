@@ -9,8 +9,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
-import com.example.INGSW.home.HomepageScreen;
 import com.example.INGSW.R;
+import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -82,7 +82,7 @@ public class RegistrationController {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(regActivity, "Utente registrato correttamente", Toast.LENGTH_LONG).show();
-                                regActivity.startActivity(new Intent(regActivity, HomepageScreen.class));
+                                regActivity.startActivity(new Intent(regActivity, ToolBarActivity.class));
                             }
                         }).addOnFailureListener(regActivity, new OnFailureListener() {
                             @Override

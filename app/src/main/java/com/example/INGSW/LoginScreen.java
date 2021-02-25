@@ -1,19 +1,20 @@
 package com.example.INGSW;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.INGSW.Controllers.LoginController;
-import com.example.INGSW.home.HomepageScreen;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,7 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /** Tale activity sostiene la schermata principale dell'app. ovvero la prima schermata che si aprirà difronte all' utente all' apertura dell'app */
 
-public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
+public class LoginScreen extends AppCompatActivity{
 
     /**Dichiarazione dei campi di testo e bottoni con i quali interagirà l'utente**/
 
@@ -35,7 +36,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     private TextView register;
     private EditText editTextEmail, editTextPassword;
-    private Button signIn;
+    private Button LoginButton;
 
 
     private FirebaseAuth mAuth;
@@ -55,18 +56,59 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         mAuth = FirebaseAuth.getInstance();
 
         register = (TextView) findViewById(R.id.RegisterText);
-        register.setOnClickListener(this);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginScreen.super.getApplicationContext(), RegistrationScreen.class));
+            }
+        });
 
         GoogleLogin = findViewById(R.id.sign_in_button);
-        signIn = (Button) findViewById(R.id.LoginButton);
-        signIn.setOnClickListener(this);
 
+        LoginButton = findViewById(R.id.LoginButton);
+        LoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    loginController.verifyUserWithFirebase(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim(),mAuth,LoginScreen.this);
+                } catch (Exception e) {
+                    if( e.getMessage().equals("Empty Mail") ) {
+                        editTextEmail.setError("Mail vuota");
+                        editTextEmail.requestFocus();
+                    }
+                    else if(e.getMessage().equals("Invalid Mail")){
+                        editTextEmail.setError("Mail non valida");
+                        editTextEmail.requestFocus();
+                    }
+                    else if(e.getMessage().equals("Empty password")){
+                        editTextPassword.setError("La password è necessaria!");
+                        editTextPassword.requestFocus();
+                    }
+                    else if(e.getMessage().equals("Password Length")){
+                        editTextPassword.setError("La password deve contenere almeno 6 caratteri!");
+                        editTextPassword.requestFocus();
+                    }else
+                    {
+                        e.printStackTrace();
+                        Toast.makeText(LoginScreen.super.getApplicationContext(),e.getMessage(),Toast.LENGTH_LONG).show();
+                    }
 
-        signIn = (Button) findViewById(R.id.LoginButton);
-        signIn.setOnClickListener(this);
+                }
+            }
+        });
 
         editTextEmail = (EditText) findViewById(R.id.TextLoginEmail);
         editTextPassword = (EditText) findViewById(R.id.TextLoginPassword);
+        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    LoginButton.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -127,45 +169,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-
-/** Se il click corrisponde al  register si passa alla schermata di Registrazione dell' utente, altrimenti se clicca su Login vengono effettuati i necessari controlli sulla compilazione dei campi **/
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.RegisterText:
-                startActivity(new Intent(this, RegistrationScreen.class));
-                break;
-            case R.id.LoginButton:
-                try {
-                    loginController.verifyUserWithFirebase(editTextEmail.getText().toString().trim(),editTextPassword.getText().toString().trim(),mAuth,LoginScreen.this);
-                } catch (Exception e) {
-                    if( e.getMessage().equals("Empty Mail") ) {
-                        editTextEmail.setError("Mail vuota");
-                        editTextEmail.requestFocus();
-                    }
-                    else if(e.getMessage().equals("Invalid Mail")){
-                        editTextEmail.setError("Mail non valida");
-                        editTextEmail.requestFocus();
-                    }
-                    else if(e.getMessage().equals("Empty password")){
-                        editTextPassword.setError("La password è necessaria!");
-                        editTextPassword.requestFocus();
-                    }
-                    else if(e.getMessage().equals("Password Length")){
-                        editTextPassword.setError("La password deve contenere almeno 6 caratteri!");
-                        editTextPassword.requestFocus();
-                    }else
-                    {
-                        e.printStackTrace();
-                        Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
-
-                    }
-
-                }
-                break;
-        }
-
-    }
 
 
 }

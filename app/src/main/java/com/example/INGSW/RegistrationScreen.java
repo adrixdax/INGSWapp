@@ -2,9 +2,12 @@ package com.example.INGSW;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +38,16 @@ public class RegistrationScreen extends AppCompatActivity {
         editTextNickName = (EditText) findViewById(R.id.editTextTextPersonName);
         editTextMail = (EditText) findViewById(R.id.editTextTextEmailAddress2);
         editTextPassword = (EditText) findViewById(R.id.editTextTextPassword2);
+        editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    registerUser.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         ProfileImage = (CircleImageView)findViewById(R.id.propic_image);
         Glide.with(this).load(propic).into(ProfileImage);
