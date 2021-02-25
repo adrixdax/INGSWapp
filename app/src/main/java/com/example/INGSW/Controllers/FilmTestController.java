@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -90,7 +91,7 @@ public class FilmTestController extends AsyncTask {
     private Object getSearchFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&name="+ nameOfFilm);
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60,TimeUnit.SECONDS).build();
         Request request = new Request.Builder().url(url+"film").post(body).build();
         System.out.println("Stampo i film: ->" + request.toString());
 

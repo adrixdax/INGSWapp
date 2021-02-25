@@ -8,23 +8,38 @@ import java.util.List;
 
 public class ListOfFilm {
 
+    @JsonProperty("id_Film")
     private int id_Film;
+    @JsonProperty("film_Title")
     private String film_Title;
+    @JsonProperty("plot")
     private String plot;
+    @JsonProperty("posterPath")
     private String posterPath;
-    private String relase_Date;
+    @JsonProperty("release_Date")
+    private String release_Date;
+    @JsonProperty("runtime")
     private int runtime;
+    @JsonProperty("genres")
     private String[] genres;
+    @JsonProperty("cast")
     private Cast[] cast;
 
 
     @JsonCreator
-    public ListOfFilm(@JsonProperty("id_Film") int id_Film, @JsonProperty("film_Title") String film_Title, @JsonProperty("plot") String plot, @JsonProperty("posterPath") String posterPath, @JsonProperty("release_Date") String relase_Date, @JsonProperty("runtime") int runtime, @JsonProperty("genres") String[] genres, @JsonProperty("cast") Cast[] cast) {
+    public ListOfFilm(@JsonProperty("id_Film") int id_Film,
+                      @JsonProperty("film_Title") String film_Title,
+                      @JsonProperty("plot") String plot,
+                      @JsonProperty("posterPath") String posterPath,
+                      @JsonProperty("release_Date") String release_Date,
+                      @JsonProperty("runtime") int runtime,
+                      @JsonProperty("genres") String[] genres,
+                      @JsonProperty("cast") Cast[] cast) {
         this.id_Film = id_Film;
         this.film_Title = film_Title;
         this.plot = plot;
         this.posterPath = posterPath;
-        this.relase_Date = relase_Date;
+        this.release_Date = release_Date;
         this.runtime = runtime;
         this.genres = genres;
         this.cast = cast;
@@ -34,7 +49,7 @@ public class ListOfFilm {
         this.posterPath = imageUrl;
         this.film_Title = title;
         this.plot = plot;
-        this.relase_Date = relaseDate;
+        this.release_Date = relaseDate;
         this.runtime = duration;
         this.genres = category;
     }
@@ -89,13 +104,13 @@ public class ListOfFilm {
         this.posterPath = posterPath;
     }
 
-    public String getRelase_Date() {
-        return relase_Date;
+    public String getRelease_Date() {
+        return release_Date;
     }
 
     @JsonSetter("release_Date")
-    public void setRelase_Date(String relase_Date) {
-        this.relase_Date = relase_Date;
+    public void setRelease_Date(String relase_Date) {
+        this.release_Date = relase_Date;
     }
 
     public int getRuntime() {

@@ -3,16 +3,19 @@ package com.example.INGSW.Component.Films;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.INGSW.R;
+
 import java.util.List;
-import static com.bumptech.glide.Glide.*;
+
+import static com.bumptech.glide.Glide.with;
 
 public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.ViewHolder> {
 
@@ -50,9 +53,9 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         }else{
             with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.imageView));
             holder.textViewTitle.setText(listOfData.get(position).getFilm_Title());
-            holder.textViewRelaseDate.setText(listOfData.get(position).getRelase_Date());
-            holder.textViewTime.setText(listOfData.get(position).getRuntime());
-            holder.textViewCategories.setText(listOfData.get(position).getFilm_Title());
+            holder.textViewRelaseDate.setText(listOfData.get(position).getRelease_Date());
+            holder.textViewTime.setText(String.valueOf(listOfData.get(position).getRuntime()));
+            holder.textViewCategories.setText(listOfData.get(position).getGenres()[0]);
             holder.textViewPlot.setText(listOfData.get(position).getPlot());
             holder.itemView.<View>findViewById(R.id.button);
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
