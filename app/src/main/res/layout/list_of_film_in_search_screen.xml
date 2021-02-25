@@ -2,57 +2,52 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent">
+    android:layout_width="350dp"
+    android:layout_height="150dp"
+    android:background="@drawable/rounded_list_obj"
+    >
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="60dp"
-        android:layout_height="100dp"
+        android:layout_width="90dp"
+        android:layout_height="120dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="19dp"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="350dp"
-        android:layout_height="150dp"
-        android:background="@drawable/rounded_list_obj"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        />
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Avengers Endgame"
         android:textColor="#FFFFFF"
         android:textSize="15dp"
         android:maxWidth="300dp"
-        android:maxHeight="33dp"/>
+        android:maxHeight="28dp"/>
 
     <TextView
         android:id="@+id/textViewRelaseDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="40dp"
         android:textSize="10dp"
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
-        android:maxWidth="50dp"/>
+        android:maxWidth="60dp"/>
 
     <TextView
         android:id="@+id/textViewTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="40dp"
         android:textSize="10dp"
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
@@ -63,8 +58,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="55dp"
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
         android:textSize="10dp"
@@ -75,12 +70,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="90dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="70dp"
         android:textColor="#FFFFFF"
         android:textSize="12dp"
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="250dp"
-        android:maxHeight="50dp"/>
+        android:maxHeight="66dp"/>
 
 </RelativeLayout>

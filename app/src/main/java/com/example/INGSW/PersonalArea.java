@@ -36,7 +36,7 @@ public class PersonalArea extends Fragment {
 
 
     GoogleSignInAccount acct;
-
+    private User userProfile = null;
     final String propic = "";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,11 +51,11 @@ public class PersonalArea extends Fragment {
         final TextView mailView = (TextView) root.findViewById(R.id.personal_profile_mail);
         final CircleImageView propicView = (CircleImageView) root.findViewById(R.id.personal_profile_image);
 
-        User userProfile = null;
+
 
         if (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null) {
             userProfile = (User) ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile");
-            System.out.println("Ho trovato lo user proprietario");
+
 
             if (userProfile != null) {
                 String nickname = userProfile.nickname;
@@ -70,7 +70,7 @@ public class PersonalArea extends Fragment {
         } else if (((ToolBarActivity) getActivity()).getContaiinerItem().get("acct") != null) {
 
             acct = (GoogleSignInAccount) ((ToolBarActivity) getActivity()).getContaiinerItem().get("acct");
-            System.out.println("Ho trovato lo user proprietario");
+
 
             if (acct != null) {
                 String nickname = acct.getDisplayName();
@@ -79,7 +79,7 @@ public class PersonalArea extends Fragment {
                     if (acct.getPhotoUrl() != null) {
                         String propic = acct.getPhotoUrl().toString();
                     } else {
-                        String propic = "";
+                        String propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -95,6 +95,13 @@ public class PersonalArea extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if((GoogleSignInAccount) ((ToolBarActivity) getActivity()).getContaiinerItem().get("acct")!=null) {
+                    System.out.println("Ho trovato lo user Google--------------------------------");
+                    ((ToolBarActivity) getActivity()).getContaiinerItem().remove("acct", acct);
+                }else{
+                    System.out.println("Ho trovato lo user proprietario----------------------------------");
+                    ((ToolBarActivity) getActivity()).getContaiinerItem().remove("userProfile", userProfile);
+                }
                 FirebaseAuth.getInstance().signOut();
                 Intent logoutIntent = new Intent(PersonalArea.this.getActivity(), LoginScreen.class);
                 logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

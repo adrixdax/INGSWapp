@@ -3,6 +3,7 @@ package com.example.INGSW;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -72,6 +74,9 @@ public class SearchFilmScreen extends Fragment {
                     recyclerView.setHasFixedSize(false);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
+                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                            layoutManager.getOrientation());
+                    recyclerView.addItemDecoration(dividerItemDecoration);
 
 
                     ((ToolBarActivity)getActivity()).stopProgressBar();
@@ -93,6 +98,6 @@ public class SearchFilmScreen extends Fragment {
 
     }
 
-    
+
 
 }

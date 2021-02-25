@@ -57,7 +57,6 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             holder.textViewTime.setText(String.valueOf(listOfData.get(position).getRuntime()));
             holder.textViewCategories.setText(listOfData.get(position).getGenres()[0]);
             holder.textViewPlot.setText(listOfData.get(position).getPlot());
-            holder.itemView.<View>findViewById(R.id.button);
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
