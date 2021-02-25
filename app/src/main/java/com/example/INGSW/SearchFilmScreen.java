@@ -81,21 +81,9 @@ public class SearchFilmScreen extends Fragment {
 
             }
         });
-        Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
-        Text_of_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InputMethodManager imm = (InputMethodManager) requireActivity()
-                        .getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm.isAcceptingText()) {
-                    recyclerView.setAlpha(0);
-                }
-            }
-        });
+
        return root;
 
     }
-
-
 
 }
