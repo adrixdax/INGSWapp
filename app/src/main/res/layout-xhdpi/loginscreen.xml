@@ -130,7 +130,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        android:indeterminateTint="@color/CineBlue"/>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"

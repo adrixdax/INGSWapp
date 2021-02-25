@@ -1,25 +1,16 @@
 package com.example.INGSW;
 
 
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.graphics.Rect;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +31,7 @@ public class SearchFilmScreen extends Fragment {
 
 
     private EditText Text_of_search;
+    private RecyclerView recyclerView;
     private List<ListOfFilm> filmInSearch = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -47,11 +39,13 @@ public class SearchFilmScreen extends Fragment {
 
         View root = inflater.inflate(R.layout.search_film_screen, container, false);
 
-
         ImageView bt_search = root.findViewById(R.id.search_button);
         bt_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) requireActivity()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 ((ToolBarActivity)getActivity()).showProgressBar();
                 Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
                 try {
@@ -69,7 +63,7 @@ public class SearchFilmScreen extends Fragment {
                     filmInSearch = (List<ListOfFilm>) getJsonToDecode(latestJson, ListOfFilm.class);
 
                     LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
-                    RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+                    recyclerView = root.findViewById(R.id.recyclerView);
                     ListOfFilmAdapter adapter = new ListOfFilmAdapter(filmInSearch);
                     recyclerView.setHasFixedSize(false);
                     recyclerView.setLayoutManager(layoutManager);
@@ -81,19 +75,23 @@ public class SearchFilmScreen extends Fragment {
 
                     ((ToolBarActivity)getActivity()).stopProgressBar();
 
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (InterruptedException | ExecutionException | JsonProcessingException e) {
                     e.printStackTrace();
                 }
 
-                Toast.makeText(root.getContext(), "Il click funziona  : " + Text_of_search.getText().toString().trim(), Toast.LENGTH_SHORT).show();
             }
         });
-
+        Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
+        Text_of_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) requireActivity()
+                        .getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm.isAcceptingText()) {
+                    recyclerView.setAlpha(0);
+                }
+            }
+        });
        return root;
 
     }
