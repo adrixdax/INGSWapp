@@ -32,7 +32,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     private ProgressDialog progressDialog;
     private Map<String, Object> contaiinerItem = new HashMap<>();
     User user = null;
-    private boolean loadUser= true;
+    private boolean loadUser = false;
     UserController userController = new UserController();
 
     @Override
@@ -40,7 +40,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationscreen);
         getUser();
-        System.out.println("Sto caricando lo User ----------------------------------------------------------------");
 
         loadFragment(new HomepageScreen(), "1");
 
@@ -121,10 +120,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         System.out.println("Sono nella ricerca user");
         Object obj = null;
         FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        obj = userController.getUserprofile(mFirebaseUser);
-        if (obj != null) {
-            System.out.println("Trovato profilo proprietario");
-            contaiinerItem.put("userProfile", obj);
+        if (mFirebaseUser != null) {
+            obj = userController.getUserprofile(mFirebaseUser);
+            if (obj != null) {
+                System.out.println("Trovato profilo proprietario");
+                contaiinerItem.put("userProfile", obj);
+            }
         } else {
             obj = userController.getAcct(this);
             if (obj != null) {

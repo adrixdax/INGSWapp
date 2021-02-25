@@ -55,7 +55,7 @@ public class PersonalArea extends Fragment {
         final TextView mailView = (TextView) root.findViewById(R.id.personal_profile_mail);
         final CircleImageView propicView = (CircleImageView) root.findViewById(R.id.personal_profile_image);
 
-        if(!((ToolBarActivity) getActivity()).isLoadUser()){
+        if(!(((ToolBarActivity) getActivity()).isLoadUser())){
             ((ToolBarActivity) getActivity()).setLoadUser(loadingUser());
         }
 
