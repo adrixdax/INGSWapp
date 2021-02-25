@@ -99,11 +99,7 @@ public class PersonalArea extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(((ToolBarActivity) getActivity()).getContaiinerItem().get("acct")!=null) {
-                    ((ToolBarActivity) getActivity()).getContaiinerItem().remove("acct", acct);
-                }else{
-                    ((ToolBarActivity) getActivity()).getContaiinerItem().remove("userProfile", userProfile);
-                }
+                ((ToolBarActivity) getActivity()).getContaiinerItem().clear();
                 FirebaseAuth.getInstance().signOut();
                 Intent logoutIntent = new Intent(PersonalArea.this.getActivity(), LoginScreen.class);
                 logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
