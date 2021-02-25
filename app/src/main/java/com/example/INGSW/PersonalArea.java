@@ -49,10 +49,15 @@ public class PersonalArea extends Fragment {
         View root = inflater.inflate(R.layout.personal_area, container, false);
 
 
+
         logout = (Button) root.findViewById(R.id.Logout_button);
         final TextView nicknameView = (TextView) root.findViewById(R.id.personal_profile_nick);
         final TextView mailView = (TextView) root.findViewById(R.id.personal_profile_mail);
         final CircleImageView propicView = (CircleImageView) root.findViewById(R.id.personal_profile_image);
+
+        if(!((ToolBarActivity) getActivity()).isLoadUser()){
+            ((ToolBarActivity) getActivity()).setLoadUser(loadingUser());
+        }
 
 
 
@@ -96,6 +101,8 @@ public class PersonalArea extends Fragment {
 
         }
 
+
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,5 +117,14 @@ public class PersonalArea extends Fragment {
         return root;
     }
 
-
+    private boolean loadingUser(){
+        boolean load = false;
+        try {
+            ((ToolBarActivity) getActivity()).getUser();
+            return load = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return load;
+    }
 }

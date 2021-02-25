@@ -32,6 +32,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     private ProgressDialog progressDialog;
     private Map<String, Object> contaiinerItem = new HashMap<>();
     User user = null;
+    private boolean loadUser= true;
     UserController userController = new UserController();
 
     @Override
@@ -120,19 +121,27 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         System.out.println("Sono nella ricerca user");
         Object obj = null;
         FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (mFirebaseUser != null) {
-            obj = userController.getUserprofile(mFirebaseUser);
+        obj = userController.getUserprofile(mFirebaseUser);
+        if (obj != null) {
+            System.out.println("Trovato profilo proprietario");
+            contaiinerItem.put("userProfile", obj);
+        } else {
+            obj = userController.getAcct(this);
             if (obj != null) {
-                System.out.println("Trovato profilo proprietario");
-                contaiinerItem.put("userProfile", obj);
-            } else {
-                obj = userController.getAcct(this);
-                if (obj != null) {
-                    System.out.println("Trovato profilo Google");
-                    contaiinerItem.put("acct", obj);
-                }
+                System.out.println("Trovato profilo Google");
+                contaiinerItem.put("acct", obj);
             }
         }
+
+    }
+
+    public boolean isLoadUser() {
+        return loadUser;
+    }
+
+    public void setLoadUser(boolean loadUser) {
+        this.loadUser = loadUser;
     }
 }
 
+//account@gmail.com
