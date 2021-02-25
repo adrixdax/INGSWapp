@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayout"
-    android:layout_width="350dp"
+    android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:background="@drawable/rounded_list_obj"
-    >
+    android:background="@drawable/rounded_list_obj">
 
     <ImageView
         android:id="@+id/imageView"
@@ -25,7 +23,7 @@
         android:fontFamily="@font/poppins_bold"
         android:text="Avengers Endgame"
         android:textColor="#FFFFFF"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:maxWidth="300dp"
         android:maxHeight="28dp"/>
 
@@ -36,7 +34,7 @@
         android:text="TextView"
         android:layout_marginStart="110dp"
         android:layout_marginTop="40dp"
-        android:textSize="10dp"
+        android:textSize="10sp"
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="60dp"/>
@@ -48,7 +46,7 @@
         android:text="TextView"
         android:layout_marginStart="180dp"
         android:layout_marginTop="40dp"
-        android:textSize="10dp"
+        android:textSize="10sp"
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="50dp"/>
@@ -62,7 +60,7 @@
         android:layout_marginTop="55dp"
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
-        android:textSize="10dp"
+        android:textSize="10sp"
         android:maxHeight="17dp"/>
 
     <TextView
@@ -73,7 +71,7 @@
         android:layout_marginStart="110dp"
         android:layout_marginTop="70dp"
         android:textColor="#FFFFFF"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="250dp"
         android:maxHeight="66dp"/>
