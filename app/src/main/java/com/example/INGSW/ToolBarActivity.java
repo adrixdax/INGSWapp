@@ -115,9 +115,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         return contaiinerItem;
     }
 
-    public void setContaiinerItem(Map<String, Object> contaiinerItem) {
-        this.contaiinerItem = contaiinerItem;
-    }
 
     public void getUser() {
         System.out.println("Sono nella ricerca user");

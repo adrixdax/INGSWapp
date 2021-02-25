@@ -23,14 +23,14 @@ public class UserController {
     private User userprofile = null;
     private DatabaseReference reference;
     private String userID;
-    User tempuser = null;
+    User tempUser = null;
 
-    public User getTempuser() {
-        return tempuser;
+    public User getTempUser() {
+        return tempUser;
     }
 
-    public void setTempuser(User tempuser) {
-        this.tempuser = tempuser;
+    public void setTempUser(User tempuser) {
+        this.tempUser = tempuser;
     }
 
     public User getUserprofile(FirebaseUser mFirebaseUser) {
@@ -44,7 +44,7 @@ public class UserController {
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        setTempuser(profile = snapshot.getValue(User.class));
+                        setTempUser(snapshot.getValue(User.class));
 
                     }
 
@@ -54,7 +54,7 @@ public class UserController {
 
                     }
                 });
-                return getTempuser();
+                return getTempUser();
             }
             return null;
         } catch (Exception e) {
