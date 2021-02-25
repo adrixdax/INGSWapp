@@ -37,7 +37,10 @@ public class PersonalArea extends Fragment {
 
     GoogleSignInAccount acct;
     private User userProfile = null;
-    final String propic = "";
+    String propic = "";
+
+    String nickname;
+    String mail ;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -54,13 +57,14 @@ public class PersonalArea extends Fragment {
 
 
         if (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null) {
+
             userProfile = (User) ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile");
 
 
             if (userProfile != null) {
-                String nickname = userProfile.nickname;
-                String mail = userProfile.email;
-                String propic = userProfile.propic;
+                 nickname = userProfile.nickname;
+                 mail = userProfile.email;
+                 propic = userProfile.propic;
 
                 nicknameView.setText(nickname);
                 mailView.setText(mail);
@@ -73,13 +77,13 @@ public class PersonalArea extends Fragment {
 
 
             if (acct != null) {
-                String nickname = acct.getDisplayName();
-                String mail = acct.getEmail();
+                 nickname = acct.getDisplayName();
+                 mail = acct.getEmail();
                 try {
                     if (acct.getPhotoUrl() != null) {
-                        String propic = acct.getPhotoUrl().toString();
+                         propic = acct.getPhotoUrl().toString();
                     } else {
-                        String propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
+                         propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -95,11 +99,9 @@ public class PersonalArea extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if((GoogleSignInAccount) ((ToolBarActivity) getActivity()).getContaiinerItem().get("acct")!=null) {
-                    System.out.println("Ho trovato lo user Google--------------------------------");
+                if(((ToolBarActivity) getActivity()).getContaiinerItem().get("acct")!=null) {
                     ((ToolBarActivity) getActivity()).getContaiinerItem().remove("acct", acct);
                 }else{
-                    System.out.println("Ho trovato lo user proprietario----------------------------------");
                     ((ToolBarActivity) getActivity()).getContaiinerItem().remove("userProfile", userProfile);
                 }
                 FirebaseAuth.getInstance().signOut();
