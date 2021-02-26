@@ -27,12 +27,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonalArea extends Fragment {
 
     private Button logout;
+    private Button mylists;
+    private Button myfavs;
+    private Button suggested;
+    private Button seenfilms;
 
 
     GoogleSignInAccount acct;
@@ -48,9 +53,22 @@ public class PersonalArea extends Fragment {
 
         View root = inflater.inflate(R.layout.personal_area, container, false);
 
-
-
+        mylists = (Button)root.findViewById(R.id.mylists_button);
+        myfavs = (Button)root.findViewById(R.id.myfavs_button);
+        suggested = (Button)root.findViewById(R.id.friendsuggests_button);
+        seenfilms = (Button)root.findViewById(R.id.seenfilms_button);
         logout = (Button) root.findViewById(R.id.Logout_button);
+
+
+        PushDownAnim.setPushDownAnimTo(mylists,myfavs,suggested,seenfilms,logout)
+                .setDurationPush( PushDownAnim.DEFAULT_PUSH_DURATION )
+                .setDurationRelease( PushDownAnim.DEFAULT_RELEASE_DURATION )
+                .setInterpolatorPush( PushDownAnim.DEFAULT_INTERPOLATOR )
+                .setInterpolatorRelease( PushDownAnim.DEFAULT_INTERPOLATOR );
+
+
+
+
         final TextView nicknameView = (TextView) root.findViewById(R.id.personal_profile_nick);
         final TextView mailView = (TextView) root.findViewById(R.id.personal_profile_mail);
         final CircleImageView propicView = (CircleImageView) root.findViewById(R.id.personal_profile_image);

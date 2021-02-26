@@ -23,6 +23,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 /** Tale activity sostiene la schermata principale dell'app. ovvero la prima schermata che si aprirà difronte all' utente all' apertura dell'app */
 
@@ -64,8 +65,15 @@ public class LoginScreen extends AppCompatActivity{
         });
 
         GoogleLogin = findViewById(R.id.sign_in_button);
-
         LoginButton = findViewById(R.id.LoginButton);
+
+
+        PushDownAnim.setPushDownAnimTo(GoogleLogin,LoginButton)
+                .setDurationPush( PushDownAnim.DEFAULT_PUSH_DURATION )
+                .setDurationRelease( PushDownAnim.DEFAULT_RELEASE_DURATION )
+                .setInterpolatorPush( PushDownAnim.DEFAULT_INTERPOLATOR )
+                .setInterpolatorRelease( PushDownAnim.DEFAULT_INTERPOLATOR );
+
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

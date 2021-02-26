@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Controllers.RegistrationController;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 
 import java.io.IOException;
@@ -50,14 +51,14 @@ public class AvatarScreen extends AppCompatActivity implements View.OnClickListe
         widow = (CircleImageView) findViewById(R.id.profile_image5);
         wonderwoman = (CircleImageView) findViewById(R.id.profile_image6);
 
+        PushDownAnim.setPushDownAnimTo(ironman,spiderman,gamora,thanos,widow,wonderwoman);
+
         ironman.setOnClickListener(this);
         spiderman.setOnClickListener(this);
         gamora.setOnClickListener(this);
         thanos.setOnClickListener(this);
         widow.setOnClickListener(this);
         wonderwoman.setOnClickListener(this);
-
-
 
         Glide.with(this).load(urlIron).into(ironman);
         Glide.with(this).load(urlSpider).into(spiderman);

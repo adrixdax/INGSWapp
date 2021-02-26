@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Controllers.RegistrationController;
 import com.google.firebase.auth.FirebaseAuth;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -62,6 +63,8 @@ public class RegistrationScreen extends AppCompatActivity {
         RegistrationController registrationController = new RegistrationController(this,propic);
 
         registerUser  = (Button) findViewById(R.id.registerUserButton);
+        PushDownAnim.setPushDownAnimTo(registerUser,ProfileImage);
+
         registerUser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 registrationController.registerUser(editTextMail,editTextPassword,editTextNickName,propic);

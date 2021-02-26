@@ -29,6 +29,7 @@ import com.example.INGSW.NotifyPopUpDialog;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,17 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
+
+        mostSeen = root.findViewById(R.id.mostSeen);
+        mostReviewed = root.findViewById(R.id.mostReviewed);
+        tooSee = root.findViewById(R.id.toSee);
+        userPrefered = root.findViewById(R.id.userPrefered);
+
+        PushDownAnim.setPushDownAnimTo(mostSeen,mostReviewed,tooSee,userPrefered)
+                .setDurationPush( PushDownAnim.DEFAULT_PUSH_DURATION )
+                .setDurationRelease( PushDownAnim.DEFAULT_RELEASE_DURATION )
+                .setInterpolatorPush( PushDownAnim.DEFAULT_INTERPOLATOR )
+                .setInterpolatorRelease( PushDownAnim.DEFAULT_INTERPOLATOR );
 
 
         film = ((ToolBarActivity)getActivity()).getListOfFilm();

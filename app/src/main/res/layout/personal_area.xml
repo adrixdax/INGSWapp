@@ -8,7 +8,7 @@
     tools:context=".PersonalArea">
 
     <Button
-        android:id="@+id/toSee3"
+        android:id="@+id/myfavs_button"
         android:layout_width="362dp"
         android:layout_height="62dp"
         android:layout_marginTop="28dp"
@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toSee2" />
+        app:layout_constraintTop_toBottomOf="@+id/mylists_button" />
 
     <Button
         android:id="@+id/toSee4"
@@ -40,7 +40,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toSee6"
+        app:layout_constraintTop_toBottomOf="@+id/seenfilms_button"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
@@ -61,14 +61,14 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/toSee2"
+        app:layout_constraintBottom_toTopOf="@+id/mylists_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/personal_profile_image"
         app:layout_constraintTop_toBottomOf="@+id/personal_profile_mail"
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/toSee6"
+        android:id="@+id/seenfilms_button"
         android:layout_width="362dp"
         android:layout_height="62dp"
         android:layout_marginTop="28dp"
@@ -84,11 +84,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toSee5"
+        app:layout_constraintTop_toBottomOf="@+id/friendsuggests_button"
         app:layout_constraintVertical_bias="0.014" />
 
     <Button
-        android:id="@+id/toSee5"
+        android:id="@+id/friendsuggests_button"
         android:layout_width="362dp"
         android:layout_height="62dp"
         android:layout_marginTop="20dp"
@@ -102,10 +102,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toSee3" />
+        app:layout_constraintTop_toBottomOf="@+id/myfavs_button" />
 
     <Button
-        android:id="@+id/toSee2"
+        android:id="@+id/mylists_button"
         android:layout_width="362dp"
         android:layout_height="62dp"
         android:layout_marginTop="168dp"
