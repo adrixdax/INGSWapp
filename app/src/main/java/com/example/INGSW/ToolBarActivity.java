@@ -1,13 +1,17 @@
 package com.example.INGSW;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.LruCache;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -40,7 +44,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationscreen);
         getUser();
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         loadFragment(new HomepageScreen(), "1");
 
         BottomNavigationView navigationView = findViewById(R.id.nav_view);
@@ -142,6 +146,32 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     public void setLoadUser(boolean loadUser) {
         this.loadUser = loadUser;
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
+        String tag2= "2";
+        String tag3= "3";
+        if( tag2.equals(currentFragment.getTag())  || tag3.equals(currentFragment.getTag()) ){
+
+            Fragment fragment = new HomepageScreen();
+            String tag = "1";
+            fm.beginTransaction().replace(R.id.nav_host_fragment,fragment,tag).commit();
+        }else{
+            new AlertDialog.Builder(this)
+                    .setTitle("Vuoi Uscire?")
+                    .setMessage("Noi siamo quello che scegliamo di essere. Ora scegli!\n\n                                     (Goblin Spiderman)")
+                    //Dopotutto, domani è un altro giorno
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            ToolBarActivity.super.onBackPressed();
+                        }
+                    }).create().show();
+        }
     }
 }
 

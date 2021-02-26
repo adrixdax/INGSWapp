@@ -12,4 +12,15 @@
 	<color name="colorPrimary">@color/Customgrey</color>
 	<color name="colorPrimaryDark">@color/Customgrey</color>
 	<color name="colorAccent">#1999CE</color>
+
+	<style name="MyCustomTheme" parent="@android:style/Theme.Panel">
+		<item name="android:windowAnimationStyle">@style/MyAnimation.Window</item>
+
+	</style>
+
+	<style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
+		<item name="android:windowEnterAnimation">@anim/anim_in</item>
+		<item name="android:windowExitAnimation">@anim/anim_out</item>
+	</style>
+
 </resources>

@@ -76,7 +76,7 @@
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/text"
+        android:text="Film Visti"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"

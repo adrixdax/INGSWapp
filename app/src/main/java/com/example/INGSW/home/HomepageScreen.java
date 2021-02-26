@@ -1,6 +1,8 @@
 package com.example.INGSW.home;
 
 import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +25,7 @@ import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.NotifyPopUp;
+import com.example.INGSW.NotifyPopUpDialog;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -41,7 +45,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
     Button mostSeen,mostReviewed,tooSee,userPrefered;
     ImageButton bell;
     FilmTestController con = new FilmTestController();
-    Fragment fragment;
+    DialogFragment fragment;
 
     private List<ListOfFilm> film = new ArrayList<>();
     /*
@@ -88,9 +92,13 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                     System.out.println("Click on bell");
-                    fragment = new NotifyPopUp();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                NotifyPopUpDialog pop= NotifyPopUpDialog.newInstance();
+                pop.show(fm,"4");
+                    /*
+                    fragment = new NotifyPopUpDialog();
                     FragmentManager fm = getActivity().getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.nav_host_fragment,fragment).commit();
+                    fm.beginTransaction().replace(R.id.nav_host_fragment,fragment).commit();*/
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
