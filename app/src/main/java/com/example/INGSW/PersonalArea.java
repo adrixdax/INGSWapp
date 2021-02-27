@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.INGSW.Controllers.RegistrationController;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -31,13 +34,15 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class PersonalArea extends Fragment {
+public class PersonalArea extends Fragment implements View.OnClickListener {
 
     private Button logout;
     private Button mylists;
     private Button myfavs;
     private Button suggested;
     private Button seenfilms;
+
+
 
 
     GoogleSignInAccount acct;
@@ -53,11 +58,18 @@ public class PersonalArea extends Fragment {
 
         View root = inflater.inflate(R.layout.personal_area, container, false);
 
+
         mylists = (Button)root.findViewById(R.id.mylists_button);
         myfavs = (Button)root.findViewById(R.id.myfavs_button);
         suggested = (Button)root.findViewById(R.id.friendsuggests_button);
         seenfilms = (Button)root.findViewById(R.id.seenfilms_button);
         logout = (Button) root.findViewById(R.id.Logout_button);
+
+        mylists.setOnClickListener(this);
+        myfavs.setOnClickListener(this);
+        suggested.setOnClickListener(this);
+        seenfilms.setOnClickListener(this);
+
 
 
         PushDownAnim.setPushDownAnimTo(mylists,myfavs,suggested,seenfilms,logout)
@@ -124,6 +136,12 @@ public class PersonalArea extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                SharedPreferences preferences = getActivity().getSharedPreferences("access", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor =  preferences.edit();
+                editor.putString("remember","false");
+                editor.apply();
+
                 ((ToolBarActivity) getActivity()).getContaiinerItem().clear();
                 FirebaseAuth.getInstance().signOut();
                 Intent logoutIntent = new Intent(PersonalArea.this.getActivity(), LoginScreen.class);
@@ -133,6 +151,44 @@ public class PersonalArea extends Fragment {
         });
 
         return root;
+    }
+
+    @Override
+    public void onClick(View v) {
+        Fragment nextFragment;
+        FragmentTransaction transaction;
+        switch (v.getId()){
+            case R.id.mylists_button :
+                nextFragment = new MyLists();
+                transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "6");
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            case R.id.myfavs_button :
+                nextFragment = new MyFavs();
+                transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            case R.id.friendsuggests_button :
+                nextFragment = new SuggestedFIlms();
+                transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "8");
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            case R.id.seenfilms_button :
+                nextFragment = new SeenFilms();
+                transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "9");
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+
+
+        }
     }
 
     private boolean loadingUser(){

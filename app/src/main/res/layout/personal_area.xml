@@ -135,7 +135,7 @@
         app:layout_constraintHorizontal_bias="0.354"
         app:layout_constraintStart_toEndOf="@+id/personal_profile_image"
         app:layout_constraintTop_toBottomOf="@+id/personal_profile_nick"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintVertical_bias="0.012" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/personal_profile_image"
@@ -154,8 +154,8 @@
 
     <TextView
         android:id="@+id/personal_profile_nick"
-        android:layout_width="239dp"
-        android:layout_height="32dp"
+        android:layout_width="238dp"
+        android:layout_height="39dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="56dp"
         android:text="@string/nickname"

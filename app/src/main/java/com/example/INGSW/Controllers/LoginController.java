@@ -1,7 +1,9 @@
 package com.example.INGSW.Controllers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -27,7 +29,6 @@ public class LoginController{
 
     public LoginController(Activity current){
         this.activity = current;
-
         progressBar = (ProgressBar)activity.findViewById(R.id.progressBar);
     }
 
@@ -62,8 +63,12 @@ public class LoginController{
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    progressBar.setVisibility(View.GONE);
+                    SharedPreferences preferences =   LoginController.this.activity.getSharedPreferences("access",Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor =  preferences.edit();
+                    editor.putString("remember","true");
+                    editor.apply();
 
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(loginscreen,"LOGIN EFFETTUATO",Toast.LENGTH_LONG).show();
                     loginscreen.startActivity(new Intent(loginscreen, ToolBarActivity.class));
                     //manda al profilo utente/homepage dell' app

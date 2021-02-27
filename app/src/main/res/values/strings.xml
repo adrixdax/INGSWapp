@@ -29,4 +29,8 @@
     <string name="consigliati_dagli_utenti">CONSIGLIATI DAGLI UTENTI</string>
     <string name="le_mie_liste">LE MIE LISTE</string>
     <string name="nickname">NICKNAME</string>
+    <string name="preferiti">PREFERITI</string>
+    <string name="ultime_uscite">Ultime uscite</string>
+    <string name="film_che_hai_visto">FILM CHE HAI VISTO</string>
+    <string name="ti_hanno_consigliato">TI HANNO CONSIGLIATO...</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.INGSW;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -46,11 +47,14 @@ public class LoginScreen extends AppCompatActivity{
     SignInButton GoogleLogin;
     GoogleSignInClient mGoogleSignInClient;
 
+
     /**Metodo che alla creazione dell' activity prepara le nuove variabili e riconosce le componenti**/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginscreen);
+
+
 
         loginController = new LoginController(this);
 
@@ -73,6 +77,14 @@ public class LoginScreen extends AppCompatActivity{
                 .setDurationRelease( PushDownAnim.DEFAULT_RELEASE_DURATION )
                 .setInterpolatorPush( PushDownAnim.DEFAULT_INTERPOLATOR )
                 .setInterpolatorRelease( PushDownAnim.DEFAULT_INTERPOLATOR );
+
+        SharedPreferences preferences = getSharedPreferences("access",MODE_PRIVATE);
+        String access = preferences.getString("remember","");
+
+        if(access.equals("true")){
+            Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
+            startActivity(intent);
+        }
 
         LoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +178,11 @@ public class LoginScreen extends AppCompatActivity{
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             // Signed in successfully, show authenticated UI.
+            SharedPreferences preferences = getSharedPreferences("access",MODE_PRIVATE);
+            SharedPreferences.Editor editor =  preferences.edit();
+            editor.putString("remember","true");
+            editor.apply();
+
             Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
             startActivity(intent);
             finish();
