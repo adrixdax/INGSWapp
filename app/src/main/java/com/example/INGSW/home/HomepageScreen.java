@@ -1,8 +1,5 @@
 package com.example.INGSW.home;
 
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.Films.ListOfFilm;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.Controllers.NotifyTestController;
-import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.NotifyPopUpDialog;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
@@ -115,7 +109,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film);
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film,getContext(),this);
         adapter.setImageListFilm(true);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);

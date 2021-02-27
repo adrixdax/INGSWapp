@@ -1,5 +1,9 @@
 package com.example.INGSW.Component.Films;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +13,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.FilmDetails;
 import com.example.INGSW.R;
+import com.example.INGSW.ToolBarActivity;
 
 import java.util.List;
 
@@ -22,8 +30,13 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
     private final List<ListOfFilm> listOfData;
     private boolean imageListFilm = false;
 
-    public ListOfFilmAdapter(List<ListOfFilm> listOfData) {
+    private Context mContext;
+    private Fragment startFragment;
+
+    public ListOfFilmAdapter(List<ListOfFilm> listOfData, Context mContext, Fragment startFragment) {
         this.listOfData = listOfData;
+        this.mContext = mContext;
+        this.startFragment = startFragment;
     }
 
     @NonNull
@@ -42,25 +55,40 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ListOfFilmAdapter.ViewHolder holder, int position) {
         final ListOfFilm listOfFilm = listOfData.get(position);
-        if(isImageListFilm()) {
+        if (isImageListFilm()) {
             with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.imageView));
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "click on item: ", Toast.LENGTH_LONG).show();
+                    FilmDetails nextFragment = new FilmDetails( listOfData.get(holder.getAdapterPosition()));
+                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             });
-        }else{
-            with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.imageView));
+        } else {
+            with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
+                    .into((ImageView) holder.itemView.findViewById(R.id.imageView));
             holder.textViewTitle.setText(listOfData.get(position).getFilm_Title());
             holder.textViewRelaseDate.setText(listOfData.get(position).getRelease_Date());
             holder.textViewTime.setText(String.valueOf(listOfData.get(position).getRuntime()));
-            holder.textViewCategories.setText(listOfData.get(position).getGenres()[0]);
+            String genere="";
+            for(int i = 0; i<listOfData.get(position).getGenres().length; i++){
+                genere =listOfData.get(position).getGenres()[i]+" - ";
+            }
+            genere.substring(0,genere.length()-3);
+            holder.textViewCategories.setText(genere);
             holder.textViewPlot.setText(listOfData.get(position).getPlot());
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
+                    FilmDetails nextFragment = new FilmDetails( listOfData.get(holder.getAdapterPosition()));
+                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             });
         }
@@ -80,12 +108,13 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         public TextView textViewTime;
         public TextView textViewCategories;
         public TextView textViewPlot;
+        private ListOfFilm film;
 
         public ViewHolder(View itemView, boolean image) {
             super(itemView);
-            if(image) {
+            if (image) {
                 this.imageView = itemView.findViewById(R.id.imageView);
-            }else {
+            } else {
                 this.imageView = itemView.findViewById(R.id.imageView);
                 this.textViewTitle = itemView.findViewById(R.id.textViewTitle);
                 this.textViewRelaseDate = itemView.findViewById(R.id.textViewRelaseDate);

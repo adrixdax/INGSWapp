@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -58,6 +59,8 @@ public class SearchFilmScreen extends Fragment {
                     String film = filmTestController.getNameOfFilm();
                     System.out.println("Il film che stai cercando -> "+ film);
 
+
+
                     String latestJson = (String) filmTestController.execute(new String("search")).get();
 
                     System.out.println("I Film trovati -> "+ latestJson);
@@ -67,7 +70,7 @@ public class SearchFilmScreen extends Fragment {
 
                     LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
                     recyclerView = root.findViewById(R.id.recyclerView);
-                    ListOfFilmAdapter adapter = new ListOfFilmAdapter(filmInSearch);
+                    ListOfFilmAdapter adapter = new ListOfFilmAdapter(filmInSearch,getContext(),((ToolBarActivity) getActivity()).activeFragment );
                     recyclerView.setHasFixedSize(false);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
