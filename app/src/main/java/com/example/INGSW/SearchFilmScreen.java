@@ -50,7 +50,7 @@ public class SearchFilmScreen extends Fragment {
                 InputMethodManager imm = (InputMethodManager) requireActivity()
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                ((ToolBarActivity)getActivity()).showProgressBar();
+                
                 Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
                 try {
 
@@ -71,15 +71,13 @@ public class SearchFilmScreen extends Fragment {
                     LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
                     recyclerView = root.findViewById(R.id.recyclerView);
                     ListOfFilmAdapter adapter = new ListOfFilmAdapter(filmInSearch,getContext(),((ToolBarActivity) getActivity()).activeFragment );
+                    adapter.setCss(SearchFilmScreen.class);
                     recyclerView.setHasFixedSize(false);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
                     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                             layoutManager.getOrientation());
                     recyclerView.addItemDecoration(dividerItemDecoration);
-
-
-                    ((ToolBarActivity)getActivity()).stopProgressBar();
 
                 } catch (InterruptedException | ExecutionException | JsonProcessingException e) {
                     e.printStackTrace();

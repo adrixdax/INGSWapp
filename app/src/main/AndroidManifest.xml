@@ -22,8 +22,9 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".AvatarScreen" />
         <activity android:name=".RegistrationScreen" />
-        <activity android:name=".ToolBarActivity"/>
-        <activity android:name=".LoginScreen"
+
+        <activity android:name=".LoginScreen"/>
+        <activity android:name=".ToolBarActivity">
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -102,7 +102,7 @@
     <TextView
         android:id="@+id/textViewCategories"
         android:layout_width="wrap_content"
-        android:layout_height="19dp"
+        android:layout_height="25dp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/poppins_bold"
         android:maxHeight="17dp"

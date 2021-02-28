@@ -73,12 +73,13 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
                 .setInterpolatorRelease( PushDownAnim.DEFAULT_INTERPOLATOR );
 
 
-        film = ((ToolBarActivity)getActivity()).getListOfFilm();
+        film = ((ToolBarActivity)getActivity()).getConteinerList().get("HomepageList");
 
         if(film ==null) {
             String latestJson = "";
             try {
                 latestJson = (String) con.execute(new String("latest")).get();
+                con.isCancelled();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
@@ -88,7 +89,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
 
             try {
                 film = (List<ListOfFilm>) getJsonToDecode(latestJson,ListOfFilm.class);
-                ((ToolBarActivity)getActivity()).setListOfFilm(film);
+                ((ToolBarActivity)getActivity()).getConteinerList().put("HomepageList",film);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -110,7 +111,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(film,getContext(),this);
-        adapter.setImageListFilm(true);
+        adapter.setCss(HomepageScreen.class);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);

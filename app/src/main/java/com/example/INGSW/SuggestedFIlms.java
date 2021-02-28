@@ -3,10 +3,21 @@ package com.example.INGSW;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.ListOfFilmAdapter;
+import com.example.INGSW.Controllers.FilmTestController;
+
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,11 +66,51 @@ public class SuggestedFIlms extends Fragment {
         }
     }
 */
+
+
+    private List<ListOfFilm> film = null;
+    private FilmTestController con = new FilmTestController();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_suggested_films, container, false);
+
+
+
+        film= ((ToolBarActivity)getActivity()).getConteinerList().get("SuggestedFIlms");
+
+        if(film==null) {
+            String latestJson = "";
+            try {
+                latestJson = (String) con.execute(new String("latest")).get();
+                con.isCancelled();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(latestJson);
+
+
+            try {
+                film = (List<ListOfFilm>) getJsonToDecode(latestJson, ListOfFilm.class);
+                ((ToolBarActivity) getActivity()).getConteinerList().put("SuggestedFIlms", film);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film,getContext(),this);
+        adapter.setCss(SuggestedFIlms.class);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+
         return root;
     }
 }

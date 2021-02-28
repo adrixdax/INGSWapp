@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.INGSW.Component.Films.ListOfFilm;
+
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SeenFilms #newInstance} factory method to
@@ -55,6 +59,10 @@ public class SeenFilms extends Fragment {
         }
     }
 */
+    private List<ListOfFilm> listofFilm;
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

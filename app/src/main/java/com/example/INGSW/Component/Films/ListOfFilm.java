@@ -59,8 +59,8 @@ public class ListOfFilm {
         this.film_Title = title;
     }
 
-    public ListOfFilm(List<ListOfFilm> listOfFilm){
-        listOfFilm=listOfFilm;
+    public ListOfFilm(List<ListOfFilm> listOfFilm) {
+        listOfFilm = listOfFilm;
     }
 
 

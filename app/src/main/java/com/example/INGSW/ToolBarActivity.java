@@ -32,7 +32,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
 
     Fragment activeFragment;
-    private List<ListOfFilm> listFilm = null;
+
+    Map<String,List<ListOfFilm>> conteinerList= new HashMap<>();
     private ProgressDialog progressDialog;
     private Map<String, Object> contaiinerItem = new HashMap<>();
     User user = null;
@@ -94,26 +95,10 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         return loadFragment(fragment, tag);
     }
 
-    public void showProgressBar() {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.show();
-        progressDialog.setContentView(R.layout.custom_dialog);
-        progressDialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent
-        );
+    public Map<String, List<ListOfFilm>> getConteinerList() {
+        return conteinerList;
     }
 
-    public void stopProgressBar() {
-        progressDialog.dismiss();
-    }
-
-    public List<ListOfFilm> getListOfFilm() {
-        return listFilm;
-    }
-
-    public void setListOfFilm(List<ListOfFilm> tempList) {
-        listFilm = tempList;
-    }
 
     public Map<String, Object> getContaiinerItem() {
         return contaiinerItem;
@@ -154,7 +139,9 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
         String tag2= "2";
         String tag3= "3";
-        if( tag2.equals(currentFragment.getTag())  || tag3.equals(currentFragment.getTag()) ){
+        if( fm.getBackStackEntryCount()>0){
+            fm.popBackStack();
+        }else if( tag2.equals(currentFragment.getTag())  || tag3.equals(currentFragment.getTag()) ){
 
             Fragment fragment = new HomepageScreen();
             String tag = "1";
