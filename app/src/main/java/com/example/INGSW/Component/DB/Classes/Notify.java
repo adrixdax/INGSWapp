@@ -29,6 +29,10 @@ public class Notify {
 
     }
 
+    public Notify(@JsonProperty("type") String type){
+        this.type=type;
+    }
+
 
         public int getId_notify() {
         return id_notify;

@@ -183,9 +183,6 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
                 break;
             case R.id.seenfilms_button:
 
-
-
-
                 nextFragment = new SeenFilms();
                 transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "9");

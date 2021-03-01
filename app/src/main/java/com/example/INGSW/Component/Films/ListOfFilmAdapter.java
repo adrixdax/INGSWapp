@@ -53,7 +53,6 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         } else if (css.getCanonicalName().equals(SearchFilmScreen.class.getCanonicalName())) {
             listItem = layoutInflater.inflate(R.layout.list_of_film_in_search_screen, parent, false);
         } else {
-            System.out.println("Ma qua ci entri bucchino??");
             listItem = layoutInflater.inflate(R.layout.list_suggest_film, parent, false);
         }
         return new ViewHolder(listItem, css);
@@ -86,9 +85,9 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             holder.textViewTime.setText(String.valueOf(listOfData.get(position).getRuntime()));
             String genere = "";
             for (int i = 0; i < listOfData.get(position).getGenres().length; i++) {
-                genere = listOfData.get(position).getGenres()[i] + " - ";
+                genere = genere + listOfData.get(position).getGenres()[i] + " - ";
             }
-            genere.substring(0, genere.length() - 3);
+            genere = genere.substring(0, genere.length() - 3);
             holder.textViewCategories.setText(genere);
             holder.textViewPlot.setText(listOfData.get(position).getPlot());
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
@@ -103,14 +102,12 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 }
             });
         } else {
-            System.out.println("Cerco di costruire sta merda porco zinco");
-            with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
-                    .into((ImageView) holder.itemView.findViewById(R.id.imageView));
-            holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
+                with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
+                        .into((ImageView) holder.itemView.findViewById(R.id.imageView));
+                holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
                     FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
@@ -137,7 +134,6 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
-        public ImageView imageView2;
         public RelativeLayout relativeLayout;
         public TextView textViewTitle;
         public TextView textViewRelaseDate;
@@ -145,7 +141,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         public TextView textViewCategories;
         public TextView textViewPlot;
         public TextView textViewUser;
-        public TextView textViewUser2;
+
 
         private ListOfFilm film;
 

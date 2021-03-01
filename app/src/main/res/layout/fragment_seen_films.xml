@@ -8,7 +8,7 @@
     tools:context=".SeenFilms" >
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/recyclerView"
         android:layout_width="411dp"
         android:layout_height="536dp"
         android:layout_marginBottom="48dp"

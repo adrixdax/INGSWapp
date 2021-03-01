@@ -35,9 +35,9 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
 
 
     ImageView imageView;
-    TextView name,email,id;
+    TextView name, email, id;
     GoogleSignInAccount mGoogleSIgn;
-    Button mostSeen,mostReviewed,tooSee,userPrefered;
+    Button mostSeen, mostReviewed, tooSee, userPrefered;
     ImageButton bell;
     FilmTestController con = new FilmTestController();
     DialogFragment fragment;
@@ -66,16 +66,16 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
         tooSee = root.findViewById(R.id.toSee);
         userPrefered = root.findViewById(R.id.userPrefered);
 
-        PushDownAnim.setPushDownAnimTo(mostSeen,mostReviewed,tooSee,userPrefered)
-                .setDurationPush( PushDownAnim.DEFAULT_PUSH_DURATION )
-                .setDurationRelease( PushDownAnim.DEFAULT_RELEASE_DURATION )
-                .setInterpolatorPush( PushDownAnim.DEFAULT_INTERPOLATOR )
-                .setInterpolatorRelease( PushDownAnim.DEFAULT_INTERPOLATOR );
+        PushDownAnim.setPushDownAnimTo(mostSeen, mostReviewed, tooSee, userPrefered)
+                .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
+                .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
+                .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
+                .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
 
 
-        film = ((ToolBarActivity)getActivity()).getConteinerList().get("HomepageList");
+        film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList");
 
-        if(film ==null) {
+        if (film == null) {
             String latestJson = "";
             try {
                 latestJson = (String) con.execute(new String("latest")).get();
@@ -88,8 +88,10 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
 
 
             try {
-                film = (List<ListOfFilm>) getJsonToDecode(latestJson,ListOfFilm.class);
-                ((ToolBarActivity)getActivity()).getConteinerList().put("HomepageList",film);
+                if (!latestJson.isEmpty()) {
+                    film = (List<ListOfFilm>) getJsonToDecode(latestJson, ListOfFilm.class);
+                    ((ToolBarActivity) getActivity()).getConteinerList().put("HomepageList", film);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -98,10 +100,10 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
         bell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    System.out.println("Click on bell");
+                System.out.println("Click on bell");
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                NotifyPopUpDialog pop= NotifyPopUpDialog.newInstance();
-                pop.show(fm,"4");
+                NotifyPopUpDialog pop = NotifyPopUpDialog.newInstance();
+                pop.show(fm, "4");
                     /*
                     fragment = new NotifyPopUpDialog();
                     FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -110,7 +112,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film,getContext(),this);
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film, getContext(), this);
         adapter.setCss(HomepageScreen.class);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);

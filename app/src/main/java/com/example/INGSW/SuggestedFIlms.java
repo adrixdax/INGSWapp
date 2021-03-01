@@ -3,6 +3,8 @@ package com.example.INGSW;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -78,10 +80,9 @@ public class SuggestedFIlms extends Fragment {
         View root = inflater.inflate(R.layout.fragment_suggested_films, container, false);
 
 
+        film = ((ToolBarActivity) getActivity()).getConteinerList().get("SuggestedFIlms");
 
-        film= ((ToolBarActivity)getActivity()).getConteinerList().get("SuggestedFIlms");
-
-        if(film==null) {
+        if (film == null) {
             String latestJson = "";
             try {
                 latestJson = (String) con.execute(new String("latest")).get();
@@ -102,12 +103,11 @@ public class SuggestedFIlms extends Fragment {
         }
 
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film,getContext(),this);
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film, getContext(), this);
         adapter.setCss(SuggestedFIlms.class);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(false);
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setAdapter(adapter);
 
 

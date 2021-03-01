@@ -3,14 +3,21 @@ package com.example.INGSW;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.ListOfFilmAdapter;
+import com.example.INGSW.Controllers.FilmTestController;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,12 +69,20 @@ public class SeenFilms extends Fragment {
     private List<ListOfFilm> listofFilm;
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_seen_films, container, false);
+
+
+
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(listofFilm, getContext(), this);
+        adapter.setCss(SuggestedFIlms.class);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
+        recyclerView.setAdapter(adapter);
 
         return root;
     }

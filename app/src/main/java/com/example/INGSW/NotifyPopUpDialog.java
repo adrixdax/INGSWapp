@@ -62,17 +62,18 @@ public class NotifyPopUpDialog extends DialogFragment {
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.notifypopup);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recycler = new RecyclerView(requireContext());
+        recycler = dialog.findViewById(R.id.recyclerViewNotify);
+        List<Notify> notify = new ArrayList<>();
+        Notify not = new Notify("Prova");
+       notify.add(not);
+        NotifyAdapter adapter = new NotifyAdapter(notify);
+        recycler.setAdapter(adapter);
+        recycler.setHasFixedSize(false);
+        recycler.setLayoutManager(layoutManager);
 
         return dialog;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (getShowsDialog()) {
-            //getDialog().getWindow().setLayout( ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        }
-    }
 }

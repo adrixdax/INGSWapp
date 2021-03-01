@@ -18,6 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.concurrent.ExecutionException;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegistrationController {
@@ -82,6 +84,19 @@ public class RegistrationController {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(regActivity, "Utente registrato correttamente", Toast.LENGTH_LONG).show();
+
+                                //Genera Tabelle Utente
+                                UserServerController usc = new UserServerController();
+                                usc.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                try {
+                                    System.out.println(usc.execute(new String("registration")).get());
+                                } catch (ExecutionException e) {
+                                    e.printStackTrace();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                usc.isCancelled();
+
                                 regActivity.startActivity(new Intent(regActivity, ToolBarActivity.class));
                             }
                         }).addOnFailureListener(regActivity, new OnFailureListener() {

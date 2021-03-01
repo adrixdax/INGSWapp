@@ -64,9 +64,9 @@ public class FilmDetails extends Fragment {
         releaseDate.setText(film.getRelease_Date());
         String genere="";
         for(int i = 0; i<film.getGenres().length; i++){
-            genere =film.getGenres()[i]+" - ";
+            genere = genere + film.getGenres()[i]+" - ";
         }
-        genere.substring(0,genere.length()-3);
+        genere = genere.substring(0,genere.length()-3);
 
         genres.setText(genere);
         time.setText(String.valueOf(film.getRuntime()));
