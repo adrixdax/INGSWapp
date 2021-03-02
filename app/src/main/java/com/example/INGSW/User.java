@@ -4,7 +4,9 @@ public class User {
 
     public String nickname, email,propic;
 
-    public User(){}
+    public User(){
+
+    }
 
     public User(String nickname, String email,String propic){
         this.nickname = nickname;

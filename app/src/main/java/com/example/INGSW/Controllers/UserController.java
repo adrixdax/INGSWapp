@@ -2,22 +2,12 @@ package com.example.INGSW.Controllers;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
-
-import com.bumptech.glide.Glide;
-import com.example.INGSW.PersonalArea;
-import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.User;
-import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 public class UserController {
@@ -39,23 +29,13 @@ public class UserController {
         try {
             if (mFirebaseUser != null) {
                 System.out.println("Cerco profilo proprietario");
-                reference = FirebaseDatabase.getInstance().getReference("Users");
                 userID = mFirebaseUser.getUid();
-                reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    User profile = null;
-
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        setTempUser(snapshot.getValue(User.class));
-
-                    }
-
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                tempUser = new User();
+                FirebaseDatabase.getInstance().getReference(userID).child("nickname").setValue(tempUser);
+                FirebaseDatabase.getInstance().getReference(userID).child("email").setValue(tempUser);
+                FirebaseDatabase.getInstance().getReference(userID).child("propick").setValue(tempUser);
+                setTempUser(tempUser);
+                System.out.println(tempUser.email+" "+tempUser.propic+" "+tempUser.nickname);
                 return getTempUser();
             }
             return null;
