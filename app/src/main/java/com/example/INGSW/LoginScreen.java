@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.INGSW.Controllers.LoginController;
+import com.example.INGSW.Controllers.UserServerController;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -25,6 +26,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.thekhaeng.pushdownanim.PushDownAnim;
+
+import java.util.concurrent.ExecutionException;
 
 /** Tale activity sostiene la schermata principale dell'app. ovvero la prima schermata che si aprirà difronte all' utente all' apertura dell'app */
 
@@ -183,6 +186,12 @@ public class LoginScreen extends AppCompatActivity{
             editor.putString("remember","true");
             editor.apply();
 
+            UserServerController usc = new UserServerController();
+            usc.setUserId(account.getId());
+            String req = (String) usc.execute(new String("google")).get();
+
+
+
             Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
             startActivity(intent);
             finish();
@@ -191,6 +200,10 @@ public class LoginScreen extends AppCompatActivity{
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("ERROR", "signInResult:failed code=" + e.getStatusCode());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
         }
     }
 

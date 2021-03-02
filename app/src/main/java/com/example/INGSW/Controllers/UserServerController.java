@@ -35,12 +35,33 @@ public class UserServerController extends AsyncTask {
         return "";
     }
 
+    private Object getRegistrationUserFromGoogle() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&google=" + UserId);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "registration").post(body).build();
+
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
             switch (objects[0].toString()) {
                 case "registration":
                     return getRegistrationUser();
+                case "google":
+                    return getRegistrationUserFromGoogle();
+
 
             }
         }
