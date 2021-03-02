@@ -13,7 +13,7 @@ import okhttp3.Response;
 
 public class UserServerController extends AsyncTask {
 
-    String url = "http://192.168.1.210:8080/";
+    String url = "http://192.168.1.13:8080/";
     String UserId = "";
 
     private Object getRegistrationUser() {
@@ -21,13 +21,13 @@ public class UserServerController extends AsyncTask {
 
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&registration=" + UserId);
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url + "user").post(body).build();
+        Request request = new Request.Builder().url(url + "registration").post(body).build();
         System.out.println("----------------------------------------------------------------------------"+request.toString() + UserId);
 
         try {
             try (Response response = client.newCall(request).execute()) {
-
-                return Objects.requireNonNull(response.body()).string();
+                System.out.println(response.isSuccessful());
+                return response.isSuccessful() ?  Objects.requireNonNull(response.body()).string() : "";
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,10 +38,8 @@ public class UserServerController extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
-            switch (objects[0].toString()) {
-                case "registration":
-                    return getRegistrationUser();
-
+            if ("registration".equals(objects[0].toString())) {
+                return getRegistrationUser();
             }
         }
         return new String("Helooo");
