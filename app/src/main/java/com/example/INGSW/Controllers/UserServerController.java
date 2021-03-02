@@ -16,13 +16,13 @@ public class UserServerController extends AsyncTask {
     String url = "http://192.168.1.210:8080/";
     String UserId = "";
 
+
     private Object getRegistrationUser() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&registration=" + UserId);
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url + "user").post(body).build();
-        System.out.println("----------------------------------------------------------------------------"+request.toString() + UserId);
+        Request request = new Request.Builder().url(url + "registration").post(body).build();
 
         try {
             try (Response response = client.newCall(request).execute()) {
