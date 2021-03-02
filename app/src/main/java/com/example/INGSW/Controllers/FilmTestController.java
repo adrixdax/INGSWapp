@@ -16,7 +16,7 @@ public class FilmTestController extends AsyncTask {
 
     private Exception exception;
     private String nameOfFilm = "";
-    String url = "http://192.168.1.210:8080/";
+    String url = "http://192.168.1.13:8080/";
 
     private Object getLatestFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");

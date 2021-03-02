@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -101,9 +100,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 System.out.println("Click on bell");
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                NotifyPopUpDialog pop = NotifyPopUpDialog.newInstance();
-                pop.show(fm, "4");
+                new NotifyPopUpDialog().show(getActivity().getSupportFragmentManager(), "4");
                     /*
                     fragment = new NotifyPopUpDialog();
                     FragmentManager fm = getActivity().getSupportFragmentManager();

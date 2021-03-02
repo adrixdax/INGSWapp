@@ -35,10 +35,25 @@ public class RegistrationScreen extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        ProfileImage = (CircleImageView)findViewById(R.id.propic_image);
+        Glide.with(this).load(propic).into(ProfileImage);
+
+        ProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(RegistrationScreen.this,AvatarScreen.class));
+            }
+        });
 
         editTextNickName = (EditText) findViewById(R.id.editTextTextPersonName);
         editTextMail = (EditText) findViewById(R.id.editTextTextEmailAddress2);
         editTextPassword = (EditText) findViewById(R.id.editTextTextPassword2);
+        registerUser  = (Button) findViewById(R.id.registerUserButton);
+        registerUser.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new RegistrationController(RegistrationScreen.this,propic).registerUser(editTextMail,editTextPassword,editTextNickName,propic);
+            }
+        });
         editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -50,27 +65,7 @@ public class RegistrationScreen extends AppCompatActivity {
             }
         });
 
-        ProfileImage = (CircleImageView)findViewById(R.id.propic_image);
-        Glide.with(this).load(propic).into(ProfileImage);
-
-        ProfileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegistrationScreen.this,AvatarScreen.class));
-            }
-        });
-
-        RegistrationController registrationController = new RegistrationController(this,propic);
-
-        registerUser  = (Button) findViewById(R.id.registerUserButton);
         PushDownAnim.setPushDownAnimTo(registerUser,ProfileImage);
-
-        registerUser.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                registrationController.registerUser(editTextMail,editTextPassword,editTextNickName,propic);
-            }
-        });
-
 
 
     }

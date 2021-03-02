@@ -2,12 +2,8 @@ package com.example.INGSW;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.LruCache;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -16,10 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-
 import com.example.INGSW.Component.Films.ListOfFilm;
 import com.example.INGSW.Controllers.UserController;
 import com.example.INGSW.home.HomepageScreen;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +35,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     User user = null;
     private boolean loadUser = false;
     UserController userController = new UserController();
+    private String uid="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,10 +111,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
             if (obj != null) {
                 System.out.println("Trovato profilo proprietario");
                 contaiinerItem.put("userProfile", obj);
+                setUid(mFirebaseUser.getUid());
             }
         } else {
             obj = userController.getAcct(this);
             if (obj != null) {
+                setUid(((GoogleSignInAccount)obj).getId());
                 System.out.println("Trovato profilo Google");
                 contaiinerItem.put("acct", obj);
             }
@@ -159,6 +158,14 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                         }
                     }).create().show();
         }
+    }
+
+    public void setUid(String uid){
+        this.uid = uid;
+    }
+
+    public String getUid(){
+        return this.uid;
     }
 }
 

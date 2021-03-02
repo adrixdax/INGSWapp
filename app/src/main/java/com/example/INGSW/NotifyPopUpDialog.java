@@ -1,8 +1,6 @@
 package com.example.INGSW;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,12 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,29 +43,35 @@ public class NotifyPopUpDialog extends DialogFragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         return inflater.inflate(R.layout.notifypopup, container);
+        //return onCreateDialog(savedInstanceState).getCurrentFocus();
     }
 
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        Dialog dialog = new Dialog(getActivity());
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.notifypopup);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.VERTICAL, false);
         recycler = new RecyclerView(requireContext());
         recycler = dialog.findViewById(R.id.recyclerViewNotify);
-        List<Notify> notify = new ArrayList<>();
-        Notify not = new Notify("Prova");
-       notify.add(not);
+        String json="";
+        try {
+            json = (String) new NotifyTestController().execute(new String(((ToolBarActivity)getActivity()).getUid())).get();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            notify = (List<Notify>)getJsonToDecode(json,Notify.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         NotifyAdapter adapter = new NotifyAdapter(notify);
+        recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
         recycler.setHasFixedSize(false);
-        recycler.setLayoutManager(layoutManager);
 
         return dialog;
     }

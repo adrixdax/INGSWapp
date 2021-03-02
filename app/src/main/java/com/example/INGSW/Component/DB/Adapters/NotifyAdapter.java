@@ -3,16 +3,16 @@ package com.example.INGSW.Component.DB.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.R;
-import static com.bumptech.glide.Glide.*;
+
 import java.util.List;
 
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder>{
@@ -32,8 +32,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Notify listOfnots = listOfData.get(position);
-        holder.textView.setText(listOfData.get(position).getType());
+        holder.textView.setText(listOfData.get(position).getId_recordref());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

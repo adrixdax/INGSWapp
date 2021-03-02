@@ -8,13 +8,12 @@ import java.util.Objects;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class NotifyTestController extends AsyncTask {
 
     private Exception exception;
-    String url = "http://87.16.144.72:8080/";
+    String url = "http://192.168.1.13:8080/";
 
     private Object getNotify(String idUser) {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");

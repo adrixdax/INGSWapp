@@ -1,22 +1,21 @@
 package com.example.INGSW.Component.DB.Classes;
 
-import com.example.INGSW.Component.Films.Cast;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Notify {
 
     int id_notify;
-    int id_sender;
-    int id_receiver;
+    String id_sender;
+    String id_receiver;
     String type;
     int id_recordref;
     String state;
 
     @JsonCreator
     public Notify(@JsonProperty("id_notify") int id_notify,
-                  @JsonProperty("id_sender") int id_sender,
-                  @JsonProperty("id_receiver") int id_receiver,
+                  @JsonProperty("id_sender") String id_sender,
+                  @JsonProperty("id_receiver") String id_receiver,
                   @JsonProperty("type") String type,
                   @JsonProperty("id_recordref") int id_recordref,
                   @JsonProperty("status") String status) {
@@ -33,8 +32,7 @@ public class Notify {
         this.type=type;
     }
 
-
-        public int getId_notify() {
+    public int getId_notify() {
         return id_notify;
     }
 
@@ -42,19 +40,19 @@ public class Notify {
         this.id_notify = id_notify;
     }
 
-    public int getId_sender() {
+    public String getId_sender() {
         return id_sender;
     }
 
-    public void setId_sender(int id_sender) {
+    public void setId_sender(String id_sender) {
         this.id_sender = id_sender;
     }
 
-    public int getId_receiver() {
+    public String getId_receiver() {
         return id_receiver;
     }
 
-    public void setId_receiver(int id_receiver) {
+    public void setId_receiver(String id_receiver) {
         this.id_receiver = id_receiver;
     }
 
