@@ -23,7 +23,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginTop="5dp"
         android:scrollbars="horizontal"
         android:layout_margin="@dimen/cardview_compat_inset_shadow"
@@ -40,30 +40,52 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/circle_obj"
-        android:src="@drawable/icons8_notification_30px_1"
+        android:src="@drawable/icons8_notification_30px_4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/toSee"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="21dp"
         android:background="@drawable/rounded_list_obj"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Da vedere"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
         android:clickable="true"
         android:focusable="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Da vedere"
+        android:textSize="10dp"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/mostReviewed"
         app:layout_constraintEnd_toStartOf="@+id/mostSeen"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
+    <Button
+        android:id="@+id/mostSeen"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="21dp"
+        android:background="@drawable/rounded_list_obj"
+        android:clickable="true"
+        android:focusable="true"
+        android:textSize="10dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="I PIù visti"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/userPrefered"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/toSee"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
     <Button
         android:id="@+id/mostReviewed"
@@ -78,33 +100,12 @@
         android:text="I più recensiti"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
+        android:textSize="10dp"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@+id/news_title"
         app:layout_constraintEnd_toStartOf="@+id/userPrefered"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toSee" />
-
-
-    <Button
-        android:id="@+id/mostSeen"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="21dp"
-        android:background="@drawable/rounded_list_obj"
-        android:fontFamily="@font/poppins_bold"
-        android:text="I PIù visti"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:clickable="true"
-        android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@+id/userPrefered"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/toSee"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
 
     <Button
@@ -118,11 +119,11 @@
         android:background="@drawable/rounded_list_obj"
         android:fontFamily="@font/poppins_bold"
         android:text="i preferiti dagli utenti"
+        android:textSize="10dp"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:clickable="true"
         android:focusable="true"
-        app:layout_constraintBottom_toTopOf="@+id/news_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/mostReviewed"
         app:layout_constraintTop_toBottomOf="@+id/mostSeen" />
