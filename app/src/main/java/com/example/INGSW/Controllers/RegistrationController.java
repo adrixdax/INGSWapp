@@ -36,10 +36,12 @@ public class RegistrationController {
         mAuth = FirebaseAuth.getInstance();
     }
 
-    public void registerUser(EditText editTextMail, EditText editTextPassword, EditText editTextNickName,String propic) {
+    public void registerUser(EditText editTextMail, EditText editTextPassword, EditText repPassword,EditText editTextNickName,String propic) {
         String email = editTextMail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
+        String password2 = repPassword.getText().toString().trim();
         String nickname = editTextNickName.getText().toString().trim();
+
 
         if (nickname.isEmpty()) {
             editTextNickName.setError("NickName non compilato!");
@@ -62,6 +64,18 @@ public class RegistrationController {
         if (password.isEmpty()) {
             editTextPassword.setError("Password non compilata!");
             editTextPassword.requestFocus();
+            return;
+        }
+
+        if (password2.isEmpty()) {
+            repPassword.setError("Ripeti la password");
+            repPassword.requestFocus();
+            return;
+        }
+
+        if(!(password.equals(password2))){
+            repPassword.setError("Le due password non coincidono");
+            repPassword.requestFocus();
             return;
         }
 

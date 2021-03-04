@@ -13,7 +13,7 @@ import okhttp3.Response;
 
 public class UserServerController extends AsyncTask {
 
-    String url = "http://192.168.1.13:8080/";
+    String url = "http://87.16.144.72:8080/";
     String UserId = "";
 
 

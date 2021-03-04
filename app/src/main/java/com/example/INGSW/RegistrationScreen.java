@@ -21,7 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RegistrationScreen extends AppCompatActivity {
 
     private Button registerUser;
-    private EditText editTextNickName,editTextMail,editTextPassword;
+    private EditText editTextNickName,editTextMail,editTextPassword,repeatPassword;
     private CircleImageView ProfileImage;
     private String propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
 
@@ -47,11 +47,13 @@ public class RegistrationScreen extends AppCompatActivity {
 
         editTextNickName = (EditText) findViewById(R.id.editTextTextPersonName);
         editTextMail = (EditText) findViewById(R.id.editTextTextEmailAddress2);
-        editTextPassword = (EditText) findViewById(R.id.editTextTextPassword2);
+        editTextPassword = (EditText) findViewById(R.id.editTextTextPassword);
+        repeatPassword = (EditText) findViewById(R.id.editTextTextRepeatPassword);
+
         registerUser  = (Button) findViewById(R.id.registerUserButton);
         registerUser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new RegistrationController(RegistrationScreen.this,propic).registerUser(editTextMail,editTextPassword,editTextNickName,propic);
+                new RegistrationController(RegistrationScreen.this,propic).registerUser(editTextMail,editTextPassword,repeatPassword,editTextNickName,propic);
             }
         });
         editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
