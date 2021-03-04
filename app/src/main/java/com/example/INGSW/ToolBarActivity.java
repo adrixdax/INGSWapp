@@ -188,7 +188,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
                         public void onClick(DialogInterface arg0, int arg1) {
-                            ToolBarActivity.super.onBackPressed();
+                            finish();
+                            //ToolBarActivity.super.onBackPressed();
                         }
                     }).create().show();
         }
