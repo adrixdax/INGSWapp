@@ -1,3 +1,4 @@
+
 package com.example.INGSW;
 
 import android.content.Intent;
@@ -56,6 +57,8 @@ public class LoginScreen extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginscreen);
+
+
 
 
 

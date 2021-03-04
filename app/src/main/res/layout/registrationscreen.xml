@@ -26,11 +26,11 @@
         class="com.google.android.material.textfield.TextInputLayout"
         android:layout_width="290dp"
         android:layout_height="58dp"
-        android:layout_marginTop="222dp"
+        android:layout_marginTop="204dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -40,29 +40,44 @@
         class="com.google.android.material.textfield.TextInputLayout"
         android:layout_width="289dp"
         android:layout_height="58dp"
-        android:layout_marginTop="318dp"
+        android:layout_marginTop="284dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
+
 
     <view
         android:id="@+id/view4"
         class="com.google.android.material.textfield.TextInputLayout"
         android:layout_width="290dp"
         android:layout_height="55dp"
-        android:layout_marginTop="416dp"
+        android:layout_marginTop="360dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
+    <view
+        android:id="@+id/view7"
+        class="com.google.android.material.textfield.TextInputLayout"
+        android:layout_width="290dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="432dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="#FFFFFF"
+        app:hintTextColor="#100E0E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <EditText
         android:id="@+id/editTextTextEmailAddress2"
@@ -81,21 +96,38 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/editTextTextPassword"
         android:layout_width="271dp"
         android:layout_height="56dp"
         android:autofillHints=""
         android:background="@android:color/transparent"
         android:ems="10"
         android:hint="@string/password"
+        android:imeOptions="actionGo"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="@+id/view4"
         app:layout_constraintEnd_toEndOf="@+id/view4"
         app:layout_constraintHorizontal_bias="0.894"
         app:layout_constraintStart_toStartOf="@+id/view4"
         app:layout_constraintTop_toTopOf="@+id/view4"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editTextTextRepeatPassword"
+        android:layout_width="271dp"
+        android:layout_height="56dp"
+        android:autofillHints=""
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="RIpeti password"
         android:imeOptions="actionGo"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toBottomOf="@+id/view7"
+        app:layout_constraintEnd_toEndOf="@+id/view7"
+        app:layout_constraintHorizontal_bias="0.947"
+        app:layout_constraintStart_toStartOf="@+id/view7"
+        app:layout_constraintTop_toTopOf="@+id/view7"
         tools:ignore="MissingConstraints" />
 
     <EditText
@@ -120,13 +152,13 @@
         android:id="@+id/registerUserButton"
         android:layout_width="158dp"
         android:layout_height="52dp"
-        android:layout_marginTop="519dp"
+        android:layout_marginTop="528dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="#1999CE"
         android:text="@string/registrati"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -137,9 +169,8 @@
         android:layout_height="143dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -148,10 +179,11 @@
         android:layout_width="34dp"
         android:layout_height="53dp"
         android:layout_marginStart="240dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="116dp"
         android:layout_marginEnd="137dp"
         android:contentDescription="TODO"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/pencil" />

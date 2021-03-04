@@ -138,16 +138,19 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
 
-                SharedPreferences preferences = getActivity().getSharedPreferences("access", Context.MODE_PRIVATE);
+                SharedPreferences preferences = getContext().getSharedPreferences("access", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("remember", "false");
+                editor.putString("remember", "false");;
                 editor.apply();
 
                 ((ToolBarActivity) getActivity()).getContaiinerItem().clear();
                 FirebaseAuth.getInstance().signOut();
                 Intent logoutIntent = new Intent(PersonalArea.this.getActivity(), LoginScreen.class);
                 logoutIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //(ToolBarActivity).getActivity().finish();
                 startActivity(logoutIntent);
+
+                ((ToolBarActivity)getActivity()).finish();
             }
         });
 
