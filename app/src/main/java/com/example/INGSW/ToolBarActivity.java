@@ -139,11 +139,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         Object obj = null;
         FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (mFirebaseUser != null) {
+            setUid(mFirebaseUser.getUid());
             obj = userController.getUserprofile(mFirebaseUser);
             if (obj != null) {
                 System.out.println("Trovato profilo proprietario");
                 contaiinerItem.put("userProfile", obj);
-                setUid(mFirebaseUser.getUid());
+
             }
         } else {
             obj = userController.getAcct(this);
