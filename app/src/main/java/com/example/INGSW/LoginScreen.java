@@ -192,6 +192,7 @@ public class LoginScreen extends AppCompatActivity{
             UserServerController usc = new UserServerController();
             usc.setUserId(account.getId());
             String req = (String) usc.execute(new String("google")).get();
+            System.out.println(req + "---------------------------------------------------------------------------------");
 
 
 

@@ -16,13 +16,16 @@ public class FilmTestController extends AsyncTask {
 
     private Exception exception;
     private String nameOfFilm = "";
-    String url = "http://87.16.144.72:8080/";
+    String url = "http://192.168.1.210:8080/";
+    private String idList = "";
+    private String idFilm = "";
+
 
     private Object getLatestFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&latest=true");
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url+"film").post(body).build();
+        Request request = new Request.Builder().url(url + "film").post(body).build();
         try {
             try (Response response = client.newCall(request).execute()) {
 
@@ -39,13 +42,13 @@ public class FilmTestController extends AsyncTask {
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&most=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(url+"film")
+                .url(url + "film")
                 .post(body)
                 .build();
         try {
             try (Response response = client.newCall(request).execute()) {
                 return Objects.requireNonNull(response.body()).string();
-               }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,13 +60,13 @@ public class FilmTestController extends AsyncTask {
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&most=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(url+"film")
+                .url(url + "film")
                 .post(body)
                 .build();
         try {
             try (Response response = client.newCall(request).execute()) {
                 return Objects.requireNonNull(response.body()).string();
-                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -75,13 +78,13 @@ public class FilmTestController extends AsyncTask {
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&most=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(url+"film")
+                .url(url + "film")
                 .post(body)
                 .build();
         try {
             try (Response response = client.newCall(request).execute()) {
                 return Objects.requireNonNull(response.body()).string();
-                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,9 +93,9 @@ public class FilmTestController extends AsyncTask {
 
     private Object getSearchFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&name="+ nameOfFilm);
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60,TimeUnit.SECONDS).build();
-        Request request = new Request.Builder().url(url+"film").post(body).build();
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&name=" + nameOfFilm);
+        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build();
+        Request request = new Request.Builder().url(url + "film").post(body).build();
         System.out.println("Stampo i film: ->" + request.toString());
 
         try {
@@ -105,6 +108,55 @@ public class FilmTestController extends AsyncTask {
         }
         return "";
     }
+
+    private Object idFilmInList() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idList=" + idList + "&idFilm=" + idFilm);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "list").post(body).build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private Object addFilmInList() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idList=" + idList + "&idFilm=" + idFilm +"&addFilm=true");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "list").post(body).build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private Object removeFilmInList() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idList=" + idList + "&idFilm=" + idFilm + "&removeFilm=true");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "list").post(body).build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -120,9 +172,31 @@ public class FilmTestController extends AsyncTask {
                     return getMostReviewedFilms();
                 case "search":
                     return getSearchFilms();
+                case "isInList":
+                    return idFilmInList();
+                case "addFilm":
+                    return addFilmInList();
+                case "removeFilm":
+                    return removeFilmInList();
             }
         }
         return new String("Helooo");
+    }
+
+    public String getIdList() {
+        return idList;
+    }
+
+    public void setIdList(String idList) {
+        this.idList = idList;
+    }
+
+    public String getIdFilm() {
+        return idFilm;
+    }
+
+    public void setIdFilm(String idFilm) {
+        this.idFilm = idFilm;
     }
 
     public String getNameOfFilm() {

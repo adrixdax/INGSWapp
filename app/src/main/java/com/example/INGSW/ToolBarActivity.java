@@ -12,9 +12,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.UserController;
+import com.example.INGSW.Controllers.UserServerController;
 import com.example.INGSW.home.HomepageScreen;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +27,9 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class ToolBarActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -35,6 +42,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     User user = null;
     private boolean loadUser = false;
     UserController userController = new UserController();
+    private UserServerController usc = new UserServerController();
+
     private String uid="";
 
     @Override
@@ -42,6 +51,29 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationscreen);
         getUser();
+
+        try {
+            usc.setUserId(uid);
+            String temp =(String) usc.execute(new String("getDefaultListOfUser")).get();
+            List<UserLists> list = (List<UserLists>) getJsonToDecode(temp, UserLists.class);
+            for (UserLists singlelist:  list){
+                if(singlelist.getType().equals("PREFERED")){
+                    contaiinerItem.put("PREFERED", singlelist.getIdUserList());
+                }else if(singlelist.getType().equals("WATCH")){
+                    contaiinerItem.put("WATCH", singlelist.getIdUserList());
+                }else{
+                    contaiinerItem.put("TOWATCH", singlelist.getIdUserList());
+                }
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         loadFragment(new HomepageScreen(), "1");
 
@@ -136,9 +168,10 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     public void onBackPressed() {
         FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
+        String tag1="1";
         String tag2= "2";
         String tag3= "3";
-        if( fm.getBackStackEntryCount()>0){
+        if( fm.getBackStackEntryCount()>0 && !(tag2.equals(currentFragment.getTag())  || tag3.equals(currentFragment.getTag())) && !(tag1.equals(currentFragment.getTag())) ){
             fm.popBackStack();
         }else if( tag2.equals(currentFragment.getTag())  || tag3.equals(currentFragment.getTag()) ){
 
