@@ -1,14 +1,14 @@
 package com.example.INGSW;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.INGSW.Controllers.RegistrationController;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.INGSW.Component.DB.Adapters.UserListsAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,28 +16,29 @@ import com.example.INGSW.Controllers.RegistrationController;
  * create an instance of this fragment.
  */
 public class MyLists extends Fragment {
-/*
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    /*
+        // TODO: Rename parameter arguments, choose names that match
+        // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+        private static final String ARG_PARAM1 = "param1";
+        private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+        // TODO: Rename and change types of parameters
+        private String mParam1;
+        private String mParam2;
+    */
     public MyLists() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyLists.
-     */
+    /*
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment MyLists.
+         */
     /*
     // TODO: Rename and change types and number of parameters
     public static MyLists newInstance(String param1, String param2) {
@@ -62,9 +63,9 @@ public class MyLists extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root =  inflater.inflate(R.layout.fragment_my_lists, container, false);
-
-
+        View root = inflater.inflate(R.layout.fragment_my_lists, container, false);
+        RecyclerView rv = root.findViewById(R.id.recyclerView2);
+        rv.setAdapter(new UserListsAdapter(new));  //Controller to get the list
 
         return root;
     }
