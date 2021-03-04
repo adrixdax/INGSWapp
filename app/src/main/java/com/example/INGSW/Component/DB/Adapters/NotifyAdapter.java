@@ -15,8 +15,21 @@ import com.example.INGSW.R;
 
 import java.util.List;
 
-public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder>{
+import static com.example.INGSW.R.id.notifyText;
+
+public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder> {
     private final List<Notify> listOfData;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView textView;
+        public RelativeLayout relativeLayout;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            this.textView = itemView.findViewById(notifyText);
+            this.relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
+        }
+    }
 
     public NotifyAdapter(List<Notify> listOfData) {
         this.listOfData = listOfData;
@@ -32,7 +45,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView.setText(listOfData.get(position).getId_recordref());
+        holder.textView.setText(listOfData.get(position).getId_receiver());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,14 +59,5 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         return listOfData.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView;
-        public RelativeLayout relativeLayout;
-        public ViewHolder(View itemView) {
-            super(itemView);
-            this.textView = itemView.findViewById(R.id.textView3);
-            relativeLayout = itemView.findViewById(R.id.relativeLayout);
-        }
-    }
 
 }

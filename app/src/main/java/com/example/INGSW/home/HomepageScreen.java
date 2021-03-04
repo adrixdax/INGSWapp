@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.Films.ListOfFilm;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.NotifyPopUpDialog;
+import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -77,7 +77,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
         if (film == null) {
             String latestJson = "";
             try {
-                latestJson = (String) con.execute(new String("latest")).get();
+                latestJson = (String) con.execute("latest").get();
                 con.isCancelled();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
@@ -100,11 +100,11 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 System.out.println("Click on bell");
-                new NotifyPopUpDialog().show(getActivity().getSupportFragmentManager(), "4");
-                    /*
-                    fragment = new NotifyPopUpDialog();
+                new NotifyPopUp().show(getActivity().getSupportFragmentManager(), "4");
+                    /*fragment = new NotifyPopUp();
                     FragmentManager fm = getActivity().getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.nav_host_fragment,fragment).commit();*/
+                    fm.beginTransaction().replace(R.id.nav_host_fragment,fragment).commit();
+                    fragment.show(fm,"4");*/
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
