@@ -56,7 +56,24 @@ public class UserServerController extends AsyncTask {
     private Object getDefaultList() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId +"&searchDefaultList=true");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&searchDefaultList=true");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "user").post(body).build();
+
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private Object getCustomLists() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&custom=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url + "user").post(body).build();
 
@@ -81,7 +98,8 @@ public class UserServerController extends AsyncTask {
                     return getRegistrationUserFromGoogle();
                 case "getDefaultListOfUser":
                     return getDefaultList();
-
+                case "custom":
+                    return getCustomLists();
 
             }
         }

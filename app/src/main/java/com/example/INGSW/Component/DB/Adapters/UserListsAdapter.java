@@ -5,12 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.R;
 
 import java.util.List;
@@ -32,7 +30,7 @@ public class UserListsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (listofdata.get(position) instanceof UserLists) {
+        /*if (listofdata.get(position) instanceof UserLists) {
             holder.imageButton.setText(listOfdata.get(position));
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -42,7 +40,7 @@ public class UserListsAdapter extends RecyclerView.Adapter {
             });
         } else {
             //holder.imageButton
-        }
+        }*/
     }
 
     @Override

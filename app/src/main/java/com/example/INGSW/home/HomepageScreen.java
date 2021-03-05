@@ -100,6 +100,7 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 System.out.println("Click on bell");
+                System.out.println(((ToolBarActivity) getActivity()).getUid());
                 new NotifyPopUp().show(getActivity().getSupportFragmentManager(), "4");
                     /*fragment = new NotifyPopUp();
                     FragmentManager fm = getActivity().getSupportFragmentManager();

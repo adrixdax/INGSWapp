@@ -45,7 +45,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView.setText(listOfData.get(position).getId_receiver());
+        holder.textView.setText("Notifica per:" + listOfData.get(position).getId_receiver() + "\nInviata da: " + listOfData.get(position).getId_sender());
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

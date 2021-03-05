@@ -1,14 +1,17 @@
 package com.example.INGSW;
 
+import android.app.Dialog;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +26,7 @@ import java.util.concurrent.ExecutionException;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
-public class NotifyPopUp extends DialogFragment {
+public class NotifyPopUp extends AppCompatDialogFragment {
 
     private RecyclerView recycler;
     private List<Notify> notify = new ArrayList<>();
@@ -61,14 +64,14 @@ public class NotifyPopUp extends DialogFragment {
         return view;
     }
 
-/*
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.notifypopup, new ConstraintLayout(getActivity()), false);
         recycler = view.findViewById(R.id.recyclerViewNotify);
         String json="";
         try {
-            json = (String) new NotifyTestController().execute(new String(((ToolBarActivity)getActivity()).getUid())).get();
+            json = (String) new NotifyTestController().execute(((ToolBarActivity) getActivity()).getUid()).get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -88,5 +91,6 @@ public class NotifyPopUp extends DialogFragment {
         return dialog;
 
     }
-*/
+
+
 }

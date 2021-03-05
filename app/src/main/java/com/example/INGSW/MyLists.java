@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.DB.Adapters.UserListsAdapter;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link MyLists #newInstance} factory method to
@@ -65,7 +63,7 @@ public class MyLists extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_lists, container, false);
         RecyclerView rv = root.findViewById(R.id.recyclerView2);
-        rv.setAdapter(new UserListsAdapter(new));  //Controller to get the list
+      //  rv.setAdapter(new UserListsAdapter(new));  //Controller to get the list
 
         return root;
     }
