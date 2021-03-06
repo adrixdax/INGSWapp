@@ -1,62 +1,108 @@
 package com.example.INGSW.Component.DB.Adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.Component.DB.Classes.UserLists;
+
+
+import com.example.INGSW.DialogCustomlList;
 import com.example.INGSW.R;
+import com.example.INGSW.home.HomepageScreen;
 
 import java.util.List;
 
-public class UserListsAdapter extends RecyclerView.Adapter {
-    private final List<Object> listofdata;
+import static com.bumptech.glide.Glide.with;
 
-    public UserListsAdapter(List<Object> listofdata) {
+public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.ViewHolder> {
+    private final List<UserLists> listofdata;
+
+    private Class css = null;
+    private View listItem;
+
+
+    public UserListsAdapter(List<UserLists> listofdata, Class css) {
         this.listofdata = listofdata;
+        this.css = css;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listItem = layoutInflater.inflate(R.layout.lists_of_lists, parent, false);
-        return new UserListsAdapter.ViewHolder(listItem);
+        if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
+             listItem = layoutInflater.inflate(R.layout.lists_of_lists, parent, false);
+        }else  if (css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())) {
+             listItem = layoutInflater.inflate(R.layout.list_custom_list_selected, parent, false);
+        }
+        return new UserListsAdapter.ViewHolder(listItem, css);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        /*if (listofdata.get(position) instanceof UserLists) {
-            holder.imageButton.setText(listOfdata.get(position));
-            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "click on item: ", Toast.LENGTH_LONG).show();
-                }
-            });
-        } else {
-            //holder.imageButton
-        }*/
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        if(css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())){
+            try {
+                holder.textView.setText(listofdata.get(position).getTitle());
+                with(holder.itemView).load("http://cdn.onlinewebfonts.com/svg/img_568523.png").into((ImageView) holder.itemView.findViewById(R.id.imageView));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 
     @Override
     public int getItemCount() {
-        return listofdata.size();
+        try {
+            if (listofdata != null) {
+                return listofdata.size();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageButton imageButton;
         public RelativeLayout relativeLayout;
+        public TextView textView;
+        public RadioButton selectItem;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, Class css) {
             super(itemView);
-            this.imageButton = itemView.findViewById(R.id.listComponent);
-            this.relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
+            if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
+                this.imageButton = itemView.findViewById(R.id.listComponent);
+                this.relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
+            }else if (css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())) {
+
+                this.imageButton = itemView.findViewById(R.id.list_image);
+                relativeLayout = itemView.findViewById(R.id.relativeLayoutAddInCustomList);
+                this.selectItem= itemView.findViewById(R.id.radioButtonAddList);
+                this.textView= itemView.findViewById(R.id.NameOfCustomList);
+
+
+            }
         }
     }
 
+    public Class getCss() {
+        return css;
+    }
+
+    public void setCss(Class css) {
+        this.css = css;
+    }
 }

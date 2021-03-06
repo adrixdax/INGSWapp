@@ -13,7 +13,7 @@ import okhttp3.Response;
 
 public class UserServerController extends AsyncTask {
 
-    String url = "http://87.16.144.72:8080/";
+    String url = "http://192.168.1.30:8080/";
     String UserId = "";
 
 
@@ -88,6 +88,24 @@ public class UserServerController extends AsyncTask {
         return "";
     }
 
+    private Object addCustomList() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&addList=true");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "user").post(body).build();
+
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
@@ -100,6 +118,8 @@ public class UserServerController extends AsyncTask {
                     return getDefaultList();
                 case "custom":
                     return getCustomLists();
+                case "addCustomList":
+                    return addCustomList();
 
             }
         }

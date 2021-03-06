@@ -29,6 +29,23 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.224" />
+
+    <ImageButton
+        android:id="@+id/addListButton"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.068"
+        app:srcCompat="@drawable/icons8_plus_26px" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
