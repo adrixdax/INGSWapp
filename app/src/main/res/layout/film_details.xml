@@ -152,7 +152,7 @@
         app:srcCompat="@drawable/icons8_star_26px" />
 
     <ImageButton
-        android:id="@+id/imageButton4"
+        android:id="@+id/imageButtonCustomList"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:background="@android:color/transparent"

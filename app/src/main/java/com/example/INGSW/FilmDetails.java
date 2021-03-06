@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public class FilmDetails extends Fragment {
     private ImageButton imageButtonWatch;
     private ImageButton imageButtonFavorites;
     private ImageButton imageButtonToWatch;
+    private ImageButton imageButtonCustomList;
 
 
     public FilmDetails(ListOfFilm film) {
@@ -78,9 +80,9 @@ public class FilmDetails extends Fragment {
         genres.setText(genere);
         time.setText(String.valueOf(film.getRuntime()));
 
-         imageButtonWatch = (ImageButton) root.findViewById(R.id.imageButtonWatch);
-         imageButtonFavorites = (ImageButton)root.findViewById(R.id.imageButtonFavorites);
-         imageButtonToWatch =(ImageButton)  root.findViewById(R.id.imageButtonToWatch);
+        imageButtonWatch = (ImageButton) root.findViewById(R.id.imageButtonWatch);
+        imageButtonFavorites = (ImageButton) root.findViewById(R.id.imageButtonFavorites);
+        imageButtonToWatch = (ImageButton) root.findViewById(R.id.imageButtonToWatch);
 
 
         try {
@@ -136,7 +138,7 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 if (!imageButtonWatchblue) {
                     Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_50px).into(imageButtonWatch);
-                    ftc= new FilmTestController();
+                    ftc = new FilmTestController();
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")));
                     try {
@@ -151,7 +153,7 @@ public class FilmDetails extends Fragment {
                     imageButtonWatchblue = true;
                 } else {
                     Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_30px_4).into(imageButtonWatch);
-                    ftc= new FilmTestController();
+                    ftc = new FilmTestController();
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")));
                     try {
@@ -174,7 +176,7 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 if (!imageButtonToWatchblue) {
                     Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
-                    ftc= new FilmTestController();
+                    ftc = new FilmTestController();
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
                     try {
@@ -188,7 +190,7 @@ public class FilmDetails extends Fragment {
                     imageButtonToWatchblue = true;
                 } else {
                     Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px).into(imageButtonToWatch);
-                    ftc= new FilmTestController();
+                    ftc = new FilmTestController();
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
                     try {
@@ -210,7 +212,7 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 if (!imageButtonFavoritesblue) {
                     Glide.with(root.getContext()).load(R.drawable.icons8_star_32px).into(imageButtonFavorites);
-                    ftc= new FilmTestController();
+                    ftc = new FilmTestController();
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
                     try {
@@ -224,7 +226,7 @@ public class FilmDetails extends Fragment {
                     imageButtonFavoritesblue = true;
                 } else {
                     Glide.with(root.getContext()).load(R.drawable.icons8_star_26px).into(imageButtonFavorites);
-                    ftc= new FilmTestController();
+                    ftc = new FilmTestController();
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
                     try {
@@ -239,6 +241,19 @@ public class FilmDetails extends Fragment {
                 }
             }
         });
+
+        imageButtonCustomList = (ImageButton) root.findViewById(R.id.imageButtonCustomList);
+        imageButtonCustomList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                DialogCustomlList fragment = new DialogCustomlList().newInstance();
+                fragment.show(getChildFragmentManager(),"6");
+                //new DialogCustomlList().show(getActivity().getSupportFragmentManager(), "6");
+            }
+        });
+
 
         return root;
 
