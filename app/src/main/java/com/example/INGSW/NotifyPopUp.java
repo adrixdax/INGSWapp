@@ -67,27 +67,12 @@ public class NotifyPopUp extends AppCompatDialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.notifypopup, new ConstraintLayout(getActivity()), false);
-        recycler = view.findViewById(R.id.recyclerViewNotify);
-        String json="";
-        try {
-            json = (String) new NotifyTestController().execute(((ToolBarActivity) getActivity()).getUid()).get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            notify = (List<Notify>)getJsonToDecode(json,Notify.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        recycler.setAdapter(new NotifyAdapter(notify));
-        recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-        recycler.setHasFixedSize(false);
+
         Dialog dialog = new Dialog(getActivity());
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.notifypopup);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setContentView(view);
+        dialog.setContentView(getActivity().getLayoutInflater().inflate(R.layout.notifypopup, new ConstraintLayout(getActivity()), false));
         return dialog;
 
     }
