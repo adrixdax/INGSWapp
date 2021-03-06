@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.example.INGSW.Component.Films.ListOfFilm;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
@@ -109,6 +110,7 @@ public class SuggestedFIlms extends Fragment {
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setAdapter(adapter);
+
 
 
         return root;
