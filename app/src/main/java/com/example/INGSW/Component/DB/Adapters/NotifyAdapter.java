@@ -3,6 +3,7 @@ package com.example.INGSW.Component.DB.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,11 +22,15 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     private final List<Notify> listOfData;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ImageView yes;
+        public ImageView no;
         public TextView textView;
         public RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            this.no=itemView.findViewById(R.id.denyNotify);
+            this.yes=itemView.findViewById(R.id.acceptNotify);
             this.textView = itemView.findViewById(notifyText);
             this.relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
         }
@@ -50,6 +55,18 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "click on item: ", Toast.LENGTH_LONG).show();
+            }
+        });
+        holder.yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),"Accept",Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(),"Decline",Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@id/relativeLayoutNotify">
 
@@ -10,4 +11,23 @@
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
+
+    <ImageView
+        android:layout_toEndOf="@id/notifyText"
+        android:id="@+id/acceptNotify"
+        android:background="#07AA00"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="fitCenter"
+        android:layout_marginStart="5dp"
+        app:srcCompat="@drawable/yes_tick" />
+
+    <ImageView
+        android:layout_toEndOf="@id/acceptNotify"
+        android:id="@+id/denyNotify"
+        android:background="#FF0000"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="5dp"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 </RelativeLayout>
