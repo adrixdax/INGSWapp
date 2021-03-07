@@ -1,5 +1,7 @@
 package com.example.INGSW.Component.Films;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.FilmDetails;
 import com.example.INGSW.R;
 import com.example.INGSW.SearchFilmScreen;
@@ -118,11 +121,15 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 public boolean onLongClick(View v) {
                     Toast.makeText(mContext,"its the vibe for me",Toast.LENGTH_SHORT).show();
                     System.out.println("VERAMENTE NON LI MOSTRA, A ME NON LI MOSTRA MAI 0.25");
-                    return false;
+                    ChooseActionDialog dialog = new ChooseActionDialog();
+
+                    return true;
                 }
             });
         }
     }
+
+
 
     @Override
     public int getItemCount() {
