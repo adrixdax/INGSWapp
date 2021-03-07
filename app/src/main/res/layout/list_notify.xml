@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:background="@drawable/circle_obj"
     android:id="@id/relativeLayoutNotify">
 
     <TextView
@@ -10,24 +12,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
-        android:textSize="24sp" />
+        android:textSize="20sp"
+        android:layout_marginStart="10dp"
+        android:maxWidth="150dp"
+        android:autoSizeTextType="uniform"/>
 
     <ImageView
-        android:layout_toEndOf="@id/notifyText"
         android:id="@+id/acceptNotify"
-        android:background="#07AA00"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:background="@drawable/circle_obj_green"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:scaleType="fitCenter"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@id/notifyText"
+        android:layout_centerVertical="true"
         app:srcCompat="@drawable/yes_tick" />
 
     <ImageView
-        android:layout_toEndOf="@id/acceptNotify"
         android:id="@+id/denyNotify"
-        android:background="#FF0000"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:background="@drawable/circle_obj_red"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_toEndOf="@id/acceptNotify"
         android:layout_marginStart="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_centerVertical="true"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 </RelativeLayout>

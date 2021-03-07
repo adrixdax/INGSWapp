@@ -16,22 +16,20 @@ import com.example.INGSW.R;
 
 import java.util.List;
 
-import static com.example.INGSW.R.id.notifyText;
-
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder> {
     private final List<Notify> listOfData;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView yes;
         public ImageView no;
-        public TextView textView;
+        public TextView text;
         public RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            this.text=itemView.findViewById(R.id.notifyText);
             this.no=itemView.findViewById(R.id.denyNotify);
             this.yes=itemView.findViewById(R.id.acceptNotify);
-            this.textView = itemView.findViewById(notifyText);
             this.relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
         }
     }
@@ -50,13 +48,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView.setText("Notifica per:" + listOfData.get(position).getId_receiver() + "\nInviata da: " + listOfData.get(position).getId_sender());
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "click on item: ", Toast.LENGTH_LONG).show();
-            }
-        });
+        holder.text.setText("Notifica per te da "+listOfData.get(position).getId_sender());
         holder.yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,7 +1,5 @@
 package com.example.INGSW.Component.Films;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +75,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             }
         } else if (css.getCanonicalName().equals(SearchFilmScreen.class.getCanonicalName())) {
 
-            with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
+            with(holder.itemView).load(listOfData.get(position).getPosterPath().equals("") ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
                     .into((ImageView) holder.itemView.findViewById(R.id.imageView));
             holder.textViewTitle.setText(listOfData.get(position).getFilm_Title());
             holder.textViewRelaseDate.setText(listOfData.get(position).getRelease_Date());
