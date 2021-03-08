@@ -4,38 +4,72 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="15dp"
-    android:background="@drawable/circle_obj"
+    android:background="@drawable/rounded_list_obj"
     android:id="@id/relativeLayoutNotify">
+
+    <ImageView
+        android:id="@+id/userImageNotify"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="3dp"
+        app:srcCompat="@drawable/circle_obj" />
+
+    <ImageView
+        android:id="@+id/filmIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userImageNotify"
+        app:srcCompat="?attr/selectableItemBackgroundBorderless" />
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/userImageNotify"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/White"
+        android:text="userName"
+        android:autoSizeTextType="uniform"
+        android:maxLines="1" />
 
     <TextView
         android:id="@+id/notifyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+        android:textSize="14sp"
+        android:layout_below="@id/userImageNotify"
+        android:layout_toEndOf="@id/filmIcon"
         android:layout_marginStart="10dp"
-        android:maxWidth="150dp"
-        android:autoSizeTextType="uniform"/>
-
-    <ImageView
-        android:id="@+id/acceptNotify"
-        android:background="@drawable/circle_obj_green"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:scaleType="fitCenter"
-        android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/notifyText"
-        android:layout_centerVertical="true"
-        app:srcCompat="@drawable/yes_tick" />
+        android:text="@string/text"
+        android:autoSizeTextType="uniform" />
 
     <ImageView
         android:id="@+id/denyNotify"
-        android:background="@drawable/circle_obj_red"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_toEndOf="@id/acceptNotify"
-        android:layout_marginStart="5dp"
+        android:layout_below="@+id/notifyText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="80dp"
         android:layout_marginEnd="15dp"
-        android:layout_centerVertical="true"
+        android:background="@drawable/circle_obj_red"
         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+    <ImageView
+        android:id="@+id/acceptNotify"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/notifyText"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@id/denyNotify"
+        android:background="@drawable/circle_obj_green"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/yes_tick" />
+
 </RelativeLayout>
