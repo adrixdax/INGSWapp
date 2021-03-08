@@ -1,34 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
-    android:layout_width="match_parent"
+    android:layout_width="370dp"
     android:layout_height="300dp"
-    android:background="@drawable/rounded_corners"
-    android:backgroundTint="@color/CineBlue">
+    android:layout_marginStart="15dp"
+    android:background="@drawable/dailog_bg">
 
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="77dp"
-        android:text="condividi"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        android:layout_width="158dp"
+        android:layout_height="73dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="#2F5685"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/condividi"
+        android:textColor="#CFBFBF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.927"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="elimina"
+        android:layout_width="158dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="#A52222"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/elimina"
+        android:textColor="#CFBFBF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.764"
+        app:layout_constraintHorizontal_bias="0.924"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

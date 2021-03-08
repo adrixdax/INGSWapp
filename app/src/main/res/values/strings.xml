@@ -34,4 +34,6 @@
     <string name="film_che_hai_visto">FILM CHE HAI VISTO</string>
     <string name="ti_hanno_consigliato">TI HANNO CONSIGLIATO...</string>
     <string name="textview">TextView</string>
+    <string name="condividi">condividi</string>
+    <string name="elimina">elimina</string>
 </resources>

@@ -1,6 +1,9 @@
 package com.example.INGSW.Component.Films;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.FilmDetails;
+import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.SearchFilmScreen;
+import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.home.HomepageScreen;
 
 import java.util.List;
@@ -119,7 +124,22 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 public boolean onLongClick(View v) {
                     Toast.makeText(mContext,"its the vibe for me",Toast.LENGTH_SHORT).show();
                     System.out.println("VERAMENTE NON LI MOSTRA, A ME NON LI MOSTRA MAI 0.25");
-                    ChooseActionDialog dialog = new ChooseActionDialog();
+
+                    //ChooseActionDialog dlg = new ChooseActionDialog(mContext);
+                    new ChooseActionDialog(mContext).show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
+
+
+
+                    /*Dialog dialog = new Dialog(mContext);
+                    dialog.setContentView(R.layout.film_action_choose_dialog);
+                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.setCancelable(true);
+                    dialog.show();
+
+                     */
+
+
 
                     return true;
                 }
