@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="370dp"
-    android:layout_height="300dp"
-    android:layout_marginStart="15dp"
-    android:background="@drawable/dailog_bg">
+    android:layout_height="280dp"
+    android:layout_marginStart="19dp"
+    android:background="@drawable/rounded_list_obj">
 
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="158dp"
-        android:layout_height="73dp"
-        android:layout_marginTop="60dp"
+        android:id="@+id/Share_button"
+        android:layout_width="309dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="92dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="#2F5685"
         android:fontFamily="@font/poppins_bold"
@@ -21,15 +21,15 @@
         android:textColor="#CFBFBF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="158dp"
-        android:layout_height="71dp"
-        android:layout_marginTop="32dp"
+        android:id="@+id/Remove_button"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="36dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="#A52222"
         android:fontFamily="@font/poppins_bold"
@@ -38,8 +38,22 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.924"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/Share_button"
+        app:layout_constraintVertical_bias="0.806" />
+
+    <TextView
+        android:id="@+id/filmTitle_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Title"
+        android:autoSizeTextType="uniform"
+        android:textAlignment="center"
+        android:textColor="#E3D5D5"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/Share_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
