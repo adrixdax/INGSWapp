@@ -26,8 +26,11 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 /** Tale activity sostiene la schermata principale dell'app. ovvero la prima schermata che si aprirà difronte all' utente all' apertura dell'app */
@@ -194,8 +197,12 @@ public class LoginScreen extends AppCompatActivity{
             String req = (String) usc.execute(new String("google")).get();
             System.out.println(req + "---------------------------------------------------------------------------------");
 
-
-
+            User u = new User();
+            u.nickname = Objects.requireNonNull(account.getEmail()).split("@")[0];
+            u.email = account.getEmail();
+            u.propic = "";
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+            ref.child(Objects.requireNonNull(account.getId())).setValue(u);
             Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
             startActivity(intent);
             finish();
