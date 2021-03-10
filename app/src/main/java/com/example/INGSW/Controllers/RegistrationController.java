@@ -84,7 +84,6 @@ public class RegistrationController {
             editTextPassword.requestFocus();
             return;
         }
-
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(regActivity, new OnSuccessListener<AuthResult>() {
                     @Override

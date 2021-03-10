@@ -33,6 +33,8 @@ public class RegistrationScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.registrationscreen);
 
+        RegistrationController reg = new RegistrationController(RegistrationScreen.this,propic);
+
         mAuth = FirebaseAuth.getInstance();
 
         ProfileImage = (CircleImageView)findViewById(R.id.propic_image);
@@ -53,7 +55,7 @@ public class RegistrationScreen extends AppCompatActivity {
         registerUser  = (Button) findViewById(R.id.registerUserButton);
         registerUser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                new RegistrationController(RegistrationScreen.this,propic).registerUser(editTextMail,editTextPassword,repeatPassword,editTextNickName,propic);
+               reg.registerUser(editTextMail,editTextPassword,repeatPassword,editTextNickName,propic);
             }
         });
         editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
