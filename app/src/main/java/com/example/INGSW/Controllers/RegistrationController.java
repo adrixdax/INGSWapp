@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.ExecutionException;
@@ -41,6 +42,7 @@ public class RegistrationController {
         String password = editTextPassword.getText().toString().trim();
         String password2 = repPassword.getText().toString().trim();
         String nickname = editTextNickName.getText().toString().trim();
+
 
 
         if (nickname.isEmpty()) {
