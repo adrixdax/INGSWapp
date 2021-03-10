@@ -64,7 +64,7 @@ public class FilmDetails extends Fragment {
         if (film != null) {
             System.out.println("Titolo ddel film" + film.getFilm_Title());
         } else {
-            System.out.println("Posrco il topocazzo");
+            System.out.println("bad");
         }
 
         title.setText(film.getFilm_Title());

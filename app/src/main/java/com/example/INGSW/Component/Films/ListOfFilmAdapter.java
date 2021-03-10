@@ -126,7 +126,14 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                     System.out.println("VERAMENTE NON LI MOSTRA, A ME NON LI MOSTRA MAI 0.25");
 
                     //ChooseActionDialog dlg = new ChooseActionDialog(mContext);
-                    new ChooseActionDialog(mContext).show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
+                    ChooseActionDialog dlg = new ChooseActionDialog(mContext,listOfData.get(holder.getAdapterPosition()).getFilm_Title());
+
+                    dlg.show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
+
+
+
+
+
 
 
 
