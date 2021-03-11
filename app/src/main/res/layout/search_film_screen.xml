@@ -12,50 +12,89 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <View
-                android:id="@+id/view6"
-                android:layout_width="328dp"
-                android:layout_height="40dp"
-                android:background="@drawable/circle_obj"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="20dp"
-                tools:ignore="MissingConstraints" />
-
-            <EditText
-                android:id="@+id/Text_of_search"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="275dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="10dp"
-                android:background="@android:color/transparent"
-                android:imeOptions="actionSearch"
-                android:importantForAutofill="yes"
-                android:inputType="text"
-                android:singleLine="false"
-                android:textColor="#FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/view6"
-                app:layout_constraintStart_toStartOf="@+id/view6"
-                app:layout_constraintTop_toTopOf="@+id/view6"
-                tools:ignore="MissingConstraints" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/search_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:backgroundTint="#00FFFFFF"
-                app:layout_constraintBottom_toBottomOf="@+id/view6"
-                app:layout_constraintEnd_toEndOf="@+id/view6"
-                app:layout_constraintStart_toEndOf="@+id/Text_of_search"
-                app:layout_constraintTop_toTopOf="@+id/view6"
-                app:srcCompat="@android:drawable/ic_menu_search"
-                tools:ignore="MissingConstraints" />
+                <View
+                    android:id="@+id/view6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_obj"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="10dp"
+                    />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <EditText
+                    android:id="@+id/Text_of_search"
+                    android:layout_width="205dp"
+                    android:layout_height="38dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@android:color/transparent"
+                    android:imeOptions="actionSearch"
+                    android:importantForAutofill="yes"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="@+id/view6"
+                    app:layout_constraintStart_toStartOf="@+id/view6"
+                    app:layout_constraintTop_toTopOf="@+id/view6"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:id="@+id/search_button"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:backgroundTint="#00FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="@+id/view6"
+                    app:layout_constraintEnd_toEndOf="@+id/view6"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/Text_of_search"
+                    app:layout_constraintTop_toTopOf="@+id/view6"
+                    app:layout_constraintVertical_bias="0.5"
+                    app:srcCompat="@android:drawable/ic_menu_search"
+                    tools:ignore="MissingConstraints" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <ImageView
+                    android:id="@+id/playButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/userButton"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@android:drawable/ic_media_play" />
+
+                <ImageView
+                    android:id="@+id/userButton"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.75"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/icons8_user_30px" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -63,7 +102,7 @@
             android:layout_marginBottom="55dp">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/recyclerViewFilm"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="0dp"
@@ -72,7 +111,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="invisible"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewFriends"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="0dp"
+                android:scrollbars="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="invisible"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
