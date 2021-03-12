@@ -1,6 +1,5 @@
 package com.example.INGSW.Component.DB.Adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Classes.UserLists;
@@ -55,7 +52,7 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
         if(css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())){
             try {
                 holder.textView.setText(listofdata.get(position).getTitle());
-                with(holder.itemView).load("http://cdn.onlinewebfonts.com/svg/img_568523.png").into((ImageView) holder.itemView.findViewById(R.id.imageView));
+                with(holder.itemView).load("http://cdn.onlinewebfonts.com/svg/img_568523.png").into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
             } catch (Exception e) {
                 e.printStackTrace();
             }

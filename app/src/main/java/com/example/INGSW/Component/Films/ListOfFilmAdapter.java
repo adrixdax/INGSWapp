@@ -1,9 +1,6 @@
 package com.example.INGSW.Component.Films;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.FilmDetails;
-import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.SearchFilmScreen;
 import com.example.INGSW.ToolBarActivity;
@@ -64,7 +60,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
     public void onBindViewHolder(@NonNull ListOfFilmAdapter.ViewHolder holder, int position) {
         if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
             try {
-                with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.imageView));
+                with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
                 holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -81,7 +77,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         } else if (css.getCanonicalName().equals(SearchFilmScreen.class.getCanonicalName())) {
 
             with(holder.itemView).load(listOfData.get(position).getPosterPath().equals("") ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
-                    .into((ImageView) holder.itemView.findViewById(R.id.imageView));
+                    .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
             holder.textViewTitle.setText(listOfData.get(position).getFilm_Title());
             holder.textViewRelaseDate.setText(listOfData.get(position).getRelease_Date());
             holder.textViewTime.setText(String.valueOf(listOfData.get(position).getRuntime()));
@@ -105,7 +101,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             });
         } else {
                 with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
-                        .into((ImageView) holder.itemView.findViewById(R.id.imageView));
+                        .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -185,12 +181,12 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         public ViewHolder(View itemView, Class css) {
             super(itemView);
             if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
-                this.imageView = itemView.findViewById(R.id.imageView);
+                this.imageView = itemView.findViewById(R.id.userprofilepic_view);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
             } else if (css.getCanonicalName().equals(SearchFilmScreen.class.getCanonicalName())) {
 
-                this.imageView = itemView.findViewById(R.id.imageView);
-                this.textViewTitle = itemView.findViewById(R.id.textViewTitle);
+                this.imageView = itemView.findViewById(R.id.userprofilepic_view);
+                this.textViewTitle = itemView.findViewById(R.id.usernick_view);
                 this.textViewRelaseDate = itemView.findViewById(R.id.textViewRelaseDate);
                 this.textViewTime = itemView.findViewById(R.id.textViewTime);
                 this.textViewCategories = itemView.findViewById(R.id.textViewCategories);
@@ -199,7 +195,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
 
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
             } else {
-                this.imageView = itemView.findViewById(R.id.imageView);
+                this.imageView = itemView.findViewById(R.id.userprofilepic_view);
 
                 this.textViewUser = itemView.findViewById(R.id.textView6);
 

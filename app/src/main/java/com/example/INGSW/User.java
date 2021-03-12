@@ -14,5 +14,15 @@ public class User {
         this.propic = propic;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPropic() {
+        return propic;
+    }
 }

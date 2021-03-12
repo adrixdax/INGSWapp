@@ -108,15 +108,15 @@
 
     <TextView
         android:id="@+id/RegisterText"
-        android:layout_width="173dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="48dp"
         android:text="@string/non_hai_un_account"
         android:textColor="#F6F2F2"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints,UnknownId" />
 

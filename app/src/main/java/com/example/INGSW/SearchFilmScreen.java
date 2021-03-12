@@ -23,6 +23,12 @@ import com.example.INGSW.Component.Films.ListOfFilm;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +43,18 @@ public class SearchFilmScreen extends Fragment {
     private RecyclerView recyclerViewFilm;
     private RecyclerView recyclerViewFriends;
     private List<ListOfFilm> filmInSearch = new ArrayList<>();
+    private ArrayList<User> usersInSearchlist;
+
+    private FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private DatabaseReference ref = db.getReference("Users");
+    private UsersListAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.search_film_screen, container, false);
 
         ImageView bt_search = root.findViewById(R.id.search_button);
+        ImageView userbutton = root.findViewById(R.id.userButton);
         bt_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,12 +129,51 @@ public class SearchFilmScreen extends Fragment {
                     e.printStackTrace();
                 }
 */
+
+
             }
         });
+
+        userbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(recyclerViewFilm!=null)recyclerViewFilm.setVisibility(View.INVISIBLE);
+                recyclerViewFriends = root.findViewById(R.id.recyclerViewFriends);
+                recyclerViewFriends.setHasFixedSize(true);
+                recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+                usersInSearchlist = new ArrayList<>();
+                adapter = new UsersListAdapter(getContext(),usersInSearchlist);
+
+                recyclerViewFriends.setAdapter(adapter);
+
+                //Query query = FirebaseDatabase.getInstance().getReference("Users");
+
+                ref.orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(String.valueOf(Text_of_search.getText()) + "\uf8ff");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            User model = dataSnapshot.getValue(User.class);
+                            if(model.getNickname().contains(String.valueOf(Text_of_search.getText())))
+                            usersInSearchlist.add(model);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                recyclerViewFriends.setVisibility(View.VISIBLE);
+            }
+        });
+
         Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
         Text_of_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) { /** senza toggle non possiamo ultimare questo editor action **/
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     bt_search.callOnClick();
                     return true;
