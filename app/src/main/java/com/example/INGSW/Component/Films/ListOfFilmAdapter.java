@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.FilmDetails;
+import com.example.INGSW.MostSeen;
 import com.example.INGSW.R;
 import com.example.INGSW.SearchFilmScreen;
+import com.example.INGSW.SuggestedFIlms;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.home.HomepageScreen;
 
@@ -100,36 +102,27 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 }
             });
         } else {
-                with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
-                        .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-                holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
-            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
+            with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
+                    .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
+            if (css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName())) holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
+            else holder.textViewUser.setText(new StringBuilder().append(listOfData.get(position).getFilm_Title()).append("\nVisto da ").append(listOfData.get(position).getCounter()).append(" utenti").toString());
+            holder.relativeLayout.setOnClickListener(v -> {
+                FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
+                FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
+                transaction.addToBackStack(null);
+                transaction.commit();
             });
 
 
             holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(mContext,"its the vibe for me",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "its the vibe for me", Toast.LENGTH_SHORT).show();
                     System.out.println("VERAMENTE NON LI MOSTRA, A ME NON LI MOSTRA MAI 0.25");
 
                     //ChooseActionDialog dlg = new ChooseActionDialog(mContext);
-                    ChooseActionDialog dlg = new ChooseActionDialog(mContext,listOfData.get(holder.getAdapterPosition()).getFilm_Title());
-
-                    dlg.show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
-
-
-
-
-
+                    new ChooseActionDialog(mContext).show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
 
 
 
@@ -141,7 +134,6 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                     dialog.show();
 
                      */
-
 
 
                     return true;
@@ -184,21 +176,16 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 this.imageView = itemView.findViewById(R.id.userprofilepic_view);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
             } else if (css.getCanonicalName().equals(SearchFilmScreen.class.getCanonicalName())) {
-
                 this.imageView = itemView.findViewById(R.id.userprofilepic_view);
                 this.textViewTitle = itemView.findViewById(R.id.usernick_view);
                 this.textViewRelaseDate = itemView.findViewById(R.id.textViewRelaseDate);
                 this.textViewTime = itemView.findViewById(R.id.textViewTime);
                 this.textViewCategories = itemView.findViewById(R.id.textViewCategories);
                 this.textViewPlot = itemView.findViewById(R.id.textViewPlot);
-
-
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
             } else {
                 this.imageView = itemView.findViewById(R.id.userprofilepic_view);
-
                 this.textViewUser = itemView.findViewById(R.id.textView6);
-
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
             }
         }

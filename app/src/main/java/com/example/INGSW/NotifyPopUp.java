@@ -60,7 +60,6 @@ public class NotifyPopUp extends AppCompatDialogFragment {
         recycler.setAdapter(new NotifyAdapter(notify));
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setHasFixedSize(false);
-        view.setBackgroundColor(Color.TRANSPARENT);
         return view;
     }
 

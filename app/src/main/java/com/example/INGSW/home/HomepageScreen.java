@@ -12,12 +12,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.Films.ListOfFilm;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.FilmDetails;
+import com.example.INGSW.MostSeen;
 import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
@@ -70,6 +73,16 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                 .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
                 .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
+        mostSeen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MostSeen nextFragment = new MostSeen();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "6");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
 
         film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList");
@@ -102,10 +115,6 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
                 System.out.println("Click on bell");
                 System.out.println(((ToolBarActivity) getActivity()).getUid());
                 new NotifyPopUp().show(getActivity().getSupportFragmentManager(), "4");
-                    /*fragment = new NotifyPopUp();
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    fm.beginTransaction().replace(R.id.nav_host_fragment,fragment).commit();
-                    fragment.show(fm,"4");*/
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
