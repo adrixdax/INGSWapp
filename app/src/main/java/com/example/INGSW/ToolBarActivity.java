@@ -65,11 +65,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                     contaiinerItem.put("TOWATCH", singlelist.getIdUserList());
                 }
             }
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 

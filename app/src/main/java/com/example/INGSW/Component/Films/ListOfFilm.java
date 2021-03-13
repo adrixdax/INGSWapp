@@ -24,6 +24,8 @@ public class ListOfFilm {
     private String[] genres;
     @JsonProperty("cast")
     private Cast[] cast;
+    @JsonProperty("counter")
+    private int counter;
 
 
     @JsonCreator
@@ -34,7 +36,8 @@ public class ListOfFilm {
                       @JsonProperty("release_Date") String release_Date,
                       @JsonProperty("runtime") int runtime,
                       @JsonProperty("genres") String[] genres,
-                      @JsonProperty("cast") Cast[] cast) {
+                      @JsonProperty("cast") Cast[] cast,
+                      @JsonProperty("counter") int counter) {
         this.id_Film = id_Film;
         this.film_Title = film_Title;
         this.plot = plot;
@@ -43,6 +46,7 @@ public class ListOfFilm {
         this.runtime = runtime;
         this.genres = genres;
         this.cast = cast;
+        this.counter = counter;
     }
 
     public ListOfFilm(String imageUrl, String title, String plot, String relaseDate, int duration, String[] category) {
@@ -138,5 +142,9 @@ public class ListOfFilm {
     @JsonSetter("cast")
     public void setCast(Cast[] cast) {
         this.cast = cast;
+    }
+
+    public int getCounter(){
+        return this.counter;
     }
 }
