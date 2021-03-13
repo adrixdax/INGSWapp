@@ -147,15 +147,13 @@ public class SearchFilmScreen extends Fragment {
 
                 recyclerViewFriends.setAdapter(adapter);
 
-                //Query query = FirebaseDatabase.getInstance().getReference("Users");
+                Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(String.valueOf(Text_of_search.getText()) + "\uf8ff");
 
-                ref.orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(String.valueOf(Text_of_search.getText()) + "\uf8ff");
-                ref.addValueEventListener(new ValueEventListener() {
+                query.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                             User model = dataSnapshot.getValue(User.class);
-                            if(model.getNickname().contains(String.valueOf(Text_of_search.getText())))
                             usersInSearchlist.add(model);
                         }
                         adapter.notifyDataSetChanged();

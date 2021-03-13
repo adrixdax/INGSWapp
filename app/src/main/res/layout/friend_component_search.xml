@@ -2,43 +2,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relativeLayoutNotify"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="130dp"
     android:background="@drawable/rounded_list_obj">
 
-    <ImageView
+
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userprofilepic_view"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/circle_obj"
         android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/usernick_view"
         android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_marginStart="140dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="50dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginBottom="40dp"
+        android:layout_toStartOf="@+id/addFriendButton"
+        android:layout_toEndOf="@+id/userprofilepic_view"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/poppins_bold"
-        android:maxWidth="300dp"
+        android:maxWidth="200dp"
         android:text="Friend Name"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
         android:textAlignment="center"
-        />
-
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
 
     <ImageView
         android:id="@+id/addFriendButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="49dp"
+        android:layout_height="46dp"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="25dp"
-        android:layout_marginTop="43dp"
-        android:background="@drawable/icons8_plus_26px"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/icons8_plus_26px" />
 
 </RelativeLayout>

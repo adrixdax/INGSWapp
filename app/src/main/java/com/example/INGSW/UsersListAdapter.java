@@ -39,7 +39,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
     public void onBindViewHolder(@NonNull UsersViewHolder holder, int position) {
         User model = userlist.get(position);
         holder.nick.setText(model.getNickname());
-        with(holder.itemView).load(model.getPropic()).into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
+        with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
     }
 
     @Override
@@ -51,7 +51,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
     public static class UsersViewHolder extends RecyclerView.ViewHolder{
 
         TextView nick;
-        ImageView userpic;
+        CircleImageView userpic;
 
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
