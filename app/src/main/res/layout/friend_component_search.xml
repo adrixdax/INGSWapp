@@ -26,17 +26,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="26dp"
         android:layout_marginBottom="40dp"
         android:layout_toStartOf="@+id/addFriendButton"
         android:layout_toEndOf="@+id/userprofilepic_view"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/poppins_bold"
-        android:maxWidth="75dp"
+        android:maxWidth="100dp"
         android:textAlignment="center"
-        android:textColor="#FFFFFF" />
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="10sp"/>
 
     <ImageView
         android:id="@+id/addFriendButton"
