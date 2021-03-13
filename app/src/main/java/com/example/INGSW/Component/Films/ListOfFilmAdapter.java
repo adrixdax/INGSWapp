@@ -105,7 +105,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
                     .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
             if (css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName())) holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
-            else holder.textViewUser.setText(new StringBuilder().append(listOfData.get(position).getFilm_Title()).append("\nVisto da ").append(listOfData.get(position).getCounter()).append(" utenti").toString());
+            else holder.textViewUser.setText(listOfData.get(position).getFilm_Title()+"\nVisto da "+(listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter()+" utente" :listOfData.get(position).getCounter()+ " utenti").toString());
             holder.relativeLayout.setOnClickListener(v -> {
                 FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
                 FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
