@@ -2,6 +2,7 @@ package com.example.INGSW;
 
 
 import android.content.Context;
+import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,11 +63,10 @@ public class SearchFilmScreen extends Fragment {
                 InputMethodManager imm = (InputMethodManager) requireActivity()
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                
                 Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
                 //if toggle button is on film then {
                 try {
-                    //recyclerViewFriends.setVisibility(View.INVISIBLE);
+                    if (recyclerViewFriends != null && recyclerViewFriends.getVisibility() == View.VISIBLE) recyclerViewFriends.setVisibility(View.INVISIBLE);
                     FilmTestController filmTestController = new FilmTestController();
                     filmTestController.setNameOfFilm(Text_of_search.getText().toString().trim());
                     String film = filmTestController.getNameOfFilm();
@@ -137,14 +138,17 @@ public class SearchFilmScreen extends Fragment {
         userbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(recyclerViewFilm!=null)recyclerViewFilm.setVisibility(View.INVISIBLE);
+                if(recyclerViewFilm!=null && recyclerViewFilm.getVisibility() == View.VISIBLE)recyclerViewFilm.setVisibility(View.INVISIBLE);
                 recyclerViewFriends = root.findViewById(R.id.recyclerViewFriends);
                 recyclerViewFriends.setHasFixedSize(true);
                 recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
 
                 usersInSearchlist = new ArrayList<>();
                 adapter = new UsersListAdapter(getContext(),usersInSearchlist);
-
+                LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFriends.getContext(),
+                        layoutManager.getOrientation());
+                recyclerViewFriends.addItemDecoration(dividerItemDecoration);
                 recyclerViewFriends.setAdapter(adapter);
 
                 Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(String.valueOf(Text_of_search.getText()) + "\uf8ff");

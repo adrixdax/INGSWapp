@@ -3,7 +3,8 @@
     android:id="@+id/relativeLayoutNotify"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:background="@drawable/rounded_list_obj">
+    android:background="@drawable/rounded_list_obj"
+    android:layout_marginBottom="5dp">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -33,11 +34,9 @@
         android:layout_toEndOf="@+id/userprofilepic_view"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/poppins_bold"
-        android:maxWidth="200dp"
-        android:text="Friend Name"
+        android:maxWidth="75dp"
         android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp" />
+        android:textColor="#FFFFFF" />
 
     <ImageView
         android:id="@+id/addFriendButton"

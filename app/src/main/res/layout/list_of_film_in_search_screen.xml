@@ -3,7 +3,8 @@
     android:id="@+id/relativeLayoutNotify"
     android:layout_width="match_parent"
     android:layout_height="150dp"
-    android:background="@drawable/rounded_list_obj">
+    android:background="@drawable/rounded_list_obj"
+    android:layout_marginBottom="5dp">
 
     <ImageView
         android:id="@+id/userprofilepic_view"
