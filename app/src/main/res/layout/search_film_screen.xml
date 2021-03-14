@@ -18,23 +18,24 @@
             android:orientation="horizontal">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="275dp"
-                android:layout_height="wrap_content">
+                android:layout_width="299dp"
+                android:layout_height="67dp">
 
                 <View
                     android:id="@+id/view6"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
+                    android:layout_width="286dp"
+                    android:layout_height="52dp"
+                    android:layout_margin="10dp"
                     android:background="@drawable/circle_obj"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:layout_margin="10dp"
-                    />
+                    app:layout_constraintVertical_bias="0.384" />
 
                 <EditText
                     android:id="@+id/Text_of_search"
-                    android:layout_width="205dp"
-                    android:layout_height="38dp"
+                    android:layout_width="224dp"
+                    android:layout_height="37dp"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
                     android:imeOptions="actionSearch"
@@ -65,32 +66,31 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="0dp">
 
                 <ImageView
                     android:id="@+id/playButton"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="45dp"
+                    android:backgroundTint="@color/CineBlue"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/userButton"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintEnd_toStartOf="@+id/userButton"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@android:drawable/ic_media_play" />
+                    app:srcCompat="@drawable/play_button" />
 
                 <ImageView
                     android:id="@+id/userButton"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="70dp"
+                    android:layout_height="45dp"
+                    android:backgroundTint="@color/CineBlue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.75"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/icons8_user_30px" />
+                    app:srcCompat="@drawable/people_button" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -108,12 +108,12 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:scrollbars="vertical"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="invisible"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewFriends"
@@ -123,12 +123,12 @@
                 android:layout_marginEnd="10dp"
 
                 android:scrollbars="vertical"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="invisible"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
