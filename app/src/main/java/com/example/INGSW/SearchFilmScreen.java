@@ -15,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,6 +49,7 @@ public class SearchFilmScreen extends Fragment {
     private EditText Text_of_search;
     private RecyclerView recyclerViewFilm;
     private RecyclerView recyclerViewFriends;
+    private ProgressBar progressBar;
     private List<ListOfFilm> filmInSearch = new ArrayList<>();
     private ArrayList<User> usersInSearchlist;
     private int playFlag,userFlag=0;
@@ -58,12 +60,14 @@ public class SearchFilmScreen extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.search_film_screen, container, false);
 
+
+        View root = inflater.inflate(R.layout.search_film_screen, container, false);
 
         ImageView bt_search = root.findViewById(R.id.search_button);
         ImageView userbutton = root.findViewById(R.id.userButton);
         ImageView playbutton = root.findViewById(R.id.playButton);
+        progressBar = root.findViewById(R.id.progressBar);
 
         Glide.with(root.getContext()).load(R.drawable.play_button_active).into(playbutton);
         playFlag = 1;
@@ -98,6 +102,7 @@ public class SearchFilmScreen extends Fragment {
             public void onClick(View v) {
 
                 if(playFlag == 1){
+
                 InputMethodManager imm = (InputMethodManager) requireActivity()
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
@@ -106,6 +111,8 @@ public class SearchFilmScreen extends Fragment {
                 try {
                     if (recyclerViewFriends != null && recyclerViewFriends.getVisibility() == View.VISIBLE)
                         recyclerViewFriends.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
+
                     FilmTestController filmTestController = new FilmTestController();
                     filmTestController.setNameOfFilm(Text_of_search.getText().toString().trim());
                     String film = filmTestController.getNameOfFilm();
@@ -129,6 +136,7 @@ public class SearchFilmScreen extends Fragment {
                     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFilm.getContext(),
                             layoutManager.getOrientation());
                     recyclerViewFilm.addItemDecoration(dividerItemDecoration);
+                    progressBar.setVisibility(View.GONE);
                     recyclerViewFilm.setVisibility(View.VISIBLE);
 
                 } catch (InterruptedException | ExecutionException | JsonProcessingException e) {
