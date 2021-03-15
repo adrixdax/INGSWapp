@@ -247,8 +247,9 @@ public class FilmDetails extends Fragment {
             @Override
             public void onClick(View v) {
 
-
-                DialogCustomlList fragment = new DialogCustomlList().newInstance();
+                System.out.println("---------------------------------->" + film.getId_Film());
+                DialogCustomlList fragment = new DialogCustomlList();
+                fragment.setIdFilmToInsert(film.getId_Film());
                 fragment.show(getChildFragmentManager(),"6");
                 //new DialogCustomlList().show(getActivity().getSupportFragmentManager(), "6");
             }

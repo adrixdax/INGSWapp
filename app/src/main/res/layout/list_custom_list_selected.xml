@@ -13,14 +13,16 @@
         android:background="@drawable/circle_obj">
 
 
-        <RadioButton
-            android:id="@+id/radioButtonAddList"
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkButtonAddList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="363dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="24dp"
+            app:buttonTint="@color/cardview_light_background"
+            android:shadowColor="#FFFFFF"
             android:textColor="#FFFFFF"
             android:textColorHighlight="#FFFFFF"
             android:textColorHint="#FFFFFF"
@@ -57,7 +59,7 @@
             android:textColor="#FFFFFF"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/radioButtonAddList"
+            app:layout_constraintEnd_toStartOf="@+id/checkButtonAddList"
             app:layout_constraintStart_toEndOf="@+id/profile_image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />

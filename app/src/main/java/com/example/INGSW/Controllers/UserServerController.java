@@ -13,8 +13,9 @@ import okhttp3.Response;
 
 public class UserServerController extends AsyncTask {
 
-    String url = "http://87.16.144.72:8080/";
+    String url = "http://192.168.1.210:8080/";
     String UserId = "";
+    String idFilm = "";
 
 
     private Object getRegistrationUser() {
@@ -73,7 +74,7 @@ public class UserServerController extends AsyncTask {
 
     private Object getCustomLists() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&custom=true");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&custom=true&idFilm=" + idFilm );
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url + "user").post(body).build();
 
@@ -132,6 +133,14 @@ public class UserServerController extends AsyncTask {
 
     public void setUserId(String userId) {
         UserId = userId;
+    }
+
+    public String getIdFilm() {
+        return idFilm;
+    }
+
+    public void setIdFilm(String idFilm) {
+        this.idFilm = idFilm;
     }
 }
 

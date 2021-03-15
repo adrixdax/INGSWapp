@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.R;
 import com.example.INGSW.User;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
+
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 

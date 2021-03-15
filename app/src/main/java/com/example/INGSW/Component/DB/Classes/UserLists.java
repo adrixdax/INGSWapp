@@ -2,14 +2,20 @@ package com.example.INGSW.Component.DB.Classes;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class UserLists {
 
 
+    @JsonProperty("idUserList")
     private int idUserList;
+    @JsonProperty("title")
     private String title;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("type")
     private String type;
+    @JsonProperty("idUser")
     private String idUser;
 
     @JsonCreator
@@ -17,7 +23,7 @@ public class UserLists {
                      @JsonProperty("title") String title,
                      @JsonProperty("description") String description,
                      @JsonProperty("type") String type,
-                     @JsonProperty("idUser") String idUser) {
+                     @JsonProperty("idUser") String idUser){
         this.idUserList = idUserList;
         this.title = title;
         this.description = description;
@@ -29,6 +35,7 @@ public class UserLists {
         return idUserList;
     }
 
+    @JsonSetter("idUserList")
     public void setIdUserList(int idUserList) {
         this.idUserList = idUserList;
     }
@@ -37,6 +44,7 @@ public class UserLists {
         return title;
     }
 
+    @JsonSetter("title")
     public void setTitle(String title) {
         this.title = title;
     }
@@ -45,6 +53,7 @@ public class UserLists {
         return description;
     }
 
+    @JsonSetter("description")
     public void setDescription(String description) {
         this.description = description;
     }
@@ -53,6 +62,7 @@ public class UserLists {
         return type;
     }
 
+    @JsonSetter("type")
     public void setType(String type) {
         this.type = type;
     }
@@ -61,9 +71,8 @@ public class UserLists {
         return idUser;
     }
 
+    @JsonSetter("idUser")
     public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
-
-
 }

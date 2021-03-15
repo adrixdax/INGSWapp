@@ -3,6 +3,7 @@ package com.example.INGSW.Component.DB.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Classes.UserLists;
@@ -21,6 +23,8 @@ import com.example.INGSW.home.HomepageScreen;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 import static com.bumptech.glide.Glide.with;
 
 public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.ViewHolder> {
@@ -28,11 +32,13 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
 
     private Class css = null;
     private View listItem;
+    private List<UserLists> selectedList=null;
 
 
-    public UserListsAdapter(List<UserLists> listofdata, Class css) {
+    public UserListsAdapter(List<UserLists> listofdata, Class css, List<UserLists> selectedList ) {
         this.listofdata = listofdata;
         this.css = css;
+        this.selectedList=selectedList;
     }
 
     @NonNull
@@ -52,7 +58,22 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
         if(css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())){
             try {
                 holder.textView.setText(listofdata.get(position).getTitle());
-                with(holder.itemView).load("http://cdn.onlinewebfonts.com/svg/img_568523.png").into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
+                with(holder.itemView).load("http://cdn.onlinewebfonts.com/svg/img_568523.png").into((CircleImageView) holder.itemView.findViewById(R.id.list_image));
+                holder.selectItem.setOnCheckedChangeListener(null);
+                holder.selectItem.setChecked(false);
+                holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!holder.selectItem.isChecked()) {
+                            holder.selectItem.setChecked(true);
+                            selectedList.add(listofdata.get(position));
+
+                        }else{
+                            holder.selectItem.setChecked(false);
+                            selectedList.remove(listofdata.get(position));
+                        }
+                    }
+                });
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -76,18 +97,16 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
         public ImageButton imageButton;
         public RelativeLayout relativeLayout;
         public TextView textView;
-        public RadioButton selectItem;
+        public AppCompatCheckBox selectItem;
+        public CircleImageView circleImageView;
 
         public ViewHolder(View itemView, Class css) {
             super(itemView);
-            if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
-                this.imageButton = itemView.findViewById(R.id.listComponent);
-                this.relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
-            }else if (css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())) {
+             if (css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())) {
 
-                this.imageButton = itemView.findViewById(R.id.list_image);
+                this.circleImageView = itemView.findViewById(R.id.list_image);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutAddInCustomList);
-                this.selectItem= itemView.findViewById(R.id.radioButtonAddList);
+                this.selectItem= itemView.findViewById(R.id.checkButtonAddList);
                 this.textView= itemView.findViewById(R.id.NameOfCustomList);
 
 
