@@ -100,7 +100,6 @@ public class FilmTestController extends AsyncTask {
 
         try {
             try (Response response = client.newCall(request).execute()) {
-
                 return Objects.requireNonNull(response.body()).string();
             }
         } catch (IOException e) {

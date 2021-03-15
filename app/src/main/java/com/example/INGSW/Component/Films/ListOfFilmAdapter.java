@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.FilmDetails;
-import com.example.INGSW.MostSeen;
 import com.example.INGSW.R;
 import com.example.INGSW.SearchFilmScreen;
 import com.example.INGSW.SuggestedFIlms;
@@ -104,8 +103,10 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         } else {
             with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
                     .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-            if (css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName())) holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
-            else holder.textViewUser.setText(listOfData.get(position).getFilm_Title()+"\nVisto da "+(listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter()+" utente" :listOfData.get(position).getCounter()+ " utenti").toString());
+            if (css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName()))
+                holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
+            else
+                holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nVisto da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
             holder.relativeLayout.setOnClickListener(v -> {
                 FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
                 FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
@@ -122,7 +123,8 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                     System.out.println("VERAMENTE NON LI MOSTRA, A ME NON LI MOSTRA MAI 0.25");
 
                     //ChooseActionDialog dlg = new ChooseActionDialog(mContext);
-                    new ChooseActionDialog(mContext).show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
+                    ChooseActionDialog dlg = new ChooseActionDialog(mContext, listOfData.get(holder.getAdapterPosition()).getFilm_Title());
+                    dlg.show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
 
 
 
