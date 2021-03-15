@@ -108,6 +108,7 @@ public class DialogCustomlList extends AppCompatDialogFragment {
                 selectedLists.clear();
                 dialog.closeOptionsMenu();
                 dialog.cancel();
+                dialog.dismiss();
             }
         });
 
