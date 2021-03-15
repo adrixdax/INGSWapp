@@ -23,6 +23,7 @@ import com.example.INGSW.MostSeen;
 import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
+import com.example.INGSW.UserPrefered;
 import com.example.INGSW.toSee;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.thekhaeng.pushdownanim.PushDownAnim;
@@ -90,6 +91,16 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
                 toSee nextFragment = new toSee();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+        userPrefered.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserPrefered nextFragment = new UserPrefered();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "8");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
