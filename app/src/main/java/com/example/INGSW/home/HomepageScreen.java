@@ -19,11 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.Films.ListOfFilm;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.FilmDetails;
 import com.example.INGSW.MostSeen;
 import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
+import com.example.INGSW.toSee;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -79,6 +79,17 @@ public class HomepageScreen extends Fragment implements View.OnClickListener {
                 MostSeen nextFragment = new MostSeen();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "6");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        tooSee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toSee nextFragment = new toSee();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

@@ -16,10 +16,10 @@ public class FilmTestController extends AsyncTask {
 
     private Exception exception;
     private String nameOfFilm = "";
-    String url = "http://192.168.1.210:8080/";
+    private final String url = "http://87.16.144.72:8080/";
     private String idList = "";
     private String idFilm = "";
-
+    private String uid = "";
 
     private Object getLatestFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -57,7 +57,7 @@ public class FilmTestController extends AsyncTask {
 
     private Object getTooSeeFilmList() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&most=true");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&toSee=" + this.getUid());
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + "film")
@@ -206,4 +206,13 @@ public class FilmTestController extends AsyncTask {
     public void setNameOfFilm(String nameOfFilm) {
         this.nameOfFilm = nameOfFilm;
     }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
 }

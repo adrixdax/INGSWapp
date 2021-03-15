@@ -1,10 +1,7 @@
 package com.example.INGSW;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,7 +11,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -52,10 +48,10 @@ public class SearchFilmScreen extends Fragment {
     private ProgressBar progressBar;
     private List<ListOfFilm> filmInSearch = new ArrayList<>();
     private ArrayList<User> usersInSearchlist;
-    private int playFlag,userFlag=0;
+    private int playFlag, userFlag = 0;
 
-    private FirebaseDatabase db = FirebaseDatabase.getInstance();
-    private DatabaseReference ref = db.getReference("Users");
+    private final FirebaseDatabase db = FirebaseDatabase.getInstance();
+    private final DatabaseReference ref = db.getReference("Users");
     private UsersListAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -105,8 +101,8 @@ public class SearchFilmScreen extends Fragment {
 
                 InputMethodManager imm = (InputMethodManager) requireActivity()
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
+                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                    Text_of_search = root.findViewById(R.id.Text_of_search);
                 //if toggle button is on f ilm then {
                 try {
                     if (recyclerViewFriends != null && recyclerViewFriends.getVisibility() == View.VISIBLE)
@@ -119,7 +115,7 @@ public class SearchFilmScreen extends Fragment {
                     System.out.println("Il film che stai cercando -> " + film);
 
 
-                    String latestJson = (String) filmTestController.execute(new String("search")).get();
+                    String latestJson = (String) filmTestController.execute("search").get();
 
                     System.out.println("I Film trovati -> " + latestJson);
                     filmTestController.isCancelled();
@@ -191,7 +187,7 @@ public class SearchFilmScreen extends Fragment {
                     recyclerViewFriends.addItemDecoration(dividerItemDecoration);
                     recyclerViewFriends.setAdapter(adapter);
 
-                    Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(String.valueOf(Text_of_search.getText()) + "\uf8ff");
+                    Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(Text_of_search.getText() + "\uf8ff");
 
                     query.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -250,7 +246,7 @@ public class SearchFilmScreen extends Fragment {
             }
         });
 */
-        Text_of_search = (EditText) root.findViewById(R.id.Text_of_search);
+        Text_of_search = root.findViewById(R.id.Text_of_search);
         Text_of_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) { /** senza toggle non possiamo ultimare questo editor action **/
