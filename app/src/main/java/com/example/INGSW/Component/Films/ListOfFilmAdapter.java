@@ -20,6 +20,7 @@ import com.example.INGSW.R;
 import com.example.INGSW.SearchFilmScreen;
 import com.example.INGSW.SuggestedFIlms;
 import com.example.INGSW.ToolBarActivity;
+import com.example.INGSW.UserPrefered;
 import com.example.INGSW.home.HomepageScreen;
 
 import java.util.List;
@@ -105,15 +106,25 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                     .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
             if (css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName()))
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
-            else
+            else if (css.getCanonicalName().equals(UserPrefered.class.getCanonicalName())) {
+                holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nIl preferito di " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
+                holder.relativeLayout.setOnClickListener(v -> {
+                    FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
+                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                });
+            } else {
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nVisto da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
-            holder.relativeLayout.setOnClickListener(v -> {
-                FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
-                transaction.addToBackStack(null);
-                transaction.commit();
-            });
+                holder.relativeLayout.setOnClickListener(v -> {
+                    FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
+                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                });
+            }
 
 
             holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
