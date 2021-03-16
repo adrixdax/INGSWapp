@@ -24,10 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class toSee extends Fragment {
+public class ToSee extends Fragment {
 
     private TextView title;
     private RecyclerView toSeeFilms;
+    private FilmTestController con = new FilmTestController();
 
     @Nullable
     @Override
@@ -40,9 +41,9 @@ public class toSee extends Fragment {
 
         List<ListOfFilm> toSee = new ArrayList<>();
         try {
-            FilmTestController con = new FilmTestController();
-            con.setUid(((ToolBarActivity) (getActivity())).getUid());
-            toSee = (List<ListOfFilm>) JSONDecoder.getJsonToDecode(String.valueOf(con.execute("toSee").get()), ListOfFilm.class);
+
+            con.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
+            toSee = (List<ListOfFilm>) JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmInList").get()), ListOfFilm.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

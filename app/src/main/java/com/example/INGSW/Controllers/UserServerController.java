@@ -13,9 +13,12 @@ import okhttp3.Response;
 
 public class UserServerController extends AsyncTask {
 
-    private final String url = "http://87.16.144.72:8080/";
+    private final String url = "http://192.168.1.210:8080/";
     private String UserId = "";
     private String idFilm = "";
+
+    private String listTitle = "";
+    private String listDescription = "";
 
 
     private Object getRegistrationUser() {
@@ -74,7 +77,7 @@ public class UserServerController extends AsyncTask {
 
     private Object getCustomLists() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&custom=true&idFilm=" + idFilm );
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&custom=true&idFilm=" + idFilm);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url + "user").post(body).build();
 
@@ -92,7 +95,7 @@ public class UserServerController extends AsyncTask {
     private Object addCustomList() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&addList=true");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&addList=true&listTitle=" + listTitle + "&listDescription=" + listDescription);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url + "user").post(body).build();
 
@@ -141,6 +144,22 @@ public class UserServerController extends AsyncTask {
 
     public void setIdFilm(String idFilm) {
         this.idFilm = idFilm;
+    }
+
+    public String getListTitle() {
+        return listTitle;
+    }
+
+    public void setListTitle(String listTitle) {
+        this.listTitle = listTitle;
+    }
+
+    public String getListDescription() {
+        return listDescription;
+    }
+
+    public void setListDescription(String listDescription) {
+        this.listDescription = listDescription;
     }
 }
 

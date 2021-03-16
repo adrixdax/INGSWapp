@@ -168,7 +168,7 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
             case R.id.mylists_button:
                 nextFragment = new MyLists();
                 transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "6");
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "MyListCustom");
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;

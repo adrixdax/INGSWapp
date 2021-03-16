@@ -16,7 +16,7 @@ public class FilmTestController extends AsyncTask {
 
     private Exception exception;
     private String nameOfFilm = "";
-    private final String url = "http://87.16.144.72:8080/";
+    private final String url = "http://192.168.1.210:8080/";
     private String idList = "";
     private String idFilm = "";
     private String uid = "";
@@ -157,6 +157,25 @@ public class FilmTestController extends AsyncTask {
     }
 
 
+    private Object getFilmInList() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idList=" + idList);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "list")
+                .post(body)
+                .build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
@@ -177,6 +196,8 @@ public class FilmTestController extends AsyncTask {
                     return addFilmInList();
                 case "removeFilm":
                     return removeFilmInList();
+                case "filmInList":
+                    return getFilmInList();
             }
         }
         return "Helooo";
