@@ -31,7 +31,7 @@ public class JSONDecoder {
         mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
         if (c.getSimpleName().equals("Notify"))
             return jsonNotify(json);
-        else if (c.getSimpleName().equals("ListOfFilm"))
+        else if (c.getSimpleName().equals("Film"))
             return jsonFilmList(json);
         else if (c.getSimpleName().equals("UserLists"))
             return jsonUserLists(json);
