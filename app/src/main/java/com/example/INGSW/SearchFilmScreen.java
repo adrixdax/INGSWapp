@@ -146,41 +146,6 @@ public class SearchFilmScreen extends Fragment {
                     } catch (InterruptedException | ExecutionException | JsonProcessingException e) {
                         e.printStackTrace();
                     }
-                    //}
-                    //else (means is on users)
-  /*              try {
-                    recyclerViewFilm.setVisibility(View.INVISIBLE);
-                    FilmTestController filmTestController = new FilmTestController();
-                    filmTestController.setNameOfFilm(Text_of_search.getText().toString().trim());
-                    String film = filmTestController.getNameOfFilm();
-                    System.out.println("Il film che stai cercando -> "+ film);
-
-
-
-                    String latestJson = (String) filmTestController.execute(new String("search")).get();
-
-                    System.out.println("I Film trovati -> "+ latestJson);
-                    filmTestController.isCancelled();
-
-                    filmInSearch = (List<ListOfFilm>) getJsonToDecode(latestJson, ListOfFilm.class);
-
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
-                    recyclerViewFriends = root.findViewById(R.id.recyclerViewFriends);
-                    ListOfFilmAdapter adapter = new ListOfFilmAdapter(filmInSearch,getContext(),((ToolBarActivity) getActivity()).activeFragment );
-                    adapter.setCss(SearchFilmScreen.class);
-                    recyclerViewFriends.setHasFixedSize(false);
-                    recyclerViewFriends.setLayoutManager(layoutManager);
-                    recyclerViewFriends.setAdapter(adapter);
-                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(Friends.getContext(),
-                            layoutManager.getOrientation());
-                    recyclerViewFriends.addItemDecoration(dividerItemDecoration);
-                    recyclerViewFriends.setVisibility(View.VISIBLE);
-
-                } catch (InterruptedException | ExecutionException | JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-*/
-
                 } else {
                     if (recyclerViewFilm != null && recyclerViewFilm.getVisibility() == View.VISIBLE)
                         recyclerViewFilm.setVisibility(View.INVISIBLE);

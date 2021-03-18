@@ -13,7 +13,7 @@ import okhttp3.Response;
 public class NotifyTestController extends AsyncTask {
 
     private Exception exception;
-    private final String url = "http://192.168.1.210:8080/";
+    private final String url = "http://192.168.1.211:8080/";
 
     private Object getNotify(String idUser) {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");

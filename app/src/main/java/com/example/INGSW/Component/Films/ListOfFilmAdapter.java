@@ -89,7 +89,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             }
             genere = genere.substring(0, genere.length() - 3);
             holder.textViewCategories.setText(genere);
-            holder.textViewPlot.setText(listOfData.get(position).getPlot());
+            holder.textViewPlot.setText(listOfData.get(position).getPlot().isEmpty()?"Non è stata trovata alcuna trama per questo film" : listOfData.get(position).getPlot());
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
