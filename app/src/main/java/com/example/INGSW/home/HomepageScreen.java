@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.MostSeen;
@@ -38,7 +38,7 @@ public class HomepageScreen extends Fragment {
     ImageButton bell;
     FilmTestController con = new FilmTestController();
 
-    private List<ListOfFilm> film = new ArrayList<>();
+    private List<Film> film = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -104,7 +104,7 @@ public class HomepageScreen extends Fragment {
 
             try {
                 if (!latestJson.isEmpty()) {
-                    film = (List<ListOfFilm>) getJsonToDecode(latestJson, ListOfFilm.class);
+                    film = (List<Film>) getJsonToDecode(latestJson, Film.class);
                     ((ToolBarActivity) getActivity()).getConteinerList().put("HomepageList", film);
                 }
             } catch (Exception e) {

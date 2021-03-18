@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Utility.JSONDecoder;
@@ -39,11 +39,11 @@ public class ToSee extends Fragment {
         title = root.findViewById(R.id.textViewTooSee);
         toSeeFilms = root.findViewById(R.id.recyclerViewToSee);
 
-        List<ListOfFilm> toSee = new ArrayList<>();
+        List<Film> toSee = new ArrayList<>();
         try {
 
             con.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
-            toSee = (List<ListOfFilm>) JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmInList").get()), ListOfFilm.class);
+            toSee = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmInList").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

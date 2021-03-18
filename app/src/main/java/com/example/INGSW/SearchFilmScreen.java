@@ -11,7 +11,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,7 +45,7 @@ public class SearchFilmScreen extends Fragment {
     private RecyclerView recyclerViewFilm;
     private RecyclerView recyclerViewFriends;
     //private ProgressBar progressBar;
-    private List<ListOfFilm> filmInSearch = new ArrayList<>();
+    private List<Film> filmInSearch = new ArrayList<>();
     private ArrayList<User> usersInSearchlist;
     private int playFlag, userFlag = 0;
     private TextView textError;
@@ -126,7 +125,7 @@ public class SearchFilmScreen extends Fragment {
                             System.out.println("I Film trovati -> " + latestJson);
                             filmTestController.isCancelled();
 
-                            filmInSearch = (List<ListOfFilm>) getJsonToDecode(latestJson, ListOfFilm.class);
+                            filmInSearch = (List<Film>) getJsonToDecode(latestJson, Film.class);
 
 
                             LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);

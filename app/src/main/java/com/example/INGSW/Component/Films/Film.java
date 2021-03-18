@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.List;
 
-public class ListOfFilm {
+public class Film {
 
     @JsonProperty("id_Film")
     private int id_Film;
@@ -29,15 +29,15 @@ public class ListOfFilm {
 
 
     @JsonCreator
-    public ListOfFilm(@JsonProperty("id_Film") int id_Film,
-                      @JsonProperty("film_Title") String film_Title,
-                      @JsonProperty("plot") String plot,
-                      @JsonProperty("posterPath") String posterPath,
-                      @JsonProperty("release_Date") String release_Date,
-                      @JsonProperty("runtime") int runtime,
-                      @JsonProperty("genres") String[] genres,
-                      @JsonProperty("cast") Cast[] cast,
-                      @JsonProperty("counter") int counter) {
+    public Film(@JsonProperty("id_Film") int id_Film,
+                @JsonProperty("film_Title") String film_Title,
+                @JsonProperty("plot") String plot,
+                @JsonProperty("posterPath") String posterPath,
+                @JsonProperty("release_Date") String release_Date,
+                @JsonProperty("runtime") int runtime,
+                @JsonProperty("genres") String[] genres,
+                @JsonProperty("cast") Cast[] cast,
+                @JsonProperty("counter") int counter) {
         this.id_Film = id_Film;
         this.film_Title = film_Title;
         this.plot = plot;
@@ -49,7 +49,7 @@ public class ListOfFilm {
         this.counter = counter;
     }
 
-    public ListOfFilm(String imageUrl, String title, String plot, String relaseDate, int duration, String[] category) {
+    public Film(String imageUrl, String title, String plot, String relaseDate, int duration, String[] category) {
         this.posterPath = imageUrl;
         this.film_Title = title;
         this.plot = plot;
@@ -58,17 +58,17 @@ public class ListOfFilm {
         this.genres = category;
     }
 
-    public ListOfFilm(String imageUrl, String title) {
+    public Film(String imageUrl, String title) {
         this.posterPath = imageUrl;
         this.film_Title = title;
     }
 
-    public ListOfFilm(List<ListOfFilm> listOfFilm) {
+    public Film(List<Film> listOfFilm) {
         listOfFilm = listOfFilm;
     }
 
 
-    public ListOfFilm(String imageUrl) {
+    public Film(String imageUrl) {
         this.posterPath = imageUrl;
     }
 

@@ -2,7 +2,7 @@ package com.example.INGSW.Utility;
 
 import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.DB.Classes.UserLists;
-import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.Film;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,8 +14,8 @@ public class JSONDecoder {
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    private static List<ListOfFilm> jsonFilmList(String json) throws JsonProcessingException {
-        return Arrays.asList(mapper.readValue(json, ListOfFilm[].class));
+    private static List<Film> jsonFilmList(String json) throws JsonProcessingException {
+        return Arrays.asList(mapper.readValue(json, Film[].class));
     }
 
     private static List<Notify> jsonNotify(String json) throws JsonProcessingException{

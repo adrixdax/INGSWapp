@@ -10,14 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
-import com.example.INGSW.Controllers.FilmTestController;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,7 +62,7 @@ public class SeenFilms extends Fragment {
         }
     }
 */
-    private List<ListOfFilm> listofFilm;
+    private List<Film> listofFilm;
 
 
     @Override

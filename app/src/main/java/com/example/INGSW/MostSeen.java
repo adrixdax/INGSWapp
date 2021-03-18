@@ -4,21 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Utility.JSONDecoder;
@@ -40,9 +36,9 @@ public class MostSeen extends Fragment {
         title = (TextView) root.findViewById(R.id.textViewMostSeen);
         mostSeenFilm = root.findViewById(R.id.recyclerViewMostSeen);
 
-        List<ListOfFilm> mostSeenFilms = new ArrayList<>();
+        List<Film> mostSeenFilms = new ArrayList<>();
         try {
-            mostSeenFilms = (List<ListOfFilm>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("most").get()),ListOfFilm.class);
+            mostSeenFilms = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("most").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

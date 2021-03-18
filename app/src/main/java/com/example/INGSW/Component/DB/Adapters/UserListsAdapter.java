@@ -4,10 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -20,17 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.DB.Classes.UserLists;
 
 
-import com.example.INGSW.Component.Films.ListOfFilm;
-import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.DialogCustomlList;
-import com.example.INGSW.FilmDetails;
 import com.example.INGSW.FilmInCustomList;
 import com.example.INGSW.MyLists;
 import com.example.INGSW.R;
-import com.example.INGSW.ToSee;
-import com.example.INGSW.ToolBarActivity;
-import com.example.INGSW.Utility.JSONDecoder;
-import com.example.INGSW.home.HomepageScreen;
 
 import java.util.List;
 

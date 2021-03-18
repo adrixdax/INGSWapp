@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Classes.UserLists;
-import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Utility.JSONDecoder;
@@ -46,11 +46,11 @@ public class FilmInCustomList extends Fragment {
 
         title.setText(list.getTitle());
 
-        List<ListOfFilm> CustomListFilm = new ArrayList<>();
+        List<Film> CustomListFilm = new ArrayList<>();
         try {
             FilmTestController con = new FilmTestController();
             con.setIdList(String.valueOf(list.getIdUserList()));
-            CustomListFilm = (List<ListOfFilm>) JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmInList").get()), ListOfFilm.class);
+            CustomListFilm = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmInList").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

@@ -29,7 +29,7 @@ import static com.bumptech.glide.Glide.with;
 
 public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.ViewHolder> {
 
-    private final List<ListOfFilm> listOfData;
+    private final List<Film> listOfData;
 
 
     private Class css = null;
@@ -37,7 +37,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
     private final Context mContext;
     private final Fragment startFragment;
 
-    public ListOfFilmAdapter(List<ListOfFilm> listOfData, Context mContext, Fragment startFragment) {
+    public ListOfFilmAdapter(List<Film> listOfData, Context mContext, Fragment startFragment) {
         this.listOfData = listOfData;
         this.mContext = mContext;
         this.startFragment = startFragment;
@@ -181,7 +181,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         public TextView textViewUser;
 
 
-        private ListOfFilm film;
+        private Film film;
 
         public ViewHolder(View itemView, Class css) {
             super(itemView);

@@ -3,17 +3,14 @@ package com.example.INGSW;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
-import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 
@@ -71,7 +68,7 @@ public class SuggestedFIlms extends Fragment {
 */
 
 
-    private List<ListOfFilm> film = null;
+    private List<Film> film = null;
     private FilmTestController con = new FilmTestController();
 
     @Override
@@ -96,7 +93,7 @@ public class SuggestedFIlms extends Fragment {
 
 
             try {
-                film = (List<ListOfFilm>) getJsonToDecode(latestJson, ListOfFilm.class);
+                film = (List<Film>) getJsonToDecode(latestJson, Film.class);
                 ((ToolBarActivity) getActivity()).getConteinerList().put("SuggestedFIlms", film);
             } catch (Exception e) {
                 e.printStackTrace();

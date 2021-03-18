@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.Films.ListOfFilm;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Utility.JSONDecoder;
@@ -38,9 +38,9 @@ public class UserPrefered extends Fragment {
         title = root.findViewById(R.id.textViewUserPrefered);
         userPreferedFilms = root.findViewById(R.id.recyclerViewUserPrefered);
 
-        List<ListOfFilm> prefered = new ArrayList<>();
+        List<Film> prefered = new ArrayList<>();
         try {
-            prefered = (List<ListOfFilm>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("userPrefered").get()), ListOfFilm.class);
+            prefered = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("userPrefered").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

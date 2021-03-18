@@ -13,8 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.INGSW.Component.DB.Classes.UserLists;
-import com.example.INGSW.Component.Films.ListOfFilm;
-import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.UserController;
 import com.example.INGSW.Controllers.UserServerController;
 import com.example.INGSW.home.HomepageScreen;
@@ -36,7 +35,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     Fragment activeFragment;
 
-    Map<String,List<ListOfFilm>> conteinerList= new HashMap<>();
+    Map<String,List<Film>> conteinerList= new HashMap<>();
     private ProgressDialog progressDialog;
     private Map<String, Object> contaiinerItem = new HashMap<>();
     User user = null;
@@ -120,7 +119,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         return loadFragment(fragment, tag);
     }
 
-    public Map<String, List<ListOfFilm>> getConteinerList() {
+    public Map<String, List<Film>> getConteinerList() {
         return conteinerList;
     }
 
