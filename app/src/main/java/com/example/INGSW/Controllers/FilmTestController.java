@@ -16,7 +16,7 @@ public class FilmTestController extends AsyncTask {
 
     private Exception exception;
     private String nameOfFilm = "";
-    private final String url = "http://192.168.1.211:8080/";
+    private final String url = "http://87.16.144.72:8080/";
     private String idList = "";
     private String idFilm = "";
     private String uid = "";

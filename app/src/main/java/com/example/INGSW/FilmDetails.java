@@ -12,10 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.concurrent.ExecutionException;
 
@@ -37,6 +39,7 @@ public class FilmDetails extends Fragment {
     private ImageButton imageButtonFavorites;
     private ImageButton imageButtonToWatch;
     private ImageButton imageButtonCustomList;
+    private ImageButton goToReview;
 
 
     public FilmDetails(Film film) {
@@ -80,6 +83,8 @@ public class FilmDetails extends Fragment {
         imageButtonWatch = (ImageButton) root.findViewById(R.id.imageButtonWatch);
         imageButtonFavorites = (ImageButton) root.findViewById(R.id.imageButtonFavorites);
         imageButtonToWatch = (ImageButton) root.findViewById(R.id.imageButtonToWatch);
+        goToReview = (ImageButton) root.findViewById(R.id.recensioni_button);
+
 
 
         try {
@@ -167,6 +172,19 @@ public class FilmDetails extends Fragment {
             }
         });
 
+        PushDownAnim.setPushDownAnimTo(goToReview);
+        goToReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment nextFragment;
+                FragmentTransaction transaction;
+                nextFragment = new ReviewScreen();
+                transaction = FilmDetails.this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "FilmReviews");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         imageButtonToWatch.setOnClickListener(new View.OnClickListener() {
             @Override

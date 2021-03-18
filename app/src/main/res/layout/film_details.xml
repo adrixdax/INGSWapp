@@ -51,7 +51,7 @@
     <TextView
         android:id="@+id/textViewPlot"
         android:layout_width="350dp"
-        android:layout_height="250dp"
+        android:layout_height="230dp"
         android:fontFamily="@font/poppins_bold"
         android:text=""
         android:textColor="#FFFFFF"
@@ -163,5 +163,32 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.111"
         app:srcCompat="@drawable/icons8_plus_26px" />
+
+
+    <ImageButton
+        android:id="@+id/recensioni_button"
+        android:layout_width="220dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/circle_obj"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="#EFE7E7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPlot"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:layout_width="152dp"
+        android:layout_height="37dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recensioni_button"
+        app:layout_constraintEnd_toEndOf="@+id/recensioni_button"
+        app:layout_constraintStart_toStartOf="@+id/recensioni_button"
+        app:layout_constraintTop_toTopOf="@+id/recensioni_button"
+        app:srcCompat="@drawable/recensioni" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
