@@ -88,6 +88,7 @@ public class FilmDetails extends Fragment {
 
 
         try {
+            ftc = new FilmTestController();
             ftc.setIdFilm(String.valueOf(film.getId_Film()));
             ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
             imageButtonFavoritesblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
