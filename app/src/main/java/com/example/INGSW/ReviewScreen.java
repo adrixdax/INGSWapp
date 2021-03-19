@@ -3,36 +3,78 @@ package com.example.INGSW;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
+import com.example.INGSW.Component.DB.Classes.Reviews;
+import com.example.INGSW.Component.Films.Film;
+import com.example.INGSW.Component.Films.ListOfFilmAdapter;
+import com.example.INGSW.Controllers.ReviewsController;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
+
 
 public class ReviewScreen extends Fragment {
 
+    private String idFilm;
+    private List<Reviews> reviews =  new ArrayList<>();
+    private RecyclerView recyclerViewReviews;
 
-
-    public ReviewScreen() {
-        // Required empty public constructor
-
-
+    public ReviewScreen(String idFilm) {
+        this.idFilm = idFilm;
     }
 
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.review_fragment, container, false);
+
+        ReviewsController rc = new ReviewsController();
+        rc.setIdFilm(idFilm);
+
+        try {
+            String latestJson = (String) rc.execute("FilmReviews").get();
+
+            System.out.println(latestJson);
+
+            if(!latestJson.isEmpty()){
+                rc.isCancelled();
+
+                 reviews = (List<Reviews>) getJsonToDecode(latestJson, Reviews.class);
+
+                LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
+                recyclerViewReviews = root.findViewById(R.id.recyclerViewReviews);
+                ReviewsAdapter adapter = new ReviewsAdapter(reviews);
+                recyclerViewReviews.setHasFixedSize(false);
+                recyclerViewReviews.setLayoutManager(layoutManager);
+                recyclerViewReviews.setAdapter(adapter);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewReviews.getContext(),
+                        layoutManager.getOrientation());
+                recyclerViewReviews.addItemDecoration(dividerItemDecoration);
+                recyclerViewReviews.setVisibility(View.VISIBLE);
+            }
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
 
         return root;
     }

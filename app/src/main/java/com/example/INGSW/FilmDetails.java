@@ -86,7 +86,6 @@ public class FilmDetails extends Fragment {
         goToReview = (ImageButton) root.findViewById(R.id.recensioni_button);
 
 
-
         try {
             ftc = new FilmTestController();
             ftc.setIdFilm(String.valueOf(film.getId_Film()));
@@ -179,7 +178,7 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 Fragment nextFragment;
                 FragmentTransaction transaction;
-                nextFragment = new ReviewScreen();
+                nextFragment = new ReviewScreen(String.valueOf(film.getId_Film()));
                 transaction = FilmDetails.this.getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "FilmReviews");
                 transaction.addToBackStack(null);
@@ -266,7 +265,7 @@ public class FilmDetails extends Fragment {
                 System.out.println("---------------------------------->" + film.getId_Film());
                 DialogCustomlList fragment = new DialogCustomlList();
                 fragment.setIdFilmToInsert(film.getId_Film());
-                fragment.show(getChildFragmentManager(),"6");
+                fragment.show(getChildFragmentManager(), "6");
                 //new DialogCustomlList().show(getActivity().getSupportFragmentManager(), "6");
             }
         });

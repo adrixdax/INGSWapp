@@ -122,6 +122,7 @@ public class SearchFilmScreen extends Fragment {
                             textError.setText("Nessun Film trovato");
                             System.out.println("--------------------------------------------> Vuoto");
                         } else {
+                            textError.setText("");
                             System.out.println("I Film trovati -> " + latestJson);
                             filmTestController.isCancelled();
 
@@ -157,6 +158,7 @@ public class SearchFilmScreen extends Fragment {
                     if (adapter.userlist.isEmpty()) {
                         textError.setText("Nessun Utente trovato ");
                     }
+                    textError.setText("");
                     LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
                     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFriends.getContext(),
                             layoutManager.getOrientation());
