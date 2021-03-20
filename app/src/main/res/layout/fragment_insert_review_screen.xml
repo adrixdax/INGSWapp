@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout5"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InsertReviewScreen">
+
+
+    <TextView
+        android:id="@+id/recensici_film_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/recensisci_il_film_insert"
+        android:textColor="#DFD2D2"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RatingBar
+        android:id="@+id/ratingBar3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:max="5"
+        android:numStars="5"
+        android:progressDrawable="@drawable/custom_star"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.267"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recensici_film_view" />
+
+    <view
+        android:id="@+id/view1"
+        class="com.google.android.material.textfield.TextInputLayout"
+        android:layout_width="317dp"
+        android:layout_height="258dp"
+        android:layout_marginTop="244dp"
+        android:background="@drawable/rounded_list_obj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/editTextListDescription"
+        android:layout_width="280dp"
+        android:layout_height="240dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="top|left"
+        android:hint="Descrizione"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:maxHeight="240dp"
+        android:textColor="#F3ECEC"
+        android:textColorHint="#7AF3EFEF"
+        app:layout_constraintBottom_toBottomOf="@+id/view1"
+        app:layout_constraintEnd_toEndOf="@+id/view1"
+        app:layout_constraintStart_toStartOf="@+id/view1"
+        app:layout_constraintTop_toTopOf="@+id/view1"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/button_inserisci"
+        android:layout_width="127dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="26dp"
+        android:background="@drawable/rounded_corners"
+        android:fontFamily="@font/poppins_bold"
+        android:text="INSERISCI"
+        android:textColor="#E8DCDC"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.869"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
