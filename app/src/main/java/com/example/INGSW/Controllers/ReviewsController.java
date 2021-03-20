@@ -14,7 +14,7 @@ import okhttp3.Response;
 public class ReviewsController extends AsyncTask {
 
     private Exception exception;
-    private final String url = "http://192.168.1.30:8080/";
+    private final String url = "http://87.16.144.72:8080/";
     private String idFilm = "";
     private String idUser = "";
 

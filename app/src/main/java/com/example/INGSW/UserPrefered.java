@@ -33,11 +33,9 @@ public class UserPrefered extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.user_prefered, container, false);
-
+        View root = inflater.inflate(R.layout.users_prefered, container, false);
         title = root.findViewById(R.id.textViewUserPrefered);
         userPreferedFilms = root.findViewById(R.id.recyclerViewUserPrefered);
-
         List<Film> prefered = new ArrayList<>();
         try {
             prefered = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("userPrefered").get()), Film.class);
