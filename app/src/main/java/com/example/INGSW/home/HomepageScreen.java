@@ -7,40 +7,78 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.MostSeen;
 import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
-import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.ToSee;
+import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.UserPrefered;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class HomepageScreen extends Fragment {
 
+    Timer timer = new Timer();
+
+    private class NotifyUpdater extends TimerTask {
+        private List<Notify> notify = new ArrayList<>();
+
+        public List<Notify> getNotify(){
+            return notify;
+        }
+
+        public void run() {
+            System.out.println("5 minutes passed :)");
+            try {
+                notify = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute(((ToolBarActivity)getActivity()).getUid()).get()),Notify.class);
+            } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (notify.size() == 0) {
+                        bell.setImageResource(R.drawable.icons8_notification_30px_1);
+                    } else {
+                        bell.setImageResource(R.drawable.icons8_notification_30px_1_active);
+                    }
+                }
+            });
+            timer.schedule(new NotifyUpdater(),300000);
+        }
+
+    }
+
 
     Button mostSeen, mostReviewed, tooSee, userPrefered;
-    ImageButton bell;
+    static ImageButton bell;
     FilmTestController con = new FilmTestController();
 
     private List<Film> film = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //NotifyUpdater not = new NotifyUpdater(5);
+        NotifyUpdater not = new NotifyUpdater();
+        timer.schedule(not,1000);
 
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
 
@@ -117,7 +155,7 @@ public class HomepageScreen extends Fragment {
             public void onClick(View v) {
                 System.out.println("Click on bell");
                 System.out.println(((ToolBarActivity) getActivity()).getUid());
-                new NotifyPopUp().show(getActivity().getSupportFragmentManager(), "4");
+                new NotifyPopUp(not.getNotify()).show(getActivity().getSupportFragmentManager(), "4");
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);

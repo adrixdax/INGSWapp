@@ -17,46 +17,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.NotifyAdapter;
 import com.example.INGSW.Component.DB.Classes.Notify;
-import com.example.INGSW.Controllers.NotifyTestController;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class NotifyPopUp extends AppCompatDialogFragment {
 
     private RecyclerView recycler;
     private List<Notify> notify = new ArrayList<>();
 
-    public NotifyPopUp() {
+    public NotifyPopUp(List<Notify> list) {
+        this.notify = list;
     }
 
-    public static NotifyPopUp newInstance() {
-        NotifyPopUp frag = new NotifyPopUp();
-        Bundle args = new Bundle();
-        frag.setArguments(args);
-        return frag;
-    }
+    public NotifyPopUp(){
 
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.notifypopup, new ConstraintLayout(getActivity()), false);
         recycler = view.findViewById(R.id.recyclerViewNotify);
-        String json = "";
-        try {
-            json = (String) new NotifyTestController().execute(((ToolBarActivity) getActivity()).getUid()).get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            notify = (List<Notify>) getJsonToDecode(json, Notify.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
         recycler.setAdapter(new NotifyAdapter(notify));
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setHasFixedSize(false);
