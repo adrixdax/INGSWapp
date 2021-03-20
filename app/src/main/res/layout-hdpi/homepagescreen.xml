@@ -40,7 +40,6 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/circle_obj"
-        android:src="@drawable/icons8_notification_30px_4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

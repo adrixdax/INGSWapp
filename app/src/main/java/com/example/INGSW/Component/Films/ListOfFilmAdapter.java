@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.FilmDetails;
+import com.example.INGSW.FilmInCustomList;
 import com.example.INGSW.R;
 import com.example.INGSW.SearchFilmScreen;
 import com.example.INGSW.SuggestedFIlms;
@@ -104,7 +105,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         } else {
             with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
                     .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-            if (css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName()))
+            if (css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName()) || css.getCanonicalName().equals(FilmInCustomList.class.getCanonicalName()))
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
             else if (css.getCanonicalName().equals(UserPrefered.class.getCanonicalName())) {
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nIl preferito di " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
@@ -115,7 +116,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                     transaction.addToBackStack(null);
                     transaction.commit();
                 });
-            } else {
+            }   else{
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nVisto da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
                 holder.relativeLayout.setOnClickListener(v -> {
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));

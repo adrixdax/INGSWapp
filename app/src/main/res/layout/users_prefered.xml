@@ -22,6 +22,7 @@
                 android:autoSizeTextType="uniform"
                 android:fontFamily="@font/poppins_bold"
                 android:text="I preferiti degli utenti"
+                android:textAllCaps="true"
                 android:textAlignment="center"
                 android:textColor="@color/White"
                 android:textSize="20sp"
