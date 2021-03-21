@@ -57,6 +57,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             }
             System.out.println("----------------------------------------------------------------------------> " + listofdata.get(position).getTitle());
             holder.ratingBar.setRating((float) listofdata.get(position).getVal());
+            holder.ratingBar.setClickable(false);
+            holder.ratingBar.setIsIndicator(true);
             holder.reviewTitle.setText(listofdata.get(position).getTitle());
             holder.reviewDescription.setText(listofdata.get(position).getDesc());
             holder.relativeLayoutReviewList.setOnClickListener(new View.OnClickListener() {
