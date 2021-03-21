@@ -1,5 +1,6 @@
 package com.example.INGSW;
 
+import android.net.sip.SipSession;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -78,6 +79,7 @@ public class ReviewScreen extends Fragment {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
 
 
 
