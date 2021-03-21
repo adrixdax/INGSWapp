@@ -3,6 +3,7 @@ package com.example.INGSW;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RatingBar;
 
 import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
@@ -30,7 +32,7 @@ import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 public class ReviewScreen extends Fragment {
 
     private String idFilm;
-    private List<Reviews> reviews =  new ArrayList<>();
+    private List<Reviews> reviews = new ArrayList<>();
     private RecyclerView recyclerViewReviews;
     private RatingBar ratingBar;
 
@@ -55,10 +57,10 @@ public class ReviewScreen extends Fragment {
 
             System.out.println(latestJson);
 
-            if(!latestJson.isEmpty()){
+            if (!latestJson.isEmpty()) {
                 rc.isCancelled();
 
-                 reviews = (List<Reviews>) getJsonToDecode(latestJson, Reviews.class);
+                reviews = (List<Reviews>) getJsonToDecode(latestJson, Reviews.class);
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
                 recyclerViewReviews = root.findViewById(R.id.recyclerViewReviews);
@@ -80,19 +82,37 @@ public class ReviewScreen extends Fragment {
             e.printStackTrace();
         }
 
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+      /*  ratingBar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            public void onClick(View v) {
                 Fragment nextFragment;
                 FragmentTransaction transaction;
-                nextFragment = new InsertReviewScreen(ratingBar.getRating());
+                FragmentManager fm = ReviewScreen.this.getActivity().getSupportFragmentManager();
+                Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
+                nextFragment = new InsertReviewScreen(ratingBar.getRating(),idFilm);
                 transaction = ReviewScreen.this.getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "InsertFilmReview");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
+*/
 
+        Button bottone = root.findViewById(R.id.button3);
+        bottone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment nextFragment;
+                FragmentTransaction transaction;
+                FragmentManager fm = ReviewScreen.this.getActivity().getSupportFragmentManager();
+                Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
+                nextFragment = new InsertReviewScreen(ratingBar.getRating(),idFilm);
+                transaction = ReviewScreen.this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "InsertFilmReview");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         return root;
     }

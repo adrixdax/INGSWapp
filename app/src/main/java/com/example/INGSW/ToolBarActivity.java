@@ -188,6 +188,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                         }
                     }).create().show();
         }
+
     }
 
     public void setUid(String uid){

@@ -17,10 +17,13 @@ public class ReviewsController extends AsyncTask {
     private final String url = "http://87.16.144.72:8080/";
     private String idFilm = "";
     private String idUser = "";
+    private String title="";
+    private String desc="";
+    private String val="";
 
     private Object getFilmReviews() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idFilm=" + idFilm);
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idFilm=" + idFilm + "&insert=false");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url + "review").post(body).build();
         try {
@@ -36,7 +39,23 @@ public class ReviewsController extends AsyncTask {
 
     private Object getUserReviews() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + idUser);
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + idUser + "&insert=false");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "review").post(body).build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private Object addReviews() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idFilm=" + idFilm + "&title=" + title+ "&desc=" + desc +"&val="+ val + "&idUser=" + idUser + "&insert=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url + "review").post(body).build();
         try {
@@ -59,6 +78,8 @@ public class ReviewsController extends AsyncTask {
                     return getFilmReviews();
                 case "UserReviews":
                     return getUserReviews();
+                case "AddReviews":
+                    return addReviews();
             }
         }
         return "Helooo";
@@ -78,5 +99,33 @@ public class ReviewsController extends AsyncTask {
 
     public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public String getVal() {
+        return val;
+    }
+
+    public void setVal(String val) {
+        this.val = val;
     }
 }
