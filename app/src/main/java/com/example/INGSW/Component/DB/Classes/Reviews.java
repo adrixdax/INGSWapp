@@ -1,5 +1,6 @@
 package com.example.INGSW.Component.DB.Classes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -12,16 +13,18 @@ public class Reviews {
     @JsonProperty("description")
     private String description;
     @JsonProperty("val")
-    private float val;
+    private double val;
     @JsonProperty("idFilm")
     private int idFilm;
     @JsonProperty("iduser")
     private String iduser;
 
+
+    @JsonCreator
     public Reviews(@JsonProperty("id_review") int id_review,
                    @JsonProperty("title") String title,
                    @JsonProperty("description") String description,
-                   @JsonProperty("val") float val,
+                   @JsonProperty("val") double val,
                    @JsonProperty("idFilm") int idFilm,
                    @JsonProperty("iduser") String iduser) {
         this.id_review = id_review;
@@ -54,18 +57,18 @@ public class Reviews {
         return description;
     }
 
-    @JsonSetter("desc")
+    @JsonSetter("description")
     public void setDescription(String description) {
         this.description = description;
     }
 
 
-    public float getVal() {
+    public double getVal() {
         return val;
     }
 
     @JsonSetter("val")
-    public void setVal(float val) {
+    public void setVal(double val) {
         this.val = val;
     }
 

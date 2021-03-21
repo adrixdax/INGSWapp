@@ -60,7 +60,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             holder.ratingBar.setClickable(false);
             holder.ratingBar.setIsIndicator(true);
             holder.reviewTitle.setText(listofdata.get(position).getTitle());
-            holder.reviewDescription.setText(listofdata.get(position).getDesc());
+            holder.reviewDescription.setText(listofdata.get(position).getDescription());
             holder.relativeLayoutReviewList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
