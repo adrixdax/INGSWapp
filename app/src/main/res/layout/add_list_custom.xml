@@ -85,6 +85,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="316dp"
@@ -109,15 +110,15 @@
             android:id="@+id/editTextListDescription"
             android:layout_width="280dp"
             android:layout_height="240dp"
-            android:maxHeight="240dp"
-            android:gravity="top|left"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="68dp"
             android:background="@android:color/transparent"
             android:ems="10"
+            android:gravity="top|left"
             android:hint="Descrizione"
             android:importantForAutofill="no"
             android:inputType="textMultiLine"
+            android:maxHeight="240dp"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -129,27 +130,31 @@
         android:id="@+id/button"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginStart="74dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="36dp"
         android:background="@drawable/circle_obj"
-        android:textColor="#FFFFFF"
         android:backgroundTint="#AC2525"
         android:fontFamily="@font/poppins_bold"
         android:text="Annulla"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginEnd="74dp"
-        android:layout_marginBottom="70dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginBottom="36dp"
         android:background="@drawable/rounded_corners"
-        android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
         android:text="Aggiungi"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
