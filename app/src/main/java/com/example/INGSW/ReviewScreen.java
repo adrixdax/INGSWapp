@@ -34,7 +34,6 @@ public class ReviewScreen extends Fragment {
     private String idFilm;
     private List<Reviews> reviews = new ArrayList<>();
     private RecyclerView recyclerViewReviews;
-    private RatingBar ratingBar;
 
     public ReviewScreen(String idFilm) {
         this.idFilm = idFilm;
@@ -46,8 +45,6 @@ public class ReviewScreen extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.review_fragment, container, false);
-
-        ratingBar = root.findViewById(R.id.ratingBar);
 
         ReviewsController rc = new ReviewsController();
         rc.setIdFilm(idFilm);
@@ -82,23 +79,9 @@ public class ReviewScreen extends Fragment {
             e.printStackTrace();
         }
 
-      /*  ratingBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment nextFragment;
-                FragmentTransaction transaction;
-                FragmentManager fm = ReviewScreen.this.getActivity().getSupportFragmentManager();
-                Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
-                nextFragment = new InsertReviewScreen(ratingBar.getRating(),idFilm);
-                transaction = ReviewScreen.this.getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "InsertFilmReview");
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
-*/
 
-        Button bottone = root.findViewById(R.id.button3);
+
+        Button bottone = root.findViewById(R.id.buttonwritereview);
         bottone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +89,7 @@ public class ReviewScreen extends Fragment {
                 FragmentTransaction transaction;
                 FragmentManager fm = ReviewScreen.this.getActivity().getSupportFragmentManager();
                 Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
-                nextFragment = new InsertReviewScreen(ratingBar.getRating(),idFilm);
+                nextFragment = new InsertReviewScreen(idFilm);
                 transaction = ReviewScreen.this.getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "InsertFilmReview");
                 transaction.addToBackStack(null);

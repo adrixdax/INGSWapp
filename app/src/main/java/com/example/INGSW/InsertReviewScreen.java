@@ -19,16 +19,14 @@ import java.util.concurrent.ExecutionException;
 
 public class InsertReviewScreen extends Fragment {
 
-
-    private float rating;
+    
     private RatingBar ratingBar;
     private Button insert;
     private String idFilm;
     private EditText title;
     private EditText description;
 
-    public InsertReviewScreen(float rating, String idFilm) {
-        this.rating = rating;
+    public InsertReviewScreen (String idFilm) {
         this.idFilm=idFilm;
     }
 
@@ -40,7 +38,6 @@ public class InsertReviewScreen extends Fragment {
         View root = inflater.inflate(R.layout.fragment_insert_review_screen, container, false);
 
         ratingBar = root.findViewById(R.id.ratingBar3);
-        ratingBar.setRating(this.rating);
 
 
         title = root.findViewById(R.id.review_title);
