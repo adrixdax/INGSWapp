@@ -55,7 +55,7 @@ public class ReviewsController extends AsyncTask {
 
     private Object addReviews() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idFilm=" + idFilm + "&title=" + title+ "&desc=" + desc +"&val="+ val + "&idUser=" + idUser + "&insert=true");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idFilm=" + idFilm + "&title=" + title + "&description=" + desc + "&val=" + val + "&idUser=" + idUser + "&insert=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url + "review").post(body).build();
         try {

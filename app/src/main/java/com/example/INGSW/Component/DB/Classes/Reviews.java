@@ -9,8 +9,8 @@ public class Reviews {
     private int id_review;
     @JsonProperty("title")
     private String title;
-    @JsonProperty("desc")
-    private String desc;
+    @JsonProperty("description")
+    private String description;
     @JsonProperty("val")
     private float val;
     @JsonProperty("idFilm")
@@ -20,13 +20,13 @@ public class Reviews {
 
     public Reviews(@JsonProperty("id_review") int id_review,
                    @JsonProperty("title") String title,
-                   @JsonProperty("desc") String desc,
+                   @JsonProperty("description") String description,
                    @JsonProperty("val") float val,
                    @JsonProperty("idFilm") int idFilm,
                    @JsonProperty("iduser") String iduser) {
         this.id_review = id_review;
         this.title = title;
-        this.desc = desc;
+        this.description = description;
         this.val = val;
         this.idFilm = idFilm;
         this.iduser = iduser;
@@ -50,13 +50,13 @@ public class Reviews {
         this.title = title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
     @JsonSetter("desc")
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 

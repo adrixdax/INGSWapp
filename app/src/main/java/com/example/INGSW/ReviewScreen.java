@@ -1,7 +1,10 @@
 package com.example.INGSW;
 
-import android.net.sip.SipSession;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,16 +13,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.RatingBar;
-
 import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
 import com.example.INGSW.Component.DB.Classes.Reviews;
-import com.example.INGSW.Component.Films.Film;
-import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.ReviewsController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -32,7 +27,7 @@ import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class ReviewScreen extends Fragment {
 
-    private String idFilm;
+    private final String idFilm;
     private List<Reviews> reviews = new ArrayList<>();
     private RecyclerView recyclerViewReviews;
 
@@ -72,15 +67,9 @@ public class ReviewScreen extends Fragment {
                 recyclerViewReviews.setVisibility(View.VISIBLE);
             }
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
+        } catch (ExecutionException | InterruptedException | JsonProcessingException e) {
             e.printStackTrace();
         }
-
-
 
 
         Button bottone = root.findViewById(R.id.buttonwritereview);
