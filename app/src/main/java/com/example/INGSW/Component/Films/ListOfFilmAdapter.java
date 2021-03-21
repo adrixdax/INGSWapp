@@ -64,15 +64,12 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
             try {
                 with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-                holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                        FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
+                holder.relativeLayout.setOnClickListener(v -> {
+                    FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
+                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -91,22 +88,26 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             genere = genere.substring(0, genere.length() - 3);
             holder.textViewCategories.setText(genere);
             holder.textViewPlot.setText(listOfData.get(position).getPlot().isEmpty()?"Non è stata trovata alcuna trama per questo film" : listOfData.get(position).getPlot());
-            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            holder.relativeLayout.setOnClickListener(v -> {
 
-                    FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
+                FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
+                FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
+                transaction.addToBackStack(null);
+                transaction.commit();
             });
         } else {
             with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
                     .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-            if (css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName()) || css.getCanonicalName().equals(FilmInCustomList.class.getCanonicalName()))
+            if (css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName()) || css.getCanonicalName().equals(FilmInCustomList.class.getCanonicalName())){
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
+            holder.relativeLayout.setOnClickListener(v -> {
+                FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
+                FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            });}
             else if (css.getCanonicalName().equals(UserPrefered.class.getCanonicalName())) {
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nIl preferito di " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
                 holder.relativeLayout.setOnClickListener(v -> {

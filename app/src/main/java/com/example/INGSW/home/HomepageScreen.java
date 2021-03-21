@@ -18,6 +18,7 @@ import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
+import com.example.INGSW.Controllers.NotifyUpdater;
 import com.example.INGSW.MostSeen;
 import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
@@ -39,36 +40,6 @@ public class HomepageScreen extends Fragment {
 
     Timer timer = new Timer();
 
-    private class NotifyUpdater extends TimerTask {
-        private List<Notify> notify = new ArrayList<>();
-
-        public List<Notify> getNotify(){
-            return notify;
-        }
-
-        public void run() {
-            System.out.println("5 minutes passed :)");
-            try {
-                notify = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute(((ToolBarActivity)getActivity()).getUid()).get()),Notify.class);
-            } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (notify.size() == 0) {
-                        bell.setImageResource(R.drawable.icons8_notification_30px_1);
-                    } else {
-                        bell.setImageResource(R.drawable.icons8_notification_30px_1_active);
-                    }
-                }
-            });
-            timer.schedule(new NotifyUpdater(),300000);
-        }
-
-    }
-
-
     Button mostSeen, mostReviewed, tooSee, userPrefered;
     static ImageButton bell;
     FilmTestController con = new FilmTestController();
@@ -77,9 +48,6 @@ public class HomepageScreen extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //NotifyUpdater not = new NotifyUpdater(5);
-        NotifyUpdater not = new NotifyUpdater();
-        timer.schedule(not,1000);
-
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
 
         mostSeen = root.findViewById(R.id.mostSeen);
@@ -150,6 +118,8 @@ public class HomepageScreen extends Fragment {
             }
         }
         bell = root.findViewById(R.id.notifyBell);
+        NotifyUpdater not = new NotifyUpdater(timer,bell,getActivity());
+        timer.schedule(not,1);
         bell.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
