@@ -176,13 +176,17 @@ public class FilmDetails extends Fragment {
         goToReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment nextFragment;
+                /*Fragment nextFragment;
                 FragmentTransaction transaction;
                 nextFragment = new ReviewScreen(String.valueOf(film.getId_Film()));
                 transaction = FilmDetails.this.getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "FilmReviews");
                 transaction.addToBackStack(null);
                 transaction.commit();
+                 */
+
+                SpoilerAlertDIalog dlg = new SpoilerAlertDIalog(film.getId_Film());
+                dlg.show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
             }
         });
 

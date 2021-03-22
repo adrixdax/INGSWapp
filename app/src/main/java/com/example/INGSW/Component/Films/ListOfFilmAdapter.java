@@ -132,24 +132,10 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(mContext, "its the vibe for me", Toast.LENGTH_SHORT).show();
-                    System.out.println("VERAMENTE NON LI MOSTRA, A ME NON LI MOSTRA MAI 0.25");
 
                     //ChooseActionDialog dlg = new ChooseActionDialog(mContext);
                     ChooseActionDialog dlg = new ChooseActionDialog(mContext, listOfData.get(holder.getAdapterPosition()).getFilm_Title());
                     dlg.show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
-
-
-
-                    /*Dialog dialog = new Dialog(mContext);
-                    dialog.setContentView(R.layout.film_action_choose_dialog);
-                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                    dialog.setCancelable(true);
-                    dialog.show();
-
-                     */
-
 
                     return true;
                 }

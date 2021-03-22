@@ -44,21 +44,13 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
 
-        share = dialog.findViewById(R.id.Share_button);
+        share = dialog.findViewById(R.id.share_button);
         remove = dialog.findViewById(R.id.Remove_button);
         filmTitle = dialog.findViewById(R.id.filmTitle_view);
 
         PushDownAnim.setPushDownAnimTo(share, remove);
         filmTitle.setText(this.title);
 
-
-        /*Dialog dialog = new Dialog(getActivity());
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.film_action_choose_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setCancelable(true);
-        dialog.setContentView(getActivity().getLayoutInflater().inflate(R.layout.film_action_choose_dialog, new ConstraintLayout(getActivity()), false));
-       */
         return dialog;
 
     }
