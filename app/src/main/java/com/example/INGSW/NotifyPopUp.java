@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.NotifyAdapter;
 import com.example.INGSW.Component.DB.Classes.Notify;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class NotifyPopUp extends AppCompatDialogFragment {
                              Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.notifypopup, new ConstraintLayout(getActivity()), false);
         recycler = view.findViewById(R.id.recyclerViewNotify);
-        recycler.setAdapter(new NotifyAdapter(notify));
+        recycler.setAdapter(new NotifyAdapter(notify,((ToolBarActivity)(getActivity())).getReference()));
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setHasFixedSize(false);
         return view;

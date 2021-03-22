@@ -22,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,7 +43,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     private boolean loadUser = false;
     UserController userController = new UserController();
     private UserServerController usc = new UserServerController();
-
+    private static final FirebaseDatabase ref = FirebaseDatabase.getInstance();
     private String uid="";
 
     @Override
@@ -50,7 +51,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationscreen);
         getUser();
-
+        ref.setPersistenceEnabled(true);
         try {
             usc.setUserId(uid);
             String temp =(String) usc.execute(new String("getDefaultListOfUser")).get();
@@ -198,6 +199,11 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     public String getUid(){
         return this.uid;
     }
+
+    public static FirebaseDatabase getReference(){
+        return ref;
+    }
+
 }
 
 //account@gmail.com

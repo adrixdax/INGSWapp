@@ -7,7 +7,7 @@
     android:background="@drawable/rounded_list_obj"
     android:id="@id/relativeLayoutNotify">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userImageNotify"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -29,7 +29,6 @@
         android:layout_marginStart="10dp"
         android:textSize="20sp"
         android:textColor="@color/White"
-        android:text="userName"
         android:autoSizeTextType="uniform"
         android:maxLines="1" />
 
@@ -44,7 +43,6 @@
         android:layout_below="@id/userImageNotify"
         android:layout_toEndOf="@id/filmIcon"
         android:layout_marginStart="10dp"
-        android:text="@string/text"
         android:autoSizeTextType="uniform" />
 
     <ImageView
