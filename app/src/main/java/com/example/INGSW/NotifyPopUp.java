@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -31,14 +32,13 @@ public class NotifyPopUp extends AppCompatDialogFragment {
     }
 
     public NotifyPopUp(){
-
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.notifypopup, new ConstraintLayout(getActivity()), false);
         recycler = view.findViewById(R.id.recyclerViewNotify);
-        recycler.setAdapter(new NotifyAdapter(notify));
+        recycler.setAdapter(new NotifyAdapter(notify,((ToolBarActivity)(getActivity())).getReference()));
         recycler.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setHasFixedSize(false);
         return view;
@@ -47,7 +47,6 @@ public class NotifyPopUp extends AppCompatDialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         Dialog dialog = new Dialog(getActivity());
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.notifypopup);
