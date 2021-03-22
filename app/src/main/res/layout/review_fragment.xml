@@ -10,15 +10,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewReviews"
         android:layout_width="402dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="58dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="90dp"
+        android:layout_marginBottom="56dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonwritereview"
-        app:layout_constraintVertical_bias="0.034" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <TextView
         android:id="@+id/Recensici_film_view"
