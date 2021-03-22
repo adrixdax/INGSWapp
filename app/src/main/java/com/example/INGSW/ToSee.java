@@ -41,7 +41,7 @@ public class ToSee extends Fragment {
 
         List<Film> toSee = new ArrayList<>();
         try {
-
+            con = new FilmTestController();
             con.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
             toSee = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmInList").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
