@@ -8,10 +8,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Classes.Reviews;
+import com.example.INGSW.FilmInCustomList;
 import com.example.INGSW.R;
+import com.example.INGSW.ReviewDetail;
 import com.example.INGSW.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,9 +34,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     private final List<Reviews> listofdata;
     private View listItem;
+    private final Fragment startFragment;
 
-    public ReviewsAdapter(List<Reviews> listofdata) {
+    public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment) {
         this.listofdata = listofdata;
+        this.startFragment = startFragment;
     }
 
     @NonNull
@@ -51,19 +57,34 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             reviewer = getReviewer(listofdata.get(position).getIduser());
 
             if (reviewer != null) {
-                System.out.println("_------------------------------------------------------------> Non sono vuoto");
                 with(holder.itemView).load(reviewer.getPropic()).into((CircleImageView) holder.userImage.findViewById(R.id.userprofilepic_view));
                 holder.userNickView.setText(reviewer.getNickname());
             }
-            System.out.println("----------------------------------------------------------------------------> " + listofdata.get(position).getTitle());
             holder.ratingBar.setRating((float) listofdata.get(position).getVal());
             holder.ratingBar.setClickable(false);
             holder.ratingBar.setIsIndicator(true);
             holder.reviewTitle.setText(listofdata.get(position).getTitle());
             holder.reviewDescription.setText(listofdata.get(position).getDescription());
+            String[] line = listofdata.get(position).getDescription().split(System.getProperty("line.separator"));
+            if (line.length > 5) {
+                int lunghezza = 0;
+                for (int i = 0; i < 5; i++) {
+                    lunghezza = lunghezza + line[i].length();
+                }
+                holder.reviewDescription.setText(listofdata.get(position).getDescription().substring(0, lunghezza + 4) + "...");
+            } else if (listofdata.get(position).getDescription().length() >= 300) {
+                holder.reviewDescription.setText(listofdata.get(position).getDescription().substring(0, 150 - 3) + "...");
+            } else {
+                holder.reviewDescription.setText(listofdata.get(position).getDescription());
+            }
             holder.relativeLayoutReviewList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position));
+                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             });
         } catch (Exception e) {

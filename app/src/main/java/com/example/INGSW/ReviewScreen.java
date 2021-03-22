@@ -57,7 +57,7 @@ public class ReviewScreen extends Fragment {
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
                 recyclerViewReviews = root.findViewById(R.id.recyclerViewReviews);
-                ReviewsAdapter adapter = new ReviewsAdapter(reviews);
+                ReviewsAdapter adapter = new ReviewsAdapter(reviews,this);
                 recyclerViewReviews.setHasFixedSize(false);
                 recyclerViewReviews.setLayoutManager(layoutManager);
                 recyclerViewReviews.setAdapter(adapter);
