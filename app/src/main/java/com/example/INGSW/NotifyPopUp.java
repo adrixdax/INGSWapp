@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -17,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.NotifyAdapter;
 import com.example.INGSW.Component.DB.Classes.Notify;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,6 @@ public class NotifyPopUp extends AppCompatDialogFragment {
     }
 
     public NotifyPopUp(){
-
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -48,7 +47,6 @@ public class NotifyPopUp extends AppCompatDialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         Dialog dialog = new Dialog(getActivity());
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.notifypopup);

@@ -34,7 +34,6 @@ public class NotifyUpdater extends TimerTask {
 
 
     public void run() {
-        System.out.println("5 minutes passed :)");
         try {
             notify = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute(((ToolBarActivity)activity).getUid()).get()),Notify.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
@@ -50,7 +49,7 @@ public class NotifyUpdater extends TimerTask {
                 }
             }
         });
-        timer.schedule(new NotifyUpdater(this.timer,this.bell,this.activity),300000);
+        timer.schedule(new NotifyUpdater(this.timer, bell,this.activity),30000);
     }
 
 }

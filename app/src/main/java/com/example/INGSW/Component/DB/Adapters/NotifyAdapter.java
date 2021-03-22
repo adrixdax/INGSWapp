@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,11 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        PushDownAnim.setPushDownAnimTo(holder.yes,holder.no)
+                .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
+                .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
+                .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
+                .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
         holder.yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -165,8 +165,7 @@ public class SearchFilmScreen extends Fragment {
                     recyclerViewFriends.addItemDecoration(dividerItemDecoration);
                     recyclerViewFriends.setAdapter(adapter);
 
-                    Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(Text_of_search.getText() + "\uf8ff");
-
+                    Query query = ToolBarActivity.getReference().getReference("Users").orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(Text_of_search.getText() + "\uf8ff");
                     query.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
