@@ -8,12 +8,19 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Controllers.RegistrationController;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -55,7 +62,26 @@ public class RegistrationScreen extends AppCompatActivity {
         registerUser  = (Button) findViewById(R.id.registerUserButton);
         registerUser.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               reg.registerUser(editTextMail,editTextPassword,repeatPassword,editTextNickName,propic);
+                DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+                DatabaseReference userNameRef = rootRef.child("Users");
+                Query queries=userNameRef.orderByChild("nickname").equalTo(editTextNickName.getText().toString());
+                ValueEventListener eventListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if(!dataSnapshot.exists()) {
+                            reg.registerUser(editTextMail,editTextPassword,repeatPassword,editTextNickName,propic);
+                        }
+                        else{
+                            editTextNickName.setError("Nickname già in uso");
+                            editTextNickName.requestFocus();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {}
+                };
+                queries.addListenerForSingleValueEvent(eventListener);
             }
         });
         editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {

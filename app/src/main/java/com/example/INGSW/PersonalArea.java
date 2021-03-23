@@ -28,6 +28,8 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
     private Button myfavs;
     private Button suggested;
     private Button seenfilms;
+    private Button myreviews;
+
 
 
     GoogleSignInAccount acct;
@@ -50,6 +52,8 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
         suggested = (Button) root.findViewById(R.id.friendsuggests_button);
         seenfilms = (Button) root.findViewById(R.id.seenfilms_button);
         logout = (Button) root.findViewById(R.id.Logout_button);
+        myreviews = (Button) root.findViewById(R.id.myreviews_button);
+
 
         mylists.setOnClickListener(this);
         myfavs.setOnClickListener(this);
@@ -57,7 +61,7 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
         seenfilms.setOnClickListener(this);
 
 
-        PushDownAnim.setPushDownAnimTo(mylists, myfavs, suggested, seenfilms, logout)
+        PushDownAnim.setPushDownAnimTo(mylists, myfavs, suggested, seenfilms, logout,myreviews)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                 .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)

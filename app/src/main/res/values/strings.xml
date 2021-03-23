@@ -38,4 +38,8 @@
     <string name="elimina">elimina</string>
     <string name="review_text">TextView</string>
     <string name="recensisci_il_film_insert">Recensisci il film</string>
+    <string name="ok">OK</string>
+    <string name="annulla">ANNULLA</string>
+    <string name="attenzione">ATTENZIONE</string>
+    <string name="tornando_alla_schermata_precedente_perderai_i_dati_relativi_alla_recensione_che_si_sta_inserendo">Tornando alla schermata precedente perderai i dati relativi alla recensione che si sta inserendo</string>
 </resources>
