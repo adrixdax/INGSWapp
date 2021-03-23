@@ -19,6 +19,7 @@ import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.NotifyUpdater;
+import com.example.INGSW.MostReviewed;
 import com.example.INGSW.MostSeen;
 import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
@@ -60,12 +61,25 @@ public class HomepageScreen extends Fragment {
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                 .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
                 .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
+
+
+        mostReviewed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MostReviewed nextFragment = new MostReviewed();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "MostReviewed");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
         mostSeen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MostSeen nextFragment = new MostSeen();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "6");
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "MostSeen");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

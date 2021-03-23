@@ -24,34 +24,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class MostSeen extends Fragment {
+public class MostReviewed extends Fragment {
     TextView title;
-    RecyclerView mostSeenFilm;
+    RecyclerView mostReviewedFilm;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View root = inflater.inflate(R.layout.most_seen_homepage, container, false);
+        View root = inflater.inflate(R.layout.most_reviewd_homepage, container, false);
 
-        title = (TextView) root.findViewById(R.id.textViewMostSeen);
-        mostSeenFilm = root.findViewById(R.id.recyclerViewMostSeen);
+        title = (TextView) root.findViewById(R.id.textViewMostReviewed);
+        mostReviewedFilm = root.findViewById(R.id.recyclerViewMostReviewed);
 
-        List<Film> mostSeenFilms = new ArrayList<>();
+        List<Film> mostReviewedFilms = new ArrayList<>();
         try {
-            mostSeenFilms = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("mostViewed").get()), Film.class);
+            mostReviewedFilms = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("mostReviewd").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(mostSeenFilms,getContext(),this);
-        adapter.setCss(MostSeen.class);
-        mostSeenFilm.setHasFixedSize(false);
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter(mostReviewedFilms,getContext(),this);
+        adapter.setCss(MostReviewed.class);
+        mostReviewedFilm.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
-        mostSeenFilm.setLayoutManager(layoutManager);
-        mostSeenFilm.setAdapter(adapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mostSeenFilm.getContext(),
+        mostReviewedFilm.setLayoutManager(layoutManager);
+        mostReviewedFilm.setAdapter(adapter);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mostReviewedFilm.getContext(),
                 layoutManager.getOrientation());
-        mostSeenFilm.addItemDecoration(dividerItemDecoration);
-        mostSeenFilm.setVisibility(View.VISIBLE);
+        mostReviewedFilm.addItemDecoration(dividerItemDecoration);
+        mostReviewedFilm.setVisibility(View.VISIBLE);
         return root;
     }
 

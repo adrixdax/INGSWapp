@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.FilmDetails;
 import com.example.INGSW.FilmInCustomList;
+import com.example.INGSW.MostSeen;
 import com.example.INGSW.R;
 import com.example.INGSW.SearchFilmScreen;
 import com.example.INGSW.SuggestedFIlms;
@@ -117,7 +118,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                     transaction.addToBackStack(null);
                     transaction.commit();
                 });
-            }   else{
+            }   else if (css.getCanonicalName().equals(MostSeen.class.getCanonicalName())){
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nVisto da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
                 holder.relativeLayout.setOnClickListener(v -> {
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
@@ -126,6 +127,16 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                     transaction.addToBackStack(null);
                     transaction.commit();
                 });
+            }else{
+                holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nRecensito da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
+                holder.relativeLayout.setOnClickListener(v -> {
+                    FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
+                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                });
+
             }
 
 

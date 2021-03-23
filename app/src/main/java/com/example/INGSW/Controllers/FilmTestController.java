@@ -16,7 +16,7 @@ public class FilmTestController extends AsyncTask {
 
     private Exception exception;
     private String nameOfFilm = "";
-    private final String url = "http://87.16.144.72:8080/";
+    private final String url = "http://192.168.1.30:8080/";
     private String idList = "";
     private String idFilm = "";
     private String uid = "";
@@ -39,7 +39,7 @@ public class FilmTestController extends AsyncTask {
 
     private Object getMostViewedFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&most=true");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&mostviewed=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + "film")
@@ -75,7 +75,7 @@ public class FilmTestController extends AsyncTask {
 
     private Object getMostReviewedFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&most=true");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&mostreviewed=true");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + "film")
@@ -197,7 +197,7 @@ public class FilmTestController extends AsyncTask {
             switch (objects[0].toString()) {
                 case "latest":
                     return getLatestFilms();
-                case "most":
+                case "mostViewed":
                     return getMostViewedFilms();
                 case "toSee":
                     return getTooSeeFilmList();
