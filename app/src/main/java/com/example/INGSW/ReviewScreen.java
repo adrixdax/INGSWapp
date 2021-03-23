@@ -31,6 +31,7 @@ public class ReviewScreen extends Fragment {
     private List<Reviews> reviews = new ArrayList<>();
     private RecyclerView recyclerViewReviews;
 
+
     public ReviewScreen(String idFilm) {
         this.idFilm = idFilm;
     }

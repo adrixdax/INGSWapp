@@ -51,7 +51,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigationscreen);
         getUser();
-        ref.setPersistenceEnabled(true);
+        //ref.setPersistenceEnabled(true);
         try {
             usc.setUserId(uid);
             String temp =(String) usc.execute(new String("getDefaultListOfUser")).get();
@@ -168,6 +168,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         String tag1="1";
         String tag2= "2";
         String tag3= "3";
+
         if( fm.getBackStackEntryCount()>0 && !(tag2.equals(currentFragment.getTag())  || tag3.equals(currentFragment.getTag())) && !(tag1.equals(currentFragment.getTag())) ){
             fm.popBackStack();
         }else if( tag2.equals(currentFragment.getTag())  || tag3.equals(currentFragment.getTag()) ){

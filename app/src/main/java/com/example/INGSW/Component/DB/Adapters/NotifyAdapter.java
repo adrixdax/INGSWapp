@@ -38,7 +38,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     private final List<Notify> listOfData;
     private FirebaseDatabase ref;
 
-    private User getReviewer(String id, ViewHolder holder, int position) {
+    private User getUser(String id, ViewHolder holder, int position) {
         final User[] reviewer = new User[1];
         try {
             Query query = ref.getReference("Users").orderByKey().equalTo(id);
@@ -93,7 +93,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         View listItem = layoutInflater.inflate(R.layout.list_notify, parent, false);
         ViewHolder holder = new NotifyAdapter.ViewHolder(listItem);
         for (int i = 0; i<listOfData.size(); i++)
-            getReviewer(listOfData.get(i).getId_sender(),holder,i);
+            getUser(listOfData.get(i).getId_sender(),holder,i);
         return holder;
     }
 

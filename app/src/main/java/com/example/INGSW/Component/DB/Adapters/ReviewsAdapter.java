@@ -35,6 +35,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     private final List<Reviews> listofdata;
     private View listItem;
     private final Fragment startFragment;
+    private FirebaseDatabase ref;
 
     public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment) {
         this.listofdata = listofdata;
@@ -54,7 +55,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         try {
 
             User reviewer = null;
-            reviewer = getReviewer(listofdata.get(position).getIduser());
+            getReviewer(listofdata.get(position).getIduser(), holder);
 
             if (reviewer != null) {
                 with(holder.itemView).load(reviewer.getPropic()).into((CircleImageView) holder.userImage.findViewById(R.id.userprofilepic_view));
@@ -104,6 +105,31 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         return 0;
     }
 
+    private void getReviewer(String id, ReviewsAdapter.ViewHolder holder) {
+        try {
+            Query query = FirebaseDatabase.getInstance().getReference("Users").orderByKey().equalTo(id);
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        User model = dataSnapshot.getValue(User.class);
+                        with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.userImage.findViewById(R.id.userprofilepic_view));
+                        holder.userNickView.setText(model.getNickname());
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public CircleImageView userImage;
@@ -124,34 +150,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             relativeLayoutReviewList = itemView.findViewById(R.id.relativeLayoutReviewList);
 
         }
-    }
-
-    private User getReviewer(String id) {
-
-        final User[] reviewer = {null};
 
 
-        try {
-            Query query = FirebaseDatabase.getInstance().getReference("Users").equalTo(id);
-            query.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        User model = dataSnapshot.getValue(User.class);
-                        reviewer[0] = model;
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return reviewer[0];
     }
 
 

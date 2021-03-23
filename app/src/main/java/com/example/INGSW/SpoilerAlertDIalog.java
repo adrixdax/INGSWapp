@@ -12,6 +12,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.thekhaeng.pushdownanim.PushDownAnim;
@@ -20,17 +21,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class SpoilerAlertDIalog extends AppCompatDialogFragment {
 
-    Context dialog_ctx;
     Button procedi, annulla;
-    private int filmid;
+    private String filmId;
+    private FragmentTransaction transaction;
 
 
 
-
-
-    public SpoilerAlertDIalog(Context ctx,int id_film) {
-        this.dialog_ctx = ctx;
-        this.filmid = id_film;
+    public SpoilerAlertDIalog(String idFilm, FragmentTransaction transaction) {
+        this.filmId = idFilm;
+        this.transaction = transaction;
     }
 
     @NotNull
@@ -40,7 +39,7 @@ public class SpoilerAlertDIalog extends AppCompatDialogFragment {
 
 
         Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.spoilerAlert_dialog);
+        dialog.setContentView(R.layout.spoiler_alert_dialog);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
@@ -53,17 +52,25 @@ public class SpoilerAlertDIalog extends AppCompatDialogFragment {
         procedi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Context ctx = dialog_ctx;
-                Fragment nextFragment;
-                FragmentTransaction transaction;
-                nextFragment = new ReviewScreen(String.valueOf(filmid);
-                transaction = ctx.getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "FilmReviews");
+
                 transaction.addToBackStack(null);
                 transaction.commit();
+                dialog.closeOptionsMenu();
+                getDialog().dismiss();
+                dialog.cancel();
+                dialog.dismiss();
+                dismiss();
+            }
+        });
 
-                 */
+        annulla.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.closeOptionsMenu();
+                getDialog().dismiss();
+                dialog.cancel();
+                dialog.dismiss();
+                dismiss();
             }
         });
 

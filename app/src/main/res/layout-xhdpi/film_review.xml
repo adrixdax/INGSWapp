@@ -33,7 +33,7 @@
         <TextView
             android:id="@+id/usernick_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:layout_marginEnd="229dp"
             android:layout_marginBottom="12dp"
             android:autoSizeMaxTextSize="24sp"

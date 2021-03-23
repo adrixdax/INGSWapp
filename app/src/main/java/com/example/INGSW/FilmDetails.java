@@ -176,17 +176,14 @@ public class FilmDetails extends Fragment {
         goToReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Fragment nextFragment;
+                Fragment nextFragment;
                 FragmentTransaction transaction;
                 nextFragment = new ReviewScreen(String.valueOf(film.getId_Film()));
                 transaction = FilmDetails.this.getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "FilmReviews");
-                transaction.addToBackStack(null);
-                transaction.commit();
-                 */
 
-                SpoilerAlertDIalog dlg = new SpoilerAlertDIalog(film.getId_Film());
-                dlg.show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
+                SpoilerAlertDIalog dlg = new SpoilerAlertDIalog(String.valueOf(film.getId_Film()),transaction);
+                dlg.show(getChildFragmentManager(), "SpoilerAllert");
             }
         });
 
@@ -265,8 +262,6 @@ public class FilmDetails extends Fragment {
         imageButtonCustomList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                System.out.println("---------------------------------->" + film.getId_Film());
                 DialogCustomlList fragment = new DialogCustomlList();
                 fragment.setIdFilmToInsert(film.getId_Film());
                 fragment.show(getChildFragmentManager(), "6");
@@ -277,15 +272,6 @@ public class FilmDetails extends Fragment {
 
         return root;
 
-
-    }
-
-
-    public void onBackPressed() {
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
-        }
 
     }
 

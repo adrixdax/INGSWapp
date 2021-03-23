@@ -33,6 +33,7 @@ public class ReviewDetail extends Fragment {
     private TextView reviewTitle;
     private TextView reviewDescription;
     private RatingBar ratingBar;
+    private FirebaseDatabase ref;
 
 
     public ReviewDetail(Reviews review) {
@@ -49,16 +50,9 @@ public class ReviewDetail extends Fragment {
         userName = (TextView) root.findViewById(R.id.usernick_view);
         reviewTitle = (TextView) root.findViewById(R.id.review_title);
         reviewDescription = (TextView) root.findViewById(R.id.textViewDescriptionReview);
-        ratingBar = (RatingBar)  root.findViewById(R.id.ratingBar2);
+        ratingBar = (RatingBar) root.findViewById(R.id.ratingBar2);
 
-        User reviewer = null;
-        reviewer = getReviewer(review.getIduser());
-
-        if (reviewer != null) {
-            Glide.with(root.getContext()).load(reviewer.getPropic()).into(userImage);
-            userName.setText(reviewer.getNickname());
-        }
-
+        getReviewer(review.getIduser(), root);
         reviewTitle.setText(review.getTitle());
         reviewDescription.setText(review.getDescription());
         ratingBar.setRating((float) review.getVal());
@@ -70,18 +64,18 @@ public class ReviewDetail extends Fragment {
     }
 
 
-    private User getReviewer(String id) {
+    private void getReviewer(String id, View root) {
 
-        final User[] reviewer = {null};
         try {
-            Query query = FirebaseDatabase.getInstance().getReference("Users").equalTo(id);
+            Query query = FirebaseDatabase.getInstance().getReference("Users").orderByKey().equalTo(id);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
                         User model = dataSnapshot.getValue(User.class);
-                        reviewer[0] = model;
+                        Glide.with(root.getContext()).load(model.getPropic()).into(userImage);
+                        userName.setText(model.getNickname());
                     }
 
                 }
@@ -94,7 +88,6 @@ public class ReviewDetail extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return reviewer[0];
     }
 
 }
