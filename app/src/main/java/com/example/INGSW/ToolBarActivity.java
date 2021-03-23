@@ -43,13 +43,17 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     private boolean loadUser = false;
     UserController userController = new UserController();
     private UserServerController usc = new UserServerController();
-    private final static FirebaseDatabase ref = FirebaseDatabase.getInstance();
+    private  static FirebaseDatabase ref = FirebaseDatabase.getInstance();
     private String uid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ref.setPersistenceEnabled(true);
+        try {
+            ref.setPersistenceEnabled(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setContentView(R.layout.navigationscreen);
         getUser();
 
@@ -204,6 +208,10 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     }
 
     public static FirebaseDatabase getReference() {
+        if(ref ==null){
+            ref =FirebaseDatabase.getInstance();
+            ref.setPersistenceEnabled(true);
+        }
         return ref;
     }
 }

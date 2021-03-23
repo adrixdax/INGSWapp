@@ -182,8 +182,13 @@ public class FilmDetails extends Fragment {
                 transaction = FilmDetails.this.getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "FilmReviews");
 
-                SpoilerAlertDIalog dlg = new SpoilerAlertDIalog(String.valueOf(film.getId_Film()),transaction);
-                dlg.show(getChildFragmentManager(), "SpoilerAllert");
+                if(imageButtonWatchblue){
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }else {
+                    SpoilerAlertDIalog dlg = new SpoilerAlertDIalog(String.valueOf(film.getId_Film()), transaction);
+                    dlg.show(getChildFragmentManager(), "SpoilerAllert");
+                }
             }
         });
 

@@ -119,7 +119,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                     transaction.commit();
                 });
             }   else if (css.getCanonicalName().equals(MostSeen.class.getCanonicalName())){
-                holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nVisto da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
+                holder.textViewUser.setText("Visto da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
                 holder.relativeLayout.setOnClickListener(v -> {
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
                     FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
@@ -128,7 +128,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                     transaction.commit();
                 });
             }else{
-                holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nRecensito da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
+                holder.textViewUser.setText("Recensito da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
                 holder.relativeLayout.setOnClickListener(v -> {
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
                     FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
