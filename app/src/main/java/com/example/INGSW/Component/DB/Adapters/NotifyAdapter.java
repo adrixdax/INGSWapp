@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.User;
@@ -49,7 +50,12 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                         User model = dataSnapshot.getValue(User.class);
                         holder.userName.setText(model.getNickname());
                         with(holder.itemView).load(model.getPropic()).into((ImageView) holder.itemView.findViewById(R.id.userImageNotify));
-                        holder.notifyText.setText(model.getNickname()+" ti consiglia: ");
+                        holder.notifyText.setText(model.getNickname()+" ti consiglia: "+listOfData.get(position).getId_recordref());
+                        if (listOfData.get(position).getState().equals("PENDING")) {
+                            holder.newNotify.setVisibility(View.VISIBLE);
+                        } else {
+                            holder.newNotify.setVisibility(View.INVISIBLE);
+                        }
                     }
                 }
                 @Override
@@ -68,6 +74,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         public TextView notifyText;
         public CircleImageView imageView;
         public TextView userName;
+        private ImageView newNotify;
         public RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView) {
@@ -78,6 +85,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             this.no=itemView.findViewById(R.id.denyNotify);
             this.yes=itemView.findViewById(R.id.acceptNotify);
             this.relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
+            this.newNotify = itemView.findViewById(R.id.newNotify);
         }
     }
 
@@ -91,14 +99,12 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     public NotifyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = layoutInflater.inflate(R.layout.list_notify, parent, false);
-        ViewHolder holder = new NotifyAdapter.ViewHolder(listItem);
-        for (int i = 0; i<listOfData.size(); i++)
-            getUser(listOfData.get(i).getId_sender(),holder,i);
-        return holder;
+        return new ViewHolder(listItem);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        getUser(listOfData.get(position).getId_sender(), holder, position);
         PushDownAnim.setPushDownAnimTo(holder.yes,holder.no)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
@@ -107,13 +113,20 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         holder.yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                holder.newNotify.setVisibility(View.INVISIBLE);
+                listOfData.get(position).setState("ACCEPTED");
+                new NotifyTestController().execute("Accepted="+listOfData.get(position).getId_Notify());
                 Toast.makeText(v.getContext(),"Accept",Toast.LENGTH_SHORT).show();
+                //set status to Acceoted
             }
         });
         holder.no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                listOfData.get(position).setState("REFUSED");
                 Toast.makeText(v.getContext(),"Decline",Toast.LENGTH_SHORT).show();
+                holder.newNotify.setVisibility(View.INVISIBLE);
+                new NotifyTestController().execute("Refused="+listOfData.get(position).getId_Notify());
             }
         });
     }
@@ -123,5 +136,11 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         return listOfData.size();
     }
 
+    public void changeStatus(){
+        for (Notify not : listOfData){
+            if (not.getState().equals("PENDING"))
+            new NotifyTestController().execute("Seen="+not.getId_Notify());
+        }
+    }
 
 }

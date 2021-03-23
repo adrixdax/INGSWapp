@@ -30,8 +30,62 @@ public class NotifyTestController extends AsyncTask {
         return "";
     }
 
+    private Object setSeen(String notifyId) {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "notify?Seen=" + notifyId).get().build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Error changing Status";
+    }
+
+    private Object setAccepted(String notifyId) {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "notify?Accepted=" + notifyId).get().build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Error changing Status";
+    }
+
+    private Object setRefused(String notifyId) {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "notify?Refused=" + notifyId).get().build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Error changing Status";
+    }
+
     @Override
     protected Object doInBackground(Object[] objects) {
-        return getNotify((String) objects[0]);
+        if (objects[0].toString().startsWith("idUser="))
+            return getNotify(((String)objects[0]).substring(((String)objects[0]).indexOf('=')+1));
+        else if (objects[0].toString().startsWith("Seen="))
+            return setSeen(((String)objects[0]).substring(((String)objects[0]).indexOf('=')+1));
+        else if (objects[0].toString().startsWith("Accepted="))
+            return setAccepted(((String)objects[0]).substring(((String)objects[0]).indexOf('=')+1));
+        else
+            return setRefused(((String)objects[0]).substring(((String)objects[0]).indexOf('=')+1));
     }
+
+
 }

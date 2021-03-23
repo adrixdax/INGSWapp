@@ -1,74 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="15dp"
     android:background="@drawable/rounded_list_obj"
     android:id="@id/relativeLayoutNotify">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userImageNotify"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="3dp"
-        app:srcCompat="@drawable/circle_obj" />
-
-    <ImageView
-        android:id="@+id/filmIcon"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userImageNotify"
-        app:srcCompat="?attr/selectableItemBackgroundBorderless" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/userImageNotify"
-        android:layout_marginStart="10dp"
-        android:textSize="20sp"
-        android:textColor="@color/White"
-        android:autoSizeTextType="uniform"
-        android:maxLines="1" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/notifyText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="5dp"
-        android:textSize="14sp"
-        android:textAlignment="center"
-        android:layout_below="@id/userImageNotify"
-        android:layout_toEndOf="@id/filmIcon"
-        android:layout_marginStart="10dp"
-        android:autoSizeTextType="uniform" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userImageNotify"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/circle_obj" />
 
-    <ImageView
-        android:id="@+id/denyNotify"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/notifyText"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/circle_obj_red"
-        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:textColor="@color/White"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/newNotify"
+                app:layout_constraintStart_toEndOf="@id/userImageNotify"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/acceptNotify"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_below="@+id/notifyText"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_toEndOf="@id/denyNotify"
-        android:background="@drawable/circle_obj_green"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/yes_tick" />
+            <ImageView
+                android:id="@+id/newNotify"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/circle_obj_red"
+                tools:visibility="invisible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/notifyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoSizeTextType="uniform"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/denyNotify"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/acceptNotify"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icons8_delete_64px"
+                android:layout_marginStart="100dp"/>
+
+            <ImageView
+                android:id="@+id/acceptNotify"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@id/denyNotify"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/icons8_checked_32px"
+                android:layout_marginEnd="50dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Notify {
 
-    int id_notify;
+    int id_Notify;
     String id_sender;
     String id_receiver;
     String type;
@@ -13,13 +13,13 @@ public class Notify {
     String state;
 
     @JsonCreator
-    public Notify(@JsonProperty("id_notify") int id_notify,
+    public Notify(@JsonProperty("id_Notify") int id_Notify,
                   @JsonProperty("id_sender") String id_sender,
                   @JsonProperty("id_receiver") String id_receiver,
                   @JsonProperty("type") String type,
                   @JsonProperty("id_recordref") int id_recordref,
                   @JsonProperty("status") String status) {
-        this.id_notify=id_notify;
+        this.id_Notify=id_Notify;
         this.id_sender=id_sender;
         this.id_receiver=id_receiver;
         this.type=type;
@@ -32,12 +32,12 @@ public class Notify {
         this.type=type;
     }
 
-    public int getId_notify() {
-        return id_notify;
+    public int getId_Notify() {
+        return id_Notify;
     }
 
-    public void setId_notify(int id_notify) {
-        this.id_notify = id_notify;
+    public void setId_Notify(int id_Notify) {
+        this.id_Notify = id_Notify;
     }
 
     public String getId_sender() {

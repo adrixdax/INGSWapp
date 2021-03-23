@@ -17,13 +17,13 @@ import java.util.concurrent.ExecutionException;
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class NotifyUpdater extends TimerTask {
-    private List<Notify> notify = new ArrayList<>();
+    private static List<Notify> notify = new ArrayList<>();
     private static ImageButton bell;
     private Timer timer;
     private Activity activity;
 
     public NotifyUpdater(Timer timer, ImageButton bell, Activity activity){
-        this.bell = bell;
+        NotifyUpdater.bell = bell;
         this.timer = timer;
         this.activity = activity;
     }
@@ -35,7 +35,7 @@ public class NotifyUpdater extends TimerTask {
 
     public void run() {
         try {
-            notify = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute(((ToolBarActivity)activity).getUid()).get()),Notify.class);
+            notify = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser="+((ToolBarActivity)activity).getUid()).get()),Notify.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -45,7 +45,17 @@ public class NotifyUpdater extends TimerTask {
                 if (notify.size() == 0) {
                     bell.setImageResource(R.drawable.icons8_notification_30px_1);
                 } else {
-                    bell.setImageResource(R.drawable.icons8_notification_30px_1_active);
+                    boolean allSeen=true;
+                    for (Notify not : notify)
+                        if (not.getState().equals("PENDING")) {
+                            allSeen = false;
+                            break;
+                        }
+                    if (!allSeen)
+                        bell.setImageResource(R.drawable.icons8_notification_30px_1_active);
+                    else{
+                        bell.setImageResource(R.drawable.icons8_notification_30px_1);
+                    }
                 }
             }
         });
