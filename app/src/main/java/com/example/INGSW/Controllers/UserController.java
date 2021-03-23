@@ -22,6 +22,7 @@ public class UserController {
     private String userID;
     User tempUser = null;
 
+
     public User getTempUser() {
         return tempUser;
     }
@@ -30,11 +31,11 @@ public class UserController {
         this.tempUser = tempuser;
     }
 
-    public User getUserprofile(FirebaseUser mFirebaseUser) {
+    public User getUserprofile(FirebaseUser mFirebaseUser, FirebaseDatabase ref ) {
         try {
             if (mFirebaseUser != null) {
                 System.out.println("Cerco profilo proprietario");
-                reference = FirebaseDatabase.getInstance().getReference("Users");
+                reference = ref.getReference("Users");
                 userID = mFirebaseUser.getUid();
                 reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                     User profile = null;

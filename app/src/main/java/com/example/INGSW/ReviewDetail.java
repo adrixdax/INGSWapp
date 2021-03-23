@@ -36,8 +36,9 @@ public class ReviewDetail extends Fragment {
     private FirebaseDatabase ref;
 
 
-    public ReviewDetail(Reviews review) {
+    public ReviewDetail(Reviews review,FirebaseDatabase ref) {
         this.review = review;
+        this.ref = ref;
     }
 
     @Nullable
@@ -67,7 +68,7 @@ public class ReviewDetail extends Fragment {
     private void getReviewer(String id, View root) {
 
         try {
-            Query query = FirebaseDatabase.getInstance().getReference("Users").orderByKey().equalTo(id);
+            Query query = ref.getReference("Users").orderByKey().equalTo(id);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

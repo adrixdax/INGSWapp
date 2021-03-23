@@ -37,9 +37,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     private final Fragment startFragment;
     private FirebaseDatabase ref;
 
-    public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment) {
+    public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment,FirebaseDatabase ref) {
         this.listofdata = listofdata;
         this.startFragment = startFragment;
+        this.ref = ref;
     }
 
     @NonNull
@@ -54,13 +55,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public void onBindViewHolder(@NonNull ReviewsAdapter.ViewHolder holder, int position) {
         try {
 
-            User reviewer = null;
             getReviewer(listofdata.get(position).getIduser(), holder);
 
-            if (reviewer != null) {
-                with(holder.itemView).load(reviewer.getPropic()).into((CircleImageView) holder.userImage.findViewById(R.id.userprofilepic_view));
-                holder.userNickView.setText(reviewer.getNickname());
-            }
             holder.ratingBar.setRating((float) listofdata.get(position).getVal());
             holder.ratingBar.setClickable(false);
             holder.ratingBar.setIsIndicator(true);
@@ -81,7 +77,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             holder.relativeLayoutReviewList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position));
+                    ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position),ref);
                     FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
                     transaction.addToBackStack(null);
@@ -107,7 +103,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     private void getReviewer(String id, ReviewsAdapter.ViewHolder holder) {
         try {
-            Query query = FirebaseDatabase.getInstance().getReference("Users").orderByKey().equalTo(id);
+            Query query = ref.getReference("Users").orderByKey().equalTo(id);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

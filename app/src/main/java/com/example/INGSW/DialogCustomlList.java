@@ -1,32 +1,31 @@
 package com.example.INGSW;
 
 import android.app.Dialog;
-import android.content.Context;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 
-import androidx.annotation.NonNull;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.constraintlayout.widget.ConstraintLayout;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.DB.Adapters.NotifyAdapter;
+
 import com.example.INGSW.Component.DB.Adapters.UserListsAdapter;
-import com.example.INGSW.Component.DB.Classes.Notify;
+
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.Controllers.NotifyTestController;
+
 import com.example.INGSW.Controllers.UserServerController;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.android.gms.common.util.ArrayUtils;
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,7 +49,7 @@ public class DialogCustomlList extends AppCompatDialogFragment {
         //return super.onCreateDialog(savedInstanceState);
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.custom_list_dialog);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
 
@@ -59,7 +58,7 @@ public class DialogCustomlList extends AppCompatDialogFragment {
         String json = "";
         try {
             UserServerController usc = new UserServerController();
-            usc.setUserId(((ToolBarActivity)getActivity()).getUid());
+            usc.setUserId(((ToolBarActivity) getActivity()).getUid());
             usc.setIdFilm(String.valueOf(idFilmToInsert));
             json = (String) usc.execute(new String("custom")).get();
         } catch (ExecutionException | InterruptedException e) {
@@ -67,25 +66,25 @@ public class DialogCustomlList extends AppCompatDialogFragment {
         }
         try {
             customLists = (List<UserLists>) getJsonToDecode(json, UserLists.class);
-            if(customLists!=null) {
+            if (customLists != null) {
                 recycler.setAdapter(new UserListsAdapter(customLists, DialogCustomlList.class, this.selectedLists));
                 recycler.setLayoutManager(new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.VERTICAL, false));
                 recycler.setHasFixedSize(false);
-            }else{
-                System.out.println("è vuota boh" );
+            } else {
+                System.out.println("è vuota boh");
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
 
 
-        Button insertInLists= (Button) dialog.getWindow().findViewById(R.id.InsertInListsbutton);
+        Button insertInLists = (Button) dialog.getWindow().findViewById(R.id.InsertInListsbutton);
         insertInLists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (UserLists singlelist:  selectedLists){
+                for (UserLists singlelist : selectedLists) {
 
-                    FilmTestController  ftc = new FilmTestController();
+                    FilmTestController ftc = new FilmTestController();
                     ftc.setIdFilm(String.valueOf(idFilmToInsert));
                     ftc.setIdList(String.valueOf(singlelist.getIdUserList()));
                     try {
@@ -99,9 +98,9 @@ public class DialogCustomlList extends AppCompatDialogFragment {
 
                     System.out.println("Lista -> " + singlelist.getIdUserList()
                             + " - " + singlelist.getTitle() +
-                            " - " + singlelist.getIdUser() + " - "+
+                            " - " + singlelist.getIdUser() + " - " +
                             idFilmToInsert
-                    + " - " +getIdFilmToInsert());
+                            + " - " + getIdFilmToInsert());
 
                 }
 
@@ -118,7 +117,8 @@ public class DialogCustomlList extends AppCompatDialogFragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
         dialog.setContentView(getActivity().getLayoutInflater().inflate(R.layout.film_action_choose_dialog, new ConstraintLayout(getActivity()), false));
-       */ return dialog;
+       */
+        return dialog;
 
     }
 
