@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,24 +13,30 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.INGSW.Component.Films.Film;
+import com.example.INGSW.Controllers.FilmTestController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.concurrent.ExecutionException;
 
 public class ChooseActionDialog extends AppCompatDialogFragment {
 
     Context dialog_ctx;
     Button share, remove;
     TextView filmTitle;
-    String title;
+    Film film;
+    String idList;
 
-    public ChooseActionDialog(Context ctx, String title) {
+    public ChooseActionDialog(Context ctx, Film film, String idList) {
         this.dialog_ctx = ctx;
-        this.title = title;
+        this.film = film;
+        this.idList = idList;
     }
 
     public ChooseActionDialog(Context ctx) {
-        new ChooseActionDialog(ctx, "");
+        new ChooseActionDialog(ctx);
     }
 
     @NotNull
@@ -49,7 +56,28 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
         filmTitle = dialog.findViewById(R.id.filmTitle_view);
 
         PushDownAnim.setPushDownAnimTo(share, remove);
-        filmTitle.setText(this.title);
+        filmTitle.setText(film.getFilm_Title());
+
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FilmTestController ftc = new FilmTestController();
+                try {
+                    ftc.setIdList(idList);
+                    ftc.setIdFilm(String.valueOf(film.getId_Film()));
+                    ftc.execute(new String("removeFilm")).get();
+                    ftc.isCancelled();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                dismiss();
+
+            }
+        });
+
 
         return dialog;
 

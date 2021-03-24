@@ -36,7 +36,8 @@ public class MyFavs extends Fragment {
             e.printStackTrace();
         }
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(listofFilm, getContext(), this);
-        adapter.setCss(SuggestedFIlms.class);
+        adapter.setCss(MyFavs.class);
+        adapter.setIdList(FTC.getIdList());
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewUserMyPrefered);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));

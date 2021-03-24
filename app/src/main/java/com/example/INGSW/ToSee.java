@@ -48,7 +48,8 @@ public class ToSee extends Fragment {
             e.printStackTrace();
         }
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(toSee, getContext(), this);
-        adapter.setCss(SuggestedFIlms.class);
+        adapter.setCss(ToSee.class);
+        adapter.setIdList(con.getIdList());
         toSeeFilms.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
         toSeeFilms.setLayoutManager(layoutManager);

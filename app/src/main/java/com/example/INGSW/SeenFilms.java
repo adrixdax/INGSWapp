@@ -35,7 +35,8 @@ public class SeenFilms extends Fragment {
             e.printStackTrace();
         }
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(listofFilm, getContext(), this);
-        adapter.setCss(SuggestedFIlms.class);
+        adapter.setCss(SeenFilms.class);
+        adapter.setIdList(FTC.getIdList());
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewUserSeen);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));

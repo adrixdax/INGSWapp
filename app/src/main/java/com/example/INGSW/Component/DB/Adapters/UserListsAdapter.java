@@ -101,13 +101,8 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
                     transaction.commit();
                 }
             });
-            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
 
-                }
-            });
         }
     }
 

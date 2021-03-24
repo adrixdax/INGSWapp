@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,9 +42,11 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         User model = userlist.get(position);
         holder.nick.setText(model.getNickname());
         with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-        holder.relativeLayoutNotify.setOnClickListener(new View.OnClickListener() {
+        holder.addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
 
             }
         });
@@ -60,6 +63,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         TextView nick;
         CircleImageView userpic;
         RelativeLayout relativeLayoutNotify;
+        ImageButton addButton;
 
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +71,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
             nick = itemView.findViewById(R.id.usernick_view);
             userpic = itemView.findViewById(R.id.userprofilepic_view);
             relativeLayoutNotify = itemView.findViewById(R.id.relativeLayoutNotify);
+            addButton = itemView.findViewById(R.id.addFriendButton);
         }
     }
 }
