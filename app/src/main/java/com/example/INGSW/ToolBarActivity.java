@@ -51,8 +51,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         super.onCreate(savedInstanceState);
         try {
             ref.setPersistenceEnabled(true);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         setContentView(R.layout.navigationscreen);
         getUser();

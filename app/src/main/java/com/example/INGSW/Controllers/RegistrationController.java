@@ -114,17 +114,16 @@ public class RegistrationController {
 
                                 regActivity.startActivity(new Intent(regActivity, ToolBarActivity.class));
                             }
-                        }).addOnFailureListener(regActivity, new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                e.printStackTrace();
-                                Toast.makeText(regActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-                            }
                         });
 
 
                     }
-                });
+                }).addOnFailureListener(regActivity, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(regActivity, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
