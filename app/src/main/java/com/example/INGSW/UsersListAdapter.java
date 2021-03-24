@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,12 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         User model = userlist.get(position);
         holder.nick.setText(model.getNickname());
         with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
+        holder.relativeLayoutNotify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -52,12 +59,14 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
 
         TextView nick;
         CircleImageView userpic;
+        RelativeLayout relativeLayoutNotify;
 
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
 
             nick = itemView.findViewById(R.id.usernick_view);
             userpic = itemView.findViewById(R.id.userprofilepic_view);
+            relativeLayoutNotify = itemView.findViewById(R.id.relativeLayoutNotify);
         }
     }
 }

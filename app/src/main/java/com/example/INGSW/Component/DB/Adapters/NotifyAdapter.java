@@ -117,6 +117,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 listOfData.get(position).setState("ACCEPTED");
                 new NotifyTestController().execute("Accepted="+listOfData.get(position).getId_Notify());
                 Toast.makeText(v.getContext(),"Accept",Toast.LENGTH_SHORT).show();
+                
                 //set status to Acceoted
             }
         });
