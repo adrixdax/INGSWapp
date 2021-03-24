@@ -2,7 +2,8 @@ package com.example.INGSW;
 
 public class User {
 
-    public String nickname, email,propic;
+    public String nickname, email,propic,idUser;
+
 
     public User(){
 
@@ -24,5 +25,13 @@ public class User {
 
     public String getPropic() {
         return propic;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 }

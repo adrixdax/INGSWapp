@@ -12,11 +12,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.Controllers.NotifyTestController;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.bumptech.glide.Glide.with;
+import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.UsersViewHolder> {
 
@@ -25,7 +32,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
     Context context;
 
 
-    public UsersListAdapter(Context context, ArrayList<User> userlist){
+    public UsersListAdapter(Context context, ArrayList<User> userlist) {
         this.context = context;
         this.userlist = userlist;
     }
@@ -33,7 +40,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
     @NonNull
     @Override
     public UsersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.friend_component_search,parent,false);
+        View v = LayoutInflater.from(context).inflate(R.layout.friend_component_search, parent, false);
         return new UsersViewHolder(v);
     }
 
@@ -41,15 +48,62 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
     public void onBindViewHolder(@NonNull UsersViewHolder holder, int position) {
         User model = userlist.get(position);
         holder.nick.setText(model.getNickname());
-        with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-        holder.addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
-
+        boolean friend = false;
+        List<Notify> notifyList = new ArrayList<>();
+        try {
+            notifyList = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser=" + model.getIdUser()).get()), Notify.class);
+            System.out.println(((ToolBarActivity) context).getUid());
+            if (!notifyList.isEmpty()) {
+                int i = 0;
+                while (i < notifyList.size() && !friend) {
+                    System.out.println("Size = " + notifyList.size() + "  indixe = " + i);
+                    System.out.println(((ToolBarActivity) context).getUid());
+                    if (notifyList.get(i).getId_sender().equals(((ToolBarActivity) context).getUid())) {
+                        friend = true;
+                    }
+                    i++;
+                }
             }
-        });
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (friend) {
+            holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
+        } else {
+            holder.addButton.setImageResource(R.drawable.icons8_plus_26px);
+        }
+        with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
+        if (!friend) {
+            holder.addButton.setOnClickListener(new View.OnClickListener() {
+                boolean send=false;
+                @Override
+                public void onClick(View v) {
+                    if (!send) {
+                        NotifyTestController ntc = new NotifyTestController();
+                        ntc.setIdSender(((ToolBarActivity) v.getContext()).getUid());
+                        ntc.setIdReceiver(model.getIdUser());
+                        ntc.setType("FRIENDSHIP REQUEST");
+                        try {
+                            ntc.execute(new String("SendFriendshipRequest")).get();
+                            ntc.isCancelled();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        send=true;
+                        holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
+                    }
+                }
+
+            });
+        }
     }
 
     @Override
@@ -58,7 +112,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
     }
 
 
-    public static class UsersViewHolder extends RecyclerView.ViewHolder{
+    public static class UsersViewHolder extends RecyclerView.ViewHolder {
 
         TextView nick;
         CircleImageView userpic;
