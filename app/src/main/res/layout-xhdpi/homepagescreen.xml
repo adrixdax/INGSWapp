@@ -48,75 +48,122 @@
         />
 
 
-    <Button
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/toSee"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/rounded_list_obj"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/da_vedere"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:srcCompat="@drawable/tosee_theme"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-    <Button
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/da_vedere"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="@id/toSee"
+        app:layout_constraintEnd_toEndOf="@id/toSee"
+        app:layout_constraintTop_toTopOf="@id/toSee"
+        app:layout_constraintBottom_toBottomOf="@id/toSee"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20" />
+
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/mostReviewed"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginStart="44dp"
         android:layout_marginBottom="72dp"
-        android:background="@drawable/rounded_list_obj"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/i_pi_recensiti"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:srcCompat="@drawable/mostreviewed_theme"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/userPrefered"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toSee" />
 
-    <Button
-        android:id="@+id/mostSeen"
-        android:layout_width="127dp"
-        android:layout_height="121dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="44dp"
-        android:background="@drawable/rounded_list_obj"
-        android:clickable="true"
-        android:focusable="true"
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/i_pi_visti"
+        android:text="i più recensiti"
+        android:textAllCaps="true"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="@id/mostReviewed"
+        app:layout_constraintEnd_toEndOf="@id/mostReviewed"
+        app:layout_constraintTop_toTopOf="@id/mostReviewed"
+        app:layout_constraintBottom_toBottomOf="@id/mostReviewed"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/mostSeen"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.863"
         app:layout_constraintStart_toEndOf="@+id/toSee"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:srcCompat="@drawable/popcorn_theme" />
 
-    <Button
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/i_pi_visti"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="@id/mostSeen"
+        app:layout_constraintEnd_toEndOf="@id/mostSeen"
+        app:layout_constraintTop_toTopOf="@id/mostSeen"
+        app:layout_constraintBottom_toBottomOf="@id/mostSeen"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20" />
+
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/userPrefered"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:layout_marginEnd="56dp"
         android:layout_marginBottom="72dp"
-        android:background="@drawable/rounded_list_obj"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/i_preferiti_dagli_utenti"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mostSeen" />
+        app:layout_constraintTop_toBottomOf="@+id/mostSeen"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:srcCompat="@drawable/prefered_theme" />
+
+    <TextView
+        android:id="@+id/textViewboh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="125dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/i_preferiti_dagli_utenti"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="@id/userPrefered"
+        app:layout_constraintEnd_toEndOf="@id/userPrefered"
+        app:layout_constraintTop_toTopOf="@id/userPrefered"
+        app:layout_constraintBottom_toBottomOf="@id/userPrefered"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -24,6 +23,7 @@ import com.example.INGSW.R;
 import com.example.INGSW.ToSee;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.UserPrefered;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
@@ -37,20 +37,23 @@ public class HomepageScreen extends Fragment {
 
     Timer timer = new Timer();
 
-    Button mostSeen, mostReviewed, tooSee, userPrefered;
+    ShapeableImageView mostSeen, tooSee, mostReviewed, userPrefered;
     static ImageButton bell;
     FilmTestController con = new FilmTestController();
 
     private List<Film> film = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //NotifyUpdater not = new NotifyUpdater(5);
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
 
         mostSeen = root.findViewById(R.id.mostSeen);
         mostReviewed = root.findViewById(R.id.mostReviewed);
         tooSee = root.findViewById(R.id.toSee);
         userPrefered = root.findViewById(R.id.userPrefered);
+        mostSeen.setAlpha(0.8f);
+        tooSee.setAlpha(0.8f);
+        mostReviewed.setAlpha(0.8f);
+        userPrefered.setAlpha(0.8f);
 
         PushDownAnim.setPushDownAnimTo(mostSeen, mostReviewed, tooSee, userPrefered)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
@@ -59,48 +62,36 @@ public class HomepageScreen extends Fragment {
                 .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
 
 
-        mostReviewed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MostReviewed nextFragment = new MostReviewed();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "MostReviewed");
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        mostReviewed.setOnClickListener(v -> {
+            MostReviewed nextFragment = new MostReviewed();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, nextFragment, "MostReviewed");
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
-        mostSeen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MostSeen nextFragment = new MostSeen();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "MostSeen");
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        mostSeen.setOnClickListener(v -> {
+            MostSeen nextFragment = new MostSeen();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, nextFragment, "MostSeen");
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
-        tooSee.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToSee nextFragment = new ToSee();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        tooSee.setOnClickListener(v -> {
+            ToSee nextFragment = new ToSee();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
-        userPrefered.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserPrefered nextFragment = new UserPrefered();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "8");
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        userPrefered.setOnClickListener(v -> {
+            UserPrefered nextFragment = new UserPrefered();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, nextFragment, "8");
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
 
@@ -124,15 +115,12 @@ public class HomepageScreen extends Fragment {
             }
         }
         bell = root.findViewById(R.id.notifyBell);
-        NotifyUpdater not = new NotifyUpdater(timer,bell,getActivity());
-        timer.schedule(not,1);
-        bell.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("Click on bell");
-                System.out.println(((ToolBarActivity) getActivity()).getUid());
-                new NotifyPopUp(not.getNotify()).show(getActivity().getSupportFragmentManager(), "4");
-            }
+        NotifyUpdater not = new NotifyUpdater(timer, bell, getActivity());
+        timer.schedule(not, 1);
+        bell.setOnClickListener(v -> {
+            System.out.println("Click on bell");
+            System.out.println(((ToolBarActivity) getActivity()).getUid());
+            new NotifyPopUp(not.getNotify()).show(getActivity().getSupportFragmentManager(), "4");
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
