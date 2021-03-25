@@ -1,6 +1,6 @@
 package com.example.INGSW.Component.DB.Adapters;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +12,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.R;
-import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,11 +23,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -37,20 +31,29 @@ import static com.bumptech.glide.Glide.with;
 
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder> {
     private final List<Notify> listOfData;
-    private FirebaseDatabase ref;
+    private final FirebaseDatabase ref;
 
     private User getUser(String id, ViewHolder holder, int position) {
         final User[] reviewer = new User[1];
         try {
             Query query = ref.getReference("Users").orderByKey().equalTo(id);
             query.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User model = dataSnapshot.getValue(User.class);
                         holder.userName.setText(model.getNickname());
                         with(holder.itemView).load(model.getPropic()).into((ImageView) holder.itemView.findViewById(R.id.userImageNotify));
-                        holder.notifyText.setText(model.getNickname()+" ti consiglia: "+listOfData.get(position).getId_recordref());
+                        if (listOfData.get(position).getType().equals("Film")) {
+                            holder.notifyText.setText(model.getNickname() + " ti consiglia: " + listOfData.get(position).getId_recordref());
+                        } else if (listOfData.get(position).getType().equals("FRIENDSHIP REQUEST")) {
+                            holder.notifyText.setText(model.getNickname() + " vuole essere il tuo supereroe");
+                        } else if (listOfData.get(position).getType().equals("List")) {
+                            holder.notifyText.setText(model.getNickname() + " vuole consigliarti la lista " + listOfData.get(position).getId_recordref());
+                        } else {
+                            holder.notifyText.setText(model.getNickname() + " vuole farti vedere la sua recensione riguardo " + listOfData.get(position).getId_recordref());
+                        }
                         if (listOfData.get(position).getState().equals("PENDING")) {
                             holder.newNotify.setVisibility(View.VISIBLE);
                         } else {
@@ -74,7 +77,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         public TextView notifyText;
         public CircleImageView imageView;
         public TextView userName;
-        private ImageView newNotify;
+        private final ImageView newNotify;
         public RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView) {
