@@ -1,5 +1,6 @@
 package com.example.INGSW.Component.Films;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -64,6 +64,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         return new ViewHolder(listItem, css);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ListOfFilmAdapter.ViewHolder holder, int position) {
         if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
@@ -101,8 +102,12 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 transaction.addToBackStack(null);
                 transaction.commit();
             });
-        } else if (css.getCanonicalName().equals(MyFavs.class.getCanonicalName()) || css.getCanonicalName().equals(SeenFilms.class.getCanonicalName()) || css.getCanonicalName().equals(ToSee.class.getCanonicalName())) {
-            with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
+        } else if (css.getCanonicalName().equals(MyFavs.class.getCanonicalName()) ||
+                css.getCanonicalName().equals(SeenFilms.class.getCanonicalName()) ||
+                css.getCanonicalName().equals(ToSee.class.getCanonicalName()) ||
+                css.getCanonicalName().equals(FilmInCustomList.class.getCanonicalName()) ||
+                css.getCanonicalName().equals(SuggestedFIlms.class.getCanonicalName())) {
+            with(holder.itemView).load(listOfData.get(position).getPosterPath().equals("") ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
                     .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
             holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
             holder.relativeLayout.setOnClickListener(v -> {
@@ -125,7 +130,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 }
             });
         } else {
-            with(holder.itemView).load(listOfData.get(position).getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
+            with(holder.itemView).load(listOfData.get(position).getPosterPath().equals("") ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
                     .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
             if (css.getCanonicalName().equals(UserPrefered.class.getCanonicalName())) {
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nIl preferito di " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
