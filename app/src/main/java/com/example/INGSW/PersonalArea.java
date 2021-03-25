@@ -104,7 +104,7 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
                             User model = dataSnapshot.getValue(User.class);;
                             nicknameView.setText(model.getNickname());
                             mailView.setText(model.getEmail());
-                            Glide.with(root.getContext()).load(model.getPropic()).into(propicView);
+                            if (getActivity()  != null) Glide.with(root.getContext()).load(model.getPropic()).into(propicView);
                         }
                     }
 

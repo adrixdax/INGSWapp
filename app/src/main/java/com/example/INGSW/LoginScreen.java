@@ -197,15 +197,17 @@ public class LoginScreen extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
+            User u = new User();
             final User[] model = new User[1];
             Query query = reference.orderByKey().equalTo(account.getId());
-            query.addValueEventListener(new ValueEventListener() {
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("RestrictedApi")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         model[0] = dataSnapshot.getValue(User.class);
+                        if (model[0].getPropic().equals(u.getPropic()))
+                            reference.child(Objects.requireNonNull(account.getId())).setValue(u);
                     }
                 }
 
@@ -214,6 +216,9 @@ public class LoginScreen extends AppCompatActivity {
 
                 }
             });
+            if (model[0]==null) {
+                System.out.println("Updating");
+            }
 
             // Signed in successfully, show authenticated UI.
             SharedPreferences preferences = getSharedPreferences("access", MODE_PRIVATE);
@@ -224,29 +229,29 @@ public class LoginScreen extends AppCompatActivity {
             UserServerController usc = new UserServerController();
             usc.setUserId(account.getId());
             String req = (String) usc.execute(new String("google")).get();
-            User u = new User();
             u.nickname = Objects.requireNonNull(account.getEmail()).split("@")[0];
             u.email = account.getEmail();
-            if ((model[0] == null) ^ ((model[0] != null) && (model[0].getPropic().equals("")))) {
-                switch (new Random().ints(0, 5).findFirst().getAsInt()) {
-                    case 0:
-                        u.propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
-                    case 1:
-                        u.propic = "https://i.pinimg.com/236x/d4/9f/33/d49f3302e2a4e7b5a21ea3aba0cfcf03.jpg";
-                    case 2:
-                        u.propic = "https://i.pinimg.com/564x/48/99/65/48996519ea996aa169ca1d61e2a6c6ab.jpg";
-                    case 3:
-                        u.propic = "https://i.pinimg.com/236x/fa/60/b8/fa60b89014f5807b5a013e83aba32aab.jpg";
-                    case 4:
-                        u.propic = "https://i.pinimg.com/564x/90/15/d9/9015d92696baf129a8b4d273625fbfdd.jpg";
-                    case 5:
-                        u.propic = "https://i.pinimg.com/564x/5b/71/ab/5b71ab4ea082c3c11e77312a64bba835.jpg";
-                }
-            } else {
-                u = model[0];
+            int switchCase = new Random().ints(0, 5).findAny().getAsInt();
+            switch (switchCase) {
+                case 0:
+                    u.propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
+                    break;
+                case 1:
+                    u.propic = "https://i.pinimg.com/236x/d4/9f/33/d49f3302e2a4e7b5a21ea3aba0cfcf03.jpg";
+                    break;
+                case 2:
+                    u.propic = "https://i.pinimg.com/564x/48/99/65/48996519ea996aa169ca1d61e2a6c6ab.jpg";
+                    break;
+                case 3:
+                    u.propic = "https://i.pinimg.com/236x/fa/60/b8/fa60b89014f5807b5a013e83aba32aab.jpg";
+                    break;
+                case 4:
+                    u.propic = "https://i.pinimg.com/564x/90/15/d9/9015d92696baf129a8b4d273625fbfdd.jpg";
+                    break;
+                case 5:
+                    u.propic = "https://i.pinimg.com/564x/5b/71/ab/5b71ab4ea082c3c11e77312a64bba835.jpg";
+                    break;
             }
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-            ref.child(Objects.requireNonNull(account.getId())).setValue(u);
             Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
             startActivity(intent);
             finish();

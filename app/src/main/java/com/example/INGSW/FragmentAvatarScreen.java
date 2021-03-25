@@ -110,7 +110,7 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
         else
             child = ((GoogleSignInAccount) (((ToolBarActivity) getActivity()).getContaiinerItem().get("acct"))).getId();
         Query query = ToolBarActivity.getReference().getReference("Users").orderByKey().equalTo(((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null ?  ((User) (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile"))).getIdUser() : ((GoogleSignInAccount) (((ToolBarActivity) getActivity()).getContaiinerItem().get("acct"))).getId());
-        query.addValueEventListener(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("RestrictedApi")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
