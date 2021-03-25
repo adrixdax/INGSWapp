@@ -13,11 +13,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.NotifyUpdater;
 import com.example.INGSW.MostReviewed;
 import com.example.INGSW.MostSeen;
@@ -26,13 +24,11 @@ import com.example.INGSW.R;
 import com.example.INGSW.ToSee;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.UserPrefered;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutionException;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
@@ -118,10 +114,6 @@ public class HomepageScreen extends Fragment {
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
-
-            System.out.println(latestJson);
-
-
             try {
                 if (!latestJson.isEmpty()) {
                     film = (List<Film>) getJsonToDecode(latestJson, Film.class);

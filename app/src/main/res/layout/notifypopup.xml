@@ -6,17 +6,17 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:background="@drawable/circle_obj_bluette"
     android:orientation="vertical"
     android:padding="5dp"
-    android:background="@drawable/circle_obj_bluette"
     tools:context=".ToolBarActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewNotify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxHeight="400dp"
         android:layout_margin="5dp"
+        android:maxHeight="400dp"
         android:scrollbars="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,5 +24,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/notifyTextError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text=""
+        android:textColor="#AC2525"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

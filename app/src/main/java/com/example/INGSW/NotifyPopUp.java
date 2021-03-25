@@ -1,26 +1,24 @@
 package com.example.INGSW;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.NotifyAdapter;
 import com.example.INGSW.Component.DB.Classes.Notify;
-import com.example.INGSW.Controllers.NotifyTestController;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +33,11 @@ public class NotifyPopUp extends AppCompatDialogFragment {
         this.notify = list;
     }
 
-    public NotifyPopUp(){
+    public NotifyPopUp() {
     }
 
+    @SuppressLint("SetTextI18n")
+    @NotNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = new Dialog(getActivity());
@@ -45,10 +45,13 @@ public class NotifyPopUp extends AppCompatDialogFragment {
         dialog.setContentView(R.layout.notifypopup);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        //dialog.setContentView(getActivity().getLayoutInflater().inflate(R.layout.notifypopup, new LinearLayout(getActivity()), false));
         recycler = dialog.findViewById(R.id.recyclerViewNotify);
-        System.out.println(notify.size());
-        recycler.setAdapter(new NotifyAdapter(notify,((ToolBarActivity)(getActivity())).getReference()));
+        NotifyAdapter adapter = new NotifyAdapter(notify, ToolBarActivity.getReference());
+        if (adapter.getItemCount() == 0) {
+            TextView notifyTextError = dialog.findViewById(R.id.notifyTextError);
+            notifyTextError.setText("Nessuna nuova notifica");
+        }
+        recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.VERTICAL, false));
         recycler.setHasFixedSize(false);
         return dialog;

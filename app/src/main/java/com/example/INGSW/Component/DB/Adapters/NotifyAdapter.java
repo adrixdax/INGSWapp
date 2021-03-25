@@ -13,9 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.Component.Films.Film;
+import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.R;
 import com.example.INGSW.User;
+import com.example.INGSW.Utility.JSONDecoder;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -45,14 +50,29 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                         User model = dataSnapshot.getValue(User.class);
                         holder.userName.setText(model.getNickname());
                         with(holder.itemView).load(model.getPropic()).into((ImageView) holder.itemView.findViewById(R.id.userImageNotify));
-                        if (listOfData.get(position).getType().equals("Film")) {
-                            holder.notifyText.setText(model.getNickname() + " ti consiglia: " + listOfData.get(position).getId_recordref());
-                        } else if (listOfData.get(position).getType().equals("FRIENDSHIP REQUEST")) {
-                            holder.notifyText.setText(model.getNickname() + " vuole essere il tuo supereroe");
-                        } else if (listOfData.get(position).getType().equals("List")) {
-                            holder.notifyText.setText(model.getNickname() + " vuole consigliarti la lista " + listOfData.get(position).getId_recordref());
-                        } else {
-                            holder.notifyText.setText(model.getNickname() + " vuole farti vedere la sua recensione riguardo " + listOfData.get(position).getId_recordref());
+                        switch (listOfData.get(position).getType()) {
+                            case "Film":
+                                FilmTestController ftc = new FilmTestController();
+                                ftc.setIdFilm(String.valueOf(listOfData.get(position).getId_recordref()));
+                                Film recordRef = null;
+                                try {
+                                    String json = (String) ftc.execute("filmById").get();
+                                    recordRef = ((List<Film>) (JSONDecoder.getJsonToDecode(json, Film.class))).get(0);
+                                } catch (ExecutionException | InterruptedException | JsonProcessingException e) {
+                                    e.printStackTrace();
+                                }
+                                if (recordRef != null)
+                                    holder.notifyText.setText("ti consiglia:\n" + recordRef.getFilm_Title());
+                                break;
+                            case "FRIENDSHIP REQUEST":
+                                holder.notifyText.setText("vuole essere il tuo supereroe");
+                                break;
+                            case "List":
+                                holder.notifyText.setText("vuole consigliarti la lista " + listOfData.get(position).getId_recordref());
+                                break;
+                            default:
+                                holder.notifyText.setText("vuole farti vedere la sua recensione riguardo " + listOfData.get(position).getId_recordref());
+                                break;
                         }
                         if (listOfData.get(position).getState().equals("PENDING")) {
                             holder.newNotify.setVisibility(View.VISIBLE);
@@ -108,30 +128,22 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         getUser(listOfData.get(position).getId_sender(), holder, position);
-        PushDownAnim.setPushDownAnimTo(holder.yes,holder.no)
+        PushDownAnim.setPushDownAnimTo(holder.yes, holder.no)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                 .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
                 .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
-        holder.yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                holder.newNotify.setVisibility(View.INVISIBLE);
-                listOfData.get(position).setState("ACCEPTED");
-                new NotifyTestController().execute("Accepted="+listOfData.get(position).getId_Notify());
-                Toast.makeText(v.getContext(),"Accept",Toast.LENGTH_SHORT).show();
-                
-                //set status to Acceoted
-            }
+        holder.yes.setOnClickListener(v -> {
+            holder.newNotify.setVisibility(View.INVISIBLE);
+            listOfData.get(position).setState("ACCEPTED");
+            new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
+            Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
         });
-        holder.no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listOfData.get(position).setState("REFUSED");
-                Toast.makeText(v.getContext(),"Decline",Toast.LENGTH_SHORT).show();
-                holder.newNotify.setVisibility(View.INVISIBLE);
-                new NotifyTestController().execute("Refused="+listOfData.get(position).getId_Notify());
-            }
+        holder.no.setOnClickListener(v -> {
+            listOfData.get(position).setState("REFUSED");
+            Toast.makeText(v.getContext(), "Decline", Toast.LENGTH_SHORT).show();
+            holder.newNotify.setVisibility(View.INVISIBLE);
+            new NotifyTestController().execute("Refused=" + listOfData.get(position).getId_Notify());
         });
     }
 

@@ -190,6 +190,24 @@ public class FilmTestController extends AsyncTask {
         return "";
     }
 
+    private Object getFilmbyId() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&filmId=" + idFilm);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "film")
+                .post(body)
+                .build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -215,6 +233,8 @@ public class FilmTestController extends AsyncTask {
                     return getUserPreferedFilms();
                 case "filmInList":
                     return getFilmInList();
+                case "filmById":
+                    return getFilmbyId();
             }
         }
         return "Helooo";

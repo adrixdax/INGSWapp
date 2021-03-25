@@ -1,23 +1,16 @@
 package com.example.INGSW;
 
 import android.os.Bundle;
-
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.INGSW.Controllers.ReviewsController;
-import com.example.INGSW.Controllers.UserServerController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.concurrent.ExecutionException;
@@ -28,7 +21,7 @@ public class InsertReviewScreen extends Fragment {
     
     private RatingBar ratingBar;
     private Button insert;
-    private String idFilm;
+    private final String idFilm;
     private EditText title;
     private EditText description;
 
@@ -46,7 +39,6 @@ public class InsertReviewScreen extends Fragment {
         ratingBar = root.findViewById(R.id.ratingBar3);
 
 
-
         title = root.findViewById(R.id.review_title);
 
         description = root.findViewById(R.id.editTextListDescription);
@@ -54,33 +46,25 @@ public class InsertReviewScreen extends Fragment {
         insert = root.findViewById(R.id.button_inserisci);
         PushDownAnim.setPushDownAnimTo(insert);
 
-        insert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!(title.getText().toString().isEmpty())) {
-                    ReviewsController rc = new ReviewsController();
-                    rc.setIdUser(((ToolBarActivity) getActivity()).getUid());
-                    rc.setTitle(String.valueOf(title.getText()));
-                    rc.setDesc(String.valueOf(description.getText()));
-                    rc.setIdFilm(idFilm);
-                    rc.setVal(String.valueOf(ratingBar.getRating()));
+        insert.setOnClickListener((View.OnClickListener) v -> {
+            if (!(title.getText().toString().isEmpty())) {
+                ReviewsController rc = new ReviewsController();
+                rc.setIdUser(((ToolBarActivity) getActivity()).getUid());
+                rc.setTitle(String.valueOf(title.getText()));
+                rc.setDesc(String.valueOf(description.getText()));
+                rc.setIdFilm(idFilm);
+                rc.setVal(String.valueOf(ratingBar.getRating()));
 
-
-                    try {
-                        rc.execute(new String("AddReviews")).get();
-                        rc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    ((ToolBarActivity) getActivity()).onBackPressed();
+                try {
+                    rc.execute("AddReviews").get();
+                    rc.isCancelled();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
                 }
-                else{
-                    title.setError("Inserire almeno un Titolo per la recensione!");
-                    title.requestFocus();
-                }
+                ((ToolBarActivity) getActivity()).onBackPressed(true);
+            } else {
+                title.setError("Inserire almeno un Titolo per la recensione!");
+                title.requestFocus();
             }
         });
 

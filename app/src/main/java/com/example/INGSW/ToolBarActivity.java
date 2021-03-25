@@ -38,12 +38,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     Map<String, List<Film>> conteinerList = new HashMap<>();
     private ProgressDialog progressDialog;
-    private Map<String, Object> contaiinerItem = new HashMap<>();
+    private final Map<String, Object> contaiinerItem = new HashMap<>();
     User user = null;
     private boolean loadUser = false;
     UserController userController = new UserController();
-    private UserServerController usc = new UserServerController();
-    private  static FirebaseDatabase ref = FirebaseDatabase.getInstance();
+    private final UserServerController usc = new UserServerController();
+    private static FirebaseDatabase ref = FirebaseDatabase.getInstance();
     private String uid = "";
 
     @Override
@@ -59,7 +59,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
         try {
             usc.setUserId(uid);
-            String temp = (String) usc.execute(new String("getDefaultListOfUser")).get();
+            String temp = (String) usc.execute("getDefaultListOfUser").get();
             List<UserLists> list = (List<UserLists>) getJsonToDecode(temp, UserLists.class);
             for (UserLists singlelist : list) {
                 if (singlelist.getType().equals("PREFERED")) {
@@ -177,8 +177,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         if(currentFragment.getTag().equals("InsertFilmReview")){
             LeaveReviewAlert dlg = new LeaveReviewAlert();
             dlg.show(this.getSupportFragmentManager(), "LeaveReview");
-        }
-        else if (fm.getBackStackEntryCount() > 0 && !(tag2.equals(currentFragment.getTag()) || tag3.equals(currentFragment.getTag())) && !(tag1.equals(currentFragment.getTag()))) {
+        } else if (fm.getBackStackEntryCount() > 0 && !(tag2.equals(currentFragment.getTag()) || tag3.equals(currentFragment.getTag())) && !(tag1.equals(currentFragment.getTag()))) {
             fm.popBackStack();
         } else if (tag2.equals(currentFragment.getTag()) || tag3.equals(currentFragment.getTag())) {
 
@@ -200,6 +199,19 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                     }).create().show();
         }
 
+    }
+
+    public void onBackPressed(boolean completed) {
+        FragmentManager fm = getSupportFragmentManager();
+        Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
+        String tag1 = "1";
+        String tag2 = "2";
+        String tag3 = "3";
+
+        if (currentFragment.getTag().equals("InsertFilmReview") && (completed)) {
+            fm.popBackStack();
+        } else
+            this.onBackPressed();
     }
 
     public void setUid(String uid) {
