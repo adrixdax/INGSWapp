@@ -2,6 +2,7 @@ package com.example.INGSW;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,7 +16,7 @@ import java.io.IOException;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class AvatarScreen extends AppCompatActivity implements View.OnClickListener  {
+public class AvatarScreenActivity extends AppCompatActivity implements View.OnClickListener  {
 
 
     private CircleImageView ironman;
@@ -70,6 +71,7 @@ public class AvatarScreen extends AppCompatActivity implements View.OnClickListe
 
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
         switch (v.getId()){

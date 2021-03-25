@@ -32,7 +32,7 @@ public class RegistrationController {
     public RegistrationController(Activity current,String propic) {
         regActivity = current;
         this.circle = regActivity.findViewById(R.id.propic_image);
-        this.pic = propic;
+        pic = propic;
 
         mAuth = FirebaseAuth.getInstance();
     }
@@ -87,43 +87,27 @@ public class RegistrationController {
             return;
         }
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener(regActivity, new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        User user = new User(nickname, email,pic);
-
-
-                        FirebaseDatabase.getInstance().getReference("Users")
-                                .child((FirebaseAuth.getInstance().getCurrentUser().getUid()))
-                                .setValue(user).addOnSuccessListener(regActivity, new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(regActivity, "Utente registrato correttamente", Toast.LENGTH_LONG).show();
-
-                                //Genera Tabelle Utente
-                                UserServerController usc = new UserServerController();
-                                usc.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                try {
-                                    System.out.println(usc.execute(new String("registration")).get());
-                                } catch (ExecutionException e) {
-                                    e.printStackTrace();
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                usc.isCancelled();
-
-                                regActivity.startActivity(new Intent(regActivity, ToolBarActivity.class));
+                .addOnSuccessListener(regActivity, authResult -> {
+                    User user = new User(nickname, email,pic);
+                    FirebaseDatabase.getInstance().getReference("Users")
+                            .child((FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                            .setValue(user).addOnSuccessListener(regActivity, new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(regActivity, "Utente registrato correttamente", Toast.LENGTH_LONG).show();
+                            //Genera Tabelle Utente
+                            UserServerController usc = new UserServerController();
+                            usc.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                            try {
+                                System.out.println(usc.execute(new String("registration")).get());
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
                             }
-                        });
-
-
-                    }
-                }).addOnFailureListener(regActivity, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(regActivity, e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+                            usc.isCancelled();
+                            regActivity.startActivity(new Intent(regActivity, ToolBarActivity.class));
+                        }
+                    });
+                }).addOnFailureListener(regActivity, e -> Toast.makeText(regActivity, e.getMessage(), Toast.LENGTH_LONG).show());
 
     }
 

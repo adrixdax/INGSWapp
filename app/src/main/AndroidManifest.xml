@@ -21,7 +21,7 @@
         android:theme="@style/Authapp"
         android:noHistory = "true"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AvatarScreen" />
+        <activity android:name=".AvatarScreenActivity" />
         <activity android:name=".RegistrationScreen" />
         <activity android:name=".ToolBarActivity"/>
         <activity android:name=".LoginScreen"

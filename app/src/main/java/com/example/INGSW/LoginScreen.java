@@ -1,6 +1,7 @@
 
 package com.example.INGSW;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.INGSW.Controllers.LoginController;
@@ -26,12 +28,18 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.IntStream;
 
 /**
  * Tale activity sostiene la schermata principale dell'app. ovvero la prima schermata che si aprirà difronte all' utente all' apertura dell'app
@@ -57,7 +65,7 @@ public class LoginScreen extends AppCompatActivity {
 
     SignInButton GoogleLogin;
     GoogleSignInClient mGoogleSignInClient;
-
+    DatabaseReference reference;
 
     /**
      * Metodo che alla creazione dell' activity prepara le nuove variabili e riconosce le componenti
@@ -68,7 +76,7 @@ public class LoginScreen extends AppCompatActivity {
 
 
             super.onCreate(savedInstanceState);
-
+            reference =  FirebaseDatabase.getInstance().getReference("Users");
             setContentView(R.layout.loginscreen);
 
 
@@ -108,21 +116,27 @@ public class LoginScreen extends AppCompatActivity {
                     try {
                         loginController.verifyUserWithFirebase(editTextEmail.getText().toString().trim(), editTextPassword.getText().toString().trim(), mAuth, LoginScreen.this);
                     } catch (Exception e) {
-                        if (e.getMessage().equals("Empty Mail")) {
-                            editTextEmail.setError("Mail vuota");
-                            editTextEmail.requestFocus();
-                        } else if (e.getMessage().equals("Invalid Mail")) {
-                            editTextEmail.setError("Mail non valida");
-                            editTextEmail.requestFocus();
-                        } else if (e.getMessage().equals("Empty password")) {
-                            editTextPassword.setError("La password è necessaria!");
-                            editTextPassword.requestFocus();
-                        } else if (e.getMessage().equals("Password Length")) {
-                            editTextPassword.setError("La password deve contenere almeno 6 caratteri!");
-                            editTextPassword.requestFocus();
-                        } else {
-                            e.printStackTrace();
-                            Toast.makeText(LoginScreen.super.getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        switch (e.getMessage()) {
+                            case "Empty Mail":
+                                editTextEmail.setError("Mail vuota");
+                                editTextEmail.requestFocus();
+                                break;
+                            case "Invalid Mail":
+                                editTextEmail.setError("Mail non valida");
+                                editTextEmail.requestFocus();
+                                break;
+                            case "Empty password":
+                                editTextPassword.setError("La password è necessaria!");
+                                editTextPassword.requestFocus();
+                                break;
+                            case "Password Length":
+                                editTextPassword.setError("La password deve contenere almeno 6 caratteri!");
+                                editTextPassword.requestFocus();
+                                break;
+                            default:
+                                e.printStackTrace();
+                                Toast.makeText(LoginScreen.super.getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                break;
                         }
 
                     }
@@ -152,12 +166,9 @@ public class LoginScreen extends AppCompatActivity {
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
             /**Sul click nella schermata, se il click corrisponde al bottone di Google, allora viene chiamata nel login controller la funzione adibita al login con google **/
-            GoogleLogin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (v.getId() == R.id.sign_in_button) {
-                        loginController.signIn(mGoogleSignInClient);
-                    }
+            GoogleLogin.setOnClickListener(v -> {
+                if (v.getId() == R.id.sign_in_button) {
+                    loginController.signIn(mGoogleSignInClient);
                 }
             });
 
@@ -187,6 +198,23 @@ public class LoginScreen extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
+            final User[] model = new User[1];
+            Query query = reference.orderByKey().equalTo(account.getId());
+            query.addValueEventListener(new ValueEventListener() {
+                @SuppressLint("RestrictedApi")
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        model[0] = dataSnapshot.getValue(User.class);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
             // Signed in successfully, show authenticated UI.
             SharedPreferences preferences = getSharedPreferences("access", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
@@ -196,25 +224,38 @@ public class LoginScreen extends AppCompatActivity {
             UserServerController usc = new UserServerController();
             usc.setUserId(account.getId());
             String req = (String) usc.execute(new String("google")).get();
-            System.out.println(req + "---------------------------------------------------------------------------------");
-
             User u = new User();
             u.nickname = Objects.requireNonNull(account.getEmail()).split("@")[0];
             u.email = account.getEmail();
-            u.propic = "";
+            if ((model[0] == null) ^ ((model[0] != null) && (model[0].getPropic().equals("")))) {
+                switch (new Random().ints(0, 5).findFirst().getAsInt()) {
+                    case 0:
+                        u.propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
+                    case 1:
+                        u.propic = "https://i.pinimg.com/236x/d4/9f/33/d49f3302e2a4e7b5a21ea3aba0cfcf03.jpg";
+                    case 2:
+                        u.propic = "https://i.pinimg.com/564x/48/99/65/48996519ea996aa169ca1d61e2a6c6ab.jpg";
+                    case 3:
+                        u.propic = "https://i.pinimg.com/236x/fa/60/b8/fa60b89014f5807b5a013e83aba32aab.jpg";
+                    case 4:
+                        u.propic = "https://i.pinimg.com/564x/90/15/d9/9015d92696baf129a8b4d273625fbfdd.jpg";
+                    case 5:
+                        u.propic = "https://i.pinimg.com/564x/5b/71/ab/5b71ab4ea082c3c11e77312a64bba835.jpg";
+                }
+            } else {
+                u = model[0];
+            }
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(Objects.requireNonNull(account.getId())).setValue(u);
             Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
             startActivity(intent);
             finish();
-
-        } catch (ApiException e) {
+        }
+        catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("ERROR", "signInResult:failed code=" + e.getStatusCode());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }

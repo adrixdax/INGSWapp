@@ -8,7 +8,6 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -50,7 +49,7 @@ public class RegistrationScreen extends AppCompatActivity {
         ProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RegistrationScreen.this,AvatarScreen.class));
+                startActivity(new Intent(RegistrationScreen.this, AvatarScreenActivity.class));
             }
         });
 
@@ -94,10 +93,7 @@ public class RegistrationScreen extends AppCompatActivity {
                 return false;
             }
         });
-
         PushDownAnim.setPushDownAnimTo(registerUser,ProfileImage);
-
-
     }
 
 
