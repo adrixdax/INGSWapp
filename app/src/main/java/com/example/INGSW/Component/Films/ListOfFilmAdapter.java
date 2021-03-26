@@ -118,16 +118,13 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 transaction.commit();
 
             });
-            holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-
-                    //ChooseActionDialog dlg = new ChooseActionDialog(mContext);
-                    ChooseActionDialog dlg = new ChooseActionDialog(mContext, listOfData.get(holder.getAdapterPosition()),idList);
+            holder.relativeLayout.setOnLongClickListener(v -> {
+                if (!(css.getCanonicalName().equals(ToSee.class.getCanonicalName()))) {
+                    ChooseActionDialog dlg = new ChooseActionDialog(mContext, listOfData.get(holder.getAdapterPosition()), idList);
                     dlg.show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
-
                     return true;
                 }
+                return false;
             });
         } else {
             with(holder.itemView).load(listOfData.get(position).getPosterPath().equals("") ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
