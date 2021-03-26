@@ -1,6 +1,9 @@
 package com.example.INGSW.Controllers;
 
 import android.os.AsyncTask;
+import android.widget.Toolbar;
+
+import com.example.INGSW.ToolBarActivity;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -208,6 +211,24 @@ public class FilmTestController extends AsyncTask {
         return "";
     }
 
+    private Object getSuggestedFilms() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&suggested=true&idUser="+uid);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "film")
+                .post(body)
+                .build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -235,10 +256,14 @@ public class FilmTestController extends AsyncTask {
                     return getFilmInList();
                 case "filmById":
                     return getFilmbyId();
+                case "suggested":
+                    return getSuggestedFilms();
             }
         }
         return "Helooo";
     }
+
+
 
     public String getIdList() {
         return idList;

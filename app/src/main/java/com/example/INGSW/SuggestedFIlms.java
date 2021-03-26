@@ -83,14 +83,12 @@ public class SuggestedFIlms extends Fragment {
         if (film == null) {
             String latestJson = "";
             try {
-                latestJson = (String) con.execute(new String("latest")).get();
+                con.setUid(((ToolBarActivity)(getActivity())).getUid());
+                latestJson = (String) con.execute(new String("suggested")).get();
                 con.isCancelled();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
-
-            System.out.println(latestJson);
-
 
             try {
                 film = (List<Film>) getJsonToDecode(latestJson, Film.class);
@@ -107,8 +105,6 @@ public class SuggestedFIlms extends Fragment {
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setAdapter(adapter);
-
-
 
         return root;
     }
