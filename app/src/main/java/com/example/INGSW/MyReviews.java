@@ -36,6 +36,7 @@ public class MyReviews extends Fragment {
 
             String latestJson = "";
             try {
+                con = new ReviewsController();
                 con.setIdUser(((ToolBarActivity)getActivity()).getUid());
                 latestJson = (String) con.execute(new String("UserReviews")).get();
                 System.out.println(latestJson);
