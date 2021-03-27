@@ -27,6 +27,7 @@ import com.example.INGSW.ToSee;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.UserPrefered;
 import com.example.INGSW.home.HomepageScreen;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
 
@@ -203,6 +204,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 this.textViewUser = itemView.findViewById(R.id.textView6);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
             }
+            PushDownAnim.setPushDownAnimTo(relativeLayout);
         }
     }
 
