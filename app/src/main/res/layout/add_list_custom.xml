@@ -10,9 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:autoSizeTextType="uniform"
         android:fontFamily="@font/poppins_bold"
         android:text="Aggiungi una lista"
-        android:autoSizeTextType="uniform"
         android:textColor="#FFFFFF"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,9 +20,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="160dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,6 +34,7 @@
             class="com.google.android.material.textfield.TextInputLayout"
             android:layout_width="310dp"
             android:layout_height="58dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
@@ -44,8 +46,8 @@
             android:id="@+id/editTextViewTitleList"
             android:layout_width="270dp"
             android:layout_height="51dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="68dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="80dp"
             android:background="@android:color/transparent"
             android:ems="10"
             android:hint="Titolo"
@@ -63,26 +65,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="118dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Titolo"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="258dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/poppins_bold"
         android:text="Descrizione"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -98,13 +100,14 @@
             android:id="@+id/view1"
             class="com.google.android.material.textfield.TextInputLayout"
             android:layout_width="310dp"
-            android:layout_height="250dp"
+            android:layout_height="215dp"
             android:background="@drawable/rounded_list_obj"
             android:backgroundTint="#FFFFFF"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="3dp" />
 
         <EditText
             android:id="@+id/editTextListDescription"
@@ -132,7 +135,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="76dp"
         android:layout_marginTop="6dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="65dp"
         android:background="@drawable/circle_obj"
         android:backgroundTint="#AC2525"
         android:fontFamily="@font/poppins_bold"
@@ -140,7 +143,8 @@
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.954" />
 
     <Button
         android:id="@+id/button2"
@@ -148,13 +152,14 @@
         android:layout_height="50dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="76dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="65dp"
         android:background="@drawable/rounded_corners"
         android:fontFamily="@font/poppins_bold"
         android:text="Aggiungi"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:layout_constraintVertical_bias="0.954" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,18 +13,23 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Classes.Reviews;
+import com.example.INGSW.Component.Films.Film;
+import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.FilmInCustomList;
 import com.example.INGSW.MyReviews;
 import com.example.INGSW.R;
 import com.example.INGSW.ReviewDetail;
 import com.example.INGSW.User;
+import com.example.INGSW.Utility.JSONDecoder;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
 
@@ -64,6 +69,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public void onBindViewHolder(@NonNull ReviewsAdapter.ViewHolder holder, int position) {
         if (css.getCanonicalName().equals(MyReviews.class.getCanonicalName())) {
             try {
+                FilmTestController con = new FilmTestController();
+                con.setIdFilm(String.valueOf(listofdata.get(position).getIdFilm()));
+                Film film = ((List<Film>) JSONDecoder.getJsonToDecode((String) con.execute("filmById").get(),Film.class)).get(0);
+                Glide.with(startFragment).load(film.getPosterPath()).into((ImageView)holder.moviepic);
 
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
                 holder.ratingBar.setClickable(false);
@@ -85,7 +94,11 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 holder.relativeLayoutReviewList.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position), ref);
+                        FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                     }
                 });
             } catch (Exception e) {
@@ -192,6 +205,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             this.ratingBar = itemView.findViewById(R.id.ratingBar2);
             relativeLayoutReviewList = itemView.findViewById(R.id.relativeLayoutReviewList);
 
+            PushDownAnim.setPushDownAnimTo(relativeLayoutReviewList);
         }
 
 
@@ -202,6 +216,6 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     }
 
     public void setCss(Class css) {
-        css = css;
+        this.css = css;
     }
 }
