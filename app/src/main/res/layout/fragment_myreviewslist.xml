@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SuggestedFIlms">
+    tools:context=".MyReviews">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -18,14 +18,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/suggested_films" />
+        app:layout_constraintTop_toBottomOf="@+id/myreviews_view" />
 
     <TextView
-        android:id="@+id/suggested_films"
+        android:id="@+id/myreviews_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/ti_hanno_consigliato"
+        android:text="LE TUE RECENSIONI"
         android:textAlignment="center"
         android:textColor="#E8DFDF"
         android:textSize="24sp"

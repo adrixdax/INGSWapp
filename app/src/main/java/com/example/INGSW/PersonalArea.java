@@ -46,7 +46,6 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
 
         mylists = (Button) root.findViewById(R.id.mylists_button);
         myfavs = (Button) root.findViewById(R.id.myfavs_button);
-        suggested = (Button) root.findViewById(R.id.friendsuggests_button);
         seenfilms = (Button) root.findViewById(R.id.seenfilms_button);
         logout = (Button) root.findViewById(R.id.Logout_button);
         myreviews = (Button) root.findViewById(R.id.myreviews_button);
@@ -54,11 +53,12 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
         pencil.setOnClickListener(this);
         mylists.setOnClickListener(this);
         myfavs.setOnClickListener(this);
-        suggested.setOnClickListener(this);
         seenfilms.setOnClickListener(this);
+        myreviews.setOnClickListener(this);
 
 
-        PushDownAnim.setPushDownAnimTo(mylists, myfavs, suggested, seenfilms, logout,myreviews,pencil)
+
+        PushDownAnim.setPushDownAnimTo(mylists, myfavs, seenfilms, logout,myreviews,pencil)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                 .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
@@ -153,8 +153,8 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
-            case R.id.friendsuggests_button:
-                nextFragment = new SuggestedFIlms();
+            case R.id.myreviews_button:
+                nextFragment = new MyReviews();
                 transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "8");
                 transaction.addToBackStack(null);
