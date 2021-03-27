@@ -211,25 +211,6 @@ public class FilmTestController extends AsyncTask {
         return "";
     }
 
-    private Object getSuggestedFilms() {
-        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&suggested=true&idUser="+uid);
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url + "film")
-                .post(body)
-                .build();
-        try {
-            try (Response response = client.newCall(request).execute()) {
-                return Objects.requireNonNull(response.body()).string();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
@@ -256,8 +237,6 @@ public class FilmTestController extends AsyncTask {
                     return getFilmInList();
                 case "filmById":
                     return getFilmbyId();
-                case "suggested":
-                    return getSuggestedFilms();
             }
         }
         return "Helooo";
