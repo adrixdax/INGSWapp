@@ -18,6 +18,7 @@ import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.UserServerController;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -28,6 +29,7 @@ import java.util.concurrent.ExecutionException;
 public class FilmInCustomList extends Fragment {
 
     private TextView title;
+    private TextView description;
     private RecyclerView filmInCustomList;
     private UserLists list;
 
@@ -43,7 +45,8 @@ public class FilmInCustomList extends Fragment {
 
         title = root.findViewById(R.id.textViewTooSee);
         filmInCustomList = root.findViewById(R.id.recyclerViewFilmInListCustom);
-
+        description = root.findViewById(R.id.listDescription);
+        description.setText(list.getDescription());
         title.setText(list.getTitle());
 
         List<Film> CustomListFilm = new ArrayList<>();
