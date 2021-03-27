@@ -1,6 +1,7 @@
 package com.example.INGSW.Component.DB.Adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,9 @@ import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
+import com.example.INGSW.Controllers.UserServerController;
 import com.example.INGSW.R;
+import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.User;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -37,6 +40,7 @@ import static com.bumptech.glide.Glide.with;
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder> {
     private final List<Notify> listOfData;
     private final FirebaseDatabase ref;
+    private Context myContext;
 
     private User getUser(String id, ViewHolder holder, int position) {
         final User[] reviewer = new User[1];
@@ -65,7 +69,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                                     holder.notifyText.setText("ti consiglia:\n" + recordRef.getFilm_Title());
                                 break;
                             case "FRIENDSHIP REQUEST":
-                                holder.notifyText.setText("vuole essere il tuo supereroe");
+                                holder.notifyText.setText("vuole essere tuo Amico");
                                 break;
                             case "List":
                                 holder.notifyText.setText("vuole consigliarti la lista " + listOfData.get(position).getId_recordref());
@@ -112,9 +116,10 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         }
     }
 
-    public NotifyAdapter(List<Notify> listOfData, FirebaseDatabase ref) {
+    public NotifyAdapter(List<Notify> listOfData, FirebaseDatabase ref, Context myContext) {
         this.listOfData = listOfData;
         this.ref = ref;
+        this.myContext = myContext;
     }
 
     @NonNull
@@ -136,8 +141,45 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         holder.yes.setOnClickListener(v -> {
             holder.newNotify.setVisibility(View.INVISIBLE);
             listOfData.get(position).setState("ACCEPTED");
-            new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
-            Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
+
+            switch (listOfData.get(position).getType()) {
+                case "Film":
+
+                    new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
+                    Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
+                    break;
+                case "FRIENDSHIP REQUEST":
+
+                    UserServerController usc = new UserServerController();
+                    usc.setUserId(((ToolBarActivity) myContext).getUid());
+                    usc.setIdOtherUser(listOfData.get(position).getId_sender());
+                    try {
+                        usc.execute(new String("acceptedFriendsRequest")).get();
+                        usc.isCancelled();
+
+                        new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
+                        Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                case "List":
+                    holder.notifyText.setText("vuole consigliarti la lista " + listOfData.get(position).getId_recordref());
+
+                    new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
+                    Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    holder.notifyText.setText("vuole farti vedere la sua recensione riguardo " + listOfData.get(position).getId_recordref());
+
+                    new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
+                    Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+
         });
         holder.no.setOnClickListener(v -> {
             listOfData.get(position).setState("REFUSED");
