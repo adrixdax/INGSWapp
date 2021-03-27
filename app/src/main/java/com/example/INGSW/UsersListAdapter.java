@@ -16,6 +16,7 @@ import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.UserServerController;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,6 +139,8 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
             userpic = itemView.findViewById(R.id.userprofilepic_view);
             relativeLayoutNotify = itemView.findViewById(R.id.relativeLayoutNotify);
             addButton = itemView.findViewById(R.id.addFriendButton);
+
+            PushDownAnim.setPushDownAnimTo(addButton);
         }
     }
 }
