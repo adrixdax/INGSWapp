@@ -1,6 +1,7 @@
 package com.example.INGSW;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.NotifyAdapter;
 import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.Controllers.NotifyUpdater;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -27,19 +29,28 @@ import java.util.Objects;
 public class NotifyPopUp extends AppCompatDialogFragment {
 
     private RecyclerView recycler;
-    private List<Notify> notify = new ArrayList<>();
+    private static ArrayList<Notify> notify = new ArrayList<>();
+    private static TextView notifyTextError;
+    private static Activity activity;
 
-    public NotifyPopUp(List<Notify> list) {
-        this.notify = list;
+    public NotifyPopUp(ArrayList<Notify> list, Activity act){
+        notify = list;
+        activity = act;
+    }
+
+    public NotifyPopUp(ArrayList<Notify> list) {
+        new NotifyPopUp(list, null);
     }
 
     public NotifyPopUp() {
+        new NotifyPopUp(null);
     }
 
     @SuppressLint("SetTextI18n")
     @NotNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        NotifyUpdater.newUpdate();
         Dialog dialog = new Dialog(getActivity());
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.notifypopup);
@@ -47,8 +58,8 @@ public class NotifyPopUp extends AppCompatDialogFragment {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         recycler = dialog.findViewById(R.id.recyclerViewNotify);
         NotifyAdapter adapter = new NotifyAdapter(notify, ToolBarActivity.getReference(), this.getContext());
+        notifyTextError = dialog.findViewById(R.id.notifyTextError);
         if (adapter.getItemCount() == 0) {
-            TextView notifyTextError = dialog.findViewById(R.id.notifyTextError);
             notifyTextError.setText("Nessuna nuova notifica");
         }
         recycler.setAdapter(adapter);
@@ -63,4 +74,20 @@ public class NotifyPopUp extends AppCompatDialogFragment {
         ((NotifyAdapter) Objects.requireNonNull(recycler.getAdapter())).changeStatus();
         super.onCancel(dialog);
     }
-}
+
+    private static void update() {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyTextError.setText("Nessuna nuova notifica");
+            }
+        });
+    }
+
+    public static void noMoreNotify() {
+        if ((notifyTextError != null) && (notify.size() == 0)) {
+            update();
+            }
+        }
+    }
+

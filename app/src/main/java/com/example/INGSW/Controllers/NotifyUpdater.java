@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.widget.ImageButton;
 
 import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,25 +19,31 @@ import java.util.concurrent.ExecutionException;
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class NotifyUpdater extends TimerTask {
-    private static List<Notify> notify = new ArrayList<>();
+    private static ArrayList<Notify> notify = new ArrayList<>();
     private static ImageButton bell;
-    private Timer timer;
-    private Activity activity;
+    private static Timer timer;
+    private static Activity activity;
 
     public NotifyUpdater(Timer timer, ImageButton bell, Activity activity){
         NotifyUpdater.bell = bell;
-        this.timer = timer;
-        this.activity = activity;
+        NotifyUpdater.timer = timer;
+        NotifyUpdater.activity = activity;
     }
 
-    public List<Notify> getNotify(){
-        return notify;
+    public ArrayList<Notify> getNotify(){
+        try {
+            notify = new ArrayList<Notify>((List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser="+((ToolBarActivity)activity).getUid()).get()),Notify.class));
+            return notify;
+        } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
 
     public void run() {
         try {
-            notify = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser="+((ToolBarActivity)activity).getUid()).get()),Notify.class);
+            notify = new ArrayList<Notify>((List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser="+((ToolBarActivity)activity).getUid()).get()),Notify.class));
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -59,7 +67,10 @@ public class NotifyUpdater extends TimerTask {
                 }
             }
         });
-        timer.schedule(new NotifyUpdater(this.timer, bell,this.activity),30000);
+        timer.schedule(new NotifyUpdater(timer, bell, activity),30000);
     }
 
+    public static void newUpdate(){
+        timer.schedule(new NotifyUpdater(timer, bell, activity),1);
+    }
 }

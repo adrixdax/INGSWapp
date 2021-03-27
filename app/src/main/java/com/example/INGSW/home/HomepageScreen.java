@@ -54,6 +54,9 @@ public class HomepageScreen extends Fragment {
         tooSee.setAlpha(0.8f);
         mostReviewed.setAlpha(0.8f);
         userPrefered.setAlpha(0.8f);
+        bell = root.findViewById(R.id.notifyBell);
+        NotifyUpdater not = new NotifyUpdater(timer, bell, getActivity());
+        timer.schedule(not, 1);
 
         PushDownAnim.setPushDownAnimTo(mostSeen, mostReviewed, tooSee, userPrefered)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
@@ -114,13 +117,8 @@ public class HomepageScreen extends Fragment {
                 e.printStackTrace();
             }
         }
-        bell = root.findViewById(R.id.notifyBell);
-        NotifyUpdater not = new NotifyUpdater(timer, bell, getActivity());
-        timer.schedule(not, 1);
         bell.setOnClickListener(v -> {
-            System.out.println("Click on bell");
-            System.out.println(((ToolBarActivity) getActivity()).getUid());
-            new NotifyPopUp(not.getNotify()).show(getActivity().getSupportFragmentManager(), "4");
+            new NotifyPopUp(not.getNotify(),getActivity()).show(getActivity().getSupportFragmentManager(), "4");
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);

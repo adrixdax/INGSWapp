@@ -90,9 +90,7 @@ public class DialogCustomlList extends AppCompatDialogFragment {
                     try {
                         ftc.execute(new String("addFilm")).get();
                         ftc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+                    } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
 
