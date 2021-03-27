@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.UserServerController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,12 +27,21 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
     Context dialog_ctx;
     Button share, remove;
     TextView filmTitle;
+    boolean custom = false;
     Film film;
     String idList;
+    String titleList;
 
     public ChooseActionDialog(Context ctx, Film film, String idList) {
         this.dialog_ctx = ctx;
         this.film = film;
+        this.idList = idList;
+    }
+
+    public ChooseActionDialog(Context ctx, boolean custom, String idList, String titleList) {
+        this.dialog_ctx = ctx;
+        this.custom = custom;
+        this.titleList=titleList;
         this.idList = idList;
     }
 
@@ -56,25 +66,44 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
         filmTitle = dialog.findViewById(R.id.filmTitle_view);
 
         PushDownAnim.setPushDownAnimTo(share, remove);
-        filmTitle.setText(film.getFilm_Title());
+        filmTitle.setText(film==null?titleList:film.getFilm_Title());
 
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                FilmTestController ftc = new FilmTestController();
-                try {
-                    ftc.setIdList(idList);
-                    ftc.setIdFilm(String.valueOf(film.getId_Film()));
-                    ftc.execute(new String("removeFilm")).get();
-                    ftc.isCancelled();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                dismiss();
 
+                if (!custom) {
+                    FilmTestController ftc = new FilmTestController();
+                    try {
+                        ftc.setIdList(idList);
+                        ftc.setIdFilm(String.valueOf(film.getId_Film()));
+                        ftc.execute(new String("removeFilm")).get();
+                        ftc.isCancelled();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    dismiss();
+
+                }else{
+
+                    UserServerController usc = new UserServerController();
+                    try {
+                        usc.setIdList(idList);
+                        usc.setUserId(((ToolBarActivity)getActivity()).getUid());
+                        usc.execute(new String("deleteCustomList")).get();
+                        usc.isCancelled();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    dismiss();
+
+
+                }
             }
         });
 

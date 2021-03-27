@@ -105,8 +105,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         } else if (css.getCanonicalName().equals(MyFavs.class.getCanonicalName()) ||
                 css.getCanonicalName().equals(SeenFilms.class.getCanonicalName()) ||
                 css.getCanonicalName().equals(ToSee.class.getCanonicalName()) ||
-                css.getCanonicalName().equals(FilmInCustomList.class.getCanonicalName()) ||
-                css.getCanonicalName().equals(MyReviews.class.getCanonicalName())) {
+                css.getCanonicalName().equals(FilmInCustomList.class.getCanonicalName())) {
             with(holder.itemView).load(listOfData.get(position).getPosterPath().equals("") ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
                     .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
             holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
@@ -119,12 +118,9 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
 
             });
             holder.relativeLayout.setOnLongClickListener(v -> {
-                if (!(css.getCanonicalName().equals(ToSee.class.getCanonicalName()))) {
                     ChooseActionDialog dlg = new ChooseActionDialog(mContext, listOfData.get(holder.getAdapterPosition()), idList);
                     dlg.show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
                     return true;
-                }
-                return false;
             });
         } else {
             with(holder.itemView).load(listOfData.get(position).getPosterPath().equals("") ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())

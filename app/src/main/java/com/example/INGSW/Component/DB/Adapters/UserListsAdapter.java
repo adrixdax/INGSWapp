@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.Component.DB.Classes.UserLists;
 
 
@@ -21,6 +22,7 @@ import com.example.INGSW.DialogCustomlList;
 import com.example.INGSW.FilmInCustomList;
 import com.example.INGSW.MyLists;
 import com.example.INGSW.R;
+import com.example.INGSW.ToolBarActivity;
 
 import java.util.List;
 
@@ -93,12 +95,19 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
             holder.circleList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    System.out.println("----------------------------------------------------> " + String.valueOf(listofdata.get(holder.getAdapterPosition()).getIdUserList()));
                     FilmInCustomList nextFragment = new FilmInCustomList(listofdata.get(position));
                     FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
                     transaction.addToBackStack(null);
                     transaction.commit();
+                }
+            });
+            holder.circleList.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    ChooseActionDialog dlg = new ChooseActionDialog(v.getContext(), true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle());
+                    dlg.show(((ToolBarActivity) v.getContext()).getSupportFragmentManager(), "Choose action");
+                    return true;
                 }
             });
 

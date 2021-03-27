@@ -13,10 +13,11 @@ import okhttp3.Response;
 
 public class UserServerController extends AsyncTask {
 
-    private final String url = "http://87.1.139.228:8080/";
+    private final String url = "http://192.168.1.30:8080/";
     private String UserId = "";
     private String idFilm = "";
     private String idOtherUser = "";
+    private String idList = "";
 
     private String listTitle = "";
     private String listDescription = "";
@@ -147,6 +148,24 @@ public class UserServerController extends AsyncTask {
         return "";
     }
 
+    private Object deleteCustomList() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&removeList=true&idUser=" + UserId + "&idList=" + idList);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "user").post(body).build();
+
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
@@ -165,6 +184,8 @@ public class UserServerController extends AsyncTask {
                     return acceptedFriendsRequest();
                 case "isFriends":
                     return isFriends();
+                case "deleteCustomList":
+                    return deleteCustomList();
 
             }
         }
@@ -209,6 +230,14 @@ public class UserServerController extends AsyncTask {
 
     public void setIdOtherUser(String idOtherUser) {
         this.idOtherUser = idOtherUser;
+    }
+
+    public String getIdList() {
+        return idList;
+    }
+
+    public void setIdList(String idList) {
+        this.idList = idList;
     }
 }
 

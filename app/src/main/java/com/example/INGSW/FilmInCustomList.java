@@ -56,6 +56,7 @@ public class FilmInCustomList extends Fragment {
         }
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(CustomListFilm, getContext(), this);
         adapter.setCss(FilmInCustomList.class);
+        adapter.setIdList(String.valueOf(list.getIdUserList()));
         filmInCustomList.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
         filmInCustomList.setLayoutManager(layoutManager);
