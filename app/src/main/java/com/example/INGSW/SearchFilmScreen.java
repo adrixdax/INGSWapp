@@ -25,6 +25,7 @@ import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -173,10 +174,24 @@ public class SearchFilmScreen extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 User model = dataSnapshot.getValue(User.class);
-                                model.setIdUser( dataSnapshot.getKey());
-                                usersInSearchlist.add(model);
+                                User u = new User();
+                                if ((((ToolBarActivity) getActivity()).getContaiinerItem().get("acct")) != null) {
+                                    GoogleSignInAccount acc = (GoogleSignInAccount) ((ToolBarActivity) getActivity()).getContaiinerItem().get("acct");
+                                    u.setIdUser(acc.getId());
+                                    if (!(u.getIdUser().equals(dataSnapshot.getKey()))) {
+                                        model.setIdUser(dataSnapshot.getKey());
+                                        usersInSearchlist.add(model);
+                                    }
+                                } else if (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null || ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") == null) {
+                                        ((ToolBarActivity) getActivity()).getUser();
+                                        u = ((User) ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile"));
+                                        if (!(u.getNickname().equals(model.getNickname()))) {
+                                        model.setIdUser(dataSnapshot.getKey());
+                                        usersInSearchlist.add(model);
+                                    }
+                                }
+                                adapter.notifyDataSetChanged();
                             }
-                            adapter.notifyDataSetChanged();
                         }
 
                         @Override
