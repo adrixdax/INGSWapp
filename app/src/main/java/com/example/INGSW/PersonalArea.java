@@ -134,6 +134,14 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
+            case R.id.personal_profile_image:
+                nextFragment = new FragmentAvatarScreen();
+                transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "avatar");
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+
         }
     }
 
