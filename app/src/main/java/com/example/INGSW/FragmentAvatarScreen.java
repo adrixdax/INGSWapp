@@ -104,12 +104,8 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
     }
 
     private void updateWithUrl(String url){
-        String child;
-        if (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null)
-            child = ((User) (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile"))).getIdUser();
-        else
-            child = ((GoogleSignInAccount) (((ToolBarActivity) getActivity()).getContaiinerItem().get("acct"))).getId();
-        Query query = ToolBarActivity.getReference().getReference("Users").orderByKey().equalTo(((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null ?  ((User) (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile"))).getIdUser() : ((GoogleSignInAccount) (((ToolBarActivity) getActivity()).getContaiinerItem().get("acct"))).getId());
+        String uid = ((ToolBarActivity) getActivity()).getUid();
+        Query query = ToolBarActivity.getReference().getReference("Users").orderByKey().equalTo(uid);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("RestrictedApi")
             @Override
@@ -117,7 +113,7 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     User model = dataSnapshot.getValue(User.class);;
                     model.propic=url;
-                    ToolBarActivity.getReference().getReference("Users").child(child).setValue(model);
+                    ToolBarActivity.getReference().getReference("Users").child(uid).setValue(model);
                 }
             }
 

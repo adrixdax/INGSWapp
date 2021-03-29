@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.app.Person;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,73 +30,34 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonalArea extends Fragment implements View.OnClickListener {
 
-    private Button logout, mylists, myfavs, suggested, seenfilms, myreviews;
-    private ImageView pencil;
-    GoogleSignInAccount acct;
-    String propic = "";
-    String nickname;
-    String mail;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
 
         View root = inflater.inflate(R.layout.personal_area, container, false);
-
-
-
-        mylists = (Button) root.findViewById(R.id.mylists_button);
-        myfavs = (Button) root.findViewById(R.id.myfavs_button);
-        seenfilms = (Button) root.findViewById(R.id.seenfilms_button);
-        logout = (Button) root.findViewById(R.id.Logout_button);
-        myreviews = (Button) root.findViewById(R.id.myreviews_button);
-        pencil = (ImageView) root.findViewById(R.id.pencilPersonalArea);
+        Button mylists = (Button) root.findViewById(R.id.mylists_button);
+        Button myfavs = (Button) root.findViewById(R.id.myfavs_button);
+        Button seenfilms = (Button) root.findViewById(R.id.seenfilms_button);
+        Button logout = (Button) root.findViewById(R.id.Logout_button);
+        Button myreviews = (Button) root.findViewById(R.id.myreviews_button);
+        ImageView pencil = (ImageView) root.findViewById(R.id.pencilPersonalArea);
         pencil.setOnClickListener(this);
         mylists.setOnClickListener(this);
         myfavs.setOnClickListener(this);
         seenfilms.setOnClickListener(this);
         myreviews.setOnClickListener(this);
-
-
-
-        PushDownAnim.setPushDownAnimTo(mylists, myfavs, seenfilms, logout,myreviews,pencil)
+        PushDownAnim.setPushDownAnimTo(mylists, myfavs, seenfilms, logout, myreviews, pencil)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                 .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
                 .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
-
-
         final TextView nicknameView = (TextView) root.findViewById(R.id.personal_profile_nick);
         final TextView mailView = (TextView) root.findViewById(R.id.personal_profile_mail);
         final CircleImageView propicView = (CircleImageView) root.findViewById(R.id.personal_profile_image);
-
         if (!(((ToolBarActivity) getActivity()).isLoadUser())) {
             ((ToolBarActivity) getActivity()).setLoadUser(loadingUser());
         }
-
-
-        if (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null) {
-
-            User userProfile = (User) ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile");
-
-
-            if (userProfile != null) {
-                nickname = userProfile.nickname;
-                mail = userProfile.email;
-                propic = userProfile.propic;
-
-                nicknameView.setText(nickname);
-                mailView.setText(mail);
-                Glide.with(root.getContext()).load(propic).into(propicView);
-            }
-
-        } else if (((ToolBarActivity) getActivity()).getContaiinerItem().get("acct") != null) {
-
-            acct = (GoogleSignInAccount) ((ToolBarActivity) getActivity()).getContaiinerItem().get("acct");
-
-
-            if (acct != null) {
-                Query query = ToolBarActivity.getReference().getReference("Users").orderByKey().equalTo(acct.getId());
+                Query query = ToolBarActivity.getReference().getReference("Users").orderByKey().equalTo((((ToolBarActivity) getActivity()).getUid()));
                 query.addValueEventListener(new ValueEventListener() {
                     @SuppressLint("RestrictedApi")
                     @Override
@@ -112,11 +74,9 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
-            }
-        }
 
 
-        logout.setOnClickListener((View.OnClickListener) v -> {
+        logout.setOnClickListener(v -> {
 
             SharedPreferences preferences = getContext().getSharedPreferences("access", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
@@ -168,9 +128,9 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
                 transaction.commit();
                 break;
             case R.id.pencilPersonalArea:
-                FragmentAvatarScreen changeAvatar = new FragmentAvatarScreen();
-                transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, changeAvatar, "avatar");
+                nextFragment = new FragmentAvatarScreen();
+                transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "avatar");
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;

@@ -76,11 +76,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
                     friend = true ;
                 }
             }
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
