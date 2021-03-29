@@ -2,6 +2,7 @@ package com.example.INGSW.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -19,7 +20,9 @@ import com.example.INGSW.Controllers.NotifyUpdater;
 import com.example.INGSW.MostReviewed;
 import com.example.INGSW.MostSeen;
 import com.example.INGSW.NotifyPopUp;
+import com.example.INGSW.PersonalArea;
 import com.example.INGSW.R;
+import com.example.INGSW.SearchFilmScreen;
 import com.example.INGSW.ToSee;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.UserPrefered;
@@ -36,6 +39,8 @@ import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 public class HomepageScreen extends Fragment {
 
     Timer timer = new Timer();
+
+    float x1,x2,y1,y2;
 
     ShapeableImageView mostSeen, tooSee, mostReviewed, userPrefered;
     static ImageButton bell;
@@ -127,7 +132,9 @@ public class HomepageScreen extends Fragment {
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-
         return root;
     }
+
+
+
 }

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
 
     Fragment activeFragment;
+
+    float x1,x2,y1,y2;
 
     Map<String, List<Film>> conteinerList = new HashMap<>();
     private ProgressDialog progressDialog;
@@ -82,6 +85,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         navigationView.setOnNavigationItemSelectedListener(this);
 
 
+
     }
 
     private boolean loadFragment(Fragment fragment, String tag) {
@@ -90,7 +94,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         if (fragment != null) {
             if (!tag.equals(currentFragment.getTag())) {
                 getSupportFragmentManager()
-                        .beginTransaction()
+                        .beginTransaction().setCustomAnimations(R.anim.enter_left_to_right,R.anim.exit_right_to_left)
                         .replace(R.id.nav_host_fragment, fragment, tag).commit();
                 activeFragment = fragment;
                 return true;
@@ -229,6 +233,55 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         }
         return ref;
     }
+
+    public boolean onTouchEvent(MotionEvent touchEvent) {
+        Fragment fragment = null;
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        String tag = currentFragment.getTag();
+
+            switch (touchEvent.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    x1 = touchEvent.getX();
+                    y1 = touchEvent.getY();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    x2 = touchEvent.getX();
+                    y2 = touchEvent.getY();
+                    if (x1 < x2) {
+                        switch (tag) {
+                            case "1":
+                                fragment = new SearchFilmScreen();
+                                tag = "3";
+                                break;
+                            case "2":
+                                fragment = new HomepageScreen();
+                                tag = "1";
+                                break;
+                            case "3":
+                                break;
+
+                        }
+                    } else if (x2 < x1) {
+                        switch (tag) {
+                            case "1":
+                                fragment = new PersonalArea();
+                                tag = "2";
+                                break;
+                            case "2":
+                                break;
+                            case "3":
+                                fragment = new HomepageScreen();
+                                tag = "1";
+                                break;
+                        }
+                    }
+                    return loadFragment(fragment, tag);
+
+            }
+
+            return false;
+        }
+
 }
 
 //account@gmail.com
