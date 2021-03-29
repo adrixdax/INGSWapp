@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
@@ -79,7 +80,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        loadFragment(new HomepageScreen(), "1");
+        loadFragment(new HomepageScreen(), "1",false);
 
         BottomNavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setOnNavigationItemSelectedListener(this);
@@ -88,18 +89,54 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     }
 
-    private boolean loadFragment(Fragment fragment, String tag) {
+    private boolean loadFragment(Fragment fragment, String tag, boolean swipe) {
         FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
         if (fragment != null) {
-            if (!tag.equals(currentFragment.getTag())) {
+            if (!tag.equals(currentFragment.getTag()) && swipe) {
+                if (tag.equals("3"))
+                    getSupportFragmentManager()
+                            .beginTransaction().setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                            .replace(R.id.nav_host_fragment, fragment, tag)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit();
+                else if (tag.equals("2"))
+                    getSupportFragmentManager()
+                            .beginTransaction().setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left)
+                            .replace(R.id.nav_host_fragment, fragment, tag)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .commit();
+                else if (currentFragment.getTag() != null) {
+                    if (tag.equals("1") && currentFragment.getTag().equals("3"))
+                        getSupportFragmentManager()
+                                .beginTransaction().setCustomAnimations(R.anim.enter_right_to_left, R.anim.exit_right_to_left)
+                                .replace(R.id.nav_host_fragment, fragment, tag)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+                    else
+                    if (tag.equals("1") && currentFragment.getTag().equals("2"))
+                        getSupportFragmentManager()
+                                .beginTransaction().setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_left_to_right)
+                                .replace(R.id.nav_host_fragment, fragment, tag)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+                    else
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.nav_host_fragment, fragment, tag)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+                }
+            }
+            else
                 getSupportFragmentManager()
-                        .beginTransaction().setCustomAnimations(R.anim.enter_left_to_right,R.anim.exit_right_to_left)
-                        .replace(R.id.nav_host_fragment, fragment, tag).commit();
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment, fragment, tag)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit();
                 activeFragment = fragment;
                 return true;
             }
-        }
         return false;
     }
 
@@ -126,7 +163,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
         }
 
-        return loadFragment(fragment, tag);
+        return loadFragment(fragment, tag, false);
     }
 
     public Map<String, List<Film>> getConteinerList() {
@@ -194,12 +231,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                     .setMessage("Noi siamo quello che scegliamo di essere. Ora scegli!\n\n                                     (Goblin Spiderman)")
                     //Dopotutto, domani è un altro giorno
                     .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            finish();
-                            //ToolBarActivity.super.onBackPressed();
-                        }
+                    .setPositiveButton(android.R.string.yes, (arg0, arg1) -> {
+                        finish();
                     }).create().show();
         }
 
@@ -275,7 +308,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                                 break;
                         }
                     }
-                    return loadFragment(fragment, tag);
+                    return loadFragment(fragment, tag,true);
 
             }
 
