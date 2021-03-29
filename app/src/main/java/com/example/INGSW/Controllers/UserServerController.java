@@ -13,7 +13,7 @@ import okhttp3.Response;
 
 public class UserServerController extends AsyncTask {
 
-    private final String url = "http://87.1.139.228:8080/";
+    private final String url = "http://192.168.1.30:8080/";
     private String UserId = "";
     private String idFilm = "";
     private String idOtherUser = "";
@@ -166,6 +166,24 @@ public class UserServerController extends AsyncTask {
         return "";
     }
 
+    private Object getFriends() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+
+        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&isFriends=true&idUser=" + UserId);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "user").post(body).build();
+
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
@@ -186,6 +204,8 @@ public class UserServerController extends AsyncTask {
                     return isFriends();
                 case "deleteCustomList":
                     return deleteCustomList();
+                case "getFriends":
+                    return getFriends();
 
             }
         }

@@ -1,5 +1,6 @@
 package com.example.INGSW.Utility;
 
+import com.example.INGSW.Component.DB.Classes.Contact;
 import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.example.INGSW.Component.DB.Classes.UserLists;
@@ -29,6 +30,9 @@ public class JSONDecoder {
     private static List<Reviews> jsonReviews(String json) throws JsonProcessingException{
         return Arrays.asList(mapper.readValue(json, Reviews[].class));
     }
+    private static List<Contact> jsonContact(String json) throws JsonProcessingException{
+        return Arrays.asList(mapper.readValue(json, Contact[].class));
+    }
 
     public static Object getJsonToDecode(String json,Class c) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
@@ -41,6 +45,8 @@ public class JSONDecoder {
             return jsonUserLists(json);
         else if (c.getSimpleName().equals("Reviews"))
             return jsonReviews(json);
+        else if (c.getSimpleName().equals("Contact"))
+            return jsonContact(json);
         return "";
     }
 }

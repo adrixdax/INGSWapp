@@ -93,13 +93,6 @@ public class DialogCustomlList extends AppCompatDialogFragment {
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
-
-                    System.out.println("Lista -> " + singlelist.getIdUserList()
-                            + " - " + singlelist.getTitle() +
-                            " - " + singlelist.getIdUser() + " - " +
-                            idFilmToInsert
-                            + " - " + getIdFilmToInsert());
-
                 }
 
                 selectedLists.clear();

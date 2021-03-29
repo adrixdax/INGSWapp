@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.INGSW.Component.DB.Classes.Contact;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.UserServerController;
@@ -20,28 +21,28 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class ChooseActionDialog extends AppCompatDialogFragment {
 
-    Context dialog_ctx;
+
     Button share, remove;
     TextView filmTitle;
     boolean custom = false;
     Film film;
     String idList;
     String titleList;
+    private List<Contact> selectedLists;
 
-    public ChooseActionDialog(Context ctx, Film film, String idList) {
-        this.dialog_ctx = ctx;
+    public ChooseActionDialog(Film film, String idList) {
         this.film = film;
         this.idList = idList;
     }
 
-    public ChooseActionDialog(Context ctx, boolean custom, String idList, String titleList) {
-        this.dialog_ctx = ctx;
+    public ChooseActionDialog(boolean custom, String idList, String titleList) {
         this.custom = custom;
-        this.titleList=titleList;
+        this.titleList = titleList;
         this.idList = idList;
     }
 
@@ -66,7 +67,21 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
         filmTitle = dialog.findViewById(R.id.filmTitle_view);
 
         PushDownAnim.setPushDownAnimTo(share, remove);
-        filmTitle.setText(film==null?titleList:film.getFilm_Title());
+        filmTitle.setText(film == null ? titleList : film.getFilm_Title());
+
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!custom) {
+                    DialogFriendsListOfShare fragment = new DialogFriendsListOfShare(String.valueOf(film.getId_Film()));
+                    fragment.show(getChildFragmentManager(), "DialogFriendsListOfShare");
+                } else {
+                    DialogFriendsListOfShare fragment = new DialogFriendsListOfShare(true, idList);
+                    fragment.show(getChildFragmentManager(), "DialogFriendsListOfShare");
+                }
+            }
+        });
 
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,12 +102,12 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
                     }
                     dismiss();
 
-                }else{
+                } else {
 
                     UserServerController usc = new UserServerController();
                     try {
                         usc.setIdList(idList);
-                        usc.setUserId(((ToolBarActivity)getActivity()).getUid());
+                        usc.setUserId(((ToolBarActivity) getActivity()).getUid());
                         usc.execute(new String("deleteCustomList")).get();
                         usc.isCancelled();
                     } catch (ExecutionException e) {

@@ -91,7 +91,6 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
         }
         else if(css.getCanonicalName().equals(MyLists.class.getCanonicalName())){
             holder.circleList.setText(listofdata.get(position).getTitle());
-            System.out.println("----------------------------------------------------> " + String.valueOf(listofdata.get(holder.getAdapterPosition()).getIdUserList()));
             holder.circleList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -105,7 +104,7 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
             holder.circleList.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    ChooseActionDialog dlg = new ChooseActionDialog(v.getContext(), true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle());
+                    ChooseActionDialog dlg = new ChooseActionDialog( true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle());
                     dlg.show(((ToolBarActivity) v.getContext()).getSupportFragmentManager(), "Choose action");
                     return true;
                 }

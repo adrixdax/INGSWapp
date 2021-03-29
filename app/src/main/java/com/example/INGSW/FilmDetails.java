@@ -269,7 +269,7 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 DialogCustomlList fragment = new DialogCustomlList();
                 fragment.setIdFilmToInsert(film.getId_Film());
-                fragment.show(getChildFragmentManager(), "6");
+                fragment.show(getChildFragmentManager(), "CustomList");
                 //new DialogCustomlList().show(getActivity().getSupportFragmentManager(), "6");
             }
         });

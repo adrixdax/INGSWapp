@@ -98,6 +98,23 @@ public class NotifyTestController extends AsyncTask {
         return "Error to send Notify";
     }
 
+    private Object shareFriendsContent() {
+        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "notify?id_sender=" + idSender + "&id_receiver=" + idReceiver +"&type=" + type + "&id_recordref=" + idRecordref + "&sendNotify=true").get().build();
+
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "Error to send Notify";
+    }
+
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0].toString().startsWith("idUser="))
@@ -110,6 +127,8 @@ public class NotifyTestController extends AsyncTask {
             return setRefused(((String)objects[0]).substring(((String)objects[0]).indexOf('=')+1));
         else if (objects[0].toString().equals("SendFriendshipRequest"))
             return sendFriendshipRequest();
+        else if (objects[0].toString().equals("shareFriendsContent"))
+            return shareFriendsContent();
 
         return null;
     }
