@@ -54,6 +54,7 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
         final TextView nicknameView = (TextView) root.findViewById(R.id.personal_profile_nick);
         final TextView mailView = (TextView) root.findViewById(R.id.personal_profile_mail);
         final CircleImageView propicView = (CircleImageView) root.findViewById(R.id.personal_profile_image);
+        propicView.setOnClickListener(this);
         if (!(((ToolBarActivity) getActivity()).isLoadUser())) {
             ((ToolBarActivity) getActivity()).setLoadUser(loadingUser());
         }
@@ -128,12 +129,6 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
                 transaction.commit();
                 break;
             case R.id.pencilPersonalArea:
-                nextFragment = new FragmentAvatarScreen();
-                transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "avatar");
-                transaction.addToBackStack(null);
-                transaction.commit();
-                break;
             case R.id.personal_profile_image:
                 nextFragment = new FragmentAvatarScreen();
                 transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
@@ -141,7 +136,6 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
-
         }
     }
 
