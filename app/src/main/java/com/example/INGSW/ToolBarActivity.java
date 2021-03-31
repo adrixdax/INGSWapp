@@ -22,6 +22,7 @@ import com.example.INGSW.home.HomepageScreen;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,6 +39,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     Fragment activeFragment;
 
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     float x1,x2,y1,y2;
 
     Map<String, List<Film>> conteinerList = new HashMap<>();
@@ -53,6 +56,13 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         try {
             ref.setPersistenceEnabled(true);
         } catch (Exception ignored) {
