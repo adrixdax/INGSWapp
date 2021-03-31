@@ -41,7 +41,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
-    float x1,x2,y1,y2;
+    float x1, x2, y1, y2;
 
     Map<String, List<Film>> conteinerList = new HashMap<>();
     private ProgressDialog progressDialog;
@@ -90,11 +90,10 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        loadFragment(new HomepageScreen(), "1",false);
+        loadFragment(new HomepageScreen(), "1", false);
 
         BottomNavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setOnNavigationItemSelectedListener(this);
-
 
 
     }
@@ -103,7 +102,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
         if (fragment != null) {
-            if (!tag.equals(currentFragment.getTag()) && swipe) {
+            if ((!tag.equals(currentFragment.getTag())) && swipe) {
                 if (tag.equals("3"))
                     getSupportFragmentManager()
                             .beginTransaction().setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_left_to_right)
@@ -123,8 +122,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                                 .replace(R.id.nav_host_fragment, fragment, tag)
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
-                    else
-                    if (tag.equals("1") && currentFragment.getTag().equals("2"))
+                    else if (tag.equals("1") && currentFragment.getTag().equals("2"))
                         getSupportFragmentManager()
                                 .beginTransaction().setCustomAnimations(R.anim.enter_left_to_right, R.anim.exit_left_to_right)
                                 .replace(R.id.nav_host_fragment, fragment, tag)
@@ -137,8 +135,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                                 .commit();
                 }
-            }
-            else
+            } else if (!tag.equals(currentFragment.getTag())) {
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment, fragment, tag)
@@ -147,6 +144,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                 activeFragment = fragment;
                 return true;
             }
+        }
         return false;
     }
 
@@ -225,7 +223,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         String tag2 = "2";
         String tag3 = "3";
 
-        if(currentFragment.getTag().equals("InsertFilmReview")){
+        if (currentFragment.getTag().equals("InsertFilmReview")) {
             LeaveReviewAlert dlg = new LeaveReviewAlert();
             dlg.show(this.getSupportFragmentManager(), "LeaveReview");
         } else if (fm.getBackStackEntryCount() > 0 && !(tag2.equals(currentFragment.getTag()) || tag3.equals(currentFragment.getTag())) && !(tag1.equals(currentFragment.getTag()))) {
@@ -270,8 +268,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     }
 
     public static FirebaseDatabase getReference() {
-        if(ref ==null){
-            ref =FirebaseDatabase.getInstance();
+        if (ref == null) {
+            ref = FirebaseDatabase.getInstance();
             ref.setPersistenceEnabled(true);
         }
         return ref;
@@ -282,48 +280,48 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         String tag = currentFragment.getTag();
 
-            switch (touchEvent.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    x1 = touchEvent.getX();
-                    y1 = touchEvent.getY();
-                    break;
-                case MotionEvent.ACTION_UP:
-                    x2 = touchEvent.getX();
-                    y2 = touchEvent.getY();
-                    if (x1 < x2) {
-                        switch (tag) {
-                            case "1":
-                                fragment = new SearchFilmScreen();
-                                tag = "3";
-                                break;
-                            case "2":
-                                fragment = new HomepageScreen();
-                                tag = "1";
-                                break;
-                            case "3":
-                                break;
+        switch (touchEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                x1 = touchEvent.getX();
+                y1 = touchEvent.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2 = touchEvent.getX();
+                y2 = touchEvent.getY();
+                if (x1 < x2) {
+                    switch (tag) {
+                        case "1":
+                            fragment = new SearchFilmScreen();
+                            tag = "3";
+                            break;
+                        case "2":
+                            fragment = new HomepageScreen();
+                            tag = "1";
+                            break;
+                        case "3":
+                            break;
 
-                        }
-                    } else if (x2 < x1) {
-                        switch (tag) {
-                            case "1":
-                                fragment = new PersonalArea();
-                                tag = "2";
-                                break;
-                            case "2":
-                                break;
-                            case "3":
-                                fragment = new HomepageScreen();
-                                tag = "1";
-                                break;
-                        }
                     }
-                    return loadFragment(fragment, tag,true);
+                } else if (x2 < x1) {
+                    switch (tag) {
+                        case "1":
+                            fragment = new PersonalArea();
+                            tag = "2";
+                            break;
+                        case "2":
+                            break;
+                        case "3":
+                            fragment = new HomepageScreen();
+                            tag = "1";
+                            break;
+                    }
+                }
+                return loadFragment(fragment, tag, true);
 
-            }
-
-            return false;
         }
+
+        return false;
+    }
 
 }
 
