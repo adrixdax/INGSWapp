@@ -206,7 +206,6 @@ public class UserServerController extends AsyncTask {
                     return deleteCustomList();
                 case "getFriends":
                     return getFriends();
-
             }
         }
         return "Helooo";

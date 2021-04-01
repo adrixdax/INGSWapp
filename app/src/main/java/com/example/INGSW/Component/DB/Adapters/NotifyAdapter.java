@@ -2,7 +2,6 @@ package com.example.INGSW.Component.DB.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.text.style.UpdateLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
@@ -44,8 +44,8 @@ import static com.bumptech.glide.Glide.with;
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder> {
     private final ArrayList<Notify> listOfData;
     private final FirebaseDatabase ref;
-    private Context myContext;
-    private int removedItems=0;
+    private final Context myContext;
+    private int removedItems = 0;
 
     private User getUser(String id, ViewHolder holder, int position) {
         final User[] reviewer = new User[1];
@@ -59,8 +59,9 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                         User model = dataSnapshot.getValue(User.class);
                         holder.userName.setText(model.getNickname());
                         with(holder.itemView).load(model.getPropic()).into((ImageView) holder.itemView.findViewById(R.id.userImageNotify));
+                        System.out.println(listOfData.get(position).getType());
                         switch (listOfData.get(position).getType()) {
-                            case "Film":
+                            case "FILM":
                                 FilmTestController ftc = new FilmTestController();
                                 ftc.setIdFilm(String.valueOf(listOfData.get(position).getId_recordref()));
                                 Film recordRef = null;
@@ -73,13 +74,25 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                                 if (recordRef != null)
                                     holder.notifyText.setText("ti consiglia:\n" + recordRef.getFilm_Title());
                                 break;
-                            case "FRIENDSHIP REQUEST":
+                            case "FRIENDSHIP_REQUEST":
                                 holder.notifyText.setText("vuole essere tuo Amico");
                                 break;
-                            case "List":
-                                holder.notifyText.setText("vuole consigliarti la lista " + listOfData.get(position).getId_recordref());
+                            case "LIST":
+                                FilmTestController controller = new FilmTestController();
+                                controller.setIdList(String.valueOf(listOfData.get(position).getId_recordref()));
+                                try {
+                                    String json = (String) controller.execute("listName").get();
+                                    try {
+                                        UserLists list = ((List<UserLists>) (JSONDecoder.getJsonToDecode(json, UserLists.class))).get(0);
+                                        holder.notifyText.setText("vuole consigliarti la lista: \"" + list.getTitle() + "\"");
+                                    } catch (JsonProcessingException e) {
+                                        e.printStackTrace();
+                                    }
+                                } catch (ExecutionException | InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                                 break;
-                            default:
+                            case "REVIEW":
                                 holder.notifyText.setText("vuole farti vedere la sua recensione riguardo " + listOfData.get(position).getId_recordref());
                                 break;
                         }
@@ -147,19 +160,20 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             holder.newNotify.setVisibility(View.INVISIBLE);
             listOfData.get(getCorrectIndex(position)).setState("ACCEPTED");
             switch (listOfData.get(getCorrectIndex(position)).getType()) {
-                case "Film":
+                case "FILMS": {
                     new NotifyTestController().execute("Accepted=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
                     Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
                     listOfData.remove(getCorrectIndex(position));
                     this.notifyItemRemoved(getCorrectIndex(position));
                     NotifyUpdater.newUpdate();
                     break;
-                case "FRIENDSHIP REQUEST":
+                }
+                case "FRIENDSHIP_REQUEST": {
                     UserServerController usc = new UserServerController();
                     usc.setUserId(((ToolBarActivity) myContext).getUid());
                     usc.setIdOtherUser(listOfData.get(getCorrectIndex(position)).getId_sender());
                     try {
-                        usc.execute(new String("acceptedFriendsRequest")).get();
+                        usc.execute("acceptedFriendsRequest").get();
                         usc.isCancelled();
                         new NotifyTestController().execute("Accepted=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
                         Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
@@ -170,7 +184,8 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     this.notifyItemRemoved(getCorrectIndex(position));
                     NotifyUpdater.newUpdate();
                     break;
-                case "List":
+                }
+                case "LIST": {
                     holder.notifyText.setText(new StringBuilder().append("vuole consigliarti la lista ").append(listOfData.get(position).getId_recordref()).toString());
                     new NotifyTestController().execute("Accepted=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
                     Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
@@ -178,7 +193,8 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     this.notifyItemRemoved(getCorrectIndex(position));
                     NotifyUpdater.newUpdate();
                     break;
-               default:
+                }
+                case "REVIEW": {
                     holder.notifyText.setText(new StringBuilder().append("vuole farti vedere la sua recensione riguardo ").append(listOfData.get(position).getId_recordref()).toString());
                     new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
                     Toast.makeText(v.getContext(), "Accept", Toast.LENGTH_SHORT).show();
@@ -186,7 +202,8 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     this.notifyItemRemoved(getCorrectIndex(position));
                     NotifyUpdater.newUpdate();
                     break;
-            };
+                }
+            }
             removedItems++;
             verifyNoMoreNotify();
         });

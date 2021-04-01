@@ -134,7 +134,6 @@ public class FilmTestController extends AsyncTask {
         Request request = new Request.Builder().url(url + "list").post(body).build();
         try {
             try (Response response = client.newCall(request).execute()) {
-
                 return Objects.requireNonNull(response.body()).string();
             }
         } catch (IOException e) {
@@ -211,6 +210,22 @@ public class FilmTestController extends AsyncTask {
         return "";
     }
 
+    private Object getList() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "list?idUserList=" + idList)
+                .get()
+                .build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
@@ -237,6 +252,8 @@ public class FilmTestController extends AsyncTask {
                     return getFilmInList();
                 case "filmById":
                     return getFilmbyId();
+                case "listName":
+                    return getList();
             }
         }
         return "Helooo";

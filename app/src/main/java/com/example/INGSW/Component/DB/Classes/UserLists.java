@@ -17,18 +17,22 @@ public class UserLists {
     private String type;
     @JsonProperty("idUser")
     private String idUser;
+    @JsonProperty("dependecy_List")
+    private int dependency_List;
 
     @JsonCreator
     public UserLists(@JsonProperty("idUserList") int idUserList,
                      @JsonProperty("title") String title,
                      @JsonProperty("description") String description,
                      @JsonProperty("type") String type,
-                     @JsonProperty("idUser") String idUser){
+                     @JsonProperty("idUser") String idUser,
+                     @JsonProperty("dependency_List") int dependency_List) {
         this.idUserList = idUserList;
         this.title = title;
         this.description = description;
         this.type = type;
         this.idUser = idUser;
+        this.dependency_List = dependency_List;
     }
 
     public int getIdUserList() {
@@ -74,5 +78,14 @@ public class UserLists {
     @JsonSetter("idUser")
     public void setIdUser(String idUser) {
         this.idUser = idUser;
+    }
+
+    public int getDependnecy_List() {
+        return dependency_List;
+    }
+
+    @JsonSetter("dependency_List")
+    public void setDependency_List(int dependency_List) {
+        this.dependency_List = dependency_List;
     }
 }

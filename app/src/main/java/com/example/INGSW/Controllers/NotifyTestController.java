@@ -22,7 +22,6 @@ public class NotifyTestController extends AsyncTask {
 
 
     private Object getNotify(String idUser) {
-        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + "notify?idUser=" + idUser).get().build();
@@ -37,7 +36,6 @@ public class NotifyTestController extends AsyncTask {
     }
 
     private Object setSeen(String notifyId) {
-        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + "notify?Seen=" + notifyId).get().build();
@@ -52,7 +50,6 @@ public class NotifyTestController extends AsyncTask {
     }
 
     private Object setAccepted(String notifyId) {
-        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + "notify?Accepted=" + notifyId).get().build();
@@ -67,7 +64,6 @@ public class NotifyTestController extends AsyncTask {
     }
 
     private Object setRefused(String notifyId) {
-        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + "notify?Refused=" + notifyId).get().build();
@@ -82,7 +78,6 @@ public class NotifyTestController extends AsyncTask {
     }
 
     private Object sendFriendshipRequest() {
-        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + "notify?id_sender=" + idSender + "&id_receiver=" + idReceiver +"&type=" + type + "&id_recordref=" + idRecordref + "&sendNotify=true").get().build();
@@ -99,7 +94,6 @@ public class NotifyTestController extends AsyncTask {
     }
 
     private Object shareFriendsContent() {
-        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url + "notify?id_sender=" + idSender + "&id_receiver=" + idReceiver +"&type=" + type + "&id_recordref=" + idRecordref + "&sendNotify=true").get().build();
