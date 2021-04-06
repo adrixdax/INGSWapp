@@ -25,24 +25,21 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegistrationController {
     private static Activity regActivity;
-    private CircleImageView circle;
     private FirebaseAuth mAuth;
     static private String pic;
 
     public RegistrationController(Activity current,String propic) {
         regActivity = current;
-        this.circle = regActivity.findViewById(R.id.propic_image);
         pic = propic;
 
-        mAuth = FirebaseAuth.getInstance();
     }
+
 
     public void registerUser(EditText editTextMail, EditText editTextPassword, EditText repPassword,EditText editTextNickName,String propic) {
         String email = editTextMail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String password2 = repPassword.getText().toString().trim();
         String nickname = editTextNickName.getText().toString().trim();
-
 
 
         if (nickname.isEmpty()) {
@@ -86,6 +83,7 @@ public class RegistrationController {
             editTextPassword.requestFocus();
             return;
         }
+        mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(regActivity, authResult -> {
                     User user = new User(nickname, email,pic);
