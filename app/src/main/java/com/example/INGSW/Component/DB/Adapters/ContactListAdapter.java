@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.INGSW.Component.DB.Classes.Contact;
 
+import com.example.INGSW.Component.DB.Classes.Contact;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.User;
@@ -31,8 +31,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     private final List<Contact> listofdata;
     private View listItem;
-    private Context myContext;
-    private List<Contact> selectedLists;
+    private final Context myContext;
+    private final List<Contact> selectedLists;
 
     public ContactListAdapter(List<Contact> listofdata, Context myContext, List<Contact> selectedLists) {
         this.listofdata = listofdata;
@@ -103,12 +103,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                         with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.userImage.findViewById(R.id.user_image));
                         holder.userNickView.setText(model.getNickname());
                     }
-
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
         } catch (Exception e) {

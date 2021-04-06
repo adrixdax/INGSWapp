@@ -2,7 +2,6 @@ package com.example.INGSW.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -20,16 +19,13 @@ import com.example.INGSW.Controllers.NotifyUpdater;
 import com.example.INGSW.MostReviewed;
 import com.example.INGSW.MostSeen;
 import com.example.INGSW.NotifyPopUp;
-import com.example.INGSW.PersonalArea;
 import com.example.INGSW.R;
-import com.example.INGSW.SearchFilmScreen;
 import com.example.INGSW.ToSee;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.UserPrefered;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.ExecutionException;
@@ -45,8 +41,6 @@ public class HomepageScreen extends Fragment {
     ShapeableImageView mostSeen, tooSee, mostReviewed, userPrefered;
     static ImageButton bell;
     FilmTestController con = new FilmTestController();
-
-    private List<Film> film = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
@@ -103,7 +97,7 @@ public class HomepageScreen extends Fragment {
         });
 
 
-        film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList");
+        List<Film> film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList");
 
         if (film == null) {
             String latestJson = "";
@@ -123,7 +117,7 @@ public class HomepageScreen extends Fragment {
             }
         }
         bell.setOnClickListener(v -> {
-            new NotifyPopUp(not.getNotify(),getActivity()).show(getActivity().getSupportFragmentManager(), "4");
+            new NotifyPopUp(not.getNotify(), getActivity()).show(getActivity().getSupportFragmentManager(), "not");
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);

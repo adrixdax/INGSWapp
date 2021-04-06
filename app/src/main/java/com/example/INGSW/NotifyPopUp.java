@@ -23,7 +23,6 @@ import com.example.INGSW.Controllers.NotifyUpdater;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class NotifyPopUp extends AppCompatDialogFragment {
@@ -76,18 +75,17 @@ public class NotifyPopUp extends AppCompatDialogFragment {
     }
 
     private static void update() {
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyTextError.setText("Nessuna nuova notifica");
-            }
-        });
+        activity.runOnUiThread(() -> notifyTextError.setText("Nessuna nuova notifica"));
     }
 
     public static void noMoreNotify() {
         if ((notifyTextError != null) && (notify.size() == 0)) {
             update();
-            }
         }
     }
+
+    public void closeDialog() {
+        this.dismiss();
+    }
+}
 

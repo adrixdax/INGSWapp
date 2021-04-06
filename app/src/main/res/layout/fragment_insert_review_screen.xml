@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:max="5"
+        android:min="0"
         android:numStars="5"
         android:progressDrawable="@drawable/custom_star"
         app:layout_constraintEnd_toEndOf="parent"

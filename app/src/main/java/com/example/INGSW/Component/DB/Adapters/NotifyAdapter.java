@@ -25,11 +25,9 @@ import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.NotifyUpdater;
 import com.example.INGSW.Controllers.ReviewsController;
 import com.example.INGSW.Controllers.UserServerController;
-import com.example.INGSW.InsertReviewScreen;
 import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.ReviewDetail;
-import com.example.INGSW.ReviewScreen;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.User;
 import com.example.INGSW.Utility.JSONDecoder;
@@ -101,10 +99,18 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                                 }
                                 break;
                             case "REVIEW":
-                                FilmTestController con = new FilmTestController();
-                                con.setIdFilm(String.valueOf(listOfData.get(position).getId_recordref()));
                                 try {
-                                    holder.notifyText.setText(new StringBuilder().append("vuole farti vedere la sua recensione riguardo: ").append(((List<Film>)(JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmById").get()),Film.class))).get(0).getFilm_Title()));
+                                    ReviewsController revCon = new ReviewsController();
+                                    revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
+                                    Reviews rev = null;
+                                    try {
+                                        rev = ((Reviews) ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0));
+                                    } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
+                                        e.printStackTrace();
+                                    }
+                                    FilmTestController con = new FilmTestController();
+                                    con.setIdFilm(String.valueOf(rev.getIdFilm()));
+                                    holder.notifyText.setText(new StringBuilder().append("vuole farti vedere la sua recensione riguardo: ").append(((List<Film>) (JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmById").get()), Film.class))).get(0).getFilm_Title()));
                                 } catch (ExecutionException | InterruptedException | JsonProcessingException e) {
                                     e.printStackTrace();
                                 }
@@ -209,21 +215,21 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 }
                 case "REVIEW": {
                     new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
-                    //portare a schermata review
-                    ReviewsController con = new ReviewsController();
-                    con.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
-                    ReviewDetail rev = null;
+                    ReviewsController revCon = new ReviewsController();
+                    revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
+                    Reviews revObj = null;
                     try {
-                        rev = new ReviewDetail((Reviews)((List<Reviews>)JSONDecoder.getJsonToDecode((String) con.execute("singleReview").get(),Reviews.class)).get(0),ToolBarActivity.getReference());
+                        revObj = ((Reviews) ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0));
                     } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
                     listOfData.remove(getCorrectIndex(position));
                     this.notifyItemRemoved(getCorrectIndex(position));
                     NotifyUpdater.newUpdate();
-                    FragmentManager fm=((ToolBarActivity)(myContext)).getSupportFragmentManager();
+                    FragmentManager fm = ((ToolBarActivity) (myContext)).getSupportFragmentManager();
                     Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
-                    FragmentTransaction transaction =((ToolBarActivity)(myContext)).getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction transaction = ((ToolBarActivity) (myContext)).getSupportFragmentManager().beginTransaction();
+                    ReviewDetail rev = new ReviewDetail(revObj, ToolBarActivity.getReference());
                     transaction.replace(R.id.nav_host_fragment, rev, "Review");
                     transaction.addToBackStack(null);
                     transaction.commit();

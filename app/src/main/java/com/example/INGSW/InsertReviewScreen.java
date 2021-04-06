@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -18,17 +19,59 @@ import java.util.concurrent.ExecutionException;
 
 public class InsertReviewScreen extends Fragment {
 
-    
+
     private RatingBar ratingBar;
     private Button insert;
     private final String idFilm;
     private EditText title;
     private EditText description;
 
-    public InsertReviewScreen (String idFilm) {
-        this.idFilm=idFilm;
+    public InsertReviewScreen(String idFilm) {
+        this.idFilm = idFilm;
     }
 
+    private boolean isNumber(String titolo) {
+        try {
+            if ((Float.parseFloat(titolo) != 0 || Float.parseFloat(titolo) == 0)
+                    ||
+                    (Integer.parseInt(titolo) != 0 || Integer.parseInt(titolo) == 0)) {
+                return true;
+            }
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+        return false;
+    }
+
+    private boolean validTitle(String titolo) {
+        if (titolo.isEmpty()) {
+            title.setError("Inserire almeno un Titolo per la recensione!");
+            title.requestFocus();
+            return false;
+        } else if (titolo.length() > 20) {
+            title.setError("Il Titolo della recensione è troppo lungo");
+            title.requestFocus();
+            return false;
+        } else if (isNumber(titolo)) {
+            title.setError("Il Titolo non può avere solo numeri");
+            title.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validValutation(float valutazione) {
+        if (valutazione >= 0.5f && valutazione <= 5.0f)
+            return true;
+        else {
+            Toast.makeText(getContext(), "Devi selezionare almeno mezzo ciak", Toast.LENGTH_LONG).show();
+            return false;
+        }
+    }
+
+    public boolean isValidReview(String titolo, float valutazione) {
+        return validTitle(titolo) && validValutation(valutazione);
+    }
 
 
     @Override
@@ -47,14 +90,13 @@ public class InsertReviewScreen extends Fragment {
         PushDownAnim.setPushDownAnimTo(insert);
 
         insert.setOnClickListener((View.OnClickListener) v -> {
-            if (!(title.getText().toString().isEmpty())) {
+            if (isValidReview(String.valueOf(title.getText()), ratingBar.getRating())) {
                 ReviewsController rc = new ReviewsController();
                 rc.setIdUser(((ToolBarActivity) getActivity()).getUid());
                 rc.setTitle(String.valueOf(title.getText()));
-                rc.setDesc(String.valueOf(description.getText()));
+                rc.setDesc(String.valueOf(description.getText()).isEmpty() ? "\0" : String.valueOf(description.getText()));
                 rc.setIdFilm(idFilm);
                 rc.setVal(String.valueOf(ratingBar.getRating()));
-
                 try {
                     rc.execute("AddReviews").get();
                     rc.isCancelled();
@@ -62,15 +104,8 @@ public class InsertReviewScreen extends Fragment {
                     e.printStackTrace();
                 }
                 ((ToolBarActivity) getActivity()).onBackPressed(true);
-            } else {
-                title.setError("Inserire almeno un Titolo per la recensione!");
-                title.requestFocus();
             }
         });
-
-
-
-
 
         return root;
     }

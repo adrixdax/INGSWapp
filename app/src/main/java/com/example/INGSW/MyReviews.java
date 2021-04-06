@@ -1,21 +1,16 @@
 package com.example.INGSW;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
 import com.example.INGSW.Component.DB.Classes.Reviews;
-import com.example.INGSW.Component.Films.Film;
-import com.example.INGSW.Component.Films.ListOfFilmAdapter;
-import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.ReviewsController;
 
 import java.util.List;
@@ -33,17 +28,15 @@ public class MyReviews extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_myreviewslist, container, false);
-
             String latestJson = "";
             try {
                 con = new ReviewsController();
-                con.setIdUser(((ToolBarActivity)getActivity()).getUid());
-                latestJson = (String) con.execute(new String("UserReviews")).get();
+                con.setIdUser(((ToolBarActivity) getActivity()).getUid());
+                latestJson = (String) con.execute("UserReviews").get();
                 con.isCancelled();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
-
             try {
                 review = (List<Reviews>) getJsonToDecode(latestJson, Reviews.class);
             } catch (Exception e) {
