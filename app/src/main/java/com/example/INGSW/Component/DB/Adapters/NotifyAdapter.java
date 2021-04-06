@@ -52,6 +52,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     private final FirebaseDatabase ref;
     private final Context myContext;
     private int removedItems = 0;
+    private final NotifyPopUp dialog;
 
     private User getUser(String id, ViewHolder holder, int position) {
         final User[] reviewer = new User[1];
@@ -154,10 +155,11 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         }
     }
 
-    public NotifyAdapter(ArrayList<Notify> listOfData, FirebaseDatabase ref, Context myContext) {
+    public NotifyAdapter(ArrayList<Notify> listOfData, FirebaseDatabase ref, Context myContext, NotifyPopUp dialog) {
         this.listOfData = listOfData;
         this.ref = ref;
         this.myContext = myContext;
+        this.dialog = dialog;
     }
 
     @NonNull
@@ -233,6 +235,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     transaction.replace(R.id.nav_host_fragment, rev, "Review");
                     transaction.addToBackStack(null);
                     transaction.commit();
+                    dialog.dismiss();
                     break;
                 }
             }

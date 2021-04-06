@@ -56,7 +56,7 @@ public class NotifyPopUp extends AppCompatDialogFragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         recycler = dialog.findViewById(R.id.recyclerViewNotify);
-        NotifyAdapter adapter = new NotifyAdapter(notify, ToolBarActivity.getReference(), this.getContext());
+        NotifyAdapter adapter = new NotifyAdapter(notify, ToolBarActivity.getReference(), this.getContext(), this);
         notifyTextError = dialog.findViewById(R.id.notifyTextError);
         if (adapter.getItemCount() == 0) {
             notifyTextError.setText("Nessuna nuova notifica");
