@@ -5,12 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Notify {
 
-    int id_Notify;
-    String id_sender;
-    String id_receiver;
-    String type;
-    int id_recordref;
-    String state;
+    private int id_Notify;
+    private String id_sender;
+    private String id_receiver;
+    private String type;
+    private int id_recordref;
+    private String state;
+    private long dateOfSend;
 
     @JsonCreator
     public Notify(@JsonProperty("id_Notify") int id_Notify,
@@ -18,14 +19,15 @@ public class Notify {
                   @JsonProperty("id_receiver") String id_receiver,
                   @JsonProperty("type") String type,
                   @JsonProperty("id_recordref") int id_recordref,
-                  @JsonProperty("status") String status) {
+                  @JsonProperty("status") String status,
+                  @JsonProperty("dateOfSend") long dateOfSend) {
         this.id_Notify=id_Notify;
         this.id_sender=id_sender;
         this.id_receiver=id_receiver;
         this.type=type;
         this.id_recordref=id_recordref;
         this.state=status;
-
+        this.dateOfSend=dateOfSend;
     }
 
     public Notify(@JsonProperty("type") String type){
@@ -78,5 +80,13 @@ public class Notify {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public long getDateOfSend() {
+        return dateOfSend;
+    }
+
+    public void setDateOfSend(long dateOfSend) {
+        this.dateOfSend = dateOfSend;
     }
 }

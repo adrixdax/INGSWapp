@@ -75,19 +75,16 @@ public class ReviewScreen extends Fragment {
 
 
         Button bottone = root.findViewById(R.id.buttonwritereview);
-        bottone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment nextFragment;
-                FragmentTransaction transaction;
-                FragmentManager fm = ReviewScreen.this.getActivity().getSupportFragmentManager();
-                Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
-                nextFragment = new InsertReviewScreen(idFilm);
-                transaction = ReviewScreen.this.getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "InsertFilmReview");
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
+        bottone.setOnClickListener(v -> {
+            Fragment nextFragment;
+            FragmentTransaction transaction;
+            FragmentManager fm = ReviewScreen.this.getActivity().getSupportFragmentManager();
+            Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
+            nextFragment = new InsertReviewScreen(idFilm);
+            transaction = ReviewScreen.this.getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, nextFragment, "InsertFilmReview");
+            transaction.addToBackStack(null);
+            transaction.commit();
         });
 
         return root;

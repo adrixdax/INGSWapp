@@ -42,38 +42,28 @@ public class AddCustomList extends Fragment {
 
         description = root.findViewById(R.id.editTextListDescription);
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((ToolBarActivity) getActivity()).onBackPressed();
+        cancel.setOnClickListener((View.OnClickListener) v -> ((ToolBarActivity) getActivity()).onBackPressed());
+
+        add.setOnClickListener((View.OnClickListener) v -> {
+
+            UserServerController usc = new UserServerController();
+            usc.setUserId(((ToolBarActivity) getActivity()).getUid());
+            usc.setListTitle(String.valueOf(title.getText()));
+
+            System.out.println("-------------------------------------------------->"+ title.getText());
+            usc.setListDescription(String.valueOf(description.getText()).length() == 0 ? "\0" : String.valueOf(description.getText()));
+            System.out.println("\n ------------------------------------------->"+ description.getText());
+
+            try {
+
+                usc.execute(new String("addCustomList")).get();
+                usc.isCancelled();
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
-        });
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            ((ToolBarActivity) getActivity()).onBackPressed();
 
-                UserServerController usc = new UserServerController();
-                usc.setUserId(((ToolBarActivity) getActivity()).getUid());
-                usc.setListTitle(String.valueOf(title.getText()));
-
-                System.out.println("-------------------------------------------------->"+String.valueOf(title.getText()));
-                usc.setListDescription(String.valueOf(description.getText()));
-                System.out.println("\n ------------------------------------------->"+String.valueOf(description.getText()));
-
-                try {
-
-                    usc.execute(new String("addCustomList")).get();
-                    usc.isCancelled();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                ((ToolBarActivity) getActivity()).onBackPressed();
-
-            }
         });
 
         return root;
