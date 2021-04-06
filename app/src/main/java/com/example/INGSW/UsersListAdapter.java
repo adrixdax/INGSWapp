@@ -59,8 +59,6 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
             if (!notifyList.isEmpty()) {
                 int i = 0;
                 while (i < notifyList.size() && !friend) {
-                    System.out.println("Size = " + notifyList.size() + "  indixe = " + i);
-                    System.out.println(((ToolBarActivity) context).getUid());
                     if (notifyList.get(i).getId_sender().equals(((ToolBarActivity) context).getUid())) {
                         friend = true;
                     }
@@ -68,7 +66,6 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
                 }
             }
             if (!friend) {
-                System.out.println("------------------------- false");
                 UserServerController usc = new UserServerController();
                 usc.setUserId(((ToolBarActivity) context).getUid());
                 usc.setIdOtherUser(model.getIdUser());

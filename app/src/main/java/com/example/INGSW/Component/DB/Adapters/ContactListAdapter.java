@@ -64,7 +64,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 public void onClick(View v) {
                     if (!holder.checkButtonShare.isChecked()) {
                         holder.checkButtonShare.setChecked(true);
-                        System.out.println(listofdata.get(position).getUser1());
                         selectedLists.add(listofdata.get(position));
 
                     } else {

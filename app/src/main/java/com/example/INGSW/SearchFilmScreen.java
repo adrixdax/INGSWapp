@@ -115,17 +115,16 @@ public class SearchFilmScreen extends Fragment {
                         FilmTestController filmTestController = new FilmTestController();
                         filmTestController.setNameOfFilm(Text_of_search.getText().toString().trim());
                         String film = filmTestController.getNameOfFilm();
-                        System.out.println("Il film che stai cercando -> " + film);
+
 
 
                         String latestJson = (String) filmTestController.execute("search").get();
 
                         if (latestJson.isEmpty()) {
                             textError.setText("Nessun Film trovato");
-                            System.out.println("--------------------------------------------> Vuoto");
+
                         } else {
                             textError.setText("");
-                            System.out.println("I Film trovati -> " + latestJson);
                             filmTestController.isCancelled();
 
                             filmInSearch = (List<Film>) getJsonToDecode(latestJson, Film.class);
@@ -172,25 +171,31 @@ public class SearchFilmScreen extends Fragment {
                         @SuppressLint("RestrictedApi")
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                User model = dataSnapshot.getValue(User.class);
-                                User u = new User();
-                                if ((((ToolBarActivity) getActivity()).getContaiinerItem().get("acct")) != null) {
-                                    GoogleSignInAccount acc = (GoogleSignInAccount) ((ToolBarActivity) getActivity()).getContaiinerItem().get("acct");
-                                    u.setIdUser(acc.getId());
-                                    if (!(u.getIdUser().equals(dataSnapshot.getKey()))) {
-                                        model.setIdUser(dataSnapshot.getKey());
-                                        usersInSearchlist.add(model);
-                                    }
-                                } else if (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null || ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") == null) {
-                                        ((ToolBarActivity) getActivity()).getUser();
-                                        u = ((User) ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile"));
-                                        if (!(u.getNickname().equals(model.getNickname()))) {
-                                        model.setIdUser(dataSnapshot.getKey());
-                                        usersInSearchlist.add(model);
+                            try {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    User model = dataSnapshot.getValue(User.class);
+                                    User u = new User();
+                                    if(((ToolBarActivity) getActivity())!=null) {
+                                        if ((((ToolBarActivity) getActivity()).getContaiinerItem().get("acct")) != null) {
+                                            GoogleSignInAccount acc = (GoogleSignInAccount) ((ToolBarActivity) getActivity()).getContaiinerItem().get("acct");
+                                            u.setIdUser(acc.getId());
+                                            if (!(u.getIdUser().equals(dataSnapshot.getKey()))) {
+                                                model.setIdUser(dataSnapshot.getKey());
+                                                usersInSearchlist.add(model);
+                                            }
+                                        } else if (((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") != null || ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile") == null) {
+                                            ((ToolBarActivity) getActivity()).getUser();
+                                            u = ((User) ((ToolBarActivity) getActivity()).getContaiinerItem().get("userProfile"));
+                                            if (!(u.getNickname().equals(model.getNickname()))) {
+                                                model.setIdUser(dataSnapshot.getKey());
+                                                usersInSearchlist.add(model);
+                                            }
+                                        }
+                                        adapter.notifyDataSetChanged();
                                     }
                                 }
-                                adapter.notifyDataSetChanged();
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }
 

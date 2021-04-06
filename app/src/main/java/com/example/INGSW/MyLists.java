@@ -68,8 +68,6 @@ public class MyLists extends Fragment {
                 recycler.setAdapter(new UserListsAdapter(customLists, this.getClass(), this));
                 recycler.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
                 recycler.setHasFixedSize(false);
-            } else {
-                System.out.println("è vuota boh");
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();

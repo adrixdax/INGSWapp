@@ -70,8 +70,6 @@ public class DialogCustomlList extends AppCompatDialogFragment {
                 recycler.setAdapter(new UserListsAdapter(customLists, DialogCustomlList.class, this.selectedLists));
                 recycler.setLayoutManager(new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.VERTICAL, false));
                 recycler.setHasFixedSize(false);
-            } else {
-                System.out.println("è vuota boh");
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();

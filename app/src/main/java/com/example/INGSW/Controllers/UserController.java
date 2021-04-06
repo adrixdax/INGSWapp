@@ -34,7 +34,6 @@ public class UserController {
     public User getUserprofile(FirebaseUser mFirebaseUser, FirebaseDatabase ref ) {
         try {
             if (mFirebaseUser != null) {
-                System.out.println("Cerco profilo proprietario");
                 reference = ref.getReference("Users");
                 userID = mFirebaseUser.getUid();
                 reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -62,7 +61,6 @@ public class UserController {
     }
 
     public GoogleSignInAccount getAcct(Context context) {
-        System.out.println("Cerco profilo Google");
         GoogleSignInAccount acct = null;
         try {
             if (context != null) {

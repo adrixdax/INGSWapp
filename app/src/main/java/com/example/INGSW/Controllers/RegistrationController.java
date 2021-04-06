@@ -99,7 +99,7 @@ public class RegistrationController {
                             UserServerController usc = new UserServerController();
                             usc.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
                             try {
-                                System.out.println(usc.execute(new String("registration")).get());
+                                usc.execute(new String("registration")).get();
                             } catch (ExecutionException | InterruptedException e) {
                                 e.printStackTrace();
                             }

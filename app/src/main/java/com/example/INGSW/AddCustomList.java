@@ -57,9 +57,7 @@ public class AddCustomList extends Fragment {
                 usc.setUserId(((ToolBarActivity) getActivity()).getUid());
                 usc.setListTitle(String.valueOf(title.getText()));
 
-                System.out.println("-------------------------------------------------->"+String.valueOf(title.getText()));
                 usc.setListDescription(String.valueOf(description.getText()));
-                System.out.println("\n ------------------------------------------->"+String.valueOf(description.getText()));
 
                 try {
 

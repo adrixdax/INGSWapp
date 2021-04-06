@@ -216,9 +216,6 @@ public class LoginScreen extends AppCompatActivity {
 
                 }
             });
-            if (model[0]==null) {
-                System.out.println("Updating");
-            }
 
             // Signed in successfully, show authenticated UI.
             SharedPreferences preferences = getSharedPreferences("access", MODE_PRIVATE);

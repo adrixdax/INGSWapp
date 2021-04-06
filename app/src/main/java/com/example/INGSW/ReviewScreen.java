@@ -49,7 +49,7 @@ public class ReviewScreen extends Fragment {
         try {
             String latestJson = (String) rc.execute("FilmReviews").get();
 
-            System.out.println(latestJson);
+
 
             if (!latestJson.isEmpty()) {
                 rc.isCancelled();

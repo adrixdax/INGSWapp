@@ -99,7 +99,6 @@ public class FilmTestController extends AsyncTask {
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&name=" + nameOfFilm);
         OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build();
         Request request = new Request.Builder().url(url + "film").post(body).build();
-        System.out.println("Stampo i film: ->" + request.toString());
 
         try {
             try (Response response = client.newCall(request).execute()) {

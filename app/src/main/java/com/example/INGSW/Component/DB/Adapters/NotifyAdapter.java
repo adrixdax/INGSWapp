@@ -59,7 +59,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                         User model = dataSnapshot.getValue(User.class);
                         holder.userName.setText(model.getNickname());
                         with(holder.itemView).load(model.getPropic()).into((ImageView) holder.itemView.findViewById(R.id.userImageNotify));
-                        System.out.println(listOfData.get(position).getType());
+
                         switch (listOfData.get(position).getType()) {
                             case "FILM":
                                 FilmTestController ftc = new FilmTestController();

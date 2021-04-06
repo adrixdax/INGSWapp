@@ -185,14 +185,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
 
     public void getUser() {
-        System.out.println("Sono nella ricerca user");
         Object obj = null;
         FirebaseUser mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (mFirebaseUser != null) {
             setUid(mFirebaseUser.getUid());
             obj = userController.getUserprofile(mFirebaseUser, ref);
             if (obj != null) {
-                System.out.println("Trovato profilo proprietario");
                 contaiinerItem.put("userProfile", obj);
 
             }
@@ -200,7 +198,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
             obj = userController.getAcct(this);
             if (obj != null) {
                 setUid(((GoogleSignInAccount) obj).getId());
-                System.out.println("Trovato profilo Google");
                 contaiinerItem.put("acct", obj);
             }
         }

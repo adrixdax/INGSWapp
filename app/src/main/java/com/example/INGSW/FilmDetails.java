@@ -61,12 +61,6 @@ public class FilmDetails extends Fragment {
 
         String pic = film.getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : film.getPosterPath();
 
-        if (film != null) {
-            System.out.println("Titolo ddel film" + film.getFilm_Title());
-        } else {
-            System.out.println("bad");
-        }
-
         title.setText(film.getFilm_Title());
         Glide.with(root.getContext()).load(pic).into(posterPath);
         plot.setText(film.getPlot());
@@ -92,7 +86,6 @@ public class FilmDetails extends Fragment {
             ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
             imageButtonFavoritesblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
             ftc.isCancelled();
-            System.out.println(imageButtonFavoritesblue + " -------------------------------------------");
 
             ftc = new FilmTestController();
             ftc.setIdFilm(String.valueOf(film.getId_Film()));
@@ -100,7 +93,6 @@ public class FilmDetails extends Fragment {
             imageButtonWatchblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
 
             ftc.isCancelled();
-            System.out.println(imageButtonWatchblue);
 
 
             ftc = new FilmTestController();
@@ -109,7 +101,6 @@ public class FilmDetails extends Fragment {
             imageButtonToWatchblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
 
             ftc.isCancelled();
-            System.out.println(imageButtonToWatchblue);
 
 
         } catch (ExecutionException e) {
