@@ -20,6 +20,7 @@ public class ReviewsController extends AsyncTask {
     private String title="";
     private String desc="";
     private String val="";
+    private String idReview="";
 
     private Object getFilmReviews() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -69,6 +70,20 @@ public class ReviewsController extends AsyncTask {
         return "";
     }
 
+    private Object singleReview() {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(url + "review?idReview="+idReview).build();
+        try {
+            try (Response response = client.newCall(request).execute()) {
+
+                return Objects.requireNonNull(response.body()).string();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
 
     @Override
     protected Object doInBackground(Object[] objects) {
@@ -80,6 +95,8 @@ public class ReviewsController extends AsyncTask {
                     return getUserReviews();
                 case "AddReviews":
                     return addReviews();
+                case "singleReview":
+                    return singleReview();
             }
         }
         return "Helooo";
@@ -127,5 +144,13 @@ public class ReviewsController extends AsyncTask {
 
     public void setVal(String val) {
         this.val = val;
+    }
+
+    public String getIdReview() {
+        return idReview;
+    }
+
+    public void setIdReview(String idReview) {
+        this.idReview = idReview;
     }
 }

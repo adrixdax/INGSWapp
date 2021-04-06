@@ -73,14 +73,11 @@ public class ReviewDetail extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
                         User model = dataSnapshot.getValue(User.class);
                         Glide.with(root.getContext()).load(model.getPropic()).into(userImage);
                         userName.setText(model.getNickname());
                     }
-
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 

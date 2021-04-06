@@ -53,9 +53,6 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
     @NotNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        //return super.onCreateDialog(savedInstanceState);
-
-
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.film_action_choose_dialog);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -70,55 +67,48 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
         filmTitle.setText(film == null ? titleList : film.getFilm_Title());
 
 
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!custom) {
-                    DialogFriendsListOfShare fragment = new DialogFriendsListOfShare(String.valueOf(film.getId_Film()));
-                    fragment.show(getChildFragmentManager(), "DialogFriendsListOfShare");
-                } else {
-                    DialogFriendsListOfShare fragment = new DialogFriendsListOfShare(true, idList);
-                    fragment.show(getChildFragmentManager(), "DialogFriendsListOfShare");
-                }
+        share.setOnClickListener(v -> {
+            if (!custom) {
+                DialogFriendsListOfShare fragment = new DialogFriendsListOfShare(String.valueOf(film.getId_Film()));
+                fragment.show(getChildFragmentManager(), "DialogFriendsListOfShare");
+            } else {
+                DialogFriendsListOfShare fragment = new DialogFriendsListOfShare(true, idList);
+                fragment.show(getChildFragmentManager(), "DialogFriendsListOfShare");
             }
         });
 
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        remove.setOnClickListener(v -> {
 
-
-                if (!custom) {
-                    FilmTestController ftc = new FilmTestController();
-                    try {
-                        ftc.setIdList(idList);
-                        ftc.setIdFilm(String.valueOf(film.getId_Film()));
-                        ftc.execute(new String("removeFilm")).get();
-                        ftc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    dismiss();
-
-                } else {
-
-                    UserServerController usc = new UserServerController();
-                    try {
-                        usc.setIdList(idList);
-                        usc.setUserId(((ToolBarActivity) getActivity()).getUid());
-                        usc.execute(new String("deleteCustomList")).get();
-                        usc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    dismiss();
-
-
+            if (!custom) {
+                FilmTestController ftc = new FilmTestController();
+                try {
+                    ftc.setIdList(idList);
+                    ftc.setIdFilm(String.valueOf(film.getId_Film()));
+                    ftc.execute(new String("removeFilm")).get();
+                    ftc.isCancelled();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                dismiss();
+
+            } else {
+
+                UserServerController usc = new UserServerController();
+                try {
+                    usc.setIdList(idList);
+                    usc.setUserId(((ToolBarActivity) getActivity()).getUid());
+                    usc.execute(new String("deleteCustomList")).get();
+                    usc.isCancelled();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                dismiss();
+
+
             }
         });
 

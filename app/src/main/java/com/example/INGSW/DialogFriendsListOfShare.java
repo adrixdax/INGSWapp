@@ -56,13 +56,11 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
     @NotNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        //return super.onCreateDialog(savedInstanceState);
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.custom_list_friends);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
-
 
         recycler = dialog.findViewById(R.id.recyclerView);
         String json = "";
@@ -86,79 +84,59 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
 
 
         Button insertInLists = (Button) dialog.getWindow().findViewById(R.id.ShareWhitFriends);
-        insertInLists.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (!custom) {
-                    if (!selectedLists.isEmpty()) {
-                        for (Contact singlelist : selectedLists) {
-                            NotifyTestController ntc = new NotifyTestController();
-                            try {
-                                ntc.setIdSender(((ToolBarActivity) getActivity()).getUid());
-                                if (singlelist.getUser1().equals(ntc.getIdSender())) {
-                                    ntc.setIdReceiver(singlelist.getUser2());
-                                } else {
-                                    ntc.setIdReceiver(singlelist.getUser1());
-                                }
-                                ntc.setType("FILM");
-                                ntc.setIdRecordref(film);
-                                ntc.execute(new String("shareFriendsContent")).get();
-                                ntc.isCancelled();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+        insertInLists.setOnClickListener(v -> {
+            if (!custom) {
+                if (!selectedLists.isEmpty()) {
+                    for (Contact singlelist : selectedLists) {
+                        NotifyTestController ntc = new NotifyTestController();
+                        try {
+                            ntc.setIdSender(((ToolBarActivity) getActivity()).getUid());
+                            if (singlelist.getUser1().equals(ntc.getIdSender())) {
+                                ntc.setIdReceiver(singlelist.getUser2());
+                            } else {
+                                ntc.setIdReceiver(singlelist.getUser1());
                             }
+                            ntc.setType("FILM");
+                            ntc.setIdRecordref(film);
+                            ntc.execute(new String("shareFriendsContent")).get();
+                            ntc.isCancelled();
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
                         }
                     }
-
-                    dismiss();
-
-                } else {
-
-                    if (!selectedLists.isEmpty()) {
-                        for (Contact singlelist : selectedLists) {
-                            NotifyTestController ntc = new NotifyTestController();
-                            try {
-                                ntc.setIdSender(((ToolBarActivity) getActivity()).getUid());
-                                if (singlelist.getUser1().equals(ntc.getIdSender())) {
-                                    ntc.setIdReceiver(singlelist.getUser2());
-                                } else {
-                                    ntc.setIdReceiver(singlelist.getUser1());
-                                }
-                                ntc.setType("LIST");
-                                ntc.setIdRecordref(idList);
-                                ntc.execute(new String("shareFriendsContent")).get();
-                                ntc.isCancelled();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-                    dismiss();
-
-
                 }
 
-                dialog.closeOptionsMenu();
-                dialog.cancel();
-                dialog.dismiss();
+                dismiss();
+
+            } else {
+
+                if (!selectedLists.isEmpty()) {
+                    for (Contact singlelist : selectedLists) {
+                        NotifyTestController ntc = new NotifyTestController();
+                        try {
+                            ntc.setIdSender(((ToolBarActivity) getActivity()).getUid());
+                            if (singlelist.getUser1().equals(ntc.getIdSender())) {
+                                ntc.setIdReceiver(singlelist.getUser2());
+                            } else {
+                                ntc.setIdReceiver(singlelist.getUser1());
+                            }
+                            ntc.setType("LIST");
+                            ntc.setIdRecordref(idList);
+                            ntc.execute(new String("shareFriendsContent")).get();
+                            ntc.isCancelled();
+                        } catch (ExecutionException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                dismiss();
             }
+
+            dialog.closeOptionsMenu();
+            dialog.cancel();
+            dialog.dismiss();
         });
-
-        /*Dialog dialog = new Dialog(getActivity());
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.film_action_choose_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setCancelable(true);
-        dialog.setContentView(getActivity().getLayoutInflater().inflate(R.layout.film_action_choose_dialog, new ConstraintLayout(getActivity()), false));
-       */
         return dialog;
-
     }
 
 }
