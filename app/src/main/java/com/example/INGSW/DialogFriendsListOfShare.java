@@ -103,7 +103,7 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
                                 } else {
                                     ntc.setIdReceiver(singlelist.getUser1());
                                 }
-                                ntc.setType("Film");
+                                ntc.setType("FILM");
                                 ntc.setIdRecordref(film);
                                 ntc.execute(new String("shareFriendsContent")).get();
                                 ntc.isCancelled();
@@ -129,7 +129,7 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
                                 } else {
                                     ntc.setIdReceiver(singlelist.getUser1());
                                 }
-                                ntc.setType("List");
+                                ntc.setType("LIST");
                                 ntc.setIdRecordref(idList);
                                 ntc.execute(new String("shareFriendsContent")).get();
                                 ntc.isCancelled();
