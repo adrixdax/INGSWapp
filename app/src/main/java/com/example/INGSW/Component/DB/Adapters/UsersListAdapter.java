@@ -94,7 +94,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
                         NotifyTestController ntc = new NotifyTestController();
                         ntc.setIdSender(((ToolBarActivity) v.getContext()).getUid());
                         ntc.setIdReceiver(model.getIdUser());
-                        ntc.setType("FRIENDSHIP REQUEST");
+                        ntc.setType("FRIENDSHIP_REQUEST");
                         try {
                             ntc.execute("SendFriendshipRequest").get();
                             ntc.isCancelled();
