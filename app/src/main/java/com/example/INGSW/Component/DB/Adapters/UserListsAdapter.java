@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -16,13 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.Component.DB.Classes.UserLists;
-
-
 import com.example.INGSW.DialogCustomlList;
 import com.example.INGSW.FilmInCustomList;
 import com.example.INGSW.MyLists;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
 
@@ -72,42 +70,33 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
                 with(holder.itemView).load("http://cdn.onlinewebfonts.com/svg/img_568523.png").into((CircleImageView) holder.itemView.findViewById(R.id.list_image));
                 holder.selectItem.setOnCheckedChangeListener(null);
                 holder.selectItem.setChecked(false);
-                holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!holder.selectItem.isChecked()) {
-                            holder.selectItem.setChecked(true);
-                            selectedList.add(listofdata.get(position));
+                holder.relativeLayout.setOnClickListener(v -> {
+                    if (!holder.selectItem.isChecked()) {
+                        holder.selectItem.setChecked(true);
+                        selectedList.add(listofdata.get(position));
 
-                        } else {
-                            holder.selectItem.setChecked(false);
-                            selectedList.remove(listofdata.get(position));
-                        }
+                    } else {
+                        holder.selectItem.setChecked(false);
+                        selectedList.remove(listofdata.get(position));
                     }
                 });
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        else if(css.getCanonicalName().equals(MyLists.class.getCanonicalName())){
+        else if(css.getCanonicalName().equals(MyLists.class.getCanonicalName())) {
             holder.circleList.setText(listofdata.get(position).getTitle());
-            holder.circleList.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    FilmInCustomList nextFragment = new FilmInCustomList(listofdata.get(position));
-                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
+            holder.circleList.setOnClickListener(v -> {
+                FilmInCustomList nextFragment = new FilmInCustomList(listofdata.get(position));
+                FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
+                transaction.addToBackStack(null);
+                transaction.commit();
             });
-            holder.circleList.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    ChooseActionDialog dlg = new ChooseActionDialog( true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle());
-                    dlg.show(((ToolBarActivity) v.getContext()).getSupportFragmentManager(), "Choose action");
-                    return true;
-                }
+            holder.circleList.setOnLongClickListener(v -> {
+                ChooseActionDialog dlg = new ChooseActionDialog(true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle());
+                dlg.show(((ToolBarActivity) v.getContext()).getSupportFragmentManager(), "Choose action");
+                return true;
             });
 
 
@@ -137,17 +126,15 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
         public ViewHolder(View itemView, Class css) {
             super(itemView);
             if (css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())) {
-
                 this.circleImageView = itemView.findViewById(R.id.list_image);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutAddInCustomList);
                 this.selectItem = itemView.findViewById(R.id.checkButtonAddList);
                 this.textView = itemView.findViewById(R.id.NameOfCustomList);
-
-
             } else if (css.getCanonicalName().equals(MyLists.class.getCanonicalName())) {
                 this.circleList = itemView.findViewById(R.id.CircolarCustomList);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutShowCustomList);
             }
+            PushDownAnim.setPushDownAnimTo(relativeLayout);
         }
     }
 
