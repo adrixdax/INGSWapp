@@ -157,7 +157,7 @@ public class SearchFilmScreen extends Fragment {
 
                     usersInSearchlist = new ArrayList<>();
                     adapter = new UsersListAdapter(getContext(), usersInSearchlist);
-                    if (adapter.userlist.isEmpty()) {
+                    if (adapter.getItemCount() == 0) {
                         textError.setText("Nessun Utente trovato ");
                     }
                     textError.setText("");

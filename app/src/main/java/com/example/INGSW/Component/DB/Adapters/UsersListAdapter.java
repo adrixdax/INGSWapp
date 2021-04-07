@@ -31,8 +31,7 @@ import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.UsersViewHolder> {
 
-
-    ArrayList<User> userlist;
+    private final ArrayList<User> userlist;
     Context context;
 
 
