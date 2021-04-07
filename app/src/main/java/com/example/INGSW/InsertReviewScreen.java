@@ -32,7 +32,7 @@ public class InsertReviewScreen extends Fragment {
 
     private boolean isNumber(String titolo) {
         try {
-            if ((Float.parseFloat(titolo) != 0 || Float.parseFloat(titolo) == 0)
+            if ((Float.parseFloat(titolo) != 0.0f || Float.parseFloat(titolo) == 0.0f)
                     ||
                     (Integer.parseInt(titolo) != 0 || Integer.parseInt(titolo) == 0)) {
                 return true;
@@ -44,29 +44,13 @@ public class InsertReviewScreen extends Fragment {
     }
 
     private boolean validTitle(String titolo) {
-        if (titolo.isEmpty()) {
-            title.setError("Inserire almeno un Titolo per la recensione!");
-            title.requestFocus();
+        if (titolo.isEmpty() || titolo.length() > 20) {
             return false;
-        } else if (titolo.length() > 20) {
-            title.setError("Il Titolo della recensione è troppo lungo");
-            title.requestFocus();
-            return false;
-        } else if (isNumber(titolo)) {
-            title.setError("Il Titolo non può avere solo numeri");
-            title.requestFocus();
-            return false;
-        }
-        return true;
+        } else return !isNumber(titolo);
     }
 
     private boolean validValutation(float valutazione) {
-        if (valutazione >= 0.5f && valutazione <= 5.0f)
-            return true;
-        else {
-            Toast.makeText(getContext(), "Devi selezionare almeno mezzo ciak", Toast.LENGTH_LONG).show();
-            return false;
-        }
+        return valutazione >= 0.5f && valutazione <= 5.0f;
     }
 
     public boolean isValidReview(String titolo, float valutazione) {
@@ -78,14 +62,9 @@ public class InsertReviewScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_insert_review_screen, container, false);
-
         ratingBar = root.findViewById(R.id.ratingBar3);
-
-
-        title = root.findViewById(R.id.review_title);
-
+        title = root.findViewById(R.id.insert_review_title);
         description = root.findViewById(R.id.editTextListDescription);
-
         insert = root.findViewById(R.id.button_inserisci);
         PushDownAnim.setPushDownAnimTo(insert);
 
@@ -103,15 +82,22 @@ public class InsertReviewScreen extends Fragment {
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
-                ((ToolBarActivity) getActivity()).onBackPressed(true);
+            } else {
+                if (!isNumber(String.valueOf(title.getText()))) {
+                    title.setError("Il titolo non può essere un numero");
+                    title.requestFocus();
+                } else if ((String.valueOf(title.getText())).isEmpty()) {
+                    title.setError("Devi inserire un titolo");
+                    title.requestFocus();
+                } else if ((String.valueOf(title.getText())).length() > 20) {
+                    title.setError("Il titolo è troppo lungo");
+                    title.requestFocus();
+                } else {
+                    Toast.makeText(getContext(), "Devi selezionare almeno mezzo ciak", Toast.LENGTH_LONG).show();
+                }
             }
+            ((ToolBarActivity) getActivity()).onBackPressed(true);
         });
-
         return root;
     }
-
-
-
-
-
 }

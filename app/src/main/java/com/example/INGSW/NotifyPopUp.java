@@ -84,8 +84,5 @@ public class NotifyPopUp extends AppCompatDialogFragment {
         }
     }
 
-    public void closeDialog() {
-        this.dismiss();
-    }
 }
 

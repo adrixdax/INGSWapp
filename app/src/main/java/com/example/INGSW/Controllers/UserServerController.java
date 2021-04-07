@@ -96,8 +96,12 @@ public class UserServerController extends AsyncTask {
 
     private Object addCustomList() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&addList=true&listTitle=" + listTitle + "&listDescription=" + listDescription);
+        RequestBody body;
+        if (listDescription.isEmpty() || listDescription.equals("\0")) {
+            body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&addList=true&listTitle=" + listTitle + "&listDescription=" + listDescription);
+        } else {
+            body = RequestBody.create(JSON, "Type=PostRequest&idUser=" + UserId + "&addList=true&listTitle=" + listTitle);
+        }
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(url + "user").post(body).build();
 

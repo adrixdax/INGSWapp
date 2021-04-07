@@ -77,5 +77,5 @@ dependencies {
     }
     implementation('com.squareup.okhttp3:okhttp:5.0.0-alpha.2')
     testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.8.0-M1'
-
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 }

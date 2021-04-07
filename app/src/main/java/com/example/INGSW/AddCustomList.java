@@ -52,8 +52,7 @@ public class AddCustomList extends Fragment {
             usc.setListDescription(String.valueOf(description.getText()));
             usc.setListDescription(String.valueOf(description.getText()).length() == 0 ? "\0" : String.valueOf(description.getText()));
             try {
-
-                usc.execute(new String("addCustomList")).get();
+                usc.execute("addCustomList").get();
                 usc.isCancelled();
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
