@@ -28,7 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.bumptech.glide.Glide.with;
 
-public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.ViewHolder> {
+public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.ViewHolder> {
     private final List<UserLists> listofdata;
 
     private Class css = null;
@@ -37,14 +37,14 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
     private final Fragment startFragment;
 
 
-    public UserListsAdapter(List<UserLists> listofdata, Class css, List<UserLists> selectedList) {
+    public CustomListsAdapter(List<UserLists> listofdata, Class css, List<UserLists> selectedList) {
         this.listofdata = listofdata;
         this.css = css;
         this.selectedList = selectedList;
         startFragment = null;
     }
 
-    public UserListsAdapter(List<UserLists> listofdata, Class css, Fragment startFragment) {
+    public CustomListsAdapter(List<UserLists> listofdata, Class css, Fragment startFragment) {
         this.listofdata = listofdata;
         this.css = css;
         this.startFragment = startFragment;
@@ -59,7 +59,7 @@ public class UserListsAdapter extends RecyclerView.Adapter<UserListsAdapter.View
         } else if (css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())) {
             listItem = layoutInflater.inflate(R.layout.list_custom_list_selected, parent, false);
         }
-        return new UserListsAdapter.ViewHolder(listItem, css);
+        return new CustomListsAdapter.ViewHolder(listItem, css);
     }
 
     @Override

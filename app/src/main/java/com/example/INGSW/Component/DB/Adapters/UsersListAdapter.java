@@ -1,11 +1,10 @@
-package com.example.INGSW;
+package com.example.INGSW.Component.DB.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.UserServerController;
+import com.example.INGSW.R;
+import com.example.INGSW.ToolBarActivity;
+import com.example.INGSW.User;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -53,7 +54,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         holder.nick.setText(model.getNickname());
 
         boolean friend = false;
-        List<Notify> notifyList = new ArrayList<>();
+        List<Notify> notifyList;
         try {
             notifyList = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser=" + model.getIdUser()).get()), Notify.class);
             if (!notifyList.isEmpty()) {
@@ -69,8 +70,8 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
                 UserServerController usc = new UserServerController();
                 usc.setUserId(((ToolBarActivity) context).getUid());
                 usc.setIdOtherUser(model.getIdUser());
-                if (Boolean.parseBoolean((String) usc.execute(new String("isFriends")).get())) {
-                    friend = true ;
+                if (Boolean.parseBoolean((String) usc.execute("isFriends").get())) {
+                    friend = true;
                 }
             }
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
@@ -96,7 +97,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
                         ntc.setIdReceiver(model.getIdUser());
                         ntc.setType("FRIENDSHIP REQUEST");
                         try {
-                            ntc.execute(new String("SendFriendshipRequest")).get();
+                            ntc.execute("SendFriendshipRequest").get();
                             ntc.isCancelled();
                         } catch (ExecutionException e) {
                             e.printStackTrace();
@@ -119,20 +120,16 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
 
 
     public static class UsersViewHolder extends RecyclerView.ViewHolder {
-
         TextView nick;
         CircleImageView userpic;
         RelativeLayout relativeLayoutNotify;
         ImageButton addButton;
-
         public UsersViewHolder(@NonNull View itemView) {
             super(itemView);
-
             nick = itemView.findViewById(R.id.usernick_view);
             userpic = itemView.findViewById(R.id.userprofilepic_view);
             relativeLayoutNotify = itemView.findViewById(R.id.relativeLayoutNotify);
             addButton = itemView.findViewById(R.id.addFriendButton);
-
             PushDownAnim.setPushDownAnimTo(addButton);
         }
     }

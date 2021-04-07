@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.INGSW.Component.DB.Adapters.UsersListAdapter;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;

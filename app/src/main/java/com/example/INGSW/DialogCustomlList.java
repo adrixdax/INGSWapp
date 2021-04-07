@@ -1,31 +1,23 @@
 package com.example.INGSW;
 
 import android.app.Dialog;
-
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
-import com.example.INGSW.Component.DB.Adapters.UserListsAdapter;
-
+import com.example.INGSW.Component.DB.Adapters.CustomListsAdapter;
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Controllers.FilmTestController;
-
 import com.example.INGSW.Controllers.UserServerController;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,7 +32,7 @@ public class DialogCustomlList extends AppCompatDialogFragment {
 
     private RecyclerView recycler;
     private List<UserLists> customLists = new ArrayList<>();
-    private List<UserLists> selectedLists = new ArrayList<>();
+    private final List<UserLists> selectedLists = new ArrayList<>();
     private int idFilmToInsert;
 
     @NotNull
@@ -60,14 +52,14 @@ public class DialogCustomlList extends AppCompatDialogFragment {
             UserServerController usc = new UserServerController();
             usc.setUserId(((ToolBarActivity) getActivity()).getUid());
             usc.setIdFilm(String.valueOf(idFilmToInsert));
-            json = (String) usc.execute(new String("custom")).get();
+            json = (String) usc.execute("custom").get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         try {
             customLists = (List<UserLists>) getJsonToDecode(json, UserLists.class);
             if (customLists != null) {
-                recycler.setAdapter(new UserListsAdapter(customLists, DialogCustomlList.class, this.selectedLists));
+                recycler.setAdapter(new CustomListsAdapter(customLists, DialogCustomlList.class, this.selectedLists));
                 recycler.setLayoutManager(new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.VERTICAL, false));
                 recycler.setHasFixedSize(false);
             }
@@ -86,7 +78,7 @@ public class DialogCustomlList extends AppCompatDialogFragment {
                     ftc.setIdFilm(String.valueOf(idFilmToInsert));
                     ftc.setIdList(String.valueOf(singlelist.getIdUserList()));
                     try {
-                        ftc.execute(new String("addFilm")).get();
+                        ftc.execute("addFilm").get();
                         ftc.isCancelled();
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();

@@ -9,14 +9,12 @@ import android.widget.ImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.DB.Adapters.UserListsAdapter;
+import com.example.INGSW.Component.DB.Adapters.CustomListsAdapter;
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Controllers.UserServerController;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,14 +56,14 @@ public class MyLists extends Fragment {
             UserServerController usc = new UserServerController();
             usc.setUserId(((ToolBarActivity) getActivity()).getUid());
             usc.setIdFilm("-1");
-            json = (String) usc.execute(new String("custom")).get();
+            json = (String) usc.execute("custom").get();
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         try {
             customLists = (List<UserLists>) getJsonToDecode(json, UserLists.class);
             if (customLists != null) {
-                recycler.setAdapter(new UserListsAdapter(customLists, this.getClass(), this));
+                recycler.setAdapter(new CustomListsAdapter(customLists, this.getClass(), this));
                 recycler.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
                 recycler.setHasFixedSize(false);
             }
