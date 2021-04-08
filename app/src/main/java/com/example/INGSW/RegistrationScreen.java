@@ -8,6 +8,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -68,7 +69,45 @@ public class RegistrationScreen extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if(!dataSnapshot.exists()) {
-                            reg.registerUser(editTextMail,editTextPassword,repeatPassword,editTextNickName,propic);
+                            try{
+                            reg.registerUser(editTextMail.getText().toString().trim(),editTextPassword.getText().toString().trim(),repeatPassword.getText().toString().trim(),editTextNickName.getText().toString().trim(),propic);
+                            } catch (Exception e) {
+                                switch (e.getMessage()) {
+                                    case "Empty nickname":
+                                        editTextNickName.setError("Inserisci un nickname");
+                                        editTextNickName.requestFocus();
+                                        break;
+                                    case "Empty Mail":
+                                        editTextMail.setError("Mail vuota");
+                                        editTextMail.requestFocus();
+                                        break;
+                                    case "Invalid Mail":
+                                        editTextMail.setError("Perfavore inserisci un indirizzo Mail valido");
+                                        editTextMail.requestFocus();
+                                        break;
+                                    case "Empty password":
+                                        editTextPassword.setError("La password è necessaria!");
+                                        editTextPassword.requestFocus();
+                                        break;
+                                    case "Not equal passwords":
+                                        repeatPassword.setError("Le password non coincidono!");
+                                        repeatPassword.requestFocus();
+                                        break;
+                                    case "Password Length":
+                                        editTextPassword.setError("La password deve contenere almeno 6 caratteri!");
+                                        editTextPassword.requestFocus();
+                                        break;
+                                    case "Weak Password":
+                                        editTextPassword.setError("La password deve contenere almeno una lettera MAIUSCOLA, una minuscola ed un numero! \n esempio: Crazythanos90");
+                                        editTextPassword.requestFocus();
+                                        break;
+                                    default:
+                                        e.printStackTrace();
+                                        Toast.makeText(RegistrationScreen.super.getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                        break;
+                                }
+
+                            }
                         }
                         else{
                             editTextNickName.setError("Nickname già in uso");

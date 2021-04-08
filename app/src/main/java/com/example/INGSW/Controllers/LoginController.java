@@ -43,22 +43,22 @@ public class LoginController{
 
 
         if(mail.isEmpty()){
-            throw new Exception("Empty Mail"); /**C'è da creare le  nostre custom exceptions**/
+            throw new Exception("Empty Mail");
         }
 
         if(!Patterns.EMAIL_ADDRESS.matcher(mail).matches()){
-            throw new Exception("Invalid Mail"); /**C'è da creare le  nostre custom exceptions**/
+            throw new Exception("Invalid Mail");
         }
 
         if(password.isEmpty()){
-            throw new Exception("Empty Password"); /**C'è da creare le  nostre custom exceptions**/
+            throw new Exception("Empty Password");
         }
 
         if(password.length() < 6){
-            throw new Exception("Password Length"); /**C'è da creare le  nostre custom exceptions**/
+            throw new Exception("Password Length");
         }
 
-        progressBar.setVisibility(View.VISIBLE); /** Non riesco a far funzionare la progress bar :( **/
+        progressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -83,14 +83,6 @@ public class LoginController{
 
 
     }
-
-
-
-
-
-
-
-
 
 
 }

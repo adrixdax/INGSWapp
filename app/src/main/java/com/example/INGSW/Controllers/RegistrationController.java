@@ -34,55 +34,54 @@ public class RegistrationController {
 
     }
 
+    public boolean checkPasswordFields(String password,String repassword) throws Exception{
+        boolean flag = true;
 
-    public void registerUser(EditText editTextMail, EditText editTextPassword, EditText repPassword,EditText editTextNickName,String propic) {
-        String email = editTextMail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        String password2 = repPassword.getText().toString().trim();
-        String nickname = editTextNickName.getText().toString().trim();
+        if(password.isEmpty()) throw new Exception("Empty Password");
+
+        if(repassword.isEmpty()) throw new Exception("Empty rePassword");
+
+        if(!(password.equals(repassword))) throw new Exception("Not equal passwords");
+
+        if(password.length() < 6) throw new Exception("Password Length");
+
+        if ((password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])"))) {
+            throw new Exception("Weak Password");
+        }
+        else{
+            System.out.println("Password valida");
+        }
+
+        /*if (password.matches("^(?=.*[a-z])(?=.*[0-9])")){
+            throw new Exception("Uppercase needed");
+        }
+
+        if (password.matches("^(?=.*[A-Z])(?=.*[0-9])")){
+            throw new Exception("Lowercase needed");
+        }
+*/
+        //if(password.isEmpty()) throw new Exception("Empty Password");
+        return true;
+    }
+
+
+    public void registerUser(String email, String password, String rePassword,String nickname,String propic) throws Exception {
 
 
         if (nickname.isEmpty()) {
-            editTextNickName.setError("NickName non compilato!");
-            editTextNickName.requestFocus();
-            return;
+            throw new Exception("Empty nickname");
         }
 
         if (email.isEmpty()) {
-            editTextMail.setError("Mail non compilata!");
-            editTextMail.requestFocus();
-            return;
+            throw new Exception("Empty Mail");
         }
 
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextMail.setError("Perfavore inserisci un indirizzo Mail valido");
-            editTextMail.requestFocus();
-            return;
+            throw new Exception("Invalid Mail");
         }
 
-        if (password.isEmpty()) {
-            editTextPassword.setError("Password non compilata!");
-            editTextPassword.requestFocus();
-            return;
-        }
+        if( checkPasswordFields(password,rePassword))
 
-        if (password2.isEmpty()) {
-            repPassword.setError("Ripeti la password");
-            repPassword.requestFocus();
-            return;
-        }
-
-        if(!(password.equals(password2))){
-            repPassword.setError("Le due password non coincidono");
-            repPassword.requestFocus();
-            return;
-        }
-
-        if (password.length() < 6) {
-            editTextPassword.setError("Password  deve contenere almeno 6 caratteri.");
-            editTextPassword.requestFocus();
-            return;
-        }
         mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(regActivity, authResult -> {

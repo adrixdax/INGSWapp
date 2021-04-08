@@ -18,25 +18,11 @@ import static org.mockito.Mockito.when;
 
 public class RegistrationControllerTest {
 
-    RegistrationController registrationController;
-    EditText mail,password,password2,nick;
-    String propic = "default propic";
+    RegistrationController registrationController = new RegistrationController(null,"");
 
 
-    @Before
-    public void enableConstructor() {
-        registrationController = new RegistrationController(null,propic);
+    @Test (expected = Exception.class)
+    public void checkEmptyPasswordField() throws Exception {
+        registrationController.checkPasswordFields("","");
     }
-
-    @Test
-    public void registerUser() {
-       // mail.setText("test@gmail.com");
-        password.setText("pw valida");
-        password2.setText("pw valida");
-        nick.setText("nick valido");
-
-        registrationController.registerUser(mail,password,password2,nick,propic);
-    }
-
-
 }
