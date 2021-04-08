@@ -27,19 +27,18 @@ public class RegistrationController {
     private static Activity regActivity;
     private FirebaseAuth mAuth;
     static private String pic;
+    private static final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).+$" ;
 
     public RegistrationController(Activity current,String propic) {
         regActivity = current;
         pic = propic;
-
     }
 
-    public boolean checkPasswordFields(String password,String repassword) throws Exception{
+    public boolean checkPasswordField(String password) throws Exception{
         if(password.isEmpty()) throw new Exception("Empty Password");
-        if(repassword.isEmpty()) throw new Exception("Empty rePassword");
-        if(!(password.equals(repassword))) throw new Exception("Not equal passwords");
         if(password.length() < 6) throw new Exception("Password Length");
-        if (!(password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]$"))) throw new Exception("Weak Password");
+        if (!password.matches(PASSWORD_PATTERN)) throw new Exception("Weak Password");
+
         return true;
     }
 
@@ -59,7 +58,13 @@ public class RegistrationController {
             throw new Exception("Invalid Mail");
         }
 
-        if( checkPasswordFields(password,rePassword))
+        if( checkPasswordField(password))
+
+        if(!(password.equals(rePassword))) throw new Exception("Not equal passwords");
+
+        if(rePassword.isEmpty()) throw new Exception("Empty rePassword");
+
+
 
         mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password)
