@@ -34,7 +34,7 @@ import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
@@ -49,7 +49,7 @@ import static com.bumptech.glide.Glide.with;
 
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder> {
     private final ArrayList<Notify> listOfData;
-    private final FirebaseDatabase ref;
+    private final DatabaseReference ref;
     private final Context myContext;
     private int removedItems = 0;
     private final NotifyPopUp dialog;
@@ -57,8 +57,8 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     private User getUser(String id, ViewHolder holder, int position) {
         final User[] reviewer = new User[1];
         try {
-            Query query = ref.getReference("Users").orderByKey().equalTo(id);
-            query.addValueEventListener(new ValueEventListener() {
+            Query query = ref.orderByKey().equalTo(id);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -155,7 +155,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         }
     }
 
-    public NotifyAdapter(ArrayList<Notify> listOfData, FirebaseDatabase ref, Context myContext, NotifyPopUp dialog) {
+    public NotifyAdapter(ArrayList<Notify> listOfData, DatabaseReference ref, Context myContext, NotifyPopUp dialog) {
         this.listOfData = listOfData;
         this.ref = ref;
         this.myContext = myContext;

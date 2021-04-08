@@ -15,28 +15,24 @@ import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.bumptech.glide.Glide.with;
 
 public class ReviewDetail extends Fragment {
 
-    private Reviews review;
+    private final Reviews review;
     private CircleImageView userImage;
     private TextView userName;
     private TextView reviewTitle;
     private TextView reviewDescription;
     private RatingBar ratingBar;
-    private FirebaseDatabase ref;
+    private final DatabaseReference ref;
 
 
-    public ReviewDetail(Reviews review,FirebaseDatabase ref) {
+    public ReviewDetail(Reviews review, DatabaseReference ref) {
         this.review = review;
         this.ref = ref;
     }
@@ -68,7 +64,7 @@ public class ReviewDetail extends Fragment {
     private void getReviewer(String id, View root) {
 
         try {
-            Query query = ref.getReference("Users").orderByKey().equalTo(id);
+            Query query = ref.orderByKey().equalTo(id);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

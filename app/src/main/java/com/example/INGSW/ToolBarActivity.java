@@ -1,7 +1,6 @@
 package com.example.INGSW;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -25,6 +24,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
@@ -50,7 +50,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     private boolean loadUser = false;
     UserController userController = new UserController();
     private final UserServerController usc = new UserServerController();
-    private static FirebaseDatabase ref = FirebaseDatabase.getInstance();
+    private static DatabaseReference ref;
     private String uid = "";
 
     @Override
@@ -59,13 +59,10 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
         try {
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            ref = db.getReference("Users");
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        try {
-            ref.setPersistenceEnabled(true);
-        } catch (Exception ignored) {
         }
         setContentView(R.layout.navigationscreen);
         getUser();
@@ -264,10 +261,9 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         return this.uid;
     }
 
-    public static FirebaseDatabase getReference() {
+    public static DatabaseReference getReference() {
         if (ref == null) {
-            ref = FirebaseDatabase.getInstance();
-            ref.setPersistenceEnabled(true);
+            ref = FirebaseDatabase.getInstance().getReference("Users");
         }
         return ref;
     }

@@ -17,16 +17,14 @@ import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.FilmInCustomList;
 import com.example.INGSW.MyReviews;
 import com.example.INGSW.R;
 import com.example.INGSW.ReviewDetail;
 import com.example.INGSW.User;
 import com.example.INGSW.Utility.JSONDecoder;
-import com.google.android.gms.common.internal.safeparcel.SafeParcelable;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
@@ -44,9 +42,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     private Class css = null;
     private View listItem;
     private final Fragment startFragment;
-    private FirebaseDatabase ref;
+    private final DatabaseReference ref;
 
-    public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment,FirebaseDatabase ref) {
+    public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment, DatabaseReference ref) {
         this.listofdata = listofdata;
         this.startFragment = startFragment;
         this.ref = ref;
@@ -158,7 +156,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     private void getReviewer(String id, ReviewsAdapter.ViewHolder holder) {
         try {
-            Query query = ref.getReference("Users").orderByKey().equalTo(id);
+            Query query = ref.orderByKey().equalTo(id);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

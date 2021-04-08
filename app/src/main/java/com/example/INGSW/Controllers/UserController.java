@@ -11,13 +11,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
 public class UserController {
 
-    private User userprofile = null;
+    private final User userprofile = null;
     private DatabaseReference reference;
     private String userID;
     User tempUser = null;
@@ -31,13 +30,13 @@ public class UserController {
         this.tempUser = tempuser;
     }
 
-    public User getUserprofile(FirebaseUser mFirebaseUser, FirebaseDatabase ref ) {
+    public User getUserprofile(FirebaseUser mFirebaseUser, DatabaseReference ref) {
         try {
             if (mFirebaseUser != null) {
-                reference = ref.getReference("Users");
+                reference = ref;
                 userID = mFirebaseUser.getUid();
                 reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    User profile = null;
+                    final User profile = null;
 
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {

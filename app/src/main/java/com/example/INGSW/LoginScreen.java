@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,7 +37,6 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.IntStream;
 
 /**
  * Tale activity sostiene la schermata principale dell'app. ovvero la prima schermata che si aprirà difronte all' utente all' apertura dell'app
@@ -76,7 +73,9 @@ public class LoginScreen extends AppCompatActivity {
 
 
             super.onCreate(savedInstanceState);
-            reference =  FirebaseDatabase.getInstance().getReference("Users");
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            db.setPersistenceEnabled(true);
+            reference = db.getReference("Users");
             setContentView(R.layout.loginscreen);
 
 
@@ -85,12 +84,7 @@ public class LoginScreen extends AppCompatActivity {
             mAuth = FirebaseAuth.getInstance();
 
             register = (TextView) findViewById(R.id.RegisterText);
-            register.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(LoginScreen.super.getApplicationContext(), RegistrationScreen.class));
-                }
-            });
+            register.setOnClickListener(v -> startActivity(new Intent(LoginScreen.super.getApplicationContext(), RegistrationScreen.class)));
 
             GoogleLogin = findViewById(R.id.sign_in_button);
             LoginButton = findViewById(R.id.LoginButton);
@@ -110,50 +104,44 @@ public class LoginScreen extends AppCompatActivity {
                 startActivity(intent);
             }
 
-            LoginButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        loginController.verifyUserWithFirebase(editTextEmail.getText().toString().trim(), editTextPassword.getText().toString().trim(), mAuth, LoginScreen.this);
-                    } catch (Exception e) {
-                        switch (e.getMessage()) {
-                            case "Empty Mail":
-                                editTextEmail.setError("Mail vuota");
-                                editTextEmail.requestFocus();
-                                break;
-                            case "Invalid Mail":
-                                editTextEmail.setError("Mail non valida");
-                                editTextEmail.requestFocus();
-                                break;
-                            case "Empty password":
-                                editTextPassword.setError("La password è necessaria!");
-                                editTextPassword.requestFocus();
-                                break;
-                            case "Password Length":
-                                editTextPassword.setError("La password deve contenere almeno 6 caratteri!");
-                                editTextPassword.requestFocus();
-                                break;
-                            default:
-                                e.printStackTrace();
-                                Toast.makeText(LoginScreen.super.getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                break;
-                        }
-
+            LoginButton.setOnClickListener(v -> {
+                try {
+                    loginController.verifyUserWithFirebase(editTextEmail.getText().toString().trim(), editTextPassword.getText().toString().trim(), mAuth, LoginScreen.this);
+                } catch (Exception e) {
+                    switch (e.getMessage()) {
+                        case "Empty Mail":
+                            editTextEmail.setError("Mail vuota");
+                            editTextEmail.requestFocus();
+                            break;
+                        case "Invalid Mail":
+                            editTextEmail.setError("Mail non valida");
+                            editTextEmail.requestFocus();
+                            break;
+                        case "Empty password":
+                            editTextPassword.setError("La password è necessaria!");
+                            editTextPassword.requestFocus();
+                            break;
+                        case "Password Length":
+                            editTextPassword.setError("La password deve contenere almeno 6 caratteri!");
+                            editTextPassword.requestFocus();
+                            break;
+                        default:
+                            e.printStackTrace();
+                            Toast.makeText(LoginScreen.super.getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                            break;
                     }
+
                 }
             });
 
             editTextEmail = (EditText) findViewById(R.id.TextLoginEmail);
             editTextPassword = (EditText) findViewById(R.id.TextLoginPassword);
-            editTextPassword.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                    if (actionId == EditorInfo.IME_ACTION_GO) {
-                        LoginButton.callOnClick();
-                        return true;
-                    }
-                    return false;
+            editTextPassword.setOnEditorActionListener((v, actionId, event) -> {
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    LoginButton.callOnClick();
+                    return true;
                 }
+                return false;
             });
 
             progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -225,7 +213,7 @@ public class LoginScreen extends AppCompatActivity {
 
             UserServerController usc = new UserServerController();
             usc.setUserId(account.getId());
-            String req = (String) usc.execute(new String("google")).get();
+            String req = (String) usc.execute("google").get();
             u.nickname = Objects.requireNonNull(account.getEmail()).split("@")[0];
             u.email = account.getEmail();
             int switchCase = new Random().ints(0, 5).findAny().getAsInt();

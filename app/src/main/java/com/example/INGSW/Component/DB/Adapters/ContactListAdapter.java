@@ -94,7 +94,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     private void getReviewer(String id, ContactListAdapter.ViewHolder holder) {
         try {
-            Query query = ToolBarActivity.getReference().getReference("Users").orderByKey().equalTo(id);
+            Query query = ToolBarActivity.getReference().orderByKey().equalTo(id);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
