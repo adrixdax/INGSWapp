@@ -25,6 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -74,7 +75,7 @@ public class LoginScreen extends AppCompatActivity {
 
             super.onCreate(savedInstanceState);
             FirebaseDatabase db = FirebaseDatabase.getInstance();
-            db.setPersistenceEnabled(true);
+            if (FirebaseApp.getApps(this).size() == 0) db.setPersistenceEnabled(true);
             reference = db.getReference("Users");
             setContentView(R.layout.loginscreen);
 
