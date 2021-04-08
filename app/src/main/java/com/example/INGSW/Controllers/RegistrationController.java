@@ -35,32 +35,11 @@ public class RegistrationController {
     }
 
     public boolean checkPasswordFields(String password,String repassword) throws Exception{
-        boolean flag = true;
-
         if(password.isEmpty()) throw new Exception("Empty Password");
-
         if(repassword.isEmpty()) throw new Exception("Empty rePassword");
-
         if(!(password.equals(repassword))) throw new Exception("Not equal passwords");
-
         if(password.length() < 6) throw new Exception("Password Length");
-
-        if ((password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])"))) {
-            throw new Exception("Weak Password");
-        }
-        else{
-            System.out.println("Password valida");
-        }
-
-        /*if (password.matches("^(?=.*[a-z])(?=.*[0-9])")){
-            throw new Exception("Uppercase needed");
-        }
-
-        if (password.matches("^(?=.*[A-Z])(?=.*[0-9])")){
-            throw new Exception("Lowercase needed");
-        }
-*/
-        //if(password.isEmpty()) throw new Exception("Empty Password");
+        if (!(password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]$"))) throw new Exception("Weak Password");
         return true;
     }
 
