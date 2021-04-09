@@ -47,6 +47,7 @@ public class MostSeen extends Fragment {
         mostSeenFilm.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
         mostSeenFilm.setLayoutManager(layoutManager);
+        mostSeenFilm.setItemViewCacheSize(mostSeenFilms.size());
         mostSeenFilm.setAdapter(adapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mostSeenFilm.getContext(),
                 layoutManager.getOrientation());

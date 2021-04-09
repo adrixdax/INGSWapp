@@ -54,6 +54,7 @@ public class ToSee extends Fragment {
         LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
         toSeeFilms.setLayoutManager(layoutManager);
         toSeeFilms.setAdapter(adapter);
+        toSeeFilms.setItemViewCacheSize(toSee.size());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(toSeeFilms.getContext(),
                 layoutManager.getOrientation());
         toSeeFilms.addItemDecoration(dividerItemDecoration);

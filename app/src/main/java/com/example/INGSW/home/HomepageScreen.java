@@ -33,10 +33,7 @@ import java.util.concurrent.ExecutionException;
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class HomepageScreen extends Fragment {
-
     Timer timer = new Timer();
-
-    float x1,x2,y1,y2;
 
     ShapeableImageView mostSeen, tooSee, mostReviewed, userPrefered;
     static ImageButton bell;
@@ -124,6 +121,7 @@ public class HomepageScreen extends Fragment {
         ListOfFilmAdapter adapter = new ListOfFilmAdapter(film, getContext(), this);
         adapter.setCss(HomepageScreen.class);
         recyclerView.setHasFixedSize(false);
+        recyclerView.setItemViewCacheSize(film.size());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         return root;

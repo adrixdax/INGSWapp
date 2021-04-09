@@ -22,7 +22,6 @@ import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 public class MyReviews extends Fragment {
 
     private List<Reviews> review = null;
-    private ReviewsController con = new ReviewsController();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,7 +29,7 @@ public class MyReviews extends Fragment {
         View root = inflater.inflate(R.layout.fragment_myreviewslist, container, false);
             String latestJson = "";
             try {
-                con = new ReviewsController();
+                ReviewsController con = new ReviewsController();
                 con.setIdUser(((ToolBarActivity) getActivity()).getUid());
                 latestJson = (String) con.execute("UserReviews").get();
                 con.isCancelled();
@@ -48,6 +47,7 @@ public class MyReviews extends Fragment {
         adapter.setCss(MyReviews.class);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(false);
+        recyclerView.setItemViewCacheSize(review.size());
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
 

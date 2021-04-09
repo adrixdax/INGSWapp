@@ -60,6 +60,7 @@ public class DialogCustomlList extends AppCompatDialogFragment {
             customLists = (List<UserLists>) getJsonToDecode(json, UserLists.class);
             if (customLists != null) {
                 recycler.setAdapter(new CustomListsAdapter(customLists, DialogCustomlList.class, this.selectedLists));
+                recycler.setItemViewCacheSize(customLists.size());
                 recycler.setLayoutManager(new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.VERTICAL, false));
                 recycler.setHasFixedSize(false);
             }

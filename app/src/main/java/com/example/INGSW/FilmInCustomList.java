@@ -61,6 +61,7 @@ public class FilmInCustomList extends Fragment {
         adapter.setCss(FilmInCustomList.class);
         adapter.setIdList(String.valueOf(list.getIdUserList()));
         filmInCustomList.setHasFixedSize(false);
+        filmInCustomList.setItemViewCacheSize(CustomListFilm.size());
         LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
         filmInCustomList.setLayoutManager(layoutManager);
         filmInCustomList.setAdapter(adapter);

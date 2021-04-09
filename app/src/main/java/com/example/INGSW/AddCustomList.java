@@ -20,8 +20,6 @@ public class AddCustomList extends Fragment {
 
     private EditText title;
     private EditText description;
-    private Button cancel;
-    private Button add;
 
     @Nullable
     @Override
@@ -29,8 +27,8 @@ public class AddCustomList extends Fragment {
 
         View root = inflater.inflate(R.layout.add_list_custom, container, false);
 
-        cancel = root.findViewById(R.id.button);
-        add = root.findViewById(R.id.button2);
+        Button cancel = root.findViewById(R.id.button);
+        Button add = root.findViewById(R.id.button2);
 
         PushDownAnim.setPushDownAnimTo(cancel, add)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)

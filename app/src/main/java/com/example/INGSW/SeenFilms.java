@@ -39,6 +39,7 @@ public class SeenFilms extends Fragment {
         adapter.setIdList(FTC.getIdList());
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewUserSeen);
         recyclerView.setHasFixedSize(false);
+        recyclerView.setItemViewCacheSize(listofFilm.size());
         recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
         recyclerView.setAdapter(adapter);
 

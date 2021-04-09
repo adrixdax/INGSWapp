@@ -25,10 +25,6 @@ import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class MyLists extends Fragment {
 
-    private ImageButton addList;
-    private RecyclerView recycler;
-    private List<UserLists> customLists = new ArrayList<>();
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,21 +32,18 @@ public class MyLists extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_lists, container, false);
 
 
-        addList = (ImageButton) root.findViewById(R.id.addListButton);
-        addList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        ImageButton addList = (ImageButton) root.findViewById(R.id.addListButton);
+        addList.setOnClickListener(v -> {
 
-                AddCustomList nextFragment = new AddCustomList();
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
-                transaction.addToBackStack(null);
-                transaction.commit();
+            AddCustomList nextFragment = new AddCustomList();
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
+            transaction.addToBackStack(null);
+            transaction.commit();
 
-            }
         });
 
-        recycler = root.findViewById(R.id.recyclerView2);
+        RecyclerView recycler = root.findViewById(R.id.recyclerView2);
         String json = "";
         try {
             UserServerController usc = new UserServerController();
@@ -61,11 +54,12 @@ public class MyLists extends Fragment {
             e.printStackTrace();
         }
         try {
-            customLists = (List<UserLists>) getJsonToDecode(json, UserLists.class);
+            List<UserLists> customLists = (List<UserLists>) getJsonToDecode(json, UserLists.class);
             if (customLists != null) {
                 recycler.setAdapter(new CustomListsAdapter(customLists, this.getClass(), this));
                 recycler.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
                 recycler.setHasFixedSize(false);
+                recycler.setItemViewCacheSize(customLists.size());
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();

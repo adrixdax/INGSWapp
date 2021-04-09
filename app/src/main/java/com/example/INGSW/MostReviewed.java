@@ -46,6 +46,7 @@ public class MostReviewed extends Fragment {
         adapter.setCss(MostReviewed.class);
         mostReviewedFilm.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
+        mostReviewedFilm.setItemViewCacheSize(mostReviewedFilms.size());
         mostReviewedFilm.setLayoutManager(layoutManager);
         mostReviewedFilm.setAdapter(adapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mostReviewedFilm.getContext(),

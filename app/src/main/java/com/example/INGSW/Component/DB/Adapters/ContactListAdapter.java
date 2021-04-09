@@ -30,7 +30,6 @@ import static com.bumptech.glide.Glide.with;
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ViewHolder> {
 
     private final List<Contact> listofdata;
-    private View listItem;
     private final Context myContext;
     private final List<Contact> selectedLists;
 
@@ -44,7 +43,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        listItem = layoutInflater.inflate(R.layout.list_friend_selected, parent, false);
+        View listItem = layoutInflater.inflate(R.layout.list_friend_selected, parent, false);
         return new ViewHolder(listItem);
     }
 

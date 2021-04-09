@@ -28,8 +28,6 @@ import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 public class ReviewScreen extends Fragment {
 
     private final String idFilm;
-    private List<Reviews> reviews = new ArrayList<>();
-    private RecyclerView recyclerViewReviews;
 
 
     public ReviewScreen(String idFilm) {
@@ -54,10 +52,10 @@ public class ReviewScreen extends Fragment {
             if (!latestJson.isEmpty()) {
                 rc.isCancelled();
 
-                reviews = (List<Reviews>) getJsonToDecode(latestJson, Reviews.class);
+                List<Reviews> reviews = (List<Reviews>) getJsonToDecode(latestJson, Reviews.class);
 
                 LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
-                recyclerViewReviews = root.findViewById(R.id.recyclerViewReviews);
+                RecyclerView recyclerViewReviews = root.findViewById(R.id.recyclerViewReviews);
                 ReviewsAdapter adapter = new ReviewsAdapter(reviews, this, ((ToolBarActivity) (getActivity())).getReference());
                 adapter.setCss(ReviewScreen.class);
                 recyclerViewReviews.setHasFixedSize(false);
@@ -65,6 +63,7 @@ public class ReviewScreen extends Fragment {
                 recyclerViewReviews.setAdapter(adapter);
                 DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewReviews.getContext(),
                         layoutManager.getOrientation());
+                recyclerViewReviews.setItemViewCacheSize(reviews.size());
                 recyclerViewReviews.addItemDecoration(dividerItemDecoration);
                 recyclerViewReviews.setVisibility(View.VISIBLE);
             }

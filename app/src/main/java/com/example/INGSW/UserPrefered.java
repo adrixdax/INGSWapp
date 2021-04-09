@@ -48,6 +48,7 @@ public class UserPrefered extends Fragment {
         LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
         userPreferedFilms.setLayoutManager(layoutManager);
         userPreferedFilms.setAdapter(adapter);
+        userPreferedFilms.setItemViewCacheSize(prefered.size());
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(userPreferedFilms.getContext(),
                 layoutManager.getOrientation());
         userPreferedFilms.addItemDecoration(dividerItemDecoration);
