@@ -81,7 +81,7 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
             if (!custom) {
                 if (!selectedLists.isEmpty()) {
                     for (Contact singlelist : selectedLists) {
-                        NotifyTestController ntc = new NotifyTestController();
+                        NotifyTestController ntc = new NotifyTestController((ToolBarActivity) getContext());
                         try {
                             ntc.setIdSender(((ToolBarActivity) getActivity()).getUid());
                             if (singlelist.getUser1().equals(ntc.getIdSender())) {
@@ -105,7 +105,7 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
 
                 if (!selectedLists.isEmpty()) {
                     for (Contact singlelist : selectedLists) {
-                        NotifyTestController ntc = new NotifyTestController();
+                        NotifyTestController ntc = new NotifyTestController((ToolBarActivity) getContext());
                         try {
                             ntc.setIdSender(((ToolBarActivity) getActivity()).getUid());
                             if (singlelist.getUser1().equals(ntc.getIdSender())) {

@@ -22,11 +22,11 @@ import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 public class NotifyUpdater extends TimerTask {
     private static ArrayList<Notify> notify = new ArrayList<>();
     private static Timer timer;
-    private static Activity activity;
+    private static ToolBarActivity activity;
 
     public NotifyUpdater(Timer timer, Activity activity) {
         NotifyUpdater.timer = timer;
-        NotifyUpdater.activity = activity;
+        NotifyUpdater.activity = (ToolBarActivity) activity;
     }
 
     @OnBackground
@@ -43,7 +43,7 @@ public class NotifyUpdater extends TimerTask {
     @OnBackground
     private void updateList() {
         try {
-            notify = new ArrayList<>((List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser=" + ((ToolBarActivity) activity).getUid()).get()), Notify.class));
+            if (activity.getActiveFragment().getClass().equals(HomepageScreen.class)) notify = new ArrayList<>((List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController(activity).execute("idUser=" + ((ToolBarActivity) activity).getUid()).get()), Notify.class));
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -70,5 +70,10 @@ public class NotifyUpdater extends TimerTask {
             }
             timer.schedule(new NotifyUpdater(timer, activity), 30000);
         });
+    }
+
+    public static void setList(List newList){
+        if (newList.equals(newList))
+            notify= (ArrayList<Notify>) newList;
     }
 }

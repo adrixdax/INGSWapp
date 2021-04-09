@@ -183,7 +183,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             listOfData.get(getCorrectIndex(position)).setState("ACCEPTED");
             switch (listOfData.get(getCorrectIndex(position)).getType()) {
                 case "FILMS": {
-                    new NotifyTestController().execute("Accepted=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
+                    new NotifyTestController((ToolBarActivity) myContext).execute("Accepted=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
                     Toast.makeText(v.getContext(), "Ora questo film è nei tuoi film da vedere :)", Toast.LENGTH_SHORT).show();
                     listOfData.remove(getCorrectIndex(position));
                     this.notifyItemRemoved(getCorrectIndex(position));
@@ -197,7 +197,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     try {
                         usc.execute("acceptedFriendsRequest").get();
                         usc.isCancelled();
-                        new NotifyTestController().execute("Accepted=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
+                        new NotifyTestController((ToolBarActivity) myContext).execute("Accepted=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
                         Toast.makeText(v.getContext(), "Ora siete amici", Toast.LENGTH_SHORT).show();
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
@@ -208,7 +208,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     break;
                 }
                 case "LIST": {
-                    new NotifyTestController().execute("Accepted=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
+                    new NotifyTestController((ToolBarActivity) myContext).execute("Accepted=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
                     Toast.makeText(v.getContext(), "Hai una nuova lista", Toast.LENGTH_SHORT).show();
                     listOfData.remove(getCorrectIndex(position));
                     this.notifyItemRemoved(getCorrectIndex(position));
@@ -216,7 +216,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     break;
                 }
                 case "REVIEW": {
-                    new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
+                    new NotifyTestController((ToolBarActivity) myContext).execute("Accepted=" + listOfData.get(position).getId_Notify());
                     ReviewsController revCon = new ReviewsController();
                     revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
                     Reviews revObj = null;
@@ -246,7 +246,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             listOfData.get(getCorrectIndex(position)).setState("REFUSED");
             Toast.makeText(v.getContext(), "Non hai accettato", Toast.LENGTH_SHORT).show();
             holder.newNotify.setVisibility(View.INVISIBLE);
-            new NotifyTestController().execute("Refused=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
+            new NotifyTestController((ToolBarActivity) myContext).execute("Refused=" + listOfData.get(getCorrectIndex(position)).getId_Notify());
             listOfData.remove(getCorrectIndex(position));
             this.notifyItemRemoved(getCorrectIndex(position));
             NotifyUpdater.newUpdate();
@@ -263,7 +263,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     public void changeStatus(){
         for (Notify not : listOfData){
             if (not.getState().equals("PENDING"))
-            new NotifyTestController().execute("Seen="+not.getId_Notify());
+            new NotifyTestController((ToolBarActivity) myContext).execute("Seen="+not.getId_Notify());
         }
     }
     private int getCorrectIndex(int position){

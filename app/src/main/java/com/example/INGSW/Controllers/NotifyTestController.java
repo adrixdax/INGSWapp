@@ -2,13 +2,19 @@ package com.example.INGSW.Controllers;
 
 import android.os.AsyncTask;
 
+import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.SearchFilmScreen;
+import com.example.INGSW.ToolBarActivity;
+import com.example.INGSW.Utility.JSONDecoder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class NotifyTestController extends AsyncTask {
@@ -19,7 +25,18 @@ public class NotifyTestController extends AsyncTask {
     private String idReceiver ="";
     private String type ="";
     private String idRecordref ="";
+    private ToolBarActivity activity;
+    private String command="";
 
+    public NotifyTestController(ToolBarActivity act){
+        this.activity=act;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        if (activity.getActiveFragment().getClass().equals(SearchFilmScreen.class)) activity.triggerProgessBar();
+    }
 
     private Object getNotify(String idUser) {
         OkHttpClient client = new OkHttpClient();
@@ -111,6 +128,7 @@ public class NotifyTestController extends AsyncTask {
 
     @Override
     protected Object doInBackground(Object[] objects) {
+        command = objects[0].toString();
         if (objects[0].toString().startsWith("idUser="))
             return getNotify(((String)objects[0]).substring(((String)objects[0]).indexOf('=')+1));
         else if (objects[0].toString().startsWith("Seen="))
@@ -127,6 +145,18 @@ public class NotifyTestController extends AsyncTask {
         return null;
     }
 
+    @Override
+    protected void onPostExecute(Object o) {
+        if (command.startsWith("idUser=") && (activity.getActiveFragment().getClass().equals(SearchFilmScreen.class))){
+            try {
+                ((SearchFilmScreen)(activity.getActiveFragment())).setList((List<?>) JSONDecoder.getJsonToDecode(o.toString(), Notify.class));
+                ((SearchFilmScreen)(activity.getActiveFragment())).updateRecyclerView();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        }
+        activity.stopProgressBar();
+    }
 
     public String getIdSender() {
         return idSender;

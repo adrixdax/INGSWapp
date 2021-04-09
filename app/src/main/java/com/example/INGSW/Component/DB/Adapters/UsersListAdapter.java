@@ -47,38 +47,40 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
 
     @Override
     public void onBindViewHolder(@NonNull UsersViewHolder holder, int position) {
-        User model = userlist.get(position);
-        holder.nick.setText(model.getNickname());
-        with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-        if (areFriends.get(position)) {
-            holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
-        } else {
-            holder.addButton.setImageResource(R.drawable.icons8_plus_26px);
-        }
-        if (!areFriends.get(position)) {
-            holder.addButton.setOnClickListener(new View.OnClickListener() {
-                boolean send = false;
+        if (!userlist.isEmpty() && userlist.size()==areFriends.size()) {
+            User model = userlist.get(position);
+            holder.nick.setText(model.getNickname());
+            with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
+            if (areFriends.get(position)) {
+                holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
+            } else {
+                holder.addButton.setImageResource(R.drawable.icons8_plus_26px);
+            }
+            if (!areFriends.get(position)) {
+                holder.addButton.setOnClickListener(new View.OnClickListener() {
+                    boolean send = false;
 
-                @Override
-                public void onClick(View v) {
-                    if (!send) {
-                        NotifyTestController ntc = new NotifyTestController();
-                        ntc.setIdSender(((ToolBarActivity) v.getContext()).getUid());
-                        ntc.setIdReceiver(model.getIdUser());
-                        ntc.setType("FRIENDSHIP_REQUEST");
-                        try {
-                            ntc.execute("SendFriendshipRequest").get();
-                            ntc.isCancelled();
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
+                    @Override
+                    public void onClick(View v) {
+                        if (!send) {
+                            NotifyTestController ntc = new NotifyTestController((ToolBarActivity) context);
+                            ntc.setIdSender(((ToolBarActivity) v.getContext()).getUid());
+                            ntc.setIdReceiver(model.getIdUser());
+                            ntc.setType("FRIENDSHIP_REQUEST");
+                            try {
+                                ntc.execute("SendFriendshipRequest").get();
+                                ntc.isCancelled();
+                            } catch (ExecutionException | InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            send = true;
+                            holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
+                            areFriends.set(position, true);
                         }
-                        send = true;
-                        holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
-                        areFriends.set(position, true);
                     }
-                }
 
-            });
+                });
+            }
         }
     }
 

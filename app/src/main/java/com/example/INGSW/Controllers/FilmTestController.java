@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.MostSeen;
+import com.example.INGSW.SearchFilmScreen;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.example.INGSW.home.HomepageScreen;
@@ -283,6 +284,8 @@ public class FilmTestController extends AsyncTask {
                     return getFilmbyId();
                 case "listName":
                     return getList();
+                case "":
+                    return "";
             }
         }
         return "Helooo";
@@ -307,6 +310,11 @@ public class FilmTestController extends AsyncTask {
     public Object returnValue() {
         Fragment active = act.getActiveFragment();
         switch (active.getClass().getSimpleName()) {
+            case "SearchFilmScreen": {
+                ((SearchFilmScreen) (active)).setList((List<Film>) list);
+                ((SearchFilmScreen) (active)).updateRecyclerView();
+                break;
+            }
             case "MostSeen": {
                 ((MostSeen) (active)).setList((List<Film>) list);
                 ((MostSeen) (active)).updateRecyclerView();
