@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,16 +49,19 @@ public class JSONDecoder {
     public static Object getJsonToDecode(String json, Class c) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-        if (c.getSimpleName().equals("Notify"))
-            return jsonNotify(json);
-        else if (c.getSimpleName().equals("Film"))
-            return jsonFilmList(json);
-        else if (c.getSimpleName().equals("UserLists"))
-            return jsonUserLists(json);
-        else if (c.getSimpleName().equals("Reviews"))
-            return jsonReviews(json);
-        else if (c.getSimpleName().equals("Contact"))
-            return jsonContact(json);
-        return "";
+        if (json.isEmpty() || json.equals("")) return new ArrayList<>();
+        else {
+            if (c.getSimpleName().equals("Notify"))
+                return jsonNotify(json);
+            else if (c.getSimpleName().equals("Film"))
+                return jsonFilmList(json);
+            else if (c.getSimpleName().equals("UserLists"))
+                return jsonUserLists(json);
+            else if (c.getSimpleName().equals("Reviews"))
+                return jsonReviews(json);
+            else if (c.getSimpleName().equals("Contact"))
+                return jsonContact(json);
+            return "";
+        }
     }
 }
