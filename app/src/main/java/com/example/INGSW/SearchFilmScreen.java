@@ -112,6 +112,7 @@ public class SearchFilmScreen extends Fragment implements UpdateRecyclers {
                         String latestJson = "";
                         filmTestController.execute("search");
                         if (latestJson.isEmpty()) {
+                            recyclerViewFilm.setVisibility(View.INVISIBLE);
                             textError.setText("Nessun Film trovato");
                         } else {
                             textError.setText("");
