@@ -69,7 +69,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
 
                         switch (listOfData.get(position).getType()) {
                             case "FILM":
-                                FilmTestController ftc = new FilmTestController();
+                                FilmTestController ftc = new FilmTestController(new ArrayList());
                                 ftc.setIdFilm(String.valueOf(listOfData.get(position).getId_recordref()));
                                 Film recordRef = null;
                                 try {
@@ -85,7 +85,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                                 holder.notifyText.setText("vuole essere tuo Amico");
                                 break;
                             case "LIST":
-                                FilmTestController controller = new FilmTestController();
+                                FilmTestController controller = new FilmTestController(new ArrayList());
                                 controller.setIdList(String.valueOf(listOfData.get(position).getId_recordref()));
                                 try {
                                     String json = (String) controller.execute("listName").get();
@@ -105,11 +105,11 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                                     revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
                                     Reviews rev = null;
                                     try {
-                                        rev = ((Reviews) ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0));
+                                        rev = ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0);
                                     } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
                                         e.printStackTrace();
                                     }
-                                    FilmTestController con = new FilmTestController();
+                                    FilmTestController con = new FilmTestController(new ArrayList());
                                     con.setIdFilm(String.valueOf(rev.getIdFilm()));
                                     holder.notifyText.setText(new StringBuilder().append("vuole farti vedere la sua recensione riguardo: ").append(((List<Film>) (JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmById").get()), Film.class))).get(0).getFilm_Title()));
                                 } catch (ExecutionException | InterruptedException | JsonProcessingException e) {
@@ -221,7 +221,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
                     Reviews revObj = null;
                     try {
-                        revObj = ((Reviews) ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0));
+                        revObj = ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0);
                     } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }

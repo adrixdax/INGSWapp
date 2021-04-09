@@ -38,7 +38,7 @@ public class UserPrefered extends Fragment {
         userPreferedFilms = root.findViewById(R.id.recyclerViewUserPrefered);
         List<Film> prefered = new ArrayList<>();
         try {
-            prefered = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("userPrefered").get()), Film.class);
+            prefered = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController(new ArrayList()).execute("userPrefered").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

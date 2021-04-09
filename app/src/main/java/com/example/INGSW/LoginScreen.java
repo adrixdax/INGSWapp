@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.Objects;
@@ -59,7 +59,7 @@ public class LoginScreen extends AppCompatActivity {
 
 
     private FirebaseAuth mAuth;
-    private ProgressBar progressBar;
+    private CircularProgressBar progressBar;
 
     SignInButton GoogleLogin;
     GoogleSignInClient mGoogleSignInClient;
@@ -84,7 +84,7 @@ public class LoginScreen extends AppCompatActivity {
 
             mAuth = FirebaseAuth.getInstance();
 
-            register = (TextView) findViewById(R.id.RegisterText);
+            register = findViewById(R.id.RegisterText);
             register.setOnClickListener(v -> startActivity(new Intent(LoginScreen.super.getApplicationContext(), RegistrationScreen.class)));
 
             GoogleLogin = findViewById(R.id.sign_in_button);
@@ -135,8 +135,8 @@ public class LoginScreen extends AppCompatActivity {
                 }
             });
 
-            editTextEmail = (EditText) findViewById(R.id.TextLoginEmail);
-            editTextPassword = (EditText) findViewById(R.id.TextLoginPassword);
+            editTextEmail = findViewById(R.id.TextLoginEmail);
+            editTextPassword = findViewById(R.id.TextLoginPassword);
             editTextPassword.setOnEditorActionListener((v, actionId, event) -> {
                 if (actionId == EditorInfo.IME_ACTION_GO) {
                     LoginButton.callOnClick();
@@ -145,7 +145,7 @@ public class LoginScreen extends AppCompatActivity {
                 return false;
             });
 
-            progressBar = (ProgressBar) findViewById(R.id.progressBar);
+            progressBar = findViewById(R.id.progressBar);
 
 
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -238,6 +238,7 @@ public class LoginScreen extends AppCompatActivity {
                     u.propic = "https://i.pinimg.com/564x/5b/71/ab/5b71ab4ea082c3c11e77312a64bba835.jpg";
                     break;
             }
+            loginController.stopProgressBar();
             Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
             startActivity(intent);
             finish();

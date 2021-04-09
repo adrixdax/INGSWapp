@@ -28,7 +28,7 @@ public class ToSee extends Fragment {
 
     private TextView title;
     private RecyclerView toSeeFilms;
-    private FilmTestController con = new FilmTestController();
+    private FilmTestController con;
 
     @Nullable
     @Override
@@ -41,7 +41,7 @@ public class ToSee extends Fragment {
 
         List<Film> toSee = new ArrayList<>();
         try {
-            con = new FilmTestController();
+            con = new FilmTestController(new ArrayList(), getActivity());
             con.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
             toSee = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmInList").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {

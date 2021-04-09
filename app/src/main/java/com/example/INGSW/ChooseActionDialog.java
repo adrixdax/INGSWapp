@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -78,13 +78,12 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
         });
 
         remove.setOnClickListener(v -> {
-
             if (!custom) {
-                FilmTestController ftc = new FilmTestController();
+                FilmTestController ftc = new FilmTestController(new ArrayList());
                 try {
                     ftc.setIdList(idList);
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
-                    ftc.execute(new String("removeFilm")).get();
+                    ftc.execute("removeFilm").get();
                     ftc.isCancelled();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
@@ -99,7 +98,7 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
                 try {
                     usc.setIdList(idList);
                     usc.setUserId(((ToolBarActivity) getActivity()).getUid());
-                    usc.execute(new String("deleteCustomList")).get();
+                    usc.execute("deleteCustomList").get();
                     usc.isCancelled();
                 } catch (ExecutionException e) {
                     e.printStackTrace();

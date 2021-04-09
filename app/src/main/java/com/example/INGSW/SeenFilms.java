@@ -27,7 +27,7 @@ public class SeenFilms extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_seen_films, container, false);
-        FilmTestController FTC = new FilmTestController();
+        FilmTestController FTC = new FilmTestController(listofFilm);
         FTC.setIdList(String.valueOf(((ToolBarActivity)getContext()).getContaiinerItem().get("WATCH")));
         try {
             listofFilm = (List<Film>) JSONDecoder.getJsonToDecode((String) FTC.execute("filmInList").get(),Film.class);

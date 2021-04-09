@@ -18,7 +18,6 @@ import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.Controllers.UserServerController;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -31,7 +30,7 @@ public class FilmInCustomList extends Fragment {
     private TextView title;
     private TextView description;
     private RecyclerView filmInCustomList;
-    private UserLists list;
+    private final UserLists list;
 
     public FilmInCustomList(UserLists idList) {
         this.list = idList;
@@ -51,7 +50,7 @@ public class FilmInCustomList extends Fragment {
 
         List<Film> CustomListFilm = new ArrayList<>();
         try {
-            FilmTestController con = new FilmTestController();
+            FilmTestController con = new FilmTestController(CustomListFilm);
             con.setIdList(String.valueOf(list.getIdUserList()));
             CustomListFilm = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmInList").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {

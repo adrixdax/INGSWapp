@@ -1,11 +1,19 @@
 package com.example.INGSW.Controllers;
 
+import android.app.Activity;
 import android.os.AsyncTask;
-import android.widget.Toolbar;
 
+import androidx.fragment.app.Fragment;
+
+import com.example.INGSW.Component.Films.Film;
+import com.example.INGSW.MostSeen;
 import com.example.INGSW.ToolBarActivity;
+import com.example.INGSW.Utility.JSONDecoder;
+import com.example.INGSW.home.HomepageScreen;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -14,15 +22,29 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import teaspoon.annotations.OnBackground;
 
 public class FilmTestController extends AsyncTask {
 
     private Exception exception;
+    private ToolBarActivity act;
     private String nameOfFilm = "";
     private final String url = "http://87.1.139.228:8080/";
     private String idList = "";
     private String idFilm = "";
     private String uid = "";
+    private String command;
+    private List<?> list;
+
+    public FilmTestController(List list, Activity act) {
+        this.list = list;
+        this.act = (ToolBarActivity) act;
+    }
+
+    public FilmTestController(List list) {
+        new FilmTestController(list, null);
+    }
+
 
     private Object getLatestFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -31,7 +53,6 @@ public class FilmTestController extends AsyncTask {
         Request request = new Request.Builder().url(url + "film").post(body).build();
         try {
             try (Response response = client.newCall(request).execute()) {
-
                 return Objects.requireNonNull(response.body()).string();
             }
         } catch (IOException e) {
@@ -226,8 +247,17 @@ public class FilmTestController extends AsyncTask {
     }
 
     @Override
+    @OnBackground
+    protected void onPreExecute() {
+        super.onPreExecute();
+        act.triggerProgessBar();
+    }
+
+    @Override
+    @OnBackground
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
+            command = objects[0].toString();
             switch (objects[0].toString()) {
                 case "latest":
                     return getLatestFilms();
@@ -258,6 +288,33 @@ public class FilmTestController extends AsyncTask {
         return "Helooo";
     }
 
+    @Override
+    @OnBackground
+    protected void onPostExecute(Object o) {
+        try {
+            list = (List<Film>) JSONDecoder.getJsonToDecode(o.toString(), Film.class);
+            if (command.equals("latest") && (act != null)) {
+                act.getConteinerList().put("HomepageList", (List<Film>) list);
+                if (act.getActiveFragment().getClass().equals(HomepageScreen.class))
+                    ((HomepageScreen) act.getActiveFragment()).updateRecyclerView();
+            } else returnValue();
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        act.stopProgressBar();
+    }
+
+    public Object returnValue() {
+        Fragment active = act.getActiveFragment();
+        switch (active.getClass().getSimpleName()) {
+            case "MostSeen": {
+                ((MostSeen) (active)).setList((List<Film>) list);
+                ((MostSeen) (active)).updateRecyclerView();
+                break;
+            }
+        }
+        return list;
+    }
 
 
     public String getIdList() {

@@ -29,6 +29,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -67,10 +68,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public void onBindViewHolder(@NonNull ReviewsAdapter.ViewHolder holder, int position) {
         if (css.getCanonicalName().equals(MyReviews.class.getCanonicalName())) {
             try {
-                FilmTestController con = new FilmTestController();
+                FilmTestController con = new FilmTestController(new ArrayList());
                 con.setIdFilm(String.valueOf(listofdata.get(position).getIdFilm()));
                 Film film = ((List<Film>) JSONDecoder.getJsonToDecode((String) con.execute("filmById").get(),Film.class)).get(0);
-                Glide.with(startFragment).load(film.getPosterPath()).into((ImageView)holder.moviepic);
+                Glide.with(startFragment).load(film.getPosterPath()).into(holder.moviepic);
 
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
                 holder.ratingBar.setClickable(false);
@@ -125,15 +126,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 } else {
                     holder.reviewDescription.setText(listofdata.get(position).getDescription());
                 }
-                holder.relativeLayoutReviewList.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position), ref);
-                        FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
+                holder.relativeLayoutReviewList.setOnClickListener(v -> {
+                    ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position), ref);
+                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 });
             } catch (Exception e) {
                 e.printStackTrace();

@@ -28,7 +28,7 @@ public class MyFavs extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_favs, container, false);
-        FilmTestController FTC = new FilmTestController();
+        FilmTestController FTC = new FilmTestController(listofFilm);
         FTC.setIdList(String.valueOf(((ToolBarActivity)getContext()).getContaiinerItem().get("PREFERED")));
         try {
             listofFilm = (List<Film>) JSONDecoder.getJsonToDecode((String) FTC.execute("filmInList").get(),Film.class);

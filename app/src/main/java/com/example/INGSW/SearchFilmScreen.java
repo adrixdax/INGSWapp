@@ -27,31 +27,34 @@ import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.UserServerController;
+import com.example.INGSW.Utility.UpdateRecyclers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import teaspoon.annotations.OnUi;
+
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
-public class SearchFilmScreen extends Fragment {
+public class SearchFilmScreen extends Fragment implements UpdateRecyclers {
 
 
     private EditText Text_of_search;
     private RecyclerView recyclerViewFilm;
     private RecyclerView recyclerViewFriends;
-    //private ProgressBar progressBar;
+    private CircularProgressBar progressBar;
     private List<Film> filmInSearch = new ArrayList<>();
     private ArrayList<User> usersInSearchlist;
     private int playFlag, userFlag = 0;
     private TextView textError;
-
     private UsersListAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -63,7 +66,6 @@ public class SearchFilmScreen extends Fragment {
         ImageView bt_search = root.findViewById(R.id.search_button);
         ImageView userbutton = root.findViewById(R.id.userButton);
         ImageView playbutton = root.findViewById(R.id.playButton);
-        //progressBar = root.findViewById(R.id.progressBar);
         textError = root.findViewById(R.id.textViewError);
         recyclerViewFilm = root.findViewById(R.id.recyclerViewFilm);
         recyclerViewFriends = root.findViewById(R.id.recyclerViewFriends);
@@ -90,20 +92,25 @@ public class SearchFilmScreen extends Fragment {
             }
         });
 
-        bt_search.setOnClickListener(v -> {
-            if (playFlag == 1) {
+        bt_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            @OnUi
+            public void onClick(View v) {
                 InputMethodManager imm = (InputMethodManager) requireActivity()
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                try {
-                    if (recyclerViewFriends != null && recyclerViewFriends.getVisibility() == View.VISIBLE)
-                        recyclerViewFriends.setVisibility(View.INVISIBLE);
-                    //progressBar.setVisibility(View.VISIBLE);
-
-                    FilmTestController filmTestController = new FilmTestController();
+                if (imm.isAcceptingText()) {
+                    imm.hideSoftInputFromWindow(root.getWindowToken(), 0);
+                }
+                if (playFlag == 1) {
+                    try {
+                        if (recyclerViewFriends != null && recyclerViewFriends.isShown())
+                            recyclerViewFriends.setVisibility(View.GONE);
+                        if (recyclerViewFilm != null && recyclerViewFilm.isShown())
+                            recyclerViewFilm.setVisibility(View.GONE);
+                        FilmTestController filmTestController = new FilmTestController(new ArrayList(), getActivity());
                         filmTestController.setNameOfFilm(Text_of_search.getText().toString().trim());
-                        String latestJson = (String) filmTestController.execute("search").get();
-
+                        String latestJson = "";
+                        filmTestController.execute("search");
                         if (latestJson.isEmpty()) {
                             textError.setText("Nessun Film trovato");
                         } else {
@@ -113,93 +120,100 @@ public class SearchFilmScreen extends Fragment {
                             LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false);
                             ListOfFilmAdapter adapter = new ListOfFilmAdapter(filmInSearch, v.getContext(), ((ToolBarActivity) getActivity()).activeFragment);
                             adapter.setCss(SearchFilmScreen.class);
-                            recyclerViewFilm.setHasFixedSize(false);
+                            adapter.setHasStableIds(true);
+                            recyclerViewFilm.setHasFixedSize(true);
+                            recyclerViewFilm.setItemViewCacheSize(10);
                             recyclerViewFilm.setLayoutManager(layoutManager);
                             recyclerViewFilm.setAdapter(adapter);
                             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFilm.getContext(),
                                     layoutManager.getOrientation());
                             recyclerViewFilm.addItemDecoration(dividerItemDecoration);
-                            //progressBar.setVisibility(View.GONE);
-                            recyclerViewFilm.setVisibility(View.VISIBLE);
                         }
-
-                    } catch (InterruptedException | ExecutionException | JsonProcessingException e) {
+                        recyclerViewFilm.setVisibility(View.VISIBLE);
+                        ((ToolBarActivity) (getActivity())).stopProgressBar();
+                    } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
                 } else {
-                if (recyclerViewFilm != null && recyclerViewFilm.getVisibility() == View.VISIBLE)
-                    recyclerViewFilm.setVisibility(View.INVISIBLE);
-                recyclerViewFriends.setHasFixedSize(true);
-                recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
-                usersInSearchlist = new ArrayList<>();
-                ArrayList<Boolean> areFriends = new ArrayList<>();
-                adapter = new UsersListAdapter(getContext(), usersInSearchlist, areFriends);
-                if (adapter.getItemCount() == 0) {
-                    textError.setText("Nessun Utente trovato ");
-                }
-                textError.setText("");
-                LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false);
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFriends.getContext(),
-                        layoutManager.getOrientation());
-                recyclerViewFriends.addItemDecoration(dividerItemDecoration);
-                recyclerViewFriends.setAdapter(adapter);
-                Query query = ToolBarActivity.getReference().orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(Text_of_search.getText() + "\uf8ff");
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @SuppressLint("RestrictedApi")
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        try {
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                User model = dataSnapshot.getValue(User.class);
-                                if (!((ToolBarActivity) (getActivity())).getUid().equals(dataSnapshot.getKey())) {
-                                    UserServerController con = new UserServerController();
-                                    con.setUserId(((ToolBarActivity) (getActivity())).getUid());
-                                    con.setIdOtherUser(dataSnapshot.getKey());
-                                    model.setIdUser(dataSnapshot.getKey());
-                                    usersInSearchlist.add(model);
-                                    boolean friend = false;
-                                    List<Notify> notifyList;
-                                    try {
-                                        notifyList = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser=" + model.getIdUser()).get()), Notify.class);
-                                        if (!notifyList.isEmpty()) {
-                                            int i = 0;
-                                            while (i < notifyList.size() && !friend) {
-                                                if (notifyList.get(i).getId_sender().equals(((ToolBarActivity) getActivity()).getUid())) {
+                    if (recyclerViewFriends != null && recyclerViewFriends.isShown())
+                        requireActivity().runOnUiThread(() -> recyclerViewFriends.setVisibility(View.GONE));
+                    if (recyclerViewFilm != null && recyclerViewFilm.isShown())
+                        requireActivity().runOnUiThread(() -> recyclerViewFilm.setVisibility(View.GONE));
+                    recyclerViewFriends.setHasFixedSize(true);
+                    recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
+                    usersInSearchlist = new ArrayList<>();
+                    ArrayList<Boolean> areFriends = new ArrayList<>();
+                    adapter = new UsersListAdapter(getContext(), usersInSearchlist, areFriends);
+                    if (adapter.getItemCount() == 0) {
+                        textError.setText("Nessun Utente trovato ");
+                    }
+                    textError.setText("");
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false);
+                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFriends.getContext(),
+                            layoutManager.getOrientation());
+                    recyclerViewFriends.addItemDecoration(dividerItemDecoration);
+                    recyclerViewFriends.setAdapter(adapter);
+                    Query query = ToolBarActivity.getReference().orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(Text_of_search.getText() + "\uf8ff");
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @SuppressLint("RestrictedApi")
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            try {
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    User model = dataSnapshot.getValue(User.class);
+                                    if (!((ToolBarActivity) (getActivity())).getUid().equals(dataSnapshot.getKey())) {
+                                        UserServerController con = new UserServerController();
+                                        con.setUserId(((ToolBarActivity) (getActivity())).getUid());
+                                        con.setIdOtherUser(dataSnapshot.getKey());
+                                        model.setIdUser(dataSnapshot.getKey());
+                                        usersInSearchlist.add(model);
+                                        boolean friend = false;
+                                        List<Notify> notifyList;
+                                        try {
+                                            notifyList = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser=" + model.getIdUser()).get()), Notify.class);
+                                            if (!notifyList.isEmpty()) {
+                                                int i = 0;
+                                                while (i < notifyList.size() && !friend) {
+                                                    if (notifyList.get(i).getId_sender().equals(((ToolBarActivity) getActivity()).getUid())) {
+                                                        friend = true;
+                                                    }
+                                                    i++;
+                                                }
+                                            }
+                                            if (!friend) {
+                                                UserServerController usc = new UserServerController();
+                                                usc.setUserId(((ToolBarActivity) getActivity()).getUid());
+                                                usc.setIdOtherUser(model.getIdUser());
+                                                if (Boolean.parseBoolean((String) usc.execute("isFriends").get())) {
                                                     friend = true;
                                                 }
-                                                i++;
                                             }
+                                        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
+                                            e.printStackTrace();
                                         }
-                                        if (!friend) {
-                                            UserServerController usc = new UserServerController();
-                                            usc.setUserId(((ToolBarActivity) getActivity()).getUid());
-                                            usc.setIdOtherUser(model.getIdUser());
-                                            if (Boolean.parseBoolean((String) usc.execute("isFriends").get())) {
-                                                friend = true;
-                                            }
-                                        }
-                                    } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
-                                        e.printStackTrace();
+                                        areFriends.add(friend);
                                     }
-                                    areFriends.add(friend);
+                                    adapter.notifyDataSetChanged();
                                 }
-                                adapter.notifyDataSetChanged();
+                            } catch (Exception exception) {
+                                exception.printStackTrace();
                             }
-                        } catch (Exception exception) {
-                            exception.printStackTrace();
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
-                recyclerViewFriends.setVisibility(View.VISIBLE);
+                        }
+                    });
+                    recyclerViewFriends.setVisibility(View.VISIBLE);
+                    ((ToolBarActivity) (getActivity())).stopProgressBar();
+                }
             }
+
         });
+
         Text_of_search = root.findViewById(R.id.Text_of_search);
-        Text_of_search.setOnEditorActionListener((v, actionId, event) -> { /** senza toggle non possiamo ultimare questo editor action **/
+        Text_of_search.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 bt_search.callOnClick();
                 return true;
@@ -211,5 +225,8 @@ public class SearchFilmScreen extends Fragment {
 
     }
 
+    @Override
+    public void updateRecyclerView() {
 
+    }
 }

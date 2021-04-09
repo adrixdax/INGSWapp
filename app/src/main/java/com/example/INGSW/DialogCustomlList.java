@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
@@ -68,28 +67,25 @@ public class DialogCustomlList extends AppCompatDialogFragment {
         }
 
 
-        Button insertInLists = (Button) dialog.getWindow().findViewById(R.id.InsertInListsbutton);
-        insertInLists.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (UserLists singlelist : selectedLists) {
+        Button insertInLists = dialog.getWindow().findViewById(R.id.InsertInListsbutton);
+        insertInLists.setOnClickListener(v -> {
+            for (UserLists singlelist : selectedLists) {
 
-                    FilmTestController ftc = new FilmTestController();
-                    ftc.setIdFilm(String.valueOf(idFilmToInsert));
-                    ftc.setIdList(String.valueOf(singlelist.getIdUserList()));
-                    try {
-                        ftc.execute("addFilm").get();
-                        ftc.isCancelled();
-                    } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                FilmTestController ftc = new FilmTestController(new ArrayList());
+                ftc.setIdFilm(String.valueOf(idFilmToInsert));
+                ftc.setIdList(String.valueOf(singlelist.getIdUserList()));
+                try {
+                    ftc.execute("addFilm").get();
+                    ftc.isCancelled();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
                 }
-
-                selectedLists.clear();
-                dialog.closeOptionsMenu();
-                dialog.cancel();
-                dialog.dismiss();
             }
+
+            selectedLists.clear();
+            dialog.closeOptionsMenu();
+            dialog.cancel();
+            dialog.dismiss();
         });
 
         /*Dialog dialog = new Dialog(getActivity());

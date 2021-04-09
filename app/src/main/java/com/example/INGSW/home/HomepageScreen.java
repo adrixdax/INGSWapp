@@ -23,28 +23,36 @@ import com.example.INGSW.R;
 import com.example.INGSW.ToSee;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.UserPrefered;
+import com.example.INGSW.Utility.UpdateRecyclers;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
-import java.util.concurrent.ExecutionException;
 
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
+import teaspoon.annotations.OnBackground;
+import teaspoon.annotations.OnUi;
 
-public class HomepageScreen extends Fragment {
+public class HomepageScreen extends Fragment implements UpdateRecyclers {
 
     Timer timer = new Timer();
-
-    float x1,x2,y1,y2;
-
     ShapeableImageView mostSeen, tooSee, mostReviewed, userPrefered;
-    static ImageButton bell;
-    FilmTestController con = new FilmTestController();
+    private static ImageButton bell;
+    CircularProgressBar progressBar;
+    List<Film> film = new ArrayList<>();
+    FilmTestController con;
+    RecyclerView recyclerView;
+
+    @OnBackground
+    public static ImageButton getBell() {
+        return bell;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
-
+        progressBar = root.findViewById(R.id.activityProgressBar);
         mostSeen = root.findViewById(R.id.mostSeen);
         mostReviewed = root.findViewById(R.id.mostReviewed);
         tooSee = root.findViewById(R.id.toSee);
@@ -54,7 +62,7 @@ public class HomepageScreen extends Fragment {
         mostReviewed.setAlpha(0.8f);
         userPrefered.setAlpha(0.8f);
         bell = root.findViewById(R.id.notifyBell);
-        NotifyUpdater not = new NotifyUpdater(timer, bell, getActivity());
+        NotifyUpdater not = new NotifyUpdater(timer, getActivity());
         timer.schedule(not, 1);
 
         PushDownAnim.setPushDownAnimTo(mostSeen, mostReviewed, tooSee, userPrefered)
@@ -64,17 +72,24 @@ public class HomepageScreen extends Fragment {
                 .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
 
 
-        mostReviewed.setOnClickListener(v -> {
-            MostReviewed nextFragment = new MostReviewed();
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment, nextFragment, "MostReviewed");
-            transaction.addToBackStack(null);
-            transaction.commit();
+        mostReviewed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            @OnUi
+            public void onClick(View v) {
+                ((ToolBarActivity) getActivity()).triggerProgessBar();
+                MostReviewed nextFragment = new MostReviewed();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "MostReviewed");
+                transaction.addToBackStack(null);
+                ((ToolBarActivity) getActivity()).stopProgressBar();
+                transaction.commit();
+            }
         });
 
         mostSeen.setOnClickListener(v -> {
-            MostSeen nextFragment = new MostSeen();
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            MostSeen nextFragment = new MostSeen();
+            ((ToolBarActivity) getActivity()).setActiveFragment(nextFragment);
             transaction.replace(R.id.nav_host_fragment, nextFragment, "MostSeen");
             transaction.addToBackStack(null);
             transaction.commit();
@@ -97,38 +112,37 @@ public class HomepageScreen extends Fragment {
         });
 
 
-        List<Film> film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList");
+        film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList");
 
-        if (film == null) {
-            String latestJson = "";
-            try {
-                latestJson = (String) con.execute("latest").get();
-                con.isCancelled();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                if (!latestJson.isEmpty()) {
-                    film = (List<Film>) getJsonToDecode(latestJson, Film.class);
-                    ((ToolBarActivity) getActivity()).getConteinerList().put("HomepageList", film);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        if (film == null || (film.size() == 0)) {
+            film = new ArrayList<>();
+            con = new FilmTestController(film, getActivity());
+            con.execute("latest");
         }
         bell.setOnClickListener(v -> {
             new NotifyPopUp(not.getNotify(), getActivity()).show(getActivity().getSupportFragmentManager(), "not");
         });
-        LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(film, getContext(), this);
-        adapter.setCss(HomepageScreen.class);
-        recyclerView.setHasFixedSize(false);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+        recyclerView = root.findViewById(R.id.recyclerView);
+        updateRecyclerView();
         return root;
     }
 
-
+    @Override
+    @OnUi
+    public void updateRecyclerView() {
+        film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList");
+        if (film != null && film.size() != 0) {
+            ((ToolBarActivity) getActivity()).triggerProgessBar();
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+            ListOfFilmAdapter adapter = new ListOfFilmAdapter(film, getContext(), this);
+            adapter.setCss(HomepageScreen.class);
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setItemViewCacheSize(film.size());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setVisibility(View.VISIBLE);
+            ((ToolBarActivity) getActivity()).stopProgressBar();
+        }
+    }
 
 }

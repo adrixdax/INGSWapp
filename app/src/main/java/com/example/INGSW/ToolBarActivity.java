@@ -4,11 +4,13 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,11 +28,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import teaspoon.TeaSpoon;
+import teaspoon.annotations.OnUi;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
@@ -52,11 +58,15 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     private final UserServerController usc = new UserServerController();
     private static DatabaseReference ref;
     private String uid = "";
+    CircularProgressBar progressBar;
+    ConstraintLayout mainLayout;
+    ConstraintLayout progressLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        TeaSpoon.initialize();
         try {
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -91,7 +101,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
         BottomNavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setOnNavigationItemSelectedListener(this);
-
+        progressBar = findViewById(R.id.activityProgressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+        progressLayout = findViewById(R.id.layoutProgress);
+        progressLayout.setVisibility(View.INVISIBLE);
+        mainLayout = findViewById(R.id.mainLayout);
+        mainLayout.setVisibility(View.VISIBLE);
 
     }
 
@@ -314,6 +329,44 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         }
 
         return false;
+    }
+
+    @Override
+    @OnUi
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (this.progressBar.isShown()) {
+            return false;
+        } else {
+            return super.dispatchTouchEvent(ev);
+        }
+    }
+
+    @OnUi
+    public void triggerProgessBar() {
+        mainLayout.setAlpha(0.1f);
+        progressLayout.setVisibility(View.VISIBLE);
+        this.progressBar.setVisibility(View.VISIBLE);
+        this.progressBar.setIndeterminateMode(true);
+        this.progressBar.animate();
+    }
+
+    @OnUi
+    public void stopProgressBar() {
+        progressLayout.setVisibility(View.INVISIBLE);
+        mainLayout.setAlpha(1f);
+        this.progressBar.setVisibility(View.INVISIBLE);
+    }
+
+    public CircularProgressBar getProgressBar() {
+        return this.progressBar;
+    }
+
+    public Fragment getActiveFragment() {
+        return this.activeFragment;
+    }
+
+    public void setActiveFragment(Fragment fragment) {
+        this.activeFragment = fragment;
     }
 
 }

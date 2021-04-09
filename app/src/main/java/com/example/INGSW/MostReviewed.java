@@ -33,12 +33,12 @@ public class MostReviewed extends Fragment {
 
         View root = inflater.inflate(R.layout.most_reviewd_homepage, container, false);
 
-        title = (TextView) root.findViewById(R.id.textViewMostReviewed);
+        title = root.findViewById(R.id.textViewMostReviewed);
         mostReviewedFilm = root.findViewById(R.id.recyclerViewMostReviewed);
 
         List<Film> mostReviewedFilms = new ArrayList<>();
         try {
-            mostReviewedFilms = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("mostReviewd").get()), Film.class);
+            mostReviewedFilms = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController(new ArrayList()).execute("mostReviewd").get()), Film.class);
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }

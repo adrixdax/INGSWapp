@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
@@ -19,11 +18,12 @@ import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class FilmDetails extends Fragment {
 
-    private Film film;
+    private final Film film;
 
     private TextView title;
     private ImageView posterPath;
@@ -34,7 +34,7 @@ public class FilmDetails extends Fragment {
     private boolean imageButtonWatchblue = false;
     private boolean imageButtonToWatchblue = false;
     private boolean imageButtonFavoritesblue = false;
-    private FilmTestController ftc = new FilmTestController();
+    private FilmTestController ftc = new FilmTestController(new ArrayList());
     private ImageButton imageButtonWatch;
     private ImageButton imageButtonFavorites;
     private ImageButton imageButtonToWatch;
@@ -52,12 +52,12 @@ public class FilmDetails extends Fragment {
 
         View root = inflater.inflate(R.layout.film_details, container, false);
 
-        title = (TextView) root.findViewById(R.id.textViewFilmTitle);
-        posterPath = (ImageView) root.findViewById(R.id.imageViewPosterPath);
-        plot = (TextView) root.findViewById(R.id.textViewPlot);
-        releaseDate = (TextView) root.findViewById(R.id.textViewRelaseDate);
-        genres = (TextView) root.findViewById(R.id.textViewCategories);
-        time = (TextView) root.findViewById(R.id.textViewTime);
+        title = root.findViewById(R.id.textViewFilmTitle);
+        posterPath = root.findViewById(R.id.imageViewPosterPath);
+        plot = root.findViewById(R.id.textViewPlot);
+        releaseDate = root.findViewById(R.id.textViewRelaseDate);
+        genres = root.findViewById(R.id.textViewCategories);
+        time = root.findViewById(R.id.textViewTime);
 
         String pic = film.getPosterPath() == "" ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : film.getPosterPath();
 
@@ -74,31 +74,31 @@ public class FilmDetails extends Fragment {
         genres.setText(genere);
         time.setText(String.valueOf(film.getRuntime()));
 
-        imageButtonWatch = (ImageButton) root.findViewById(R.id.imageButtonWatch);
-        imageButtonFavorites = (ImageButton) root.findViewById(R.id.imageButtonFavorites);
-        imageButtonToWatch = (ImageButton) root.findViewById(R.id.imageButtonToWatch);
-        goToReview = (ImageButton) root.findViewById(R.id.recensioni_button);
+        imageButtonWatch = root.findViewById(R.id.imageButtonWatch);
+        imageButtonFavorites = root.findViewById(R.id.imageButtonFavorites);
+        imageButtonToWatch = root.findViewById(R.id.imageButtonToWatch);
+        goToReview = root.findViewById(R.id.recensioni_button);
 
 
         try {
-            ftc = new FilmTestController();
+            ftc = new FilmTestController(new ArrayList(), getActivity());
             ftc.setIdFilm(String.valueOf(film.getId_Film()));
             ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
-            imageButtonFavoritesblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
+            imageButtonFavoritesblue = Boolean.parseBoolean((String) ftc.execute("isInList").get());
             ftc.isCancelled();
 
-            ftc = new FilmTestController();
+            ftc = new FilmTestController(new ArrayList(), getActivity());
             ftc.setIdFilm(String.valueOf(film.getId_Film()));
             ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")));
-            imageButtonWatchblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
+            imageButtonWatchblue = Boolean.parseBoolean((String) ftc.execute("isInList").get());
 
             ftc.isCancelled();
 
 
-            ftc = new FilmTestController();
+            ftc = new FilmTestController(new ArrayList(), getActivity());
             ftc.setIdFilm(String.valueOf(film.getId_Film()));
             ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
-            imageButtonToWatchblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
+            imageButtonToWatchblue = Boolean.parseBoolean((String) ftc.execute("isInList").get());
 
             ftc.isCancelled();
 
@@ -131,11 +131,11 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 if (!imageButtonWatchblue) {
                     Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_50px).into(imageButtonWatch);
-                    ftc = new FilmTestController();
+                    ftc = new FilmTestController(new ArrayList());
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")));
                     try {
-                        ftc.execute(new String("addFilm")).get();
+                        ftc.execute("addFilm").get();
                         ftc.isCancelled();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -146,11 +146,11 @@ public class FilmDetails extends Fragment {
                     imageButtonWatchblue = true;
                 } else {
                     Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_30px_4).into(imageButtonWatch);
-                    ftc = new FilmTestController();
+                    ftc = new FilmTestController(new ArrayList());
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")));
                     try {
-                        ftc.execute(new String("removeFilm")).get();
+                        ftc.execute("removeFilm").get();
                         ftc.isCancelled();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -188,11 +188,11 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 if (!imageButtonToWatchblue) {
                     Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
-                    ftc = new FilmTestController();
+                    ftc = new FilmTestController(new ArrayList());
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
                     try {
-                        ftc.execute(new String("addFilm")).get();
+                        ftc.execute("addFilm").get();
                         ftc.isCancelled();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -202,11 +202,11 @@ public class FilmDetails extends Fragment {
                     imageButtonToWatchblue = true;
                 } else {
                     Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px).into(imageButtonToWatch);
-                    ftc = new FilmTestController();
+                    ftc = new FilmTestController(new ArrayList());
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
                     try {
-                        ftc.execute(new String("removeFilm")).get();
+                        ftc.execute("removeFilm").get();
                         ftc.isCancelled();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -224,11 +224,11 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 if (!imageButtonFavoritesblue) {
                     Glide.with(root.getContext()).load(R.drawable.icons8_star_32px).into(imageButtonFavorites);
-                    ftc = new FilmTestController();
+                    ftc = new FilmTestController(new ArrayList());
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
                     try {
-                        ftc.execute(new String("addFilm")).get();
+                        ftc.execute("addFilm").get();
                         ftc.isCancelled();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -238,11 +238,11 @@ public class FilmDetails extends Fragment {
                     imageButtonFavoritesblue = true;
                 } else {
                     Glide.with(root.getContext()).load(R.drawable.icons8_star_26px).into(imageButtonFavorites);
-                    ftc = new FilmTestController();
+                    ftc = new FilmTestController(new ArrayList());
                     ftc.setIdFilm(String.valueOf(film.getId_Film()));
                     ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
                     try {
-                        ftc.execute(new String("removeFilm")).get();
+                        ftc.execute("removeFilm").get();
                         ftc.isCancelled();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
@@ -254,7 +254,7 @@ public class FilmDetails extends Fragment {
             }
         });
 
-        imageButtonCustomList = (ImageButton) root.findViewById(R.id.imageButtonCustomList);
+        imageButtonCustomList = root.findViewById(R.id.imageButtonCustomList);
         imageButtonCustomList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
