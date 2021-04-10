@@ -9,12 +9,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RetrofitResponse {
+
+    private static Boolean response= new Boolean(false);
+
+
 
     public static void getResponse(String body, Object c, Context context, String structureClass, String callMethod) {
         RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
@@ -26,8 +31,17 @@ public class RetrofitResponse {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
                     try {
-                        Method methodClassCalled = c.getClass().getMethod("setList", List.class);
-                        methodClassCalled.invoke(c,((List<?>) JSONDecoder.getJsonToDecode(response.body(), Class.forName(structureClass))));
+                        if(response.body().isEmpty()){
+
+                        }else if(response.body().startsWith("[")){
+                            Method methodClassCalled = c.getClass().getMethod("setList", List.class);
+                            methodClassCalled.invoke(c,((List<?>) JSONDecoder.getJsonToDecode(response.body(), Class.forName(structureClass))));
+                        }else if((response.body().equals("true")) || (response.body().equals("false") )){
+                           setResponse(Boolean.parseBoolean(response.body()));
+                        }else {
+                            System.out.println(response.body());
+                        }
+
 
                     } catch (JsonProcessingException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
                         e.printStackTrace();
@@ -46,5 +60,13 @@ public class RetrofitResponse {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Boolean getResponse() {
+        return response;
+    }
+
+    public static void setResponse(Boolean response) {
+        RetrofitResponse.response = response;
     }
 }

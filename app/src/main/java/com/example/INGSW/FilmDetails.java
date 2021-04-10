@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.concurrent.ExecutionException;
@@ -80,34 +82,33 @@ public class FilmDetails extends Fragment {
         goToReview = (ImageButton) root.findViewById(R.id.recensioni_button);
 
 
-        try {
-            ftc = new FilmTestController();
-            ftc.setIdFilm(String.valueOf(film.getId_Film()));
-            ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
-            imageButtonFavoritesblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
-            ftc.isCancelled();
+        ((ToolBarActivity)getActivity()).triggerProgessBar();
 
-            ftc = new FilmTestController();
-            ftc.setIdFilm(String.valueOf(film.getId_Film()));
-            ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")));
-            imageButtonWatchblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
+        RetrofitResponse.getResponse(
+                    "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED"))
+                            + "&idFilm=" + String.valueOf(film.getId_Film()),
+                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
 
-            ftc.isCancelled();
+            imageButtonFavoritesblue = RetrofitResponse.getResponse();
 
 
-            ftc = new FilmTestController();
-            ftc.setIdFilm(String.valueOf(film.getId_Film()));
-            ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
-            imageButtonToWatchblue = Boolean.parseBoolean((String) ftc.execute(new String("isInList")).get());
 
-            ftc.isCancelled();
+        RetrofitResponse.getResponse(
+                    "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH"))
+                            + "&idFilm=" + String.valueOf(film.getId_Film()),
+                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
+
+            imageButtonWatchblue = RetrofitResponse.getResponse();
 
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        RetrofitResponse.getResponse(
+                    "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH"))
+                            + "&idFilm=" + String.valueOf(film.getId_Film()),
+                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
+
+            imageButtonToWatchblue = RetrofitResponse.getResponse();
+
+
 
 
         if (imageButtonFavoritesblue) {
@@ -124,6 +125,7 @@ public class FilmDetails extends Fragment {
 
             Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
         }
+        ((ToolBarActivity)getActivity()).stopProgressBar();
 
         imageButtonWatch.setOnClickListener(new View.OnClickListener() {
 
@@ -131,32 +133,18 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 if (!imageButtonWatchblue) {
                     Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_50px).into(imageButtonWatch);
-                    ftc = new FilmTestController();
-                    ftc.setIdFilm(String.valueOf(film.getId_Film()));
-                    ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")));
-                    try {
-                        ftc.execute(new String("addFilm")).get();
-                        ftc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    RetrofitResponse.getResponse(
+                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH"))
+                                    + "&idFilm=" + film.getId_Film() +"&addFilm=true",
+                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
 
                     imageButtonWatchblue = true;
                 } else {
                     Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_30px_4).into(imageButtonWatch);
-                    ftc = new FilmTestController();
-                    ftc.setIdFilm(String.valueOf(film.getId_Film()));
-                    ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")));
-                    try {
-                        ftc.execute(new String("removeFilm")).get();
-                        ftc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    RetrofitResponse.getResponse(
+                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH"))
+                                    + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
+                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
 
                     imageButtonWatchblue = false;
                 }
@@ -188,31 +176,21 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 if (!imageButtonToWatchblue) {
                     Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
-                    ftc = new FilmTestController();
-                    ftc.setIdFilm(String.valueOf(film.getId_Film()));
-                    ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
-                    try {
-                        ftc.execute(new String("addFilm")).get();
-                        ftc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    RetrofitResponse.getResponse(
+                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH"))
+                                    + "&idFilm=" + film.getId_Film() +"&addFilm=true",
+                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
+
                     imageButtonToWatchblue = true;
                 } else {
                     Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px).into(imageButtonToWatch);
-                    ftc = new FilmTestController();
-                    ftc.setIdFilm(String.valueOf(film.getId_Film()));
-                    ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
-                    try {
-                        ftc.execute(new String("removeFilm")).get();
-                        ftc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
+
+                    RetrofitResponse.getResponse(
+                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH"))
+                                    + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
+                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
+
                     imageButtonToWatchblue = false;
                 }
             }
@@ -224,31 +202,21 @@ public class FilmDetails extends Fragment {
             public void onClick(View v) {
                 if (!imageButtonFavoritesblue) {
                     Glide.with(root.getContext()).load(R.drawable.icons8_star_32px).into(imageButtonFavorites);
-                    ftc = new FilmTestController();
-                    ftc.setIdFilm(String.valueOf(film.getId_Film()));
-                    ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
-                    try {
-                        ftc.execute(new String("addFilm")).get();
-                        ftc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
+                    RetrofitResponse.getResponse(
+                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED"))
+                                    + "&idFilm=" + film.getId_Film() +"&addFilm=true",
+                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
+
                     imageButtonFavoritesblue = true;
                 } else {
                     Glide.with(root.getContext()).load(R.drawable.icons8_star_26px).into(imageButtonFavorites);
-                    ftc = new FilmTestController();
-                    ftc.setIdFilm(String.valueOf(film.getId_Film()));
-                    ftc.setIdList(String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")));
-                    try {
-                        ftc.execute(new String("removeFilm")).get();
-                        ftc.isCancelled();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
+                    RetrofitResponse.getResponse(
+                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED"))
+                                    + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
+                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
+
                     imageButtonFavoritesblue = false;
                 }
             }

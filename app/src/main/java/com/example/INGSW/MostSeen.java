@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class MostSeen extends Fragment {
+public class MostSeen extends Fragment implements RetrofitListInterface {
     TextView title;
     RecyclerView mostSeenFilm;
     @Nullable
@@ -36,24 +38,27 @@ public class MostSeen extends Fragment {
         title = (TextView) root.findViewById(R.id.textViewMostSeen);
         mostSeenFilm = root.findViewById(R.id.recyclerViewMostSeen);
 
-        List<Film> mostSeenFilms = new ArrayList<>();
-        try {
-            mostSeenFilms = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("mostViewed").get()), Film.class);
-        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(mostSeenFilms,getContext(),this);
+        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse(
+                "Type=PostRequest&mostviewed=true",
+                this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
+
+        return root;
+    }
+
+    @Override
+    public void setList(List<?> newList) {
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList,getContext(),this);
         adapter.setCss(MostSeen.class);
         mostSeenFilm.setHasFixedSize(false);
-        LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
+        LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         mostSeenFilm.setLayoutManager(layoutManager);
-        mostSeenFilm.setItemViewCacheSize(mostSeenFilms.size());
+        mostSeenFilm.setItemViewCacheSize(newList.size());
         mostSeenFilm.setAdapter(adapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mostSeenFilm.getContext(),
                 layoutManager.getOrientation());
         mostSeenFilm.addItemDecoration(dividerItemDecoration);
         mostSeenFilm.setVisibility(View.VISIBLE);
-        return root;
+        ((ToolBarActivity)getActivity()).stopProgressBar();
     }
-
 }

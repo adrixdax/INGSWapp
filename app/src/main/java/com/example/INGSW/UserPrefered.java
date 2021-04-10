@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class UserPrefered extends Fragment {
+public class UserPrefered extends Fragment implements RetrofitListInterface {
 
     private TextView title;
     private RecyclerView userPreferedFilms;
@@ -36,25 +38,29 @@ public class UserPrefered extends Fragment {
         View root = inflater.inflate(R.layout.users_prefered, container, false);
         title = root.findViewById(R.id.textViewUserPrefered);
         userPreferedFilms = root.findViewById(R.id.recyclerViewUserPrefered);
-        List<Film> prefered = new ArrayList<>();
-        try {
-            prefered = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("userPrefered").get()), Film.class);
-        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(prefered, getContext(), this);
-        adapter.setCss(UserPrefered.class);
-        userPreferedFilms.setHasFixedSize(false);
-        LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
-        userPreferedFilms.setLayoutManager(layoutManager);
-        userPreferedFilms.setAdapter(adapter);
-        userPreferedFilms.setItemViewCacheSize(prefered.size());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(userPreferedFilms.getContext(),
-                layoutManager.getOrientation());
-        userPreferedFilms.addItemDecoration(dividerItemDecoration);
-        userPreferedFilms.setVisibility(View.VISIBLE);
+
+        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse(
+                "Type=PostRequest&userPrefered=true",
+                this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
+
         return root;
     }
 
 
+    @Override
+    public void setList(List<?> newList) {
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
+        adapter.setCss(UserPrefered.class);
+        userPreferedFilms.setHasFixedSize(false);
+        LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        userPreferedFilms.setLayoutManager(layoutManager);
+        userPreferedFilms.setAdapter(adapter);
+        userPreferedFilms.setItemViewCacheSize(newList.size());
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(userPreferedFilms.getContext(),
+                layoutManager.getOrientation());
+        userPreferedFilms.addItemDecoration(dividerItemDecoration);
+        userPreferedFilms.setVisibility(View.VISIBLE);
+        ((ToolBarActivity)getActivity()).stopProgressBar();
+    }
 }

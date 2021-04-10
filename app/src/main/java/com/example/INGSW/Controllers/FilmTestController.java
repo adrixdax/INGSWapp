@@ -24,22 +24,8 @@ public class FilmTestController extends AsyncTask {
     private String idFilm = "";
     private String uid = "";
 
-    private Object getLatestFilms() {
-        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&latest=true");
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url + "film").post(body).build();
-        try {
-            try (Response response = client.newCall(request).execute()) {
 
-                return Objects.requireNonNull(response.body()).string();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
+/*
     private Object getMostViewedFilms() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, "Type=PostRequest&mostviewed=true");
@@ -94,21 +80,6 @@ public class FilmTestController extends AsyncTask {
         return "";
     }
 
-    private Object getSearchFilms() {
-        final MediaType JSON = MediaType.get("application/json; charset=utf-8");
-        RequestBody body = RequestBody.create(JSON, "Type=PostRequest&name=" + nameOfFilm);
-        OkHttpClient client = new OkHttpClient.Builder().connectTimeout(60, TimeUnit.SECONDS).build();
-        Request request = new Request.Builder().url(url + "film").post(body).build();
-
-        try {
-            try (Response response = client.newCall(request).execute()) {
-                return Objects.requireNonNull(response.body()).string();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
 
     private Object idFilmInList() {
         final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -225,20 +196,18 @@ public class FilmTestController extends AsyncTask {
         return "";
     }
 
+
+
     @Override
     protected Object doInBackground(Object[] objects) {
         if (objects[0] instanceof String) {
             switch (objects[0].toString()) {
-                case "latest":
-                    return getLatestFilms();
                 case "mostViewed":
                     return getMostViewedFilms();
                 case "toSee":
                     return getTooSeeFilmList();
                 case "mostReviewd":
                     return getMostReviewedFilms();
-                case "search":
-                    return getSearchFilms();
                 case "isInList":
                     return idFilmInList();
                 case "addFilm":
@@ -257,6 +226,8 @@ public class FilmTestController extends AsyncTask {
         }
         return "Helooo";
     }
+
+ */
 
 
 
@@ -292,4 +263,8 @@ public class FilmTestController extends AsyncTask {
         this.uid = uid;
     }
 
+    @Override
+    protected Object doInBackground(Object[] objects) {
+        return null;
+    }
 }

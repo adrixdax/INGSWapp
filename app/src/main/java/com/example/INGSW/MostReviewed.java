@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -24,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-public class MostReviewed extends Fragment {
+public class MostReviewed extends Fragment implements RetrofitListInterface {
     TextView title;
     RecyclerView mostReviewedFilm;
     @Nullable
@@ -36,24 +38,27 @@ public class MostReviewed extends Fragment {
         title = (TextView) root.findViewById(R.id.textViewMostReviewed);
         mostReviewedFilm = root.findViewById(R.id.recyclerViewMostReviewed);
 
-        List<Film> mostReviewedFilms = new ArrayList<>();
-        try {
-            mostReviewedFilms = (List<Film>) JSONDecoder.getJsonToDecode(String.valueOf(new FilmTestController().execute("mostReviewd").get()), Film.class);
-        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(mostReviewedFilms,getContext(),this);
+        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse(
+                "Type=PostRequest&mostreviewed=true",
+                this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
+
+        return root;
+    }
+
+    @Override
+    public void setList(List<?> newList) {
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList,getContext(),this);
         adapter.setCss(MostReviewed.class);
         mostReviewedFilm.setHasFixedSize(false);
-        LinearLayoutManager layoutManager = new GridLayoutManager(root.getContext(), 2);
-        mostReviewedFilm.setItemViewCacheSize(mostReviewedFilms.size());
+        LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+        mostReviewedFilm.setItemViewCacheSize(newList.size());
         mostReviewedFilm.setLayoutManager(layoutManager);
         mostReviewedFilm.setAdapter(adapter);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mostReviewedFilm.getContext(),
                 layoutManager.getOrientation());
         mostReviewedFilm.addItemDecoration(dividerItemDecoration);
         mostReviewedFilm.setVisibility(View.VISIBLE);
-        return root;
+        ((ToolBarActivity)getActivity()).stopProgressBar();
     }
-
 }
