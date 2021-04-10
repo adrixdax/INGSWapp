@@ -18,6 +18,7 @@ import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyUpdater;
 import com.example.INGSW.Controllers.Retrofit.RetrofitInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.Retrofit.RetrofitSingleton;
 import com.example.INGSW.Controllers.RetrofitList;
 import com.example.INGSW.MostReviewed;
@@ -38,7 +39,6 @@ import java.util.Objects;
 import java.util.Timer;
 import java.util.concurrent.ExecutionException;
 
-import kotlin.internal.OnlyInputTypes;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,7 +51,8 @@ public class HomepageScreen extends Fragment implements RetrofitList {
     List<Film> film;
     ShapeableImageView mostSeen, tooSee, mostReviewed, userPrefered;
     static ImageButton bell;
-    FilmTestController con = new FilmTestController();
+    private boolean exist = false;
+    RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
@@ -67,6 +68,7 @@ public class HomepageScreen extends Fragment implements RetrofitList {
         bell = root.findViewById(R.id.notifyBell);
         NotifyUpdater not = new NotifyUpdater(timer, bell, getActivity());
         timer.schedule(not, 1);
+        recyclerView = root.findViewById(R.id.recyclerView);
 
         PushDownAnim.setPushDownAnimTo(mostSeen, mostReviewed, tooSee, userPrefered)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
@@ -108,28 +110,15 @@ public class HomepageScreen extends Fragment implements RetrofitList {
         });
 
 
-        film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList");
+        film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList") ;
 
-        if (film == null) {
+        if (((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList") == null) {
             ((ToolBarActivity)getActivity()).triggerProgessBar();
             film = new ArrayList<>();
-            RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
-            Call<String> call = service.getLatestMovies("Type=PostRequest&latest=true");
-            call.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    try {
-                        setList((List<Film>) JSONDecoder.getJsonToDecode(response.body(),Film.class));
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    Toast.makeText(getContext(),"Error",Toast.LENGTH_LONG);
-                }
-            });
+            RetrofitResponse.getResponse("Type=PostRequest&latest=true",this,this.getContext(),Film.class.getCanonicalName());
+        }else {
+            exist = true;
+            setList(film);
         }
         bell.setOnClickListener(v -> {
             new NotifyPopUp(not.getNotify(), getActivity()).show(getActivity().getSupportFragmentManager(), "not");
@@ -141,8 +130,10 @@ public class HomepageScreen extends Fragment implements RetrofitList {
     @Override
     @OnUi
     public void setList(List<?> list) {
+        if(!exist) {
+            ((ToolBarActivity) getActivity()).getConteinerList().put("HomepageList", (List<Film>) list);
+        }
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = this.requireView().findViewById(R.id.recyclerView);
         ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) list, getContext(), this);
         adapter.setCss(HomepageScreen.class);
         recyclerView.setHasFixedSize(true);

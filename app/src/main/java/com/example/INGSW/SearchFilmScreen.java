@@ -28,6 +28,7 @@ import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.Retrofit.RetrofitInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.Retrofit.RetrofitSingleton;
 import com.example.INGSW.Controllers.RetrofitList;
 import com.example.INGSW.Controllers.UserServerController;
@@ -114,23 +115,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitList {
                         recyclerViewFilm.setVisibility(View.GONE);
                     ((ToolBarActivity) getActivity()).triggerProgessBar();
                     filmInSearch = new ArrayList<>();
-                    RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
-                    Call<String> call = service.getMovieByName("Type=PostRequest&name="+Text_of_search.getText().toString());
-                    call.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            try {
-                                setList((List<Film>) JSONDecoder.getJsonToDecode(response.body(), Film.class));
-                            } catch (JsonProcessingException e) {
-                                e.printStackTrace();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG);
-                        }
-                    });
+                    RetrofitResponse.getResponse("Type=PostRequest&name="+Text_of_search.getText().toString(),SearchFilmScreen.this,v.getContext(),Film.class.getCanonicalName());
 
                 } else {
                     if (recyclerViewFriends != null && recyclerViewFriends.isShown())
