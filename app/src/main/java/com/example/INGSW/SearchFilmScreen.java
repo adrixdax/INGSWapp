@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,7 +27,11 @@ import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitSingleton;
+import com.example.INGSW.Controllers.RetrofitList;
 import com.example.INGSW.Controllers.UserServerController;
+import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,13 +41,17 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import teaspoon.annotations.OnUi;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
-public class SearchFilmScreen extends Fragment {
+public class SearchFilmScreen extends Fragment implements RetrofitList {
 
 
     private EditText Text_of_search;
@@ -99,38 +108,30 @@ public class SearchFilmScreen extends Fragment {
                     imm.hideSoftInputFromWindow(root.getWindowToken(), 0);
                 }
                 if (playFlag == 1) {
-                    try {
-                        if (recyclerViewFriends != null && recyclerViewFriends.isShown())
-                            recyclerViewFriends.setVisibility(View.GONE);
-                        if (recyclerViewFilm != null && recyclerViewFilm.isShown())
-                            recyclerViewFilm.setVisibility(View.GONE);
-                        FilmTestController filmTestController = new FilmTestController();
-                        filmTestController.setNameOfFilm(Text_of_search.getText().toString().trim());
-                        String latestJson = "";
-                        filmTestController.execute("search");
-                        if (latestJson.isEmpty()) {
-                            recyclerViewFilm.setVisibility(View.INVISIBLE);
-                            textError.setText("Nessun Film trovato");
-                        } else {
-                            textError.setText("");
-                            filmTestController.isCancelled();
-                            filmInSearch = (List<Film>) getJsonToDecode(latestJson, Film.class);
-                            LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false);
-                            ListOfFilmAdapter adapter = new ListOfFilmAdapter(filmInSearch, v.getContext(), ((ToolBarActivity) getActivity()).activeFragment);
-                            adapter.setCss(SearchFilmScreen.class);
-                            adapter.setHasStableIds(true);
-                            recyclerViewFilm.setHasFixedSize(true);
-                            recyclerViewFilm.setItemViewCacheSize(filmInSearch.size());
-                            recyclerViewFilm.setLayoutManager(layoutManager);
-                            recyclerViewFilm.setAdapter(adapter);
-                            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFilm.getContext(),
-                                    layoutManager.getOrientation());
-                            recyclerViewFilm.addItemDecoration(dividerItemDecoration);
+                    if (recyclerViewFriends != null && recyclerViewFriends.isShown())
+                        recyclerViewFriends.setVisibility(View.GONE);
+                    if (recyclerViewFilm != null && recyclerViewFilm.isShown())
+                        recyclerViewFilm.setVisibility(View.GONE);
+                    ((ToolBarActivity) getActivity()).triggerProgessBar();
+                    filmInSearch = new ArrayList<>();
+                    RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
+                    Call<String> call = service.getMovieByName("Type=PostRequest&name="+Text_of_search.getText().toString());
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            try {
+                                setList((List<Film>) JSONDecoder.getJsonToDecode(response.body(), Film.class));
+                            } catch (JsonProcessingException e) {
+                                e.printStackTrace();
+                            }
                         }
-                        recyclerViewFilm.setVisibility(View.VISIBLE);
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
-                    }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            Toast.makeText(getContext(), "Error", Toast.LENGTH_LONG);
+                        }
+                    });
+
                 } else {
                     if (recyclerViewFriends != null && recyclerViewFriends.isShown())
                         requireActivity().runOnUiThread(() -> recyclerViewFriends.setVisibility(View.GONE));
@@ -222,4 +223,25 @@ public class SearchFilmScreen extends Fragment {
 
     }
 
+    @Override
+    public void setList(List<?> newList) {
+        if (newList.isEmpty()) {
+            recyclerViewFilm.setVisibility(View.INVISIBLE);
+            textError.setText("Nessun Film trovato");
+        } else {
+            textError.setText("");
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+            ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), ((ToolBarActivity) requireActivity()).activeFragment);
+            adapter.setCss(SearchFilmScreen.class);
+            recyclerViewFilm.setHasFixedSize(true);
+            recyclerViewFilm.setItemViewCacheSize(newList.size());
+            recyclerViewFilm.setLayoutManager(layoutManager);
+            recyclerViewFilm.setAdapter(adapter);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFilm.getContext(),
+                    layoutManager.getOrientation());
+            recyclerViewFilm.addItemDecoration(dividerItemDecoration);
+            recyclerViewFilm.setVisibility(View.VISIBLE);
+        }
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
+    }
 }

@@ -49,7 +49,7 @@ public class JSONDecoder {
     public static Object getJsonToDecode(String json, Class c) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
-        if (json.isEmpty() || json.equals("")) return new ArrayList<>();
+        if (json == null || json.isEmpty() || json.equals("")) return new ArrayList<>();
         else {
             if (c.getSimpleName().equals("Notify"))
                 return jsonNotify(json);

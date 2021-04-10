@@ -1,14 +1,15 @@
 package com.example.INGSW;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -26,11 +27,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import teaspoon.annotations.OnUi;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
@@ -38,13 +42,15 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
 
     Fragment activeFragment;
+    CircularProgressBar progressBar;
+    ConstraintLayout mainLayout;
+    ConstraintLayout progressLayout;
 
     private FirebaseAnalytics mFirebaseAnalytics;
 
     float x1, x2, y1, y2;
 
     Map<String, List<Film>> conteinerList = new HashMap<>();
-    private ProgressDialog progressDialog;
     private final Map<String, Object> contaiinerItem = new HashMap<>();
     User user = null;
     private boolean loadUser = false;
@@ -56,7 +62,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         try {
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             FirebaseDatabase db = FirebaseDatabase.getInstance();
@@ -67,6 +72,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         setContentView(R.layout.navigationscreen);
         getUser();
 
+        progressBar = findViewById(R.id.activityProgressBar);
+        progressBar.setVisibility(View.INVISIBLE);
+        progressLayout = findViewById(R.id.layoutProgress);
+        progressLayout.setVisibility(View.INVISIBLE);
+        mainLayout = findViewById(R.id.mainLayout);
+        mainLayout.setVisibility(View.VISIBLE);
 
         try {
             usc.setUserId(uid);
@@ -314,6 +325,53 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         }
 
         return false;
+    }
+
+    @Override
+    @OnUi
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (this.progressBar.isShown()) {
+            return false;
+        } else {
+            return super.dispatchTouchEvent(ev);
+        }
+    }
+
+
+
+    @OnUi
+    public void triggerProgessBar() {
+        mainLayout.setAlpha(0.1f);
+        progressLayout.setVisibility(View.VISIBLE);
+        this.progressBar.setVisibility(View.VISIBLE);
+        this.progressBar.setIndeterminateMode(true);
+        this.progressBar.animate();
+    }
+
+
+    @OnUi
+    public void stopProgressBar() {
+        progressLayout.setVisibility(View.INVISIBLE);
+        mainLayout.setAlpha(1f);
+        this.progressBar.setVisibility(View.INVISIBLE);
+    }
+
+
+
+    public CircularProgressBar getProgressBar() {
+        return this.progressBar;
+    }
+
+
+
+    public Fragment getActiveFragment() {
+        return this.activeFragment;
+    }
+
+
+
+    public void setActiveFragment(Fragment fragment) {
+        this.activeFragment = fragment;
     }
 
 }
