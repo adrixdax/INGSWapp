@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,12 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
-import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyUpdater;
-import com.example.INGSW.Controllers.Retrofit.RetrofitInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.Retrofit.RetrofitSingleton;
-import com.example.INGSW.Controllers.RetrofitList;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.MostReviewed;
 import com.example.INGSW.MostSeen;
 import com.example.INGSW.NotifyPopUp;
@@ -28,25 +24,16 @@ import com.example.INGSW.R;
 import com.example.INGSW.ToSee;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.UserPrefered;
-import com.example.INGSW.Utility.JSONDecoder;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Timer;
-import java.util.concurrent.ExecutionException;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import teaspoon.annotations.OnUi;
 
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
-
-public class HomepageScreen extends Fragment implements RetrofitList {
+public class HomepageScreen extends Fragment implements RetrofitListInterface {
     Timer timer = new Timer();
     List<Film> film;
     ShapeableImageView mostSeen, tooSee, mostReviewed, userPrefered;
@@ -115,7 +102,7 @@ public class HomepageScreen extends Fragment implements RetrofitList {
         if (((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList") == null) {
             ((ToolBarActivity)getActivity()).triggerProgessBar();
             film = new ArrayList<>();
-            RetrofitResponse.getResponse("Type=PostRequest&latest=true",this,this.getContext(),Film.class.getCanonicalName());
+            RetrofitResponse.getResponse("Type=PostRequest&latest=true",this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
         }else {
             exist = true;
             setList(film);

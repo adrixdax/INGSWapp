@@ -12,7 +12,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,14 +24,10 @@ import com.example.INGSW.Component.DB.Adapters.UsersListAdapter;
 import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
-import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.NotifyTestController;
-import com.example.INGSW.Controllers.Retrofit.RetrofitInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.Retrofit.RetrofitSingleton;
-import com.example.INGSW.Controllers.RetrofitList;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.UserServerController;
-import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -42,17 +37,13 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import teaspoon.annotations.OnUi;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
-public class SearchFilmScreen extends Fragment implements RetrofitList {
+public class SearchFilmScreen extends Fragment implements RetrofitListInterface {
 
 
     private EditText Text_of_search;
@@ -63,6 +54,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitList {
     private int playFlag, userFlag = 0;
     private TextView textError;
     private UsersListAdapter adapter;
+    List<Notify> notifyList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -115,9 +107,10 @@ public class SearchFilmScreen extends Fragment implements RetrofitList {
                         recyclerViewFilm.setVisibility(View.GONE);
                     ((ToolBarActivity) getActivity()).triggerProgessBar();
                     filmInSearch = new ArrayList<>();
-                    RetrofitResponse.getResponse("Type=PostRequest&name="+Text_of_search.getText().toString(),SearchFilmScreen.this,v.getContext(),Film.class.getCanonicalName());
+                    RetrofitResponse.getResponse("Type=PostRequest&name="+Text_of_search.getText().toString(),SearchFilmScreen.this,v.getContext(),Film.class.getCanonicalName(),"getFilm");
 
                 } else {
+                    ((ToolBarActivity) getActivity()).triggerProgessBar();
                     if (recyclerViewFriends != null && recyclerViewFriends.isShown())
                         requireActivity().runOnUiThread(() -> recyclerViewFriends.setVisibility(View.GONE));
                     if (recyclerViewFilm != null && recyclerViewFilm.isShown())
@@ -152,9 +145,8 @@ public class SearchFilmScreen extends Fragment implements RetrofitList {
                                         model.setIdUser(dataSnapshot.getKey());
                                         usersInSearchlist.add(model);
                                         boolean friend = false;
-                                        List<Notify> notifyList;
                                         try {
-                                            notifyList = (List<Notify>) getJsonToDecode(String.valueOf(new NotifyTestController().execute("idUser=" + model.getIdUser()).get()), Notify.class);
+                                            RetrofitResponse.getResponse("&idUser="+ model.getIdUser(),SearchFilmScreen.this,v.getContext(),Notify.class.getCanonicalName(),"getNotify");
                                             if (!notifyList.isEmpty()) {
                                                 int i = 0;
                                                 while (i < notifyList.size() && !friend) {
@@ -172,13 +164,15 @@ public class SearchFilmScreen extends Fragment implements RetrofitList {
                                                     friend = true;
                                                 }
                                             }
-                                        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
+
+                                        } catch (ExecutionException | InterruptedException e) {
                                             e.printStackTrace();
                                         }
                                         areFriends.add(friend);
                                     }
                                     adapter.notifyDataSetChanged();
                                 }
+                                ((ToolBarActivity) requireActivity()).stopProgressBar();
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
@@ -210,23 +204,28 @@ public class SearchFilmScreen extends Fragment implements RetrofitList {
 
     @Override
     public void setList(List<?> newList) {
-        if (newList.isEmpty()) {
-            recyclerViewFilm.setVisibility(View.INVISIBLE);
-            textError.setText("Nessun Film trovato");
-        } else {
-            textError.setText("");
-            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-            ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), ((ToolBarActivity) requireActivity()).activeFragment);
-            adapter.setCss(SearchFilmScreen.class);
-            recyclerViewFilm.setHasFixedSize(true);
-            recyclerViewFilm.setItemViewCacheSize(newList.size());
-            recyclerViewFilm.setLayoutManager(layoutManager);
-            recyclerViewFilm.setAdapter(adapter);
-            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFilm.getContext(),
-                    layoutManager.getOrientation());
-            recyclerViewFilm.addItemDecoration(dividerItemDecoration);
-            recyclerViewFilm.setVisibility(View.VISIBLE);
+        if (playFlag == 0) {
+            notifyList= (List<Notify>) newList;
+
+        } else if(playFlag==1){
+            if (newList.isEmpty()) {
+                recyclerViewFilm.setVisibility(View.INVISIBLE);
+                textError.setText("Nessun Film trovato");
+            } else {
+                textError.setText("");
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), ((ToolBarActivity) requireActivity()).activeFragment);
+                adapter.setCss(SearchFilmScreen.class);
+                recyclerViewFilm.setHasFixedSize(true);
+                recyclerViewFilm.setItemViewCacheSize(newList.size());
+                recyclerViewFilm.setLayoutManager(layoutManager);
+                recyclerViewFilm.setAdapter(adapter);
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFilm.getContext(),
+                        layoutManager.getOrientation());
+                recyclerViewFilm.addItemDecoration(dividerItemDecoration);
+                recyclerViewFilm.setVisibility(View.VISIBLE);
+            }
+            ((ToolBarActivity) requireActivity()).stopProgressBar();
         }
-        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

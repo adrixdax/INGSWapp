@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
-import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -19,30 +21,32 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
-public class MyFavs extends Fragment {
+public class MyFavs extends Fragment implements RetrofitListInterface {
 
-    private List<Film> listofFilm;
-
+    RecyclerView recyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_favs, container, false);
-        FilmTestController FTC = new FilmTestController();
-        FTC.setIdList(String.valueOf(((ToolBarActivity)getContext()).getContaiinerItem().get("PREFERED")));
-        try {
-            listofFilm = (List<Film>) JSONDecoder.getJsonToDecode((String) FTC.execute("filmInList").get(),Film.class);
-        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter(listofFilm, getContext(), this);
-        adapter.setCss(MyFavs.class);
-        adapter.setIdList(FTC.getIdList());
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewUserMyPrefered);
-        recyclerView.setHasFixedSize(false);
-        recyclerView.setItemViewCacheSize(listofFilm.size());
-        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
-        recyclerView.setAdapter(adapter);
+        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse("Type=PostRequest&idList=" +((ToolBarActivity)getContext()).getContaiinerItem().get("PREFERED"),MyFavs.this,this.getContext(), Film.class.getCanonicalName(),"getList");
+        recyclerView = root.findViewById(R.id.recyclerViewUserMyPrefered);
         return root;
+    }
+
+    @Override
+    public void setList(List<?> newList) {
+
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
+        adapter.setCss(MyFavs.class);
+        adapter.setIdList(String.valueOf(((ToolBarActivity)getContext()).getContaiinerItem().get("PREFERED")));
+
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setItemViewCacheSize(newList.size());
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerView.setAdapter(adapter);
+        ((ToolBarActivity)getActivity()).stopProgressBar();
+
     }
 }

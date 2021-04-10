@@ -16,28 +16,35 @@ import retrofit2.Response;
 
 public class RetrofitResponse {
 
-    private String request="";
-
-
-    public static void getResponse(String body, Object c, Context context, String structureClass) {
+    public static void getResponse(String body, Object c, Context context, String structureClass, String callMethod) {
         RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
-        Call<String> call = service.getLatestMovies(body);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                try {
-                    Method m = c.getClass().getMethod("setList", List.class);
-                    m.invoke(c,((List<?>) JSONDecoder.getJsonToDecode(response.body(), Class.forName(structureClass))));
+        Method methodRetrofit = null;
+        try {
+            methodRetrofit = service.getClass().getMethod(callMethod,String.class);
+            Call<String> call = (Call<String>) methodRetrofit.invoke(service, body);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    try {
+                        Method methodClassCalled = c.getClass().getMethod("setList", List.class);
+                        methodClassCalled.invoke(c,((List<?>) JSONDecoder.getJsonToDecode(response.body(), Class.forName(structureClass))));
 
-                } catch (JsonProcessingException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
-                    e.printStackTrace();
+                    } catch (JsonProcessingException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Toast.makeText(context, "Error", Toast.LENGTH_LONG);
-            }
-        });
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG);
+                }
+            });
+        } catch (NoSuchMethodException e) {
+
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }
