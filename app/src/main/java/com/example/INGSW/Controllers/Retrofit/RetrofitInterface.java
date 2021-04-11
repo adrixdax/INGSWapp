@@ -1,11 +1,6 @@
 package com.example.INGSW.Controllers.Retrofit;
 
-import com.example.INGSW.Component.Films.Film;
-
-import java.util.List;
-
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -22,6 +17,7 @@ public interface RetrofitInterface {
     @POST("/list")
     Call<String> getList(@Body String body);
 
-
+    @POST("/registration")
+    Call<String> getRegistration(@Body String body);
 
 }

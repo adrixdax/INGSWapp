@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.INGSW.LoginScreen;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.home.HomepageScreen;
 import com.example.INGSW.R;
@@ -22,14 +23,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginController{
 
-    private ProgressBar progressBar;
-    private Activity activity;
+    private final Activity activity;
     int RC_SIGN_IN = 0;
 
 
     public LoginController(Activity current){
         this.activity = current;
-        progressBar = (ProgressBar)activity.findViewById(R.id.progressBar);
     }
 
     /**NOTA: Risulta fondamentale ai fini della funzionalità dell' interfaccia far si che determinate componenti quali l'activity per esempio, vengano passati al controller tramite appositi metodi **/
@@ -58,7 +57,6 @@ public class LoginController{
             throw new Exception("Password Length");
         }
 
-        progressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -68,14 +66,13 @@ public class LoginController{
                     editor.putString("remember","true");
                     editor.apply();
 
-                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(loginscreen,"LOGIN EFFETTUATO",Toast.LENGTH_LONG).show();
+                    ((LoginScreen)loginscreen).stopProgressBar();
                     loginscreen.startActivity(new Intent(loginscreen, ToolBarActivity.class));
                     //manda al profilo utente/homepage dell' app
                 }
                 else{
                     Toast.makeText(loginscreen,"LOGIN FALLITO",Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.GONE);
                 }
             }
         });

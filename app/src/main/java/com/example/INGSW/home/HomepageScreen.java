@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
+import teaspoon.annotations.OnBackground;
 import teaspoon.annotations.OnUi;
 
 public class HomepageScreen extends Fragment implements RetrofitListInterface {
@@ -115,7 +116,7 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
 
 
     @Override
-    @OnUi
+    @OnBackground
     public void setList(List<?> list) {
         if(!exist) {
             ((ToolBarActivity) getActivity()).getConteinerList().put("HomepageList", (List<Film>) list);

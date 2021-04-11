@@ -6,10 +6,11 @@ import android.widget.Toast;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -17,7 +18,7 @@ import retrofit2.Response;
 
 public class RetrofitResponse {
 
-    private static Boolean response= new Boolean(false);
+    private static Boolean response= Boolean.FALSE;
 
 
 
@@ -27,12 +28,13 @@ public class RetrofitResponse {
         try {
             methodRetrofit = service.getClass().getMethod(callMethod,String.class);
             Call<String> call = (Call<String>) methodRetrofit.invoke(service, body);
+            assert call != null;
             call.enqueue(new Callback<String>() {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(@NotNull Call<String> call, @NotNull Response<String> response) {
                     try {
                         if(response.body().isEmpty()){
-
+                            System.out.println("Empty");
                         }else if(response.body().startsWith("[")){
                             Method methodClassCalled = c.getClass().getMethod("setList", List.class);
                             methodClassCalled.invoke(c,((List<?>) JSONDecoder.getJsonToDecode(response.body(), Class.forName(structureClass))));
@@ -41,23 +43,17 @@ public class RetrofitResponse {
                         }else {
                             System.out.println(response.body());
                         }
-
-
                     } catch (JsonProcessingException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    Toast.makeText(context, "Error", Toast.LENGTH_LONG);
+                public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
                 }
             });
-        } catch (NoSuchMethodException e) {
-
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }

@@ -6,18 +6,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.INGSW.Controllers.LoginController;
-import com.example.INGSW.Controllers.UserServerController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -33,11 +34,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.Objects;
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
+
+import teaspoon.annotations.OnUi;
 
 /**
  * Tale activity sostiene la schermata principale dell'app. ovvero la prima schermata che si aprirà difronte all' utente all' apertura dell'app
@@ -53,17 +56,19 @@ public class LoginScreen extends AppCompatActivity {
     int RC_SIGN_IN = 0;
 
 
-    private TextView register;
     private EditText editTextEmail, editTextPassword;
     private Button LoginButton;
 
 
     private FirebaseAuth mAuth;
-    private ProgressBar progressBar;
 
     SignInButton GoogleLogin;
     GoogleSignInClient mGoogleSignInClient;
     DatabaseReference reference;
+
+    ConstraintLayout progressLayout;
+    CircularProgressBar circularProgressBar;
+    ConstraintLayout layout;
 
     /**
      * Metodo che alla creazione dell' activity prepara le nuove variabili e riconosce le componenti
@@ -78,18 +83,19 @@ public class LoginScreen extends AppCompatActivity {
             if (FirebaseApp.getApps(this).size() == 0) db.setPersistenceEnabled(true);
             reference = db.getReference("Users");
             setContentView(R.layout.loginscreen);
-
+            layout = findViewById(R.id.loginscreen);
+            circularProgressBar = findViewById(R.id.activityProgressBarLog);
+            progressLayout = findViewById(R.id.layoutProgressLog);
 
             loginController = new LoginController(this);
 
             mAuth = FirebaseAuth.getInstance();
 
-            register = (TextView) findViewById(R.id.RegisterText);
+            TextView register = findViewById(R.id.RegisterText);
             register.setOnClickListener(v -> startActivity(new Intent(LoginScreen.super.getApplicationContext(), RegistrationScreen.class)));
 
             GoogleLogin = findViewById(R.id.sign_in_button);
             LoginButton = findViewById(R.id.LoginButton);
-
 
             PushDownAnim.setPushDownAnimTo(GoogleLogin, LoginButton)
                     .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
@@ -106,7 +112,9 @@ public class LoginScreen extends AppCompatActivity {
             }
 
             LoginButton.setOnClickListener(v -> {
+
                 try {
+                    startProgresBar();
                     loginController.verifyUserWithFirebase(editTextEmail.getText().toString().trim(), editTextPassword.getText().toString().trim(), mAuth, LoginScreen.this);
                 } catch (Exception e) {
                     switch (e.getMessage()) {
@@ -135,8 +143,8 @@ public class LoginScreen extends AppCompatActivity {
                 }
             });
 
-            editTextEmail = (EditText) findViewById(R.id.TextLoginEmail);
-            editTextPassword = (EditText) findViewById(R.id.TextLoginPassword);
+            editTextEmail = findViewById(R.id.TextLoginEmail);
+            editTextPassword = findViewById(R.id.TextLoginPassword);
             editTextPassword.setOnEditorActionListener((v, actionId, event) -> {
                 if (actionId == EditorInfo.IME_ACTION_GO) {
                     LoginButton.callOnClick();
@@ -145,18 +153,15 @@ public class LoginScreen extends AppCompatActivity {
                 return false;
             });
 
-            progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestEmail()
                     .build();
 
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-            /**Sul click nella schermata, se il click corrisponde al bottone di Google, allora viene chiamata nel login controller la funzione adibita al login con google **/
             GoogleLogin.setOnClickListener(v -> {
                 if (v.getId() == R.id.sign_in_button) {
+                    startProgresBar();
                     loginController.signIn(mGoogleSignInClient);
                 }
             });
@@ -211,10 +216,7 @@ public class LoginScreen extends AppCompatActivity {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("remember", "true");
             editor.apply();
-
-            UserServerController usc = new UserServerController();
-            usc.setUserId(account.getId());
-            String req = (String) usc.execute("google").get();
+            RetrofitResponse.getResponse("Type=PostRequest&google=" + account.getId(),LoginScreen.this,this,null,"getRegistration");
             u.nickname = Objects.requireNonNull(account.getEmail()).split("@")[0];
             u.email = account.getEmail();
             int switchCase = new Random().ints(0, 5).findAny().getAsInt();
@@ -238,17 +240,31 @@ public class LoginScreen extends AppCompatActivity {
                     u.propic = "https://i.pinimg.com/564x/5b/71/ab/5b71ab4ea082c3c11e77312a64bba835.jpg";
                     break;
             }
-            Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
-            startActivity(intent);
+            stopProgressBar();
+            startActivity(new Intent(LoginScreen.this, ToolBarActivity.class));
             finish();
         }
         catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("ERROR", "signInResult:failed code=" + e.getStatusCode());
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
         }
+    }
+
+    @OnUi
+    public void startProgresBar(){
+        layout.setAlpha(0.1f);
+        progressLayout.setVisibility(View.VISIBLE);
+        this.circularProgressBar.setVisibility(View.VISIBLE);
+        this.circularProgressBar.setIndeterminateMode(true);
+        this.circularProgressBar.animate();
+    }
+
+    @OnUi
+    public void stopProgressBar(){
+        progressLayout.setVisibility(View.INVISIBLE);
+        layout.setAlpha(1.0f);
+        circularProgressBar.setVisibility(View.INVISIBLE);
     }
 
 
