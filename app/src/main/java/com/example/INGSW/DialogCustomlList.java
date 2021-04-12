@@ -20,6 +20,7 @@ import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.UserServerController;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -53,6 +54,7 @@ public class DialogCustomlList extends AppCompatDialogFragment implements Retrof
 
 
         Button insertInLists = (Button) dialog.getWindow().findViewById(R.id.InsertInListsbutton);
+        PushDownAnim.setPushDownAnimTo(insertInLists);
         insertInLists.setOnClickListener(v -> {
             for (UserLists singlelist : selectedLists) {
                 RetrofitResponse.getResponse("Type=PostRequest&idList=" + String.valueOf(singlelist.getIdUserList()) + "&idFilm="+ String.valueOf(idFilmToInsert) + "&addFilm=true",DialogCustomlList.this,DialogCustomlList.this.getContext(),"","getList" );

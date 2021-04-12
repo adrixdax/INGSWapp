@@ -70,6 +70,8 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
                 with(holder.itemView).load("http://cdn.onlinewebfonts.com/svg/img_568523.png").into((CircleImageView) holder.itemView.findViewById(R.id.list_image));
                 holder.selectItem.setOnCheckedChangeListener(null);
                 holder.selectItem.setChecked(false);
+                holder.selectItem.setClickable(false);
+
                 holder.relativeLayout.setOnClickListener(v -> {
                     if (!holder.selectItem.isChecked()) {
                         holder.selectItem.setChecked(true);

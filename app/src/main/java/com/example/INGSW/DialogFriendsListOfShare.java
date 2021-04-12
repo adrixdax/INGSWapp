@@ -100,7 +100,6 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
                         }
                     }
                 }
-
                 dismiss();
 
             } else {

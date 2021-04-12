@@ -58,6 +58,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             }
             holder.checkButtonShare.setOnCheckedChangeListener(null);
             holder.checkButtonShare.setChecked(false);
+            holder.checkButtonShare.setClickable(false);
+
             holder.relativeLayoutShareWhitFriend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -78,6 +80,8 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         e.printStackTrace();
     }
 }
+
+
 
     @Override
     public int getItemCount() {
