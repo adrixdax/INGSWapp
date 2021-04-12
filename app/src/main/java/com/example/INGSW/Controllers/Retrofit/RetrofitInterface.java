@@ -11,6 +11,9 @@ public interface RetrofitInterface {
     @POST("/film")
     Call<String> getFilm(@Body String body);
 
+    @POST("/film")
+    Call<String> getFilmById(@Body String body);
+
     @GET("/notify")
     Call<String> getNotify(@Query("idUser") String param);
 
@@ -25,6 +28,9 @@ public interface RetrofitInterface {
 
     @POST("/list")
     Call<String> getList(@Body String body);
+
+    @POST("/review")
+    Call<String> getReview(@Body String body);
 
     @POST("/registration")
     Call<String> getRegistration(@Body String body);

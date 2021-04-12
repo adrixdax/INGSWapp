@@ -17,6 +17,9 @@ import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.MyReviews;
 import com.example.INGSW.R;
 import com.example.INGSW.ReviewDetail;
@@ -29,16 +32,20 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import teaspoon.annotations.OnUi;
 
 import static com.bumptech.glide.Glide.with;
 
 
-public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
+public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> implements RetrofitListInterface {
 
     private final List<Reviews> listofdata;
+    private final List<Film> filmList = new ArrayList<>();
     private Class css = null;
     private View listItem;
     private final Fragment startFragment;
@@ -67,10 +74,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public void onBindViewHolder(@NonNull ReviewsAdapter.ViewHolder holder, int position) {
         if (css.getCanonicalName().equals(MyReviews.class.getCanonicalName())) {
             try {
-                FilmTestController con = new FilmTestController();
-                con.setIdFilm(String.valueOf(listofdata.get(position).getIdFilm()));
-                Film film = ((List<Film>) JSONDecoder.getJsonToDecode((String) con.execute("filmById").get(),Film.class)).get(0);
-                Glide.with(startFragment).load(film.getPosterPath()).into((ImageView)holder.moviepic);
+                RetrofitResponse.getResponse("Type=PostRequest&filmId=" + listofdata.get(position).getIdFilm(),ReviewsAdapter.this,null,Film.class.getCanonicalName(),"getFilmById");
+//                Film film = ((List<Film>) JSONDecoder.getJsonToDecode((String) con.execute("filmById").get(),Film.class)).get(0);
+                if( position < filmList.size())
+                Glide.with(startFragment).load(filmList.get(position).getPosterPath()).into((ImageView) holder.moviepic);
 
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
                 holder.ratingBar.setClickable(false);
@@ -176,6 +183,14 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    @OnUi
+    public void setList(List<?> newList) {
+        this.filmList.addAll(this.filmList.size(),(Collection<? extends Film>) newList);
+        notifyDataSetChanged();
+
     }
 
 

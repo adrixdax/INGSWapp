@@ -55,9 +55,8 @@
         tools:ignore="MissingConstraints" />
 
 
-    <view
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/view4"
-        class="com.google.android.material.textfield.TextInputLayout"
         android:layout_width="290dp"
         android:layout_height="55dp"
         android:layout_marginTop="360dp"
@@ -186,7 +185,7 @@
         android:layout_marginStart="240dp"
         android:layout_marginTop="116dp"
         android:layout_marginEnd="137dp"
-        android:contentDescription="TODO"
+        android:tint = "@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -24,6 +25,7 @@ import java.util.concurrent.ExecutionException;
 public class MyFavs extends Fragment implements RetrofitListInterface {
 
     RecyclerView recyclerView;
+    TextView textFavsError;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,20 +34,27 @@ public class MyFavs extends Fragment implements RetrofitListInterface {
         ((ToolBarActivity)getActivity()).triggerProgessBar();
         RetrofitResponse.getResponse("Type=PostRequest&idList=" +((ToolBarActivity)getContext()).getContaiinerItem().get("PREFERED"),MyFavs.this,this.getContext(), Film.class.getCanonicalName(),"getList");
         recyclerView = root.findViewById(R.id.recyclerViewUserMyPrefered);
+        textFavsError = root.findViewById(R.id.Textview_favsError);
+
         return root;
     }
 
     @Override
     public void setList(List<?> newList) {
 
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
-        adapter.setCss(MyFavs.class);
-        adapter.setIdList(String.valueOf(((ToolBarActivity)getContext()).getContaiinerItem().get("PREFERED")));
+        if(newList.size() != 0) {
 
-        recyclerView.setHasFixedSize(false);
-        recyclerView.setItemViewCacheSize(newList.size());
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerView.setAdapter(adapter);
+            textFavsError.setText("");
+            ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
+            adapter.setCss(MyFavs.class);
+            adapter.setIdList(String.valueOf(((ToolBarActivity) getContext()).getContaiinerItem().get("PREFERED")));
+
+            recyclerView.setHasFixedSize(false);
+            recyclerView.setItemViewCacheSize(newList.size());
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            recyclerView.setAdapter(adapter);
+        }
+        else textFavsError.setText("Davvero non hai neanche un film preferito?");
         ((ToolBarActivity)getActivity()).stopProgressBar();
 
     }

@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
 import com.example.INGSW.Component.DB.Classes.Reviews;
+import com.example.INGSW.Component.Films.Film;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.ReviewsController;
 
 import java.util.List;
@@ -19,38 +22,28 @@ import java.util.concurrent.ExecutionException;
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 
-public class MyReviews extends Fragment {
+public class MyReviews extends Fragment implements RetrofitListInterface {
 
-    private List<Reviews> review = null;
+    private RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_myreviewslist, container, false);
-            String latestJson = "";
-            try {
-                ReviewsController con = new ReviewsController();
-                con.setIdUser(((ToolBarActivity) getActivity()).getUid());
-                latestJson = (String) con.execute("UserReviews").get();
-                con.isCancelled();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-            try {
-                review = (List<Reviews>) getJsonToDecode(latestJson, Reviews.class);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        ReviewsAdapter adapter = new ReviewsAdapter(review, this,ToolBarActivity.getReference());
-        adapter.setCss(MyReviews.class);
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(false);
-        recyclerView.setItemViewCacheSize(review.size());
-        recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter);
+        recyclerView = root.findViewById(R.id.recyclerView);
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&insert=false",this,((ToolBarActivity)getContext()), Reviews.class.getCanonicalName(),"getReview");
 
         return root;
+    }
+
+    @Override
+    public void setList(List<?> newList) {
+
+        ReviewsAdapter adapter = new ReviewsAdapter((List<Reviews>) newList, this,ToolBarActivity.getReference());
+        adapter.setCss(MyReviews.class);
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setItemViewCacheSize(newList.size());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(adapter);
     }
 }
