@@ -17,6 +17,7 @@ import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.ReviewsController;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
@@ -31,7 +32,7 @@ public class MyReviews extends Fragment implements RetrofitListInterface {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_myreviewslist, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
-        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&insert=false",this,((ToolBarActivity)getContext()), Reviews.class.getCanonicalName(),"getReview");
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=false",this, getContext(), Reviews.class.getCanonicalName(),"getReview");
 
         return root;
     }

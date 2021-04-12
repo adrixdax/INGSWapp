@@ -1,5 +1,6 @@
 package com.example.INGSW.Component.DB.Adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +36,10 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import teaspoon.annotations.OnBackground;
 import teaspoon.annotations.OnUi;
 
 import static com.bumptech.glide.Glide.with;
@@ -53,6 +56,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment, DatabaseReference ref) {
         this.listofdata = listofdata;
+        for (Reviews rev : listofdata) {
+            RetrofitResponse.getResponse("Type=PostRequest&filmId=" + rev.getIdFilm(), ReviewsAdapter.this, null, Film.class.getCanonicalName(), "getFilmById");
+        }
         this.startFragment = startFragment;
         this.ref = ref;
     }
@@ -70,21 +76,18 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         return new ReviewsAdapter.ViewHolder(listItem,css);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ReviewsAdapter.ViewHolder holder, int position) {
         if (css.getCanonicalName().equals(MyReviews.class.getCanonicalName())) {
             try {
-                RetrofitResponse.getResponse("Type=PostRequest&filmId=" + listofdata.get(position).getIdFilm(),ReviewsAdapter.this,null,Film.class.getCanonicalName(),"getFilmById");
-//                Film film = ((List<Film>) JSONDecoder.getJsonToDecode((String) con.execute("filmById").get(),Film.class)).get(0);
-                if( position < filmList.size())
-                Glide.with(startFragment).load(filmList.get(position).getPosterPath()).into((ImageView) holder.moviepic);
-
+              if( position < filmList.size()) Glide.with(startFragment).load(filmList.get(position).getPosterPath()).into((ImageView) holder.moviepic);
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
                 holder.ratingBar.setClickable(false);
                 holder.ratingBar.setIsIndicator(true);
                 holder.reviewTitle.setText(listofdata.get(position).getTitle());
                 holder.reviewDescription.setText(listofdata.get(position).getDescription());
-                String[] line = listofdata.get(position).getDescription().split(System.getProperty("line.separator"));
+                String[] line = listofdata.get(position).getDescription().split(Objects.requireNonNull(System.getProperty("line.separator")));
                 if (line.length > 5) {
                     int lunghezza = 0;
                     for (int i = 0; i < 5; i++) {
@@ -96,15 +99,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 } else {
                     holder.reviewDescription.setText(listofdata.get(position).getDescription());
                 }
-                holder.relativeLayoutReviewList.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position), ref);
-                        FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
+                holder.relativeLayoutReviewList.setOnClickListener(v -> {
+                    ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position), ref);
+                    FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -112,15 +112,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         } else {
             try {
-
                 getReviewer(listofdata.get(position).getIduser(), holder);
-
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
                 holder.ratingBar.setClickable(false);
                 holder.ratingBar.setIsIndicator(true);
                 holder.reviewTitle.setText(listofdata.get(position).getTitle());
                 holder.reviewDescription.setText(listofdata.get(position).getDescription());
-                String[] line = listofdata.get(position).getDescription().split(System.getProperty("line.separator"));
+                String[] line = listofdata.get(position).getDescription().split(Objects.requireNonNull(System.getProperty("line.separator")));
                 if (line.length > 5) {
                     int lunghezza = 0;
                     for (int i = 0; i < 5; i++) {
@@ -132,15 +130,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 } else {
                     holder.reviewDescription.setText(listofdata.get(position).getDescription());
                 }
-                holder.relativeLayoutReviewList.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position), ref);
-                        FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
+                holder.relativeLayoutReviewList.setOnClickListener(v -> {
+                    ReviewDetail nextFragment = new ReviewDetail(listofdata.get(position), ref);
+                    FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 });
             } catch (Exception e) {
                 e.printStackTrace();
@@ -161,11 +156,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         return 0;
     }
 
+    @OnBackground
     private void getReviewer(String id, ReviewsAdapter.ViewHolder holder) {
         try {
             Query query = ref.orderByKey().equalTo(id);
             query.addValueEventListener(new ValueEventListener() {
                 @Override
+                @OnUi
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User model = dataSnapshot.getValue(User.class);
@@ -186,7 +183,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     }
 
     @Override
-    @OnUi
+    @OnBackground
     public void setList(List<?> newList) {
         this.filmList.addAll(this.filmList.size(),(Collection<? extends Film>) newList);
         notifyDataSetChanged();
