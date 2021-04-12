@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.CustomListsAdapter;
 import com.example.INGSW.Component.DB.Classes.UserLists;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.UserServerController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -20,10 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import retrofit2.Retrofit;
+
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 
-public class MyLists extends Fragment {
+public class MyLists extends Fragment implements RetrofitListInterface {
+
+    private RecyclerView recycler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,33 +49,18 @@ public class MyLists extends Fragment {
 
         });
 
-        RecyclerView recycler = root.findViewById(R.id.recyclerView2);
-        String json = "";
-        try {
-            UserServerController usc = new UserServerController();
-            usc.setUserId(((ToolBarActivity) getActivity()).getUid());
-            usc.setIdFilm("-1");
-            json = (String) usc.execute("custom").get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            List<UserLists> customLists = (List<UserLists>) getJsonToDecode(json, UserLists.class);
-            if (customLists != null) {
-                recycler.setAdapter(new CustomListsAdapter(customLists, this.getClass(), this));
-                recycler.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
-                recycler.setHasFixedSize(false);
-                recycler.setItemViewCacheSize(customLists.size());
-            }
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-
-        //  rv.setAdapter(new UserListsAdapter(new));  //Controller to get the list
+        recycler = root.findViewById(R.id.recyclerView2);
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&custom=true&idFilm= -1",this,this.getContext(),UserLists.class.getCanonicalName(),"getList" );
 
         return root;
     }
 
 
+    @Override
+    public void setList(List<?> newList) {
+        recycler.setAdapter(new CustomListsAdapter((List<UserLists>) newList, this.getClass(), this));
+        recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recycler.setHasFixedSize(false);
+        recycler.setItemViewCacheSize(newList.size());
+    }
 }

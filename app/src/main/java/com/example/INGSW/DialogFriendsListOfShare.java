@@ -17,6 +17,7 @@ import com.example.INGSW.Component.DB.Classes.Contact;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.UserServerController;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -77,6 +78,7 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
 
 
         Button insertInLists = (Button) dialog.getWindow().findViewById(R.id.ShareWhitFriends);
+        PushDownAnim.setPushDownAnimTo(insertInLists);
         insertInLists.setOnClickListener(v -> {
             if (!custom) {
                 if (!selectedLists.isEmpty()) {
