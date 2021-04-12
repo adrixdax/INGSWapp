@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Patterns;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.R;
+import com.example.INGSW.RegistrationScreen;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-
+import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RegistrationController {
@@ -35,36 +35,28 @@ public class RegistrationController {
 
 
     public void registerUser(String email, String password, String rePassword,String nickname,String propic) throws Exception {
-
-
         if (nickname.isEmpty()) {
             throw new Exception("Empty nickname");
         }
-
         if (email.isEmpty()) {
             throw new Exception("Empty Mail");
         }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             throw new Exception("Invalid Mail");
         }
-
         if( checkPasswordField(password))
-
         if(!(password.equals(rePassword))) throw new Exception("Not equal passwords");
-
         if(rePassword.isEmpty()) throw new Exception("Empty rePassword");
-
-
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(regActivity, authResult -> {
                     User user = new User(nickname, email,pic);
                     FirebaseDatabase.getInstance().getReference("Users")
-                            .child((FirebaseAuth.getInstance().getCurrentUser().getUid()))
+                            .child((Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
                             .setValue(user).addOnSuccessListener(regActivity, aVoid -> {
-                                Toast.makeText(regActivity, "Utente registrato correttamente", Toast.LENGTH_LONG).show();
                                 RetrofitResponse.getResponse("Type=PostRequest&registration=" + FirebaseAuth.getInstance().getCurrentUser().getUid(),regActivity,regActivity,null,"getRegistration");
+                                ((RegistrationScreen)regActivity).stopProgressBar();
+                                Toast.makeText(regActivity, "Utente registrato correttamente", Toast.LENGTH_LONG).show();
                                 regActivity.startActivity(new Intent(regActivity, ToolBarActivity.class));
                             });
                 }).addOnFailureListener(regActivity, e -> Toast.makeText(regActivity, e.getMessage(), Toast.LENGTH_LONG).show());
