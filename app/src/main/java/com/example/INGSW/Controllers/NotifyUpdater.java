@@ -33,7 +33,7 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
         NotifyUpdater.bell = bell;
         NotifyUpdater.timer = timer;
         NotifyUpdater.activity = activity;
-        notify = list;
+        NotifyUpdater.notify = list;
     }
 
     public NotifyUpdater(Timer timer, ImageButton bell, Activity activity){
@@ -41,7 +41,7 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     }
 
     public List<?> getNotify(){
-        this.run();
+        newUpdate();
         return notify;
     }
 
@@ -79,6 +79,5 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     @Override
     public void setList(List<?> newList) {
         notify=newList;
-        newUpdate();
     }
 }
