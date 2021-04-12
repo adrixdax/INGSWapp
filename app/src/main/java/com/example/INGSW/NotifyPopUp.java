@@ -23,6 +23,9 @@ import com.example.INGSW.Controllers.NotifyUpdater;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 public class NotifyPopUp extends AppCompatDialogFragment {
@@ -32,8 +35,8 @@ public class NotifyPopUp extends AppCompatDialogFragment {
     private static TextView notifyTextError;
     private static Activity activity;
 
-    public NotifyPopUp(ArrayList<Notify> list, Activity act){
-        notify = list;
+    public NotifyPopUp(List<?> list, Activity act){
+        notify = new ArrayList<>((Collection<? extends Notify>) list);
         activity = act;
     }
 

@@ -12,7 +12,16 @@ public interface RetrofitInterface {
     Call<String> getFilm(@Body String body);
 
     @GET("/notify")
-    Call<String> getNotify(@Query("mid") String param1);
+    Call<String> getNotify(@Query("idUser") String param);
+
+    @GET("/notify")
+    Call<String> setSeen(@Query("Seen") String param);
+
+    @GET("/notify")
+    Call<String> setAccepted(@Query("Accepted") String param);
+
+    @GET("/notify")
+    Call<String> setRefused(@Query("Refused") String param);
 
     @POST("/list")
     Call<String> getList(@Body String body);
