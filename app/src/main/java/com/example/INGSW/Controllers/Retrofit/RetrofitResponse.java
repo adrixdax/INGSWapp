@@ -33,9 +33,7 @@ public class RetrofitResponse {
                 @Override
                 public void onResponse(@NotNull Call<String> call, @NotNull Response<String> response) {
                     try {
-                        if(response.body().isEmpty()){
-                            System.out.println("Empty");
-                        }else if(response.body().startsWith("[")){
+                        if(response.body().startsWith("[") || response.body().isEmpty()){
                             Method methodClassCalled = c.getClass().getMethod("setList", List.class);
                             methodClassCalled.invoke(c,((List<?>) JSONDecoder.getJsonToDecode(response.body(), Class.forName(structureClass))));
                         }else if((response.body().equals("true")) || (response.body().equals("false") )){

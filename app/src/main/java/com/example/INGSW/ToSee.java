@@ -22,14 +22,19 @@ import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
+
+import teaspoon.annotations.OnUi;
 
 public class ToSee extends Fragment implements RetrofitListInterface {
 
-    private TextView title;
     private RecyclerView toSeeFilms;
+    private TextView textToSeeError;
 
     @Nullable
     @Override
@@ -37,11 +42,11 @@ public class ToSee extends Fragment implements RetrofitListInterface {
 
         View root = inflater.inflate(R.layout.to_see_homepage, container, false);
 
-        title = root.findViewById(R.id.textViewTooSee);
         toSeeFilms = root.findViewById(R.id.recyclerViewToSee);
+        textToSeeError = root.findViewById(R.id.textToSeeError);
         ((ToolBarActivity)getActivity()).triggerProgessBar();
             RetrofitResponse.getResponse(
-                    "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")),
+                    "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH"),
                     this,this.getContext(),Film.class.getCanonicalName(),"getList");
 
         return root;
@@ -49,19 +54,26 @@ public class ToSee extends Fragment implements RetrofitListInterface {
 
 
     @Override
+    @OnUi
     public void setList(List<?> newList) {
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
-        adapter.setCss(ToSee.class);
-        adapter.setIdList( String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")));
-        toSeeFilms.setHasFixedSize(false);
-        LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-        toSeeFilms.setLayoutManager(layoutManager);
-        toSeeFilms.setAdapter(adapter);
-        toSeeFilms.setItemViewCacheSize(newList.size());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(toSeeFilms.getContext(),
-                layoutManager.getOrientation());
-        toSeeFilms.addItemDecoration(dividerItemDecoration);
-        toSeeFilms.setVisibility(View.VISIBLE);
-        ((ToolBarActivity)getActivity()).stopProgressBar();
+        if (newList.size() != 0) {
+            textToSeeError.setText("");
+            ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
+            adapter.setCss(ToSee.class);
+            adapter.setIdList(String.valueOf(((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")));
+            toSeeFilms.setHasFixedSize(false);
+            LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+            toSeeFilms.setLayoutManager(layoutManager);
+            toSeeFilms.setAdapter(adapter);
+            toSeeFilms.setItemViewCacheSize(newList.size());
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(toSeeFilms.getContext(),
+                    layoutManager.getOrientation());
+            toSeeFilms.addItemDecoration(dividerItemDecoration);
+            toSeeFilms.setVisibility(View.VISIBLE);
+        }
+        else{
+            textToSeeError.setText("Non ci sono film da vedere");
+        }
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }
