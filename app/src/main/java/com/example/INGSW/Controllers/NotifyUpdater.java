@@ -41,34 +41,12 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     }
 
     public List<?> getNotify(){
-        newUpdate();
         return notify;
     }
 
     @OnUi
     public void run() {
         RetrofitResponse.getResponse(((ToolBarActivity) activity).getUid(),this,activity,Notify.class.getCanonicalName(),"getNotify");
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            @OnUi
-            public void run() {
-                if (notify.size() == 0) {
-                    bell.setImageResource(R.drawable.icons8_notification_30px_1);
-                } else {
-                    boolean allSeen = true;
-                    for (Object not : notify)
-                        if (((Notify)not).getState().equals("PENDING")) {
-                            allSeen = false;
-                            break;
-                        }
-                    if (!allSeen)
-                        bell.setImageResource(R.drawable.icons8_notification_30px_1_active);
-                    else {
-                        bell.setImageResource(R.drawable.icons8_notification_30px_1);
-                    }
-                }
-            }
-        });
         timer.schedule(new NotifyUpdater(timer, bell, activity,notify), 30000);
     }
 
@@ -77,7 +55,23 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     }
 
     @Override
+    @OnUi
     public void setList(List<?> newList) {
         notify=newList;
+        if (notify.size() == 0) {
+            bell.setImageResource(R.drawable.icons8_notification_30px_1);
+        } else {
+            boolean allSeen = true;
+            for (Object not : notify)
+                if (((Notify)not).getState().equals("PENDING")) {
+                    allSeen = false;
+                    break;
+                }
+            if (!allSeen)
+                bell.setImageResource(R.drawable.icons8_notification_30px_1_active);
+            else {
+                bell.setImageResource(R.drawable.icons8_notification_30px_1);
+            }
+        }
     }
 }

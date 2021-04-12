@@ -39,7 +39,6 @@ public class MyReviews extends Fragment implements RetrofitListInterface {
 
     @Override
     public void setList(List<?> newList) {
-
         ReviewsAdapter adapter = new ReviewsAdapter((List<Reviews>) newList, this,ToolBarActivity.getReference());
         adapter.setCss(MyReviews.class);
         recyclerView.setHasFixedSize(false);

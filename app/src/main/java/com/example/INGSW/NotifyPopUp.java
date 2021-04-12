@@ -18,7 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.NotifyAdapter;
 import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.Component.DB.Classes.Reviews;
+import com.example.INGSW.Component.DB.Classes.UserLists;
+import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.NotifyUpdater;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,10 +32,15 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import teaspoon.annotations.OnUi;
+
 public class NotifyPopUp extends AppCompatDialogFragment {
 
     private RecyclerView recycler;
     private static ArrayList<Notify> notify = new ArrayList<>();
+    private ArrayList<UserLists> lists = new ArrayList<>();
+    private ArrayList<Reviews> revs = new ArrayList<>();
+    private ArrayList<Film> films = new ArrayList<>();
     private static TextView notifyTextError;
     private static Activity activity;
 
@@ -59,26 +68,29 @@ public class NotifyPopUp extends AppCompatDialogFragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         recycler = dialog.findViewById(R.id.recyclerViewNotify);
-        NotifyAdapter adapter = new NotifyAdapter(notify, ToolBarActivity.getReference(), this.getContext(), this);
         notifyTextError = dialog.findViewById(R.id.notifyTextError);
-        if (adapter.getItemCount() == 0) {
+        if (notify.isEmpty()) {
             notifyTextError.setText("Nessuna nuova notifica");
+        }else {
+            NotifyAdapter adapter = new NotifyAdapter(notify, ToolBarActivity.getReference(), this.getContext(), this);
+            recycler.setAdapter(adapter);
+            recycler.setItemViewCacheSize(notify.size());
+            recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            recycler.setHasFixedSize(false);
         }
-        recycler.setAdapter(adapter);
-        recycler.setLayoutManager(new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.VERTICAL, false));
-        recycler.setHasFixedSize(false);
         return dialog;
 
     }
 
     @Override
     public void onCancel(@NonNull DialogInterface dialog) {
-        ((NotifyAdapter) Objects.requireNonNull(recycler.getAdapter())).changeStatus();
+        if (recycler.getAdapter() != null) ((NotifyAdapter) Objects.requireNonNull(recycler.getAdapter())).changeStatus();
         super.onCancel(dialog);
     }
 
+    @OnUi
     private static void update() {
-        activity.runOnUiThread(() -> notifyTextError.setText("Nessuna nuova notifica"));
+        notifyTextError.setText("Nessuna nuova notifica");
     }
 
     public static void noMoreNotify() {

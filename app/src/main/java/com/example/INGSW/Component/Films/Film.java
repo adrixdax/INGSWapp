@@ -63,13 +63,11 @@ public class Film {
         this.film_Title = title;
     }
 
-    public Film(List<Film> listOfFilm) {
-        listOfFilm = listOfFilm;
+    public Film(String imageUrl) {
+        new Film(imageUrl,"");
     }
 
-
-    public Film(String imageUrl) {
-        this.posterPath = imageUrl;
+    public Film() {
     }
 
     public int getId_Film() {
