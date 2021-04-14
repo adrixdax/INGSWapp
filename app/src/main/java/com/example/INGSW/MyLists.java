@@ -1,6 +1,7 @@
 package com.example.INGSW;
 
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,33 +35,30 @@ public class MyLists extends Fragment implements RetrofitListInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_my_lists, container, false);
-
-
         ImageButton addList = (ImageButton) root.findViewById(R.id.addListButton);
         addList.setOnClickListener(v -> {
-
             AddCustomList nextFragment = new AddCustomList();
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
             transaction.addToBackStack(null);
             transaction.commit();
-
         });
-
         recycler = root.findViewById(R.id.recyclerView2);
+        ((ToolBarActivity)getActivity()).triggerProgessBar();
         RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&custom=true&idFilm= -1",this,this.getContext(),UserLists.class.getCanonicalName(),"getList" );
-
         return root;
     }
 
-
     @Override
     public void setList(List<?> newList) {
-        recycler.setAdapter(new CustomListsAdapter((List<UserLists>) newList, this.getClass(), this));
-        recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recycler.setHasFixedSize(false);
-        recycler.setItemViewCacheSize(newList.size());
+        if (newList.size() != 0) {
+            recycler.setAdapter(new CustomListsAdapter((List<UserLists>) newList, this.getClass(), this));
+            recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            recycler.setHasFixedSize(false);
+            recycler.setItemViewCacheSize(newList.size());
+        }
+        ((ToolBarActivity)getActivity()).stopProgressBar();
     }
+
 }

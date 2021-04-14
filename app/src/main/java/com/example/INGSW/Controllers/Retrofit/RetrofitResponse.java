@@ -5,18 +5,22 @@ import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import teaspoon.annotations.OnBackground;
 
 public class RetrofitResponse {
 
     private static Boolean response = Boolean.FALSE;
 
-    public static <type> void getResponse(String body, Object c, Context context, String structureClass, String callMethod) {
+    @OnBackground
+    public static <type> void getResponse(String body, Object c, Context context, String structureClass, String callMethod, Object toGlide) {
         RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
+        System.out.println(body);
         try {
             Method methodRetrofit = service.getClass().getMethod(callMethod,String.class);
             Call<type> call = (Call<type>) methodRetrofit.invoke(service, body);
@@ -24,12 +28,17 @@ public class RetrofitResponse {
                 @Override
                 public void onResponse(Call<type> call, Response<type> response) {
                         try {
-                            System.out.println(response.body().getClass().getSimpleName());
-                            if (response.body() instanceof Boolean) {
-
-                            } else {
+                            if (response.body() instanceof List) {
                                 Method methodClassCalled = c.getClass().getMethod("setList", List.class);
-                                methodClassCalled.invoke(c, response.body());
+                                methodClassCalled.invoke(c, response.body() != null ? response.body() : new ArrayList<>());
+                            }
+                            else if (response.body() instanceof String){
+                                System.out.println(response.body());
+                            }
+                            else if (response.body() instanceof Boolean && toGlide != null){
+                                Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class,Object.class);
+                                methodClassCalled.invoke(c, response.body(),toGlide);
+
                             }
                         }catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                             e.printStackTrace();
@@ -46,6 +55,11 @@ public class RetrofitResponse {
             e.printStackTrace();
         }
     }
+
+    public static void getResponse(String body, Object c, Context context, String structureClass, String callMethod) {
+        getResponse(body,c,context,structureClass,callMethod,null);
+    }
+
 
     public static Boolean getResponse() {
         return response;

@@ -37,7 +37,22 @@ public interface RetrofitInterface {
     Call<List<UserLists>> getList(@Body String body);
 
     @POST("/list")
+    Call<String> addFilm(@Body String body);
+
+    @POST("/list")
+    Call<String> removeFilmInList(@Body String body);
+
+    @POST("/user")
+    Call<String> addList(@Body String body);
+
+    @POST("/user")
+    Call<String> deleteCustomList(@Body String body);
+
+    @POST("/list")
     Call<List<Film>> getFilmInList(@Body String body);
+
+    @POST("/list")
+    Call<Boolean> isFilmInList(@Body String body);
 
     @POST("/review")
     Call<List<Reviews>> getReview(@Body String body);

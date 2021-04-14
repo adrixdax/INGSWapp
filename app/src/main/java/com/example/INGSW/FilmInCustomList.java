@@ -30,10 +30,8 @@ import java.util.concurrent.ExecutionException;
 
 public class FilmInCustomList extends Fragment implements RetrofitListInterface {
 
-    private TextView title;
-    private TextView description;
     private RecyclerView filmInCustomList;
-    private UserLists list;
+    private final UserLists list;
 
     public FilmInCustomList(UserLists idList) {
         this.list = idList;
@@ -45,16 +43,16 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
 
         View root = inflater.inflate(R.layout.film_in_list_custom, container, false);
 
-        title = root.findViewById(R.id.textViewTooSee);
+        TextView title = root.findViewById(R.id.textViewTooSee);
         filmInCustomList = root.findViewById(R.id.recyclerViewFilmInListCustom);
-        description = root.findViewById(R.id.listDescription);
+        TextView description = root.findViewById(R.id.listDescription);
         description.setText(list.getDescription());
         title.setText(list.getTitle());
 
-        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        ((ToolBarActivity) getActivity()).triggerProgessBar();
         RetrofitResponse.getResponse(
                 "Type=PostRequest&idList=" + list.getIdUserList(),
-                this,this.getContext(),Film.class.getCanonicalName(),"getFilmInList");
+                this, this.getContext(), Film.class.getCanonicalName(), "getFilmInList");
 
         return root;
     }
@@ -62,18 +60,20 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
 
     @Override
     public void setList(List<?> newList) {
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
-        adapter.setCss(FilmInCustomList.class);
-        adapter.setIdList(String.valueOf(list.getIdUserList()));
-        filmInCustomList.setHasFixedSize(false);
-        filmInCustomList.setItemViewCacheSize(newList.size());
-        LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-        filmInCustomList.setLayoutManager(layoutManager);
-        filmInCustomList.setAdapter(adapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(filmInCustomList.getContext(),
-                layoutManager.getOrientation());
-        filmInCustomList.addItemDecoration(dividerItemDecoration);
-        filmInCustomList.setVisibility(View.VISIBLE);
-        ((ToolBarActivity)getActivity()).stopProgressBar();
+        if (newList.size() != 0) {
+            ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
+            adapter.setCss(FilmInCustomList.class);
+            adapter.setIdList(String.valueOf(list.getIdUserList()));
+            filmInCustomList.setHasFixedSize(false);
+            filmInCustomList.setItemViewCacheSize(newList.size());
+            LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+            filmInCustomList.setLayoutManager(layoutManager);
+            filmInCustomList.setAdapter(adapter);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(filmInCustomList.getContext(),
+                    layoutManager.getOrientation());
+            filmInCustomList.addItemDecoration(dividerItemDecoration);
+            filmInCustomList.setVisibility(View.VISIBLE);
+        }
+        ((ToolBarActivity) getActivity()).stopProgressBar();
     }
 }

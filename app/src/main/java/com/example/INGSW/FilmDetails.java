@@ -17,13 +17,16 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitBooleanInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.concurrent.ExecutionException;
 
-public class FilmDetails extends Fragment {
+import teaspoon.annotations.OnUi;
+
+public class FilmDetails extends Fragment implements RetrofitBooleanInterface {
 
     private Film film;
 
@@ -42,6 +45,7 @@ public class FilmDetails extends Fragment {
     private ImageButton imageButtonToWatch;
     private ImageButton imageButtonCustomList;
     private ImageButton goToReview;
+    private short counter=0;
 
 
     public FilmDetails(Film film) {
@@ -67,13 +71,15 @@ public class FilmDetails extends Fragment {
         Glide.with(root.getContext()).load(pic).into(posterPath);
         plot.setText(film.getPlot());
         releaseDate.setText(film.getRelease_Date());
-        String genere = "";
-        for (int i = 0; i < film.getGenres().length; i++) {
-            genere = genere + film.getGenres()[i] + " - ";
+        StringBuilder genere = new StringBuilder();
+        if (film.getGenres() != null)
+        {
+            for (int i = 0; i < film.getGenres().length; i++) {
+                genere.append(film.getGenres()[i]).append(" - ");
+            }
+            genere = new StringBuilder(genere.substring(0, genere.length() - 3));
         }
-        genere = genere.substring(0, genere.length() - 3);
-
-        genres.setText(genere);
+        genres.setText(genere.toString());
         time.setText(String.valueOf(film.getRuntime()));
 
         imageButtonWatch = (ImageButton) root.findViewById(R.id.imageButtonWatch);
@@ -85,152 +91,100 @@ public class FilmDetails extends Fragment {
         ((ToolBarActivity)getActivity()).triggerProgessBar();
 
         RetrofitResponse.getResponse(
-                    "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED"))
-                            + "&idFilm=" + String.valueOf(film.getId_Film()),
-                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
-
-            imageButtonFavoritesblue = RetrofitResponse.getResponse();
-
-
+                    "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")
+                            + "&idFilm=" + film.getId_Film(),
+                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"isFilmInList",imageButtonFavorites);
 
         RetrofitResponse.getResponse(
-                    "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH"))
-                            + "&idFilm=" + String.valueOf(film.getId_Film()),
-                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
-
-            imageButtonWatchblue = RetrofitResponse.getResponse();
-
-
+                    "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")
+                            + "&idFilm=" + film.getId_Film(),
+                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"isFilmInList",imageButtonWatch);
         RetrofitResponse.getResponse(
-                    "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH"))
-                            + "&idFilm=" + String.valueOf(film.getId_Film()),
-                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
+                    "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")
+                            + "&idFilm=" + film.getId_Film(),
+                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"isFilmInList",imageButtonToWatch);
 
-            imageButtonToWatchblue = RetrofitResponse.getResponse();
+        imageButtonWatch.setOnClickListener(v -> {
+            if (!imageButtonWatchblue) {
+                Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_50px).into(imageButtonWatch);
+                RetrofitResponse.getResponse(
+                        "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")
+                                + "&idFilm=" + film.getId_Film() +"&addFilm=true",
+                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"addFilm");
+
+                imageButtonWatchblue = true;
+            } else {
+                Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_30px_4).into(imageButtonWatch);
+                RetrofitResponse.getResponse(
+                        "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH")
+                                + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
+                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"removeFilmInList");
+
+                imageButtonWatchblue = false;
+            }
+        });
+
+        imageButtonToWatch.setOnClickListener(v -> {
+            if (!imageButtonToWatchblue) {
+                Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
+                RetrofitResponse.getResponse(
+                        "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")
+                                + "&idFilm=" + film.getId_Film() +"&addFilm=true",
+                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"addFilm");
+                imageButtonToWatchblue = true;
+            } else {
+                Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px).into(imageButtonToWatch);
+                RetrofitResponse.getResponse(
+                        "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH")
+                                + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
+                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"removeFilmInList");
+                imageButtonToWatchblue = false;
+            }
+        });
 
 
+        imageButtonFavorites.setOnClickListener(v -> {
+            if (!imageButtonFavoritesblue) {
+                Glide.with(root.getContext()).load(R.drawable.icons8_star_32px).into(imageButtonFavorites);
+                RetrofitResponse.getResponse(
+                        "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")
+                                + "&idFilm=" + film.getId_Film() +"&addFilm=true",
+                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"addFilm");
+                imageButtonFavoritesblue = true;
+            } else {
+                Glide.with(root.getContext()).load(R.drawable.icons8_star_26px).into(imageButtonFavorites);
+                RetrofitResponse.getResponse(
+                        "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED")
+                                + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
+                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"removeFilmInList");
 
-
-        if (imageButtonFavoritesblue) {
-
-            Glide.with(root.getContext()).load(R.drawable.icons8_star_32px).into(imageButtonFavorites);
-        }
-
-        if (imageButtonWatchblue) {
-
-            Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_50px).into(imageButtonWatch);
-        }
-
-        if (imageButtonToWatchblue) {
-
-            Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
-        }
-        ((ToolBarActivity)getActivity()).stopProgressBar();
-
-        imageButtonWatch.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (!imageButtonWatchblue) {
-                    Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_50px).into(imageButtonWatch);
-                    RetrofitResponse.getResponse(
-                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH"))
-                                    + "&idFilm=" + film.getId_Film() +"&addFilm=true",
-                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
-
-                    imageButtonWatchblue = true;
-                } else {
-                    Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_30px_4).into(imageButtonWatch);
-                    RetrofitResponse.getResponse(
-                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("WATCH"))
-                                    + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
-                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
-
-                    imageButtonWatchblue = false;
-                }
+                imageButtonFavoritesblue = false;
             }
         });
 
         PushDownAnim.setPushDownAnimTo(goToReview);
-        goToReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment nextFragment;
-                FragmentTransaction transaction;
-                nextFragment = new ReviewScreen(String.valueOf(film.getId_Film()));
-                transaction = FilmDetails.this.getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.nav_host_fragment, nextFragment, "FilmReviews");
+        goToReview.setOnClickListener(v -> {
+            Fragment nextFragment;
+            FragmentTransaction transaction;
+            nextFragment = new ReviewScreen(String.valueOf(film.getId_Film()));
+            transaction = FilmDetails.this.getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment, nextFragment, "FilmReviews");
 
-                if(imageButtonWatchblue){
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }else {
-                    SpoilerAlertDIalog dlg = new SpoilerAlertDIalog(String.valueOf(film.getId_Film()), transaction);
-                    dlg.show(getChildFragmentManager(), "SpoilerAllert");
-                }
+            if(imageButtonWatchblue){
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }else {
+                SpoilerAlertDIalog dlg = new SpoilerAlertDIalog(String.valueOf(film.getId_Film()), transaction);
+                dlg.show(getChildFragmentManager(), "SpoilerAllert");
             }
         });
 
-        imageButtonToWatch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!imageButtonToWatchblue) {
-                    Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
-                    RetrofitResponse.getResponse(
-                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH"))
-                                    + "&idFilm=" + film.getId_Film() +"&addFilm=true",
-                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
-
-                    imageButtonToWatchblue = true;
-                } else {
-                    Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px).into(imageButtonToWatch);
-
-
-                    RetrofitResponse.getResponse(
-                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH"))
-                                    + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
-                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
-
-                    imageButtonToWatchblue = false;
-                }
-            }
-        });
-
-
-        imageButtonFavorites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!imageButtonFavoritesblue) {
-                    Glide.with(root.getContext()).load(R.drawable.icons8_star_32px).into(imageButtonFavorites);
-
-                    RetrofitResponse.getResponse(
-                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED"))
-                                    + "&idFilm=" + film.getId_Film() +"&addFilm=true",
-                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
-
-                    imageButtonFavoritesblue = true;
-                } else {
-                    Glide.with(root.getContext()).load(R.drawable.icons8_star_26px).into(imageButtonFavorites);
-
-                    RetrofitResponse.getResponse(
-                            "Type=PostRequest&idList=" + String.valueOf(((ToolBarActivity) getActivity()).getContaiinerItem().get("PREFERED"))
-                                    + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
-                            FilmDetails.this,getContext(),Film.class.getCanonicalName(),"getList");
-
-                    imageButtonFavoritesblue = false;
-                }
-            }
-        });
 
         imageButtonCustomList = (ImageButton) root.findViewById(R.id.imageButtonCustomList);
-        imageButtonCustomList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogCustomlList fragment = new DialogCustomlList();
-                fragment.setIdFilmToInsert(film.getId_Film());
-                fragment.show(getChildFragmentManager(), "CustomList");
-                //new DialogCustomlList().show(getActivity().getSupportFragmentManager(), "6");
-            }
+        imageButtonCustomList.setOnClickListener(v -> {
+            DialogCustomlList fragment = new DialogCustomlList();
+            fragment.setIdFilmToInsert(film.getId_Film());
+            fragment.show(getChildFragmentManager(), "CustomList");
         });
 
 
@@ -239,4 +193,23 @@ public class FilmDetails extends Fragment {
 
     }
 
+    @Override
+    @OnUi
+    public void glideObject(Boolean b, Object toGlide) {
+        if (((ImageButton)toGlide).equals(imageButtonFavorites) && b){
+            Glide.with(getContext()).load(R.drawable.icons8_star_32px).into(imageButtonFavorites);
+            imageButtonFavoritesblue=true;
+        }
+        if (((ImageButton)toGlide).equals(imageButtonWatch) && b) {
+            Glide.with(getContext()).load(R.drawable.icons8_closed_eye_50px).into(imageButtonWatch);
+            imageButtonWatchblue=true;
+        }
+
+        if (((ImageButton)toGlide).equals(imageButtonToWatch) && b) {
+            Glide.with(getContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
+            imageButtonToWatchblue=true;
+        }
+        counter++;
+        if (counter==3) ((ToolBarActivity)getActivity()).stopProgressBar();
+    }
 }

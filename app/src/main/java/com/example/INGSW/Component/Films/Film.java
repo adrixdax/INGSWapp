@@ -11,7 +11,7 @@ import java.util.List;
 
 import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Film {
 
     @JsonProperty("id_Film")

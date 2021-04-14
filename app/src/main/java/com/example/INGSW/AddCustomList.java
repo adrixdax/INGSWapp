@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.UserServerController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -43,19 +44,7 @@ public class AddCustomList extends Fragment {
         cancel.setOnClickListener((View.OnClickListener) v -> ((ToolBarActivity) getActivity()).onBackPressed());
 
         add.setOnClickListener((View.OnClickListener) v -> {
-
-            UserServerController usc = new UserServerController();
-            usc.setUserId(((ToolBarActivity) getActivity()).getUid());
-            usc.setListTitle(String.valueOf(title.getText()));
-            usc.setListDescription(String.valueOf(description.getText()));
-            usc.setListDescription(String.valueOf(description.getText()).length() == 0 ? "\0" : String.valueOf(description.getText()));
-            try {
-                usc.execute("addCustomList").get();
-                usc.isCancelled();
-            } catch (ExecutionException | InterruptedException e) {
-                e.printStackTrace();
-            }
-
+            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&addList=true&listTitle=" + String.valueOf(title.getText()) + (String.valueOf(description.getText()).length() != 0 ? "&listDescription=" + String.valueOf(description.getText()) : ""),AddCustomList.this,getContext(),User.class.getCanonicalName(),"addList");
             ((ToolBarActivity) getActivity()).onBackPressed();
 
         });

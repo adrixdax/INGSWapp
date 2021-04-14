@@ -1,5 +1,6 @@
 package com.example.INGSW.Component.DB.Adapters;
 
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.bumptech.glide.Glide.with;
 
 public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.ViewHolder> {
-    private final List<UserLists> listofdata;
+    private static List<UserLists> listofdata;
 
     private Class css = null;
     private View listItem;
@@ -37,15 +38,15 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
     private final Fragment startFragment;
 
 
-    public CustomListsAdapter(List<UserLists> listofdata, Class css, List<UserLists> selectedList) {
-        this.listofdata = listofdata;
+    public CustomListsAdapter(List<UserLists> list, Class css, List<UserLists> selectedList) {
+        listofdata = list;
         this.css = css;
         this.selectedList = selectedList;
         startFragment = null;
     }
 
-    public CustomListsAdapter(List<UserLists> listofdata, Class css, Fragment startFragment) {
-        this.listofdata = listofdata;
+    public CustomListsAdapter(List<UserLists> list, Class css, Fragment startFragment) {
+        listofdata = list;
         this.css = css;
         this.startFragment = startFragment;
     }
@@ -71,12 +72,10 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
                 holder.selectItem.setOnCheckedChangeListener(null);
                 holder.selectItem.setChecked(false);
                 holder.selectItem.setClickable(false);
-
                 holder.relativeLayout.setOnClickListener(v -> {
                     if (!holder.selectItem.isChecked()) {
                         holder.selectItem.setChecked(true);
                         selectedList.add(listofdata.get(position));
-
                     } else {
                         holder.selectItem.setChecked(false);
                         selectedList.remove(listofdata.get(position));
@@ -96,7 +95,7 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
                 transaction.commit();
             });
             holder.circleList.setOnLongClickListener(v -> {
-                ChooseActionDialog dlg = new ChooseActionDialog(true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle());
+                ChooseActionDialog dlg = new ChooseActionDialog(true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle(),startFragment);
                 dlg.show(((ToolBarActivity) v.getContext()).getSupportFragmentManager(), "Choose action");
                 return true;
             });
@@ -147,4 +146,5 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
     public void setCss(Class css) {
         this.css = css;
     }
+
 }
