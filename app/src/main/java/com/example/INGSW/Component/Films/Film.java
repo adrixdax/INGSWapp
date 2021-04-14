@@ -1,11 +1,17 @@
 package com.example.INGSW.Component.Films;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.util.List;
 
+import static com.fasterxml.jackson.databind.DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Film {
 
     @JsonProperty("id_Film")
@@ -21,9 +27,10 @@ public class Film {
     @JsonProperty("runtime")
     private int runtime;
     @JsonProperty("genres")
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     private String[] genres;
     @JsonProperty("cast")
-    private Cast[] cast;
+    private List<Cast> cast;
     @JsonProperty("counter")
     private int counter;
 
@@ -36,7 +43,7 @@ public class Film {
                 @JsonProperty("release_Date") String release_Date,
                 @JsonProperty("runtime") int runtime,
                 @JsonProperty("genres") String[] genres,
-                @JsonProperty("cast") Cast[] cast,
+                @JsonProperty("cast") List<Cast> cast,
                 @JsonProperty("counter") int counter) {
         this.id_Film = id_Film;
         this.film_Title = film_Title;
@@ -133,12 +140,12 @@ public class Film {
         this.genres = genres;
     }
 
-    public Cast[] getCast() {
+    public List<Cast> getCast() {
         return cast;
     }
 
     @JsonSetter("cast")
-    public void setCast(Cast[] cast) {
+    public void setCast(List<Cast> cast) {
         this.cast = cast;
     }
 

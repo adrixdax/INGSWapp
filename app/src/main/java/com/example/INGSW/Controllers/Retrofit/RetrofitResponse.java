@@ -3,11 +3,6 @@ package com.example.INGSW.Controllers.Retrofit;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.INGSW.Utility.JSONDecoder;
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import org.jetbrains.annotations.NotNull;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
@@ -18,37 +13,32 @@ import retrofit2.Response;
 
 public class RetrofitResponse {
 
-    private static Boolean response= Boolean.FALSE;
+    private static Boolean response = Boolean.FALSE;
 
-
-
-    public static void getResponse(String body, Object c, Context context, String structureClass, String callMethod) {
+    public static <type> void getResponse(String body, Object c, Context context, String structureClass, String callMethod) {
         RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
-        Method methodRetrofit = null;
         try {
-            methodRetrofit = service.getClass().getMethod(callMethod,String.class);
-            Call<String> call = (Call<String>) methodRetrofit.invoke(service, body);
-            assert call != null;
-            call.enqueue(new Callback<String>() {
+            Method methodRetrofit = service.getClass().getMethod(callMethod,String.class);
+            Call<type> call = (Call<type>) methodRetrofit.invoke(service, body);
+            call.enqueue(new Callback<type>() {
                 @Override
-                public void onResponse(@NotNull Call<String> call, @NotNull Response<String> response) {
-                    try {
-                        if(response.body().startsWith("[") || response.body().isEmpty() ){
-                            Method methodClassCalled = c.getClass().getMethod("setList", List.class);
-                            methodClassCalled.invoke(c,((List<?>) JSONDecoder.getJsonToDecode(response.body(), Class.forName(structureClass))));
-                        }else if((response.body().equals("true")) || (response.body().equals("false") )){
-                           setResponse(Boolean.parseBoolean(response.body()));
-                        }else {
-                            System.out.println(response.body());
+                public void onResponse(Call<type> call, Response<type> response) {
+                        try {
+                            System.out.println(response.body().getClass().getSimpleName());
+                            if (response.body() instanceof Boolean) {
+                                assert response.body().equals(true);
+                            } else {
+                                Method methodClassCalled = c.getClass().getMethod("setList", List.class);
+                                methodClassCalled.invoke(c, response.body());
+                            }
+                        }catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JsonProcessingException | NoSuchMethodException | IllegalAccessException | InvocationTargetException | ClassNotFoundException e) {
-                        e.printStackTrace();
                     }
-                }
 
                 @Override
-                public void onFailure(@NotNull Call<String> call, @NotNull Throwable t) {
-                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
+                public void onFailure(Call<type> call, Throwable t) {
+                    Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
                 }
             });
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
