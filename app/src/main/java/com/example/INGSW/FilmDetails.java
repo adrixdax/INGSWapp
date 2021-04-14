@@ -21,7 +21,7 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import teaspoon.annotations.OnUi;
 
-public class FilmDetails extends Fragment implements RetrofitBooleanInterface {
+public class FilmDetails extends Fragment {
 
     private Film film;
 
