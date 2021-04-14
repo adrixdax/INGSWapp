@@ -47,7 +47,7 @@ public class ToSee extends Fragment implements RetrofitListInterface {
         ((ToolBarActivity)getActivity()).triggerProgessBar();
             RetrofitResponse.getResponse(
                     "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH"),
-                    this,this.getContext(),Film.class.getCanonicalName(),"getList");
+                    this,this.getContext(),Film.class.getCanonicalName(),"getFilmInList");
 
         return root;
     }
@@ -60,6 +60,7 @@ public class ToSee extends Fragment implements RetrofitListInterface {
             textToSeeError.setText("");
             ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
             adapter.setCss(ToSee.class);
+            System.out.println(((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH"));
             adapter.setIdList(String.valueOf(((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")));
             toSeeFilms.setHasFixedSize(false);
             LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);

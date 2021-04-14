@@ -26,7 +26,7 @@ public class RetrofitResponse {
                         try {
                             System.out.println(response.body().getClass().getSimpleName());
                             if (response.body() instanceof Boolean) {
-                                assert response.body().equals(true);
+
                             } else {
                                 Method methodClassCalled = c.getClass().getMethod("setList", List.class);
                                 methodClassCalled.invoke(c, response.body());
@@ -39,6 +39,7 @@ public class RetrofitResponse {
                 @Override
                 public void onFailure(Call<type> call, Throwable t) {
                     Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
+                    t.printStackTrace();
                 }
             });
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {

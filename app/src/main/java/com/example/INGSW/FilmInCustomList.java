@@ -53,8 +53,8 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
 
         ((ToolBarActivity)getActivity()).triggerProgessBar();
         RetrofitResponse.getResponse(
-                "Type=PostRequest&idList=" + String.valueOf(list.getIdUserList()),
-                this,this.getContext(),Film.class.getCanonicalName(),"getList");
+                "Type=PostRequest&idList=" + list.getIdUserList(),
+                this,this.getContext(),Film.class.getCanonicalName(),"getFilmInList");
 
         return root;
     }

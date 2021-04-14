@@ -33,7 +33,7 @@ public class SeenFilms extends Fragment implements RetrofitListInterface {
         View root = inflater.inflate(R.layout.fragment_seen_films, container, false);
         recyclerView = root.findViewById(R.id.recyclerViewUserSeen);
 
-        RetrofitResponse.getResponse("Type=PostRequest&idList="+((ToolBarActivity)getContext()).getContaiinerItem().get("WATCH"),this,((ToolBarActivity)getContext()),Film.class.getCanonicalName(),"getList");
+        RetrofitResponse.getResponse("Type=PostRequest&idList="+((ToolBarActivity)getContext()).getContaiinerItem().get("WATCH"),this,((ToolBarActivity)getContext()),Film.class.getCanonicalName(),"getFilmInList");
         return root;
     }
 

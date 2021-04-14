@@ -36,6 +36,9 @@ public interface RetrofitInterface {
     @POST("/list")
     Call<List<UserLists>> getList(@Body String body);
 
+    @POST("/list")
+    Call<List<Film>> getFilmInList(@Body String body);
+
     @POST("/review")
     Call<List<Reviews>> getReview(@Body String body);
 
