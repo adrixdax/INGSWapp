@@ -11,18 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.Controllers.Retrofit.RetrofitBooleanInterface;
-import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.thekhaeng.pushdownanim.PushDownAnim;
-
-import java.util.concurrent.ExecutionException;
 
 import teaspoon.annotations.OnUi;
 
@@ -193,7 +188,6 @@ public class FilmDetails extends Fragment implements RetrofitBooleanInterface {
 
     }
 
-    @Override
     @OnUi
     public void glideObject(Boolean b, Object toGlide) {
         if (((ImageButton)toGlide).equals(imageButtonFavorites) && b){
