@@ -30,7 +30,7 @@
         android:layout_width="88dp"
         android:layout_height="47dp"
         android:layout_marginStart="149dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/rounded_list_obj"
         android:backgroundTint="#AC2525"
@@ -42,9 +42,33 @@
         android:textColor="#FFFFFF"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/personal_profile_image"
         app:layout_constraintTop_toBottomOf="@+id/personal_profile_mail"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/Friends_button"
+        android:layout_width="88dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/rounded_list_obj"
+        android:backgroundTint="@color/colorAccent"
+        android:clickable="true"
+        android:focusable="true"
+        android:fontFamily="@font/poppins_bold"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/mylists_button"
+        app:layout_constraintEnd_toStartOf="@+id/Logout_button"
+        app:layout_constraintHorizontal_bias="0.73"
+        app:layout_constraintStart_toEndOf="@+id/pencilPersonalArea"
+        app:layout_constraintTop_toBottomOf="@+id/personal_profile_mail"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -104,6 +128,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pencilPersonalArea" />
 
+
     <TextView
         android:id="@+id/personal_profile_mail"
         android:layout_width="239dp"
@@ -113,12 +138,10 @@
         android:text="@string/mail"
         android:textColor="#817171"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.354"
         app:layout_constraintStart_toEndOf="@+id/personal_profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/personal_profile_nick"
-        app:layout_constraintVertical_bias="0.012" />
+        app:layout_constraintTop_toBottomOf="@+id/personal_profile_nick" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/personal_profile_image"
@@ -155,7 +178,6 @@
         android:id="@+id/pencilPersonalArea"
         android:layout_width="34dp"
         android:layout_height="53dp"
-        android:contentDescription="TODO"
         android:tint="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@id/personal_profile_mail"
@@ -163,5 +185,7 @@
         app:layout_constraintStart_toEndOf="@id/personal_profile_image"
         app:layout_constraintTop_toBottomOf="@id/personal_profile_mail"
         app:srcCompat="@drawable/pencil" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

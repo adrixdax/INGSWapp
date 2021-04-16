@@ -1,5 +1,6 @@
 package com.example.INGSW.Controllers.Retrofit;
 
+import com.example.INGSW.Component.DB.Classes.Contact;
 import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.example.INGSW.Component.DB.Classes.UserLists;
@@ -59,5 +60,8 @@ public interface RetrofitInterface {
 
     @POST("/registration")
     Call<Boolean> getRegistration(@Body String body);
+
+    @POST("/user")
+    Call<List<Contact>> getFriends(@Body String body);
 
 }

@@ -39,12 +39,16 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
         Button logout = (Button) root.findViewById(R.id.Logout_button);
         Button myreviews = (Button) root.findViewById(R.id.myreviews_button);
         ImageView pencil = (ImageView) root.findViewById(R.id.pencilPersonalArea);
+        Button friends = (Button) root.findViewById(R.id.Friends_button);
+
         pencil.setOnClickListener(this);
         mylists.setOnClickListener(this);
         myfavs.setOnClickListener(this);
         seenfilms.setOnClickListener(this);
         myreviews.setOnClickListener(this);
-        PushDownAnim.setPushDownAnimTo(mylists, myfavs, seenfilms, logout, myreviews, pencil)
+        friends.setOnClickListener(this);
+
+        PushDownAnim.setPushDownAnimTo(mylists, myfavs, seenfilms, logout, myreviews, pencil,friends)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                 .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
@@ -131,6 +135,13 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
                 nextFragment = new FragmentAvatarScreen();
                 transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "avatar");
+                transaction.addToBackStack(null);
+                transaction.commit();
+                break;
+            case R.id.Friends_button:
+                nextFragment = new ListOfFriendsScreen();
+                transaction = PersonalArea.this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "friends");
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
