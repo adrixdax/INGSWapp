@@ -81,16 +81,16 @@ public class FilmDetails extends Fragment {
         RetrofitResponse.getResponse(
                     "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("PREFERED")
                             + "&idFilm=" + film.getId_Film(),
-                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"isFilmInList",imageButtonFavorites);
+                    FilmDetails.this,getContext(),"isFilmInList",imageButtonFavorites);
 
         RetrofitResponse.getResponse(
                     "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("WATCH")
                             + "&idFilm=" + film.getId_Film(),
-                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"isFilmInList",imageButtonWatch);
+                    FilmDetails.this,getContext(),"isFilmInList",imageButtonWatch);
         RetrofitResponse.getResponse(
                     "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")
                             + "&idFilm=" + film.getId_Film(),
-                    FilmDetails.this,getContext(),Film.class.getCanonicalName(),"isFilmInList",imageButtonToWatch);
+                    FilmDetails.this,getContext(),"isFilmInList",imageButtonToWatch);
 
         imageButtonWatch.setOnClickListener(v -> {
             if (!imageButtonWatchblue) {
@@ -98,7 +98,7 @@ public class FilmDetails extends Fragment {
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("WATCH")
                                 + "&idFilm=" + film.getId_Film() +"&addFilm=true",
-                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"addFilm");
+                        FilmDetails.this,getContext(),"addFilm");
 
                 imageButtonWatchblue = true;
             } else {
@@ -106,7 +106,7 @@ public class FilmDetails extends Fragment {
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("WATCH")
                                 + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
-                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"removeFilmInList");
+                        FilmDetails.this,getContext(),"removeFilmInList");
 
                 imageButtonWatchblue = false;
             }
@@ -118,14 +118,14 @@ public class FilmDetails extends Fragment {
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")
                                 + "&idFilm=" + film.getId_Film() +"&addFilm=true",
-                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"addFilm");
+                        FilmDetails.this,getContext(),"addFilm");
                 imageButtonToWatchblue = true;
             } else {
                 Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px).into(imageButtonToWatch);
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")
                                 + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
-                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"removeFilmInList");
+                        FilmDetails.this,getContext(),"removeFilmInList");
                 imageButtonToWatchblue = false;
             }
         });
@@ -137,14 +137,14 @@ public class FilmDetails extends Fragment {
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("PREFERED")
                                 + "&idFilm=" + film.getId_Film() +"&addFilm=true",
-                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"addFilm");
+                        FilmDetails.this,getContext(),"addFilm");
                 imageButtonFavoritesblue = true;
             } else {
                 Glide.with(root.getContext()).load(R.drawable.icons8_star_26px).into(imageButtonFavorites);
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("PREFERED")
                                 + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
-                        FilmDetails.this,getContext(),Film.class.getCanonicalName(),"removeFilmInList");
+                        FilmDetails.this,getContext(),"removeFilmInList");
 
                 imageButtonFavoritesblue = false;
             }

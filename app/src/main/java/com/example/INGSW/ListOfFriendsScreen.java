@@ -40,10 +40,8 @@ public class ListOfFriendsScreen extends Fragment implements RetrofitListInterfa
         ((ToolBarActivity)requireActivity()).triggerProgessBar();
         textFriendsError = root.findViewById(R.id.Textview_friendsError);
         recyclerView = root.findViewById(R.id.recyclerViewUserMyFriends);
-        RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + ((ToolBarActivity)requireActivity()).getUid(),ListOfFriendsScreen.this,this.getContext(),"","getFriends");
-
+        RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + ((ToolBarActivity)requireActivity()).getUid(),ListOfFriendsScreen.this,this.getContext(),"getFriends");
         return root;
-        // Inflate the layout for this fragment
 
     }
 

@@ -33,10 +33,9 @@ public class MyFavs extends Fragment implements RetrofitListInterface {
 
         View root = inflater.inflate(R.layout.fragment_my_favs, container, false);
         ((ToolBarActivity) requireActivity()).triggerProgessBar();
-        RetrofitResponse.getResponse("Type=PostRequest&idList=" +((ToolBarActivity) requireContext()).getContaiinerItem().get("PREFERED"),MyFavs.this,this.getContext(), Film.class.getCanonicalName(),"getFilmInList");
         recyclerView = root.findViewById(R.id.recyclerViewUserMyPrefered);
         textFavsError = root.findViewById(R.id.Textview_favsError);
-
+        RetrofitResponse.getResponse("Type=PostRequest&idList=" +((ToolBarActivity) requireContext()).getContaiinerItem().get("PREFERED"),MyFavs.this,this.getContext(),"getFilmInList");
         return root;
     }
 

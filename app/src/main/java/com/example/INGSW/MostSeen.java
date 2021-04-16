@@ -40,7 +40,7 @@ public class MostSeen extends Fragment implements RetrofitListInterface {
         ((ToolBarActivity) requireActivity()).triggerProgessBar();
         RetrofitResponse.getResponse(
                 "Type=PostRequest&mostviewed=true",
-                this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
+                this,this.getContext(),"getFilm");
 
         return root;
     }

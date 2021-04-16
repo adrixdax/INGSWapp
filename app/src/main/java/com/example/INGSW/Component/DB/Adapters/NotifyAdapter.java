@@ -11,8 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +29,7 @@ import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.ReviewDetail;
 import com.example.INGSW.ToolBarActivity;
-import com.example.INGSW.User;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.firebase.database.DataSnapshot;
@@ -59,7 +57,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     private final Context myContext;
     private final NotifyPopUp dialog;
 
-    private User getUser(String id, ViewHolder holder, int position) {
+    private void getUser(String id, ViewHolder holder, int position) {
         final User[] reviewer = new User[1];
         try {
             Query query = ref.orderByKey().equalTo(id);
@@ -69,6 +67,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User model = dataSnapshot.getValue(User.class);
+                        assert model != null;
                         holder.userName.setText(model.getNickname());
                         with(holder.itemView).load(model.getPropic()).into((ImageView) holder.itemView.findViewById(R.id.userImageNotify));
                         if (listOfData.get(position).getState().equals("PENDING")) {
@@ -85,7 +84,6 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return reviewer[0];
     }
 
     public NotifyAdapter(ArrayList<Notify> listOfData,DatabaseReference ref, Context myContext, NotifyPopUp dialog) {
@@ -93,7 +91,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         for (Notify not : listOfData){
             switch (not.getType()) {
                 case "FILM":
-                     RetrofitResponse.getResponse("Type=PostRequest&filmId=" + not.getId_recordref(), NotifyAdapter.this, null, Film.class.getCanonicalName(), "getFilmById");
+                     RetrofitResponse.getResponse("Type=PostRequest&filmId=" + not.getId_recordref(), NotifyAdapter.this, null, "getFilmById");
                      break;
                 case "FRIENDSHIP_REQUEST":
                     //holder.notifyText.setText("vuole essere tuo Amico");
@@ -199,9 +197,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 holder.notifyText.setText("vuole essere tuo Amico");
                 break;
             case "LIST":
-
                 //Retrofit
-
                 FilmTestController controller = new FilmTestController();
                 controller.setIdList(String.valueOf(listOfData.get(position).getId_recordref()));
                 try {
@@ -217,9 +213,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 }
                 break;
             case "REVIEW":
-
                 //Retrofit
-
                 try {
                     ReviewsController revCon = new ReviewsController();
                     revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
@@ -241,11 +235,12 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             holder.newNotify.setVisibility(View.INVISIBLE);
             listOfData.get(position).setState("ACCEPTED");
             switch (listOfData.get(position).getType()) {
-                case "FILMS": {
+                case "FILM": {
                     new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
                     Toast.makeText(v.getContext(), "Ora questo film è nei tuoi film da vedere :)", Toast.LENGTH_SHORT).show();
                     listOfData.remove(position);
                     notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,listOfData.size());
                     NotifyUpdater.newUpdate();
                     break;
                 }
@@ -263,6 +258,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     }
                     listOfData.remove(position);
                     this.notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,listOfData.size());
                     NotifyUpdater.newUpdate();
                     break;
                 }
@@ -271,6 +267,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     Toast.makeText(v.getContext(), "Hai una nuova lista", Toast.LENGTH_SHORT).show();
                     listOfData.remove(position);
                     this.notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,listOfData.size());
                     NotifyUpdater.newUpdate();
                     break;
                 }
@@ -280,15 +277,14 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
                     Reviews revObj = null;
                     try {
-                        revObj = ((Reviews) ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0));
+                        revObj = ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0);
                     } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
                         e.printStackTrace();
                     }
                     listOfData.remove(position);
                     this.notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,listOfData.size());
                     NotifyUpdater.newUpdate();
-                    FragmentManager fm = ((ToolBarActivity) (myContext)).getSupportFragmentManager();
-                    Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
                     FragmentTransaction transaction = ((ToolBarActivity) (myContext)).getSupportFragmentManager().beginTransaction();
                     ReviewDetail rev = new ReviewDetail(revObj, ToolBarActivity.getReference());
                     transaction.replace(R.id.nav_host_fragment, rev, "Review");
@@ -307,6 +303,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             new NotifyTestController().execute("Refused=" + listOfData.get(position).getId_Notify());
             listOfData.remove(position);
             notifyItemRemoved(position);
+            notifyItemRangeChanged(position,listOfData.size());
             NotifyUpdater.newUpdate();
             verifyNoMoreNotify();
         });

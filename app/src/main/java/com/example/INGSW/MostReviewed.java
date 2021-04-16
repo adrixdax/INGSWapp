@@ -40,7 +40,7 @@ public class MostReviewed extends Fragment implements RetrofitListInterface {
         ((ToolBarActivity) requireActivity()).triggerProgessBar();
         RetrofitResponse.getResponse(
                 "Type=PostRequest&mostreviewed=true",
-                this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
+                this,this.getContext(),"getFilm");
 
         return root;
     }

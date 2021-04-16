@@ -24,7 +24,6 @@ public class InsertReviewScreen extends Fragment {
 
 
     private RatingBar ratingBar;
-    private Button insert;
     private final String idFilm;
     private EditText title;
     private EditText description;
@@ -68,13 +67,13 @@ public class InsertReviewScreen extends Fragment {
         ratingBar = root.findViewById(R.id.ratingBar3);
         title = root.findViewById(R.id.insert_review_title);
         description = root.findViewById(R.id.editTextListDescription);
-        insert = root.findViewById(R.id.button_inserisci);
+        Button insert = root.findViewById(R.id.button_inserisci);
         PushDownAnim.setPushDownAnimTo(insert);
 
         insert.setOnClickListener(v -> {
             try {
                 if (isValidReview(String.valueOf(title.getText()), ratingBar.getRating())) {
-                    RetrofitResponse.getResponse("Type=PostRequest&idFilm=" + idFilm + "&title=" + title.getText().toString() + "&description=" + (description.getText().toString().isEmpty() ? "\0" : String.valueOf(description.getText())) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true",this,getContext(),"","addReview");
+                    RetrofitResponse.getResponse("Type=PostRequest&idFilm=" + idFilm + "&title=" + title.getText().toString() + "&description=" + (description.getText().toString().isEmpty() ? "\0" : String.valueOf(description.getText())) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true",this,getContext(),"addReview");
                 }
                 else {
                     Toast.makeText(getContext(), "Devi selezionare almeno mezzo ciak", Toast.LENGTH_LONG).show();

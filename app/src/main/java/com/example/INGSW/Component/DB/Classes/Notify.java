@@ -30,32 +30,12 @@ public class Notify {
         this.dateOfSend=dateOfSend;
     }
 
-    public Notify(@JsonProperty("type") String type){
-        this.type=type;
-    }
-
     public int getId_Notify() {
         return id_Notify;
     }
 
-    public void setId_Notify(int id_Notify) {
-        this.id_Notify = id_Notify;
-    }
-
     public String getId_sender() {
         return id_sender;
-    }
-
-    public void setId_sender(String id_sender) {
-        this.id_sender = id_sender;
-    }
-
-    public String getId_receiver() {
-        return id_receiver;
-    }
-
-    public void setId_receiver(String id_receiver) {
-        this.id_receiver = id_receiver;
     }
 
     public String getType() {
@@ -70,10 +50,6 @@ public class Notify {
         return id_recordref;
     }
 
-    public void setId_recordref(int id_recordref) {
-        this.id_recordref = id_recordref;
-    }
-
     public String getState() {
         return state;
     }
@@ -82,11 +58,4 @@ public class Notify {
         this.state = state;
     }
 
-    public long getDateOfSend() {
-        return dateOfSend;
-    }
-
-    public void setDateOfSend(long dateOfSend) {
-        this.dateOfSend = dateOfSend;
-    }
 }

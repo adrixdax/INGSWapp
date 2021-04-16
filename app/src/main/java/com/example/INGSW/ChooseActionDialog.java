@@ -94,7 +94,7 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
             @Override
             public synchronized void onClick(View v) {
                 if (!custom) {
-                    RetrofitResponse.getResponse("Type=PostRequest&idList=" + idList + "&idFilm=" + film.getId_Film() + "&removeFilm=true", ChooseActionDialog.this, getContext(), Film.class.getCanonicalName(), "removeFilmInList");
+                    RetrofitResponse.getResponse("Type=PostRequest&idList=" + idList + "&idFilm=" + film.getId_Film() + "&removeFilm=true", ChooseActionDialog.this, getContext(), "removeFilmInList");
                     try {
                         wait(250);
                     } catch (InterruptedException e) {
@@ -102,16 +102,16 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
                     }
                     RetrofitResponse.getResponse(
                             "Type=PostRequest&idList=" + idList,
-                            fg, fg.getContext(), Film.class.getCanonicalName(), "getFilmInList");
+                            fg, fg.getContext(), "getFilmInList");
                     dismiss();
                 } else {
-                    RetrofitResponse.getResponse("Type=PostRequest&removeList=true&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&idList=" + idList, ChooseActionDialog.this, getContext(), Film.class.getCanonicalName(), "deleteCustomList");
+                    RetrofitResponse.getResponse("Type=PostRequest&removeList=true&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&idList=" + idList, ChooseActionDialog.this, getContext(), "deleteCustomList");
                     try {
                         wait(250);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&custom=true&idFilm= -1", fg, fg.getContext(), UserLists.class.getCanonicalName(), "getList");
+                    RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&custom=true&idFilm= -1", fg, fg.getContext(), "getList");
                     dismiss();
                 }
             }

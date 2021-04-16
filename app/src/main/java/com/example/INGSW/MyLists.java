@@ -46,7 +46,7 @@ public class MyLists extends Fragment implements RetrofitListInterface {
         });
         recycler = root.findViewById(R.id.recyclerView2);
         ((ToolBarActivity)requireActivity()).triggerProgessBar();
-        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&custom=true&idFilm= -1",this,this.getContext(),UserLists.class.getCanonicalName(),"getList" );
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&custom=true&idFilm= -1",this,this.getContext(),"getList" );
         return root;
     }
 

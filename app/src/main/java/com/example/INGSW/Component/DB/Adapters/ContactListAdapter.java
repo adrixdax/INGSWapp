@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,10 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.DB.Classes.Contact;
 import com.example.INGSW.DialogFriendsListOfShare;
 import com.example.INGSW.ListOfFriendsScreen;
-import com.example.INGSW.MyFavs;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
-import com.example.INGSW.User;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -26,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import teaspoon.annotations.OnUi;
@@ -49,7 +48,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View listItem = null;
+        View listItem;
         if(css.equals(ListOfFriendsScreen.class))
             listItem = layoutInflater.inflate(R.layout.friend_component_personal_area,parent,false);
         else
@@ -59,19 +58,19 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ContactListAdapter.ViewHolder holder, int position) {
-        if(css.getCanonicalName().equals(ListOfFriendsScreen.class.getCanonicalName())){
+        if(Objects.equals(css.getCanonicalName(), ListOfFriendsScreen.class.getCanonicalName())){
             if (listofdata.get(position).getUser1().equals(((ToolBarActivity) myContext).getUid())) {
-                getReviewer(listofdata.get(position).getUser2(), holder);
+                getUser(listofdata.get(position).getUser2(), holder);
             } else {
-                getReviewer(listofdata.get(position).getUser1(), holder);
+                getUser(listofdata.get(position).getUser1(), holder);
             }
         }
         else {
             try {
                 if (listofdata.get(position).getUser1().equals(((ToolBarActivity) myContext).getUid())) {
-                    getReviewer(listofdata.get(position).getUser2(), holder);
+                    getUser(listofdata.get(position).getUser2(), holder);
                 } else {
-                    getReviewer(listofdata.get(position).getUser1(), holder);
+                    getUser(listofdata.get(position).getUser1(), holder);
                 }
                 holder.checkButtonShare.setOnCheckedChangeListener(null);
                 holder.checkButtonShare.setChecked(false);
@@ -108,7 +107,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     }
 
     @OnUi
-    private void getReviewer(String id, ContactListAdapter.ViewHolder holder) {
+    private void getUser(String id, ContactListAdapter.ViewHolder holder) {
         try {
             Query query = ToolBarActivity.getReference().orderByKey().equalTo(id);
             query.addListenerForSingleValueEvent(new ValueEventListener() {

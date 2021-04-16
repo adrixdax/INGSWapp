@@ -17,15 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.example.INGSW.Component.Films.Film;
-import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.Controllers.Retrofit.RetrofitInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.MyReviews;
 import com.example.INGSW.R;
 import com.example.INGSW.ReviewDetail;
-import com.example.INGSW.User;
-import com.example.INGSW.Utility.JSONDecoder;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,7 +54,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment, DatabaseReference ref) {
         this.listofdata = listofdata;
         for (Reviews rev : listofdata) {
-            RetrofitResponse.getResponse("Type=PostRequest&filmId=" + rev.getIdFilm(), ReviewsAdapter.this, null, Film.class.getCanonicalName(), "getFilmById");
+            RetrofitResponse.getResponse("Type=PostRequest&filmId=" + rev.getIdFilm(), ReviewsAdapter.this, null, "getFilmById");
         }
         this.startFragment = startFragment;
         this.ref = ref;
@@ -79,7 +76,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ReviewsAdapter.ViewHolder holder, int position) {
-        if (css.getCanonicalName().equals(MyReviews.class.getCanonicalName())) {
+        if (Objects.equals(css, MyReviews.class)) {
             try {
               if( position < filmList.size()) Glide.with(startFragment).load(filmList.get(position).getPosterPath()).into((ImageView) holder.moviepic);
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
@@ -166,6 +163,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User model = dataSnapshot.getValue(User.class);
+                        assert model != null;
                         with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.userImage.findViewById(R.id.userprofilepic_view));
                         holder.userNickView.setText(model.getNickname());
                     }
@@ -204,7 +202,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
         public ViewHolder(View itemView, Class css) {
             super(itemView);
-            if(css.getCanonicalName().equals(MyReviews.class.getCanonicalName()) ){
+            if(Objects.equals(css, MyReviews.class)){
                 this.moviepic = itemView.findViewById(R.id.moviepic_view);
             }else {
                 this.userImage = itemView.findViewById(R.id.userprofilepic_view);

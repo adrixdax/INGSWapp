@@ -24,6 +24,7 @@ import com.example.INGSW.ToolBarActivity;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,9 +56,9 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        if (css.getCanonicalName().equals(MyLists.class.getCanonicalName())) {
+        if (Objects.equals(css.getCanonicalName(), MyLists.class.getCanonicalName())) {
             listItem = layoutInflater.inflate(R.layout.lists_of_lists, parent, false);
-        } else if (css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())) {
+        } else if (Objects.equals(css.getCanonicalName(), DialogCustomlList.class.getCanonicalName())) {
             listItem = layoutInflater.inflate(R.layout.list_custom_list_selected, parent, false);
         }
         return new CustomListsAdapter.ViewHolder(listItem, css);
@@ -65,7 +66,7 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())) {
+        if (Objects.equals(css.getCanonicalName(), DialogCustomlList.class.getCanonicalName())) {
             try {
                 holder.textView.setText(listofdata.get(position).getTitle());
                 with(holder.itemView).load("http://cdn.onlinewebfonts.com/svg/img_568523.png").into((CircleImageView) holder.itemView.findViewById(R.id.list_image));
@@ -85,11 +86,12 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
                 e.printStackTrace();
             }
         }
-        else if(css.getCanonicalName().equals(MyLists.class.getCanonicalName())) {
+        else if(Objects.equals(css, MyLists.class)) {
             holder.circleList.setText(listofdata.get(position).getTitle());
             holder.circleList.setOnClickListener(v -> {
                 FilmInCustomList nextFragment = new FilmInCustomList(listofdata.get(position));
-                FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                assert startFragment != null;
+                FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "ListFilmCustom");
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -126,12 +128,12 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
 
         public ViewHolder(View itemView, Class css) {
             super(itemView);
-            if (css.getCanonicalName().equals(DialogCustomlList.class.getCanonicalName())) {
+            if (Objects.equals(css.getCanonicalName(), DialogCustomlList.class.getCanonicalName())) {
                 this.circleImageView = itemView.findViewById(R.id.list_image);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutAddInCustomList);
                 this.selectItem = itemView.findViewById(R.id.checkButtonAddList);
                 this.textView = itemView.findViewById(R.id.NameOfCustomList);
-            } else if (css.getCanonicalName().equals(MyLists.class.getCanonicalName())) {
+            } else if (Objects.equals(css.getCanonicalName(), MyLists.class.getCanonicalName())) {
                 this.circleList = itemView.findViewById(R.id.CircolarCustomList);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutShowCustomList);
             }

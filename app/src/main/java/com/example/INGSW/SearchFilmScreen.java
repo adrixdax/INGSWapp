@@ -22,13 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Adapters.UsersListAdapter;
 import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
-import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.UserServerController;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -40,8 +39,6 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import teaspoon.annotations.OnUi;
-
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class SearchFilmScreen extends Fragment implements RetrofitListInterface {
 
@@ -107,8 +104,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                         recyclerViewFilm.setVisibility(View.GONE);
                     ((ToolBarActivity) requireActivity()).triggerProgessBar();
                     filmInSearch = new ArrayList<>();
-                    RetrofitResponse.getResponse("Type=PostRequest&name="+Text_of_search.getText().toString(),SearchFilmScreen.this,v.getContext(),Film.class.getCanonicalName(),"getFilm");
-
+                    RetrofitResponse.getResponse("Type=PostRequest&name="+Text_of_search.getText().toString(),SearchFilmScreen.this,v.getContext(),"getFilm");
                 } else {
                     ((ToolBarActivity) requireActivity()).triggerProgessBar();
                     if (recyclerViewFriends != null && recyclerViewFriends.isShown())
@@ -147,7 +143,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                                         usersInSearchlist.add(model);
                                         boolean friend = false;
                                         try {
-                                            RetrofitResponse.getResponse("&idUser="+ model.getIdUser(),SearchFilmScreen.this,v.getContext(),Notify.class.getCanonicalName(),"getNotify");
+                                            RetrofitResponse.getResponse("&idUser="+ model.getIdUser(),SearchFilmScreen.this,v.getContext(),"getNotify");
                                             if (!notifyList.isEmpty()) {
                                                 int i = 0;
                                                 while (i < notifyList.size() && !friend) {
@@ -206,8 +202,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
     @Override
     public void setList(List<?> newList) {
         if (playFlag == 0) {
-            notifyList= (List<Notify>) newList;
-
+            notifyList = (List<Notify>) newList;
         } else if(playFlag==1){
             if (newList.isEmpty()) {
                 recyclerViewFilm.setVisibility(View.INVISIBLE);

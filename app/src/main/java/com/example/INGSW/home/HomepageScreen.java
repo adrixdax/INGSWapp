@@ -102,13 +102,13 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
         if (((ToolBarActivity) requireActivity()).getConteinerList().get("HomepageList") == null) {
             ((ToolBarActivity)requireActivity()).triggerProgessBar();
             film = new ArrayList<>();
-            RetrofitResponse.getResponse("Type=PostRequest&latest=true",this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
+            RetrofitResponse.getResponse("Type=PostRequest&latest=true",this,this.getContext(),"getFilm");
         }else {
             exist = true;
             setList(film);
         }
         bell.setOnClickListener(v -> {
-            new NotifyPopUp(not.getNotify(), requireActivity()).show(getActivity().getSupportFragmentManager(), "not");
+            new NotifyPopUp(not.getNotify(), requireActivity()).show(requireActivity().getSupportFragmentManager(), "not");
         });
         return root;
     }

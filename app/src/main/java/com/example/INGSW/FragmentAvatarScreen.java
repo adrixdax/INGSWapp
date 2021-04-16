@@ -11,13 +11,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
-
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -114,7 +113,6 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
                     ToolBarActivity.getReference().child(uid).setValue(model);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }

@@ -23,10 +23,7 @@ import java.util.Objects;
 
 public class SpoilerAlertDIalog extends AppCompatDialogFragment {
 
-    Button procedi, annulla;
     private final FragmentTransaction transaction;
-
-
 
     public SpoilerAlertDIalog(FragmentTransaction transaction) {
         this.transaction = transaction;
@@ -42,8 +39,8 @@ public class SpoilerAlertDIalog extends AppCompatDialogFragment {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
 
-        procedi = dialog.findViewById(R.id.procedi_button);
-        annulla = dialog.findViewById(R.id.annulla_button);
+        Button procedi = dialog.findViewById(R.id.procedi_button);
+        Button annulla = dialog.findViewById(R.id.annulla_button);
 
         PushDownAnim.setPushDownAnimTo(procedi,annulla);
 

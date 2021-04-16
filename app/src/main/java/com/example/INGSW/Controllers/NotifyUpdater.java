@@ -46,7 +46,7 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
 
     @OnUi
     public void run() {
-        RetrofitResponse.getResponse(((ToolBarActivity) activity).getUid(),this,activity,Notify.class.getCanonicalName(),"getNotify");
+        RetrofitResponse.getResponse(((ToolBarActivity) activity).getUid(),this,activity,"getNotify");
         timer.schedule(new NotifyUpdater(timer, bell, activity,notify), 30000);
     }
 

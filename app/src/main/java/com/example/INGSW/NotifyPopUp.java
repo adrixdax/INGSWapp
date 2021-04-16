@@ -22,12 +22,10 @@ import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.NotifyUpdater;
-import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -38,9 +36,6 @@ public class NotifyPopUp extends AppCompatDialogFragment {
 
     private RecyclerView recycler;
     private static ArrayList<Notify> notify = new ArrayList<>();
-    private final ArrayList<UserLists> lists = new ArrayList<>();
-    private final ArrayList<Reviews> revs = new ArrayList<>();
-    private final ArrayList<Film> films = new ArrayList<>();
     private static TextView notifyTextError;
 
     public NotifyPopUp(List<?> list, Activity act){

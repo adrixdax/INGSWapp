@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.INGSW.Component.DB.Classes.User;
 import com.example.INGSW.Controllers.LoginController;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -201,7 +202,7 @@ public class LoginScreen extends AppCompatActivity {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("remember", "true");
             editor.apply();
-            RetrofitResponse.getResponse("Type=PostRequest&google=" + account.getId(),LoginScreen.this,this,null,"getRegistration");
+            RetrofitResponse.getResponse("Type=PostRequest&google=" + account.getId(),LoginScreen.this,this,"getRegistration");
             u.nickname = Objects.requireNonNull(account.getEmail()).split("@")[0];
             u.email = account.getEmail();
             int switchCase = new Random().ints(0, 5).findAny().getAsInt();

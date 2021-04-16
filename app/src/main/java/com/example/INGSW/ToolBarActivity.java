@@ -17,10 +17,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.UserController;
-import com.example.INGSW.Controllers.UserServerController;
 import com.example.INGSW.home.HomepageScreen;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -34,13 +34,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 import teaspoon.annotations.OnUi;
 
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
-
-public class ToolBarActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class ToolBarActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, RetrofitListInterface {
 
 
     Fragment activeFragment;
@@ -52,10 +49,9 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     Map<String, List<Film>> conteinerList = new HashMap<>();
     private final Map<String, Object> contaiinerItem = new HashMap<>();
-    User user = null;
     private boolean loadUser = false;
     UserController userController = new UserController();
-    private final UserServerController usc = new UserServerController();
+    FirebaseAnalytics mFirebaseAnalytics;
     private static DatabaseReference ref;
     private String uid = "";
 
@@ -63,7 +59,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             FirebaseDatabase db = FirebaseDatabase.getInstance();
             ref = db.getReference("Users");
         } catch (Exception e) {
@@ -71,6 +67,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         }
         setContentView(R.layout.navigationscreen);
         getUser();
+        mFirebaseAnalytics.setUserId(getUid());
 
         progressBar = findViewById(R.id.activityProgressBar);
         progressBar.setVisibility(View.INVISIBLE);
@@ -79,23 +76,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         mainLayout = findViewById(R.id.mainLayout);
         mainLayout.setVisibility(View.VISIBLE);
 
-        try {
-            usc.setUserId(uid);
-            String temp = (String) usc.execute("getDefaultListOfUser").get();
-            List<UserLists> list = (List<UserLists>) getJsonToDecode(temp, UserLists.class);
-            for (UserLists singlelist : list) {
-                if (singlelist.getType().equals("PREFERED")) {
-                    contaiinerItem.put("PREFERED", singlelist.getIdUserList());
-                } else if (singlelist.getType().equals("WATCH")) {
-                    contaiinerItem.put("WATCH", singlelist.getIdUserList());
-                } else {
-                    contaiinerItem.put("TOWATCH", singlelist.getIdUserList());
-                }
-            }
-        } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + uid + "&searchDefaultList=true",this,this.getApplicationContext(),"getDefaultList");
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         loadFragment(new HomepageScreen(), "1", false);
@@ -230,6 +211,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         String tag2 = "2";
         String tag3 = "3";
 
+        assert currentFragment != null;
+        assert currentFragment.getTag() != null;
         if (currentFragment.getTag().equals("InsertFilmReview")) {
             LeaveReviewAlert dlg = new LeaveReviewAlert();
             dlg.show(this.getSupportFragmentManager(), "LeaveReview");
@@ -260,6 +243,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         String tag2 = "2";
         String tag3 = "3";
 
+        assert currentFragment != null;
+        assert currentFragment.getTag() != null;
         if (currentFragment.getTag().equals("InsertFilmReview") && (completed)) {
             fm.popBackStack();
         } else
@@ -284,6 +269,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     public boolean onTouchEvent(MotionEvent touchEvent) {
         Fragment fragment = null;
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        assert currentFragment != null;
         String tag = currentFragment.getTag();
 
         switch (touchEvent.getAction()) {
@@ -359,6 +345,18 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     }
 
 
+    @Override
+    public void setList(List<?> newList) {
+        for (Object singlelist : newList) {
+            if (((UserLists)singlelist).getType().equals("PREFERED")) {
+                contaiinerItem.put("PREFERED", ((UserLists)singlelist).getIdUserList());
+            } else if (((UserLists)singlelist).getType().equals("WATCH")) {
+                contaiinerItem.put("WATCH", ((UserLists)singlelist).getIdUserList());
+            } else {
+                contaiinerItem.put("TOWATCH", ((UserLists)singlelist).getIdUserList());
+            }
+        }
+    }
 }
 
 //account@gmail.com

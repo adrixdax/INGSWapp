@@ -16,7 +16,7 @@ import teaspoon.annotations.OnBackground;
 public class RetrofitResponse {
 
     @OnBackground
-    public static <type> void getResponse(String body, Object c, Context context, String structureClass, String callMethod, Object toGlide) {
+    public static <type> void getResponse(String body, Object c, Context context, String callMethod, Object toGlide) {
         RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
         System.out.println(body);
         try {
@@ -36,7 +36,6 @@ public class RetrofitResponse {
                             else if (response.body() instanceof Boolean && toGlide != null){
                                 Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class,Object.class);
                                 methodClassCalled.invoke(c, response.body(),toGlide);
-
                             }
                         }catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                             e.printStackTrace();
@@ -54,8 +53,8 @@ public class RetrofitResponse {
         }
     }
 
-    public static void getResponse(String body, Object c, Context context, String structureClass, String callMethod) {
-        getResponse(body,c,context,structureClass,callMethod,null);
+    public static void getResponse(String body, Object c, Context context, String callMethod) {
+        getResponse(body,c,context,callMethod,null);
     }
 
 }

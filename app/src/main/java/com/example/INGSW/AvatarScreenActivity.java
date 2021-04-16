@@ -19,13 +19,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AvatarScreenActivity extends AppCompatActivity implements View.OnClickListener  {
 
 
-    private CircleImageView ironman;
-    private CircleImageView spiderman;
-    private CircleImageView gamora;
-    private CircleImageView thanos;
-    private CircleImageView wonderwoman;
-    private CircleImageView widow;
-
     RegistrationController regcont;
 
 
@@ -45,14 +38,14 @@ public class AvatarScreenActivity extends AppCompatActivity implements View.OnCl
         setContentView(R.layout.avatar_screen);
 
 
-        ironman = (CircleImageView) findViewById(R.id.profile_image);
-        spiderman = (CircleImageView) findViewById(R.id.profile_image2);
-        gamora = (CircleImageView) findViewById(R.id.profile_image3);
-        thanos = (CircleImageView) findViewById(R.id.profile_image4);
-        widow = (CircleImageView) findViewById(R.id.profile_image5);
-        wonderwoman = (CircleImageView) findViewById(R.id.profile_image6);
+        CircleImageView ironman = findViewById(R.id.profile_image);
+        CircleImageView spiderman = findViewById(R.id.profile_image2);
+        CircleImageView gamora = findViewById(R.id.profile_image3);
+        CircleImageView thanos = findViewById(R.id.profile_image4);
+        CircleImageView widow = findViewById(R.id.profile_image5);
+        CircleImageView wonderwoman = findViewById(R.id.profile_image6);
 
-        PushDownAnim.setPushDownAnimTo(ironman,spiderman,gamora,thanos,widow,wonderwoman);
+        PushDownAnim.setPushDownAnimTo(ironman, spiderman, gamora, thanos, widow, wonderwoman);
 
         ironman.setOnClickListener(this);
         spiderman.setOnClickListener(this);
@@ -80,9 +73,9 @@ public class AvatarScreenActivity extends AppCompatActivity implements View.OnCl
                 onBackPressed();
                 break;
             case R.id.profile_image2 :
-                    RegistrationController.setAvatar(urlSpider);
-                    onBackPressed();
-                    break;
+                RegistrationController.setAvatar(urlSpider);
+                onBackPressed();
+                break;
             case R.id.profile_image3 :
                 RegistrationController.setAvatar(urlGamora);
                 onBackPressed();
@@ -95,7 +88,6 @@ public class AvatarScreenActivity extends AppCompatActivity implements View.OnCl
                 RegistrationController.setAvatar(urlWidow);
                 onBackPressed();
                 break;
-
             case R.id.profile_image6 :
                 RegistrationController.setAvatar(urlWonder);
                 onBackPressed();

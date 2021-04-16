@@ -4,7 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.example.INGSW.User;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,11 +16,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserController {
 
-    private final User userprofile = null;
-    private DatabaseReference reference;
-    private String userID;
     User tempUser = null;
-
 
     public User getTempUser() {
         return tempUser;
@@ -33,21 +29,14 @@ public class UserController {
     public User getUserprofile(FirebaseUser mFirebaseUser, DatabaseReference ref) {
         try {
             if (mFirebaseUser != null) {
-                reference = ref;
-                userID = mFirebaseUser.getUid();
-                reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                    final User profile = null;
-
+                String userID = mFirebaseUser.getUid();
+                ref.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         setTempUser(snapshot.getValue(User.class));
-
                     }
-
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
                     }
                 });
                 return getTempUser();
@@ -60,15 +49,13 @@ public class UserController {
     }
 
     public GoogleSignInAccount getAcct(Context context) {
-        GoogleSignInAccount acct = null;
         try {
             if (context != null) {
-                acct = GoogleSignIn.getLastSignedInAccount(context);
+                return GoogleSignIn.getLastSignedInAccount(context);
             }
-            return acct;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return acct;
+        return null;
     }
 }

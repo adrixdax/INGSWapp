@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
-import com.example.INGSW.User;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;

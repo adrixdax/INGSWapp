@@ -9,7 +9,7 @@ import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.R;
 import com.example.INGSW.RegistrationScreen;
 import com.example.INGSW.ToolBarActivity;
-import com.example.INGSW.User;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.Objects;
@@ -54,7 +54,7 @@ public class RegistrationController {
                     FirebaseDatabase.getInstance().getReference("Users")
                             .child((Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
                             .setValue(user).addOnSuccessListener(regActivity, aVoid -> {
-                                RetrofitResponse.getResponse("Type=PostRequest&registration=" + FirebaseAuth.getInstance().getCurrentUser().getUid(),regActivity,regActivity,null,"getRegistration");
+                                RetrofitResponse.getResponse("Type=PostRequest&registration=" + FirebaseAuth.getInstance().getCurrentUser().getUid(),regActivity,regActivity,"getRegistration");
                                 ((RegistrationScreen)regActivity).stopProgressBar();
                                 Toast.makeText(regActivity, "Utente registrato correttamente", Toast.LENGTH_LONG).show();
                                 regActivity.startActivity(new Intent(regActivity, ToolBarActivity.class));

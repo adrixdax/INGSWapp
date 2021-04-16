@@ -34,14 +34,12 @@ public class DialogCustomlList extends AppCompatDialogFragment implements Retrof
 
 
     private RecyclerView recycler;
-    private List<UserLists> customLists = new ArrayList<>();
     private final List<UserLists> selectedLists = new ArrayList<>();
     private int idFilmToInsert;
 
     @NotNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        //return super.onCreateDialog(savedInstanceState);
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.custom_list_dialog);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -50,14 +48,14 @@ public class DialogCustomlList extends AppCompatDialogFragment implements Retrof
 
 
         recycler = dialog.findViewById(R.id.recyclerView);
-        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&custom=true&idFilm="+ String.valueOf(idFilmToInsert),this,this.getContext(),UserLists.class.getCanonicalName(),"getList" );
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&custom=true&idFilm="+ idFilmToInsert,this,this.getContext(),"getList" );
 
 
         Button insertInLists = (Button) dialog.getWindow().findViewById(R.id.InsertInListsbutton);
         PushDownAnim.setPushDownAnimTo(insertInLists);
         insertInLists.setOnClickListener(v -> {
             for (UserLists singlelist : selectedLists) {
-                RetrofitResponse.getResponse("Type=PostRequest&idList=" + String.valueOf(singlelist.getIdUserList()) + "&idFilm="+ String.valueOf(idFilmToInsert) + "&addFilm=true",DialogCustomlList.this,DialogCustomlList.this.getContext(),"","getList" );
+                RetrofitResponse.getResponse("Type=PostRequest&idList=" + singlelist.getIdUserList() + "&idFilm="+ idFilmToInsert + "&addFilm=true",DialogCustomlList.this,DialogCustomlList.this.getContext(),"getList" );
             }
 
             selectedLists.clear();

@@ -11,11 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.INGSW.Component.DB.Classes.User;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.UserServerController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
-
-import java.util.concurrent.ExecutionException;
 
 public class AddCustomList extends Fragment {
 
@@ -41,11 +39,11 @@ public class AddCustomList extends Fragment {
 
         description = root.findViewById(R.id.editTextListDescription);
 
-        cancel.setOnClickListener((View.OnClickListener) v -> ((ToolBarActivity) getActivity()).onBackPressed());
+        cancel.setOnClickListener(v -> requireActivity().onBackPressed());
 
-        add.setOnClickListener((View.OnClickListener) v -> {
-            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&addList=true&listTitle=" + String.valueOf(title.getText()) + (String.valueOf(description.getText()).length() != 0 ? "&listDescription=" + String.valueOf(description.getText()) : ""),AddCustomList.this,getContext(),User.class.getCanonicalName(),"addList");
-            ((ToolBarActivity) getActivity()).onBackPressed();
+        add.setOnClickListener(v -> {
+            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&addList=true&listTitle=" + String.valueOf(title.getText()) + (String.valueOf(description.getText()).length() != 0 ? "&listDescription=" + description.getText() : ""),AddCustomList.this,getContext(),"addList");
+            requireActivity().onBackPressed();
 
         });
 

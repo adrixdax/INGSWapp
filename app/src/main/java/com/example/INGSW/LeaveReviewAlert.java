@@ -23,13 +23,10 @@ import java.util.Objects;
 public class LeaveReviewAlert extends AppCompatDialogFragment {
 
     Button ok, annulla;
-    private String filmId;
-    private FragmentTransaction transaction;
 
+    public LeaveReviewAlert(){
 
-
-
-    public LeaveReviewAlert(){};
+    }
 
     @NotNull
     @Override

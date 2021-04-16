@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Classes.Reviews;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,13 +40,11 @@ public class ReviewDetail extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.review_details, container, false);
-
         userImage = root.findViewById(R.id.userprofilepic_view);
         userName = root.findViewById(R.id.usernick_view);
         TextView reviewTitle = root.findViewById(R.id.review_title);
         TextView reviewDescription = root.findViewById(R.id.textViewDescriptionReview);
         RatingBar ratingBar = root.findViewById(R.id.ratingBar2);
-
         getReviewer(review.getIduser(), root);
         reviewTitle.setText(review.getTitle());
         reviewDescription.setText(review.getDescription());
@@ -59,7 +58,6 @@ public class ReviewDetail extends Fragment {
 
 
     private void getReviewer(String id, View root) {
-
         try {
             Query query = ref.orderByKey().equalTo(id);
             query.addValueEventListener(new ValueEventListener() {
