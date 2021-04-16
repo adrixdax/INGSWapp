@@ -19,24 +19,22 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class SpoilerAlertDIalog extends AppCompatDialogFragment {
 
     Button procedi, annulla;
-    private String filmId;
-    private FragmentTransaction transaction;
+    private final FragmentTransaction transaction;
 
 
 
-    public SpoilerAlertDIalog(String idFilm, FragmentTransaction transaction) {
-        this.filmId = idFilm;
+    public SpoilerAlertDIalog(FragmentTransaction transaction) {
         this.transaction = transaction;
     }
 
     @NotNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        //return super.onCreateDialog(savedInstanceState);
-
 
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.spoiler_alert_dialog);
@@ -49,29 +47,22 @@ public class SpoilerAlertDIalog extends AppCompatDialogFragment {
 
         PushDownAnim.setPushDownAnimTo(procedi,annulla);
 
-        procedi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                transaction.addToBackStack(null);
-                transaction.commit();
-                dialog.closeOptionsMenu();
-                getDialog().dismiss();
-                dialog.cancel();
-                dialog.dismiss();
-                dismiss();
-            }
+        procedi.setOnClickListener(v -> {
+            transaction.addToBackStack(null);
+            transaction.commit();
+            dialog.closeOptionsMenu();
+            Objects.requireNonNull(getDialog()).dismiss();
+            dialog.cancel();
+            dialog.dismiss();
+            dismiss();
         });
 
-        annulla.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.closeOptionsMenu();
-                getDialog().dismiss();
-                dialog.cancel();
-                dialog.dismiss();
-                dismiss();
-            }
+        annulla.setOnClickListener(v -> {
+            dialog.closeOptionsMenu();
+            Objects.requireNonNull(getDialog()).dismiss();
+            dialog.cancel();
+            dialog.dismiss();
+            dismiss();
         });
 
 

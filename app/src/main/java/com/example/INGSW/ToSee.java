@@ -44,9 +44,9 @@ public class ToSee extends Fragment implements RetrofitListInterface {
 
         toSeeFilms = root.findViewById(R.id.recyclerViewToSee);
         textToSeeError = root.findViewById(R.id.textToSeeError);
-        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        ((ToolBarActivity)requireActivity()).triggerProgessBar();
             RetrofitResponse.getResponse(
-                    "Type=PostRequest&idList=" + ((ToolBarActivity) getActivity()).getContaiinerItem().get("TOWATCH"),
+                    "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH"),
                     this,this.getContext(),Film.class.getCanonicalName(),"getFilmInList");
 
         return root;

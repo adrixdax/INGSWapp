@@ -26,6 +26,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class FilmInCustomList extends Fragment implements RetrofitListInterface {
@@ -49,7 +50,7 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
         description.setText(list.getDescription());
         title.setText(list.getTitle());
 
-        ((ToolBarActivity) getActivity()).triggerProgessBar();
+        ((ToolBarActivity) requireActivity()).triggerProgessBar();
         RetrofitResponse.getResponse(
                 "Type=PostRequest&idList=" + list.getIdUserList(),
                 this, this.getContext(), Film.class.getCanonicalName(), "getFilmInList");
@@ -74,6 +75,6 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
             filmInCustomList.addItemDecoration(dividerItemDecoration);
             filmInCustomList.setVisibility(View.VISIBLE);
         }
-        ((ToolBarActivity) getActivity()).stopProgressBar();
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

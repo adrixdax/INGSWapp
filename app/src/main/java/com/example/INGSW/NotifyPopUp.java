@@ -38,15 +38,13 @@ public class NotifyPopUp extends AppCompatDialogFragment {
 
     private RecyclerView recycler;
     private static ArrayList<Notify> notify = new ArrayList<>();
-    private ArrayList<UserLists> lists = new ArrayList<>();
-    private ArrayList<Reviews> revs = new ArrayList<>();
-    private ArrayList<Film> films = new ArrayList<>();
+    private final ArrayList<UserLists> lists = new ArrayList<>();
+    private final ArrayList<Reviews> revs = new ArrayList<>();
+    private final ArrayList<Film> films = new ArrayList<>();
     private static TextView notifyTextError;
-    private static Activity activity;
 
     public NotifyPopUp(List<?> list, Activity act){
         notify = new ArrayList<>((Collection<? extends Notify>) list);
-        activity = act;
     }
 
     public NotifyPopUp(ArrayList<Notify> list) {

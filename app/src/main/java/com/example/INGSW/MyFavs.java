@@ -19,6 +19,7 @@ import com.example.INGSW.Utility.JSONDecoder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 
@@ -29,34 +30,29 @@ public class MyFavs extends Fragment implements RetrofitListInterface {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View root = inflater.inflate(R.layout.fragment_my_favs, container, false);
-        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        ((ToolBarActivity) requireActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse("Type=PostRequest&idList=" +((ToolBarActivity) requireContext()).getContaiinerItem().get("PREFERED"),MyFavs.this,this.getContext(), Film.class.getCanonicalName(),"getFilmInList");
         recyclerView = root.findViewById(R.id.recyclerViewUserMyPrefered);
         textFavsError = root.findViewById(R.id.Textview_favsError);
-        RetrofitResponse.getResponse("Type=PostRequest&idList=" +((ToolBarActivity)getContext()).getContaiinerItem().get("PREFERED"),MyFavs.this,this.getContext(), Film.class.getCanonicalName(),"getFilmInList");
-
 
         return root;
     }
 
     @Override
     public void setList(List<?> newList) {
-
         if(newList.size() != 0) {
-
             textFavsError.setText("");
             ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
             adapter.setCss(MyFavs.class);
-            adapter.setIdList(String.valueOf(((ToolBarActivity) getContext()).getContaiinerItem().get("PREFERED")));
-
+            adapter.setIdList(String.valueOf(((ToolBarActivity) requireContext()).getContaiinerItem().get("PREFERED")));
             recyclerView.setHasFixedSize(false);
             recyclerView.setItemViewCacheSize(newList.size());
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             recyclerView.setAdapter(adapter);
         }
         else textFavsError.setText("Davvero non hai neanche un film preferito?");
-        ((ToolBarActivity)getActivity()).stopProgressBar();
-
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

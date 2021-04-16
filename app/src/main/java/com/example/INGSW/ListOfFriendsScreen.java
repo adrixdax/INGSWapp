@@ -39,9 +39,8 @@ public class ListOfFriendsScreen extends Fragment implements RetrofitListInterfa
         View root = inflater.inflate(R.layout.fragment_my_friends, container, false);
         ((ToolBarActivity)requireActivity()).triggerProgessBar();
         textFriendsError = root.findViewById(R.id.Textview_friendsError);
-
         recyclerView = root.findViewById(R.id.recyclerViewUserMyFriends);
-        RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + ((ToolBarActivity)requireActivity()).getUid(),this,this.getContext(),"","getFriends");
+        RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + ((ToolBarActivity)requireActivity()).getUid(),ListOfFriendsScreen.this,this.getContext(),"","getFriends");
 
         return root;
         // Inflate the layout for this fragment
@@ -50,19 +49,16 @@ public class ListOfFriendsScreen extends Fragment implements RetrofitListInterfa
 
     @Override
     public void setList(List<?> newList) {
-
         if(newList.size() != 0) {
-
             textFriendsError.setText("");
-            ContactListAdapter adapter = new ContactListAdapter((List<Contact>) newList, getContext(), (List<Contact>) newList);
-            adapter.setCss(ListOfFriendsScreen.class);
-
+            ContactListAdapter adapter = new ContactListAdapter((List<Contact>) newList, getContext(), null);
+            adapter.setCss(this.getClass());
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             recyclerView.setHasFixedSize(false);
             recyclerView.setItemViewCacheSize(newList.size());
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(adapter);
         }
         else textFriendsError.setText("Davvero non hai neanche un amico?");
-        ((ToolBarActivity)getActivity()).stopProgressBar();
+        ((ToolBarActivity)requireActivity()).stopProgressBar();
     }
 }

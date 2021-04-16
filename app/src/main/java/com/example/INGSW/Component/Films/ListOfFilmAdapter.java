@@ -30,6 +30,7 @@ import com.example.INGSW.home.HomepageScreen;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
+import java.util.Objects;
 
 import static com.bumptech.glide.Glide.with;
 
@@ -55,9 +56,9 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = null;
-        if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
+        if (Objects.equals(css.getCanonicalName(), HomepageScreen.class.getCanonicalName())) {
             listItem = layoutInflater.inflate(R.layout.list_image_film, parent, false);
-        } else if (css.getCanonicalName().equals(SearchFilmScreen.class.getCanonicalName())) {
+        } else if (Objects.equals(css.getCanonicalName(), SearchFilmScreen.class.getCanonicalName())) {
             listItem = layoutInflater.inflate(R.layout.list_of_film_in_search_screen, parent, false);
         } else {
             listItem = layoutInflater.inflate(R.layout.list_suggest_film, parent, false);
@@ -73,7 +74,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
                 holder.relativeLayout.setOnClickListener(v -> {
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -88,17 +89,19 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             holder.textViewTitle.setText(listOfData.get(position).getFilm_Title());
             holder.textViewRelaseDate.setText(listOfData.get(position).getRelease_Date());
             holder.textViewTime.setText(String.valueOf(listOfData.get(position).getRuntime()));
-            String genere = "";
-            for (int i = 0; i < listOfData.get(position).getGenres().length; i++) {
-                genere = genere + listOfData.get(position).getGenres()[i] + " - ";
+            StringBuilder genere = new StringBuilder();
+            if (listOfData.get(position).getGenres() != null) {
+                for (int i = 0; i < listOfData.get(position).getGenres().length; i++) {
+                    genere.append(listOfData.get(position).getGenres()[i]).append(" - ");
+                }
+                genere = new StringBuilder(genere.substring(0, genere.length() - 3));
             }
-            genere = genere.substring(0, genere.length() - 3);
-            holder.textViewCategories.setText(genere);
+            holder.textViewCategories.setText(genere.toString());
             holder.textViewPlot.setText(listOfData.get(position).getPlot().isEmpty() ? "Non è stata trovata alcuna trama per questo film" : listOfData.get(position).getPlot());
             holder.relativeLayout.setOnClickListener(v -> {
 
                 FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -112,7 +115,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             holder.textViewUser.setText(listOfData.get(position).getFilm_Title());
             holder.relativeLayout.setOnClickListener(v -> {
                 FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
                 transaction.addToBackStack(null);
                 transaction.commit();
@@ -130,7 +133,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 holder.textViewUser.setText(listOfData.get(position).getFilm_Title() + "\nIl preferito di " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
                 holder.relativeLayout.setOnClickListener(v -> {
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -139,7 +142,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 holder.textViewUser.setText("Visto da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
                 holder.relativeLayout.setOnClickListener(v -> {
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -148,7 +151,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 holder.textViewUser.setText("Recensito da " + (listOfData.get(position).getCounter() == 1 ? listOfData.get(position).getCounter() + " utente" : listOfData.get(position).getCounter() + " utenti"));
                 holder.relativeLayout.setOnClickListener(v -> {
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
-                    FragmentTransaction transaction = startFragment.getActivity().getSupportFragmentManager().beginTransaction();
+                    FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
                     transaction.addToBackStack(null);
                     transaction.commit();
@@ -183,15 +186,12 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         public TextView textViewPlot;
         public TextView textViewUser;
 
-
-        private Film film;
-
         public ViewHolder(View itemView, Class css) {
             super(itemView);
-            if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
+            if (Objects.equals(css.getCanonicalName(), HomepageScreen.class.getCanonicalName())) {
                 this.imageView = itemView.findViewById(R.id.userprofilepic_view);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutNotify);
-            } else if (css.getCanonicalName().equals(SearchFilmScreen.class.getCanonicalName())) {
+            } else if (Objects.equals(css.getCanonicalName(), SearchFilmScreen.class.getCanonicalName())) {
                 this.imageView = itemView.findViewById(R.id.userprofilepic_view);
                 this.textViewTitle = itemView.findViewById(R.id.usernick_view);
                 this.textViewRelaseDate = itemView.findViewById(R.id.textViewRelaseDate);
@@ -206,10 +206,6 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             }
             PushDownAnim.setPushDownAnimTo(relativeLayout);
         }
-    }
-
-    public Class getCss() {
-        return css;
     }
 
     public void setCss(Class css) {

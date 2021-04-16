@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.ReviewsController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -73,37 +74,26 @@ public class InsertReviewScreen extends Fragment {
         insert.setOnClickListener(v -> {
             try {
                 if (isValidReview(String.valueOf(title.getText()), ratingBar.getRating())) {
-                    ReviewsController rc = new ReviewsController();
-                    rc.setIdUser(((ToolBarActivity) getActivity()).getUid());
-                    rc.setTitle(String.valueOf(title.getText()));
-                    rc.setDesc(String.valueOf(description.getText()).isEmpty() ? "\0" : String.valueOf(description.getText()));
-                    rc.setIdFilm(idFilm);
-                    rc.setVal(String.valueOf(ratingBar.getRating()));
-                    try {
-                        rc.execute("AddReviews").get();
-                        rc.isCancelled();
-                    } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    RetrofitResponse.getResponse("Type=PostRequest&idFilm=" + idFilm + "&title=" + title.getText().toString() + "&description=" + (description.getText().toString().isEmpty() ? "\0" : String.valueOf(description.getText())) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true",this,getContext(),"","addReview");
                 }
                 else {
                     Toast.makeText(getContext(), "Devi selezionare almeno mezzo ciak", Toast.LENGTH_LONG).show();
                 }
-                } catch (Exception e) {
+            } catch (Exception e) {
                 if (e.getMessage().equals(IS_NUMBER)) {
-                        title.setError("Il titolo non può essere un numero");
-                        title.requestFocus();
-                    }
-                    else if (e.getMessage().equals(TOO_LONG)){
-                        title.setError("Il titolo è troppo lungo");
-                        title.requestFocus();
-                    }
-                    else if (e.getMessage().equals(TOO_SHORT)){
-                        title.setError("Devi inserire un titolo");
-                        title.requestFocus();
-                    }
+                    title.setError("Il titolo non può essere un numero");
+                    title.requestFocus();
                 }
-            ((ToolBarActivity) getActivity()).onBackPressed(true);
+                else if (e.getMessage().equals(TOO_LONG)){
+                    title.setError("Il titolo è troppo lungo");
+                    title.requestFocus();
+                }
+                else if (e.getMessage().equals(TOO_SHORT)){
+                    title.setError("Devi inserire un titolo");
+                    title.requestFocus();
+                }
+            }
+            ((ToolBarActivity) requireActivity()).onBackPressed(true);
         });
         return root;
     }

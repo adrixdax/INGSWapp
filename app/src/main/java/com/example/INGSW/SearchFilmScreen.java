@@ -105,12 +105,12 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                         recyclerViewFriends.setVisibility(View.GONE);
                     if (recyclerViewFilm != null && recyclerViewFilm.isShown())
                         recyclerViewFilm.setVisibility(View.GONE);
-                    ((ToolBarActivity) getActivity()).triggerProgessBar();
+                    ((ToolBarActivity) requireActivity()).triggerProgessBar();
                     filmInSearch = new ArrayList<>();
                     RetrofitResponse.getResponse("Type=PostRequest&name="+Text_of_search.getText().toString(),SearchFilmScreen.this,v.getContext(),Film.class.getCanonicalName(),"getFilm");
 
                 } else {
-                    ((ToolBarActivity) getActivity()).triggerProgessBar();
+                    ((ToolBarActivity) requireActivity()).triggerProgessBar();
                     if (recyclerViewFriends != null && recyclerViewFriends.isShown())
                         requireActivity().runOnUiThread(() -> recyclerViewFriends.setVisibility(View.GONE));
                     if (recyclerViewFilm != null && recyclerViewFilm.isShown())
@@ -138,10 +138,11 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                             try {
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                     User model = dataSnapshot.getValue(User.class);
-                                    if (!((ToolBarActivity) (getActivity())).getUid().equals(dataSnapshot.getKey())) {
+                                    if (!((ToolBarActivity) (requireActivity())).getUid().equals(dataSnapshot.getKey())) {
                                         UserServerController con = new UserServerController();
-                                        con.setUserId(((ToolBarActivity) (getActivity())).getUid());
+                                        con.setUserId(((ToolBarActivity) (requireActivity())).getUid());
                                         con.setIdOtherUser(dataSnapshot.getKey());
+                                        assert model != null;
                                         model.setIdUser(dataSnapshot.getKey());
                                         usersInSearchlist.add(model);
                                         boolean friend = false;
@@ -150,7 +151,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                                             if (!notifyList.isEmpty()) {
                                                 int i = 0;
                                                 while (i < notifyList.size() && !friend) {
-                                                    if (notifyList.get(i).getId_sender().equals(((ToolBarActivity) getActivity()).getUid())) {
+                                                    if (notifyList.get(i).getId_sender().equals(((ToolBarActivity) requireActivity()).getUid())) {
                                                         friend = true;
                                                     }
                                                     i++;
@@ -158,7 +159,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                                             }
                                             if (!friend) {
                                                 UserServerController usc = new UserServerController();
-                                                usc.setUserId(((ToolBarActivity) getActivity()).getUid());
+                                                usc.setUserId(((ToolBarActivity) requireActivity()).getUid());
                                                 usc.setIdOtherUser(model.getIdUser());
                                                 if (Boolean.parseBoolean((String) usc.execute("isFriends").get())) {
                                                     friend = true;

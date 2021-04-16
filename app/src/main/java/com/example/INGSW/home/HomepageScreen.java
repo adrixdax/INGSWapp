@@ -39,13 +39,12 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
     Timer timer = new Timer();
     List<Film> film;
     ShapeableImageView mostSeen, tooSee, mostReviewed, userPrefered;
-    static ImageButton bell;
+    ImageButton bell;
     private boolean exist = false;
     RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
-
         mostSeen = root.findViewById(R.id.mostSeen);
         mostReviewed = root.findViewById(R.id.mostReviewed);
         tooSee = root.findViewById(R.id.toSee);
@@ -58,7 +57,6 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
         NotifyUpdater not = new NotifyUpdater(timer, bell, getActivity());
         timer.schedule(not, 1);
         recyclerView = root.findViewById(R.id.recyclerView);
-
         PushDownAnim.setPushDownAnimTo(mostSeen, mostReviewed, tooSee, userPrefered)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
@@ -68,7 +66,7 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
 
         mostReviewed.setOnClickListener(v -> {
             MostReviewed nextFragment = new MostReviewed();
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nextFragment, "MostReviewed");
             transaction.addToBackStack(null);
             transaction.commit();
@@ -76,7 +74,7 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
 
         mostSeen.setOnClickListener(v -> {
             MostSeen nextFragment = new MostSeen();
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nextFragment, "MostSeen");
             transaction.addToBackStack(null);
             transaction.commit();
@@ -84,7 +82,7 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
 
         tooSee.setOnClickListener(v -> {
             ToSee nextFragment = new ToSee();
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
             transaction.addToBackStack(null);
             transaction.commit();
@@ -92,17 +90,17 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
 
         userPrefered.setOnClickListener(v -> {
             UserPrefered nextFragment = new UserPrefered();
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nextFragment, "8");
             transaction.addToBackStack(null);
             transaction.commit();
         });
 
 
-        film = ((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList") ;
+        film = ((ToolBarActivity) requireActivity()).getConteinerList().get("HomepageList") ;
 
-        if (((ToolBarActivity) getActivity()).getConteinerList().get("HomepageList") == null) {
-            ((ToolBarActivity)getActivity()).triggerProgessBar();
+        if (((ToolBarActivity) requireActivity()).getConteinerList().get("HomepageList") == null) {
+            ((ToolBarActivity)requireActivity()).triggerProgessBar();
             film = new ArrayList<>();
             RetrofitResponse.getResponse("Type=PostRequest&latest=true",this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
         }else {
@@ -110,7 +108,7 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
             setList(film);
         }
         bell.setOnClickListener(v -> {
-            new NotifyPopUp(not.getNotify(), getActivity()).show(getActivity().getSupportFragmentManager(), "not");
+            new NotifyPopUp(not.getNotify(), requireActivity()).show(getActivity().getSupportFragmentManager(), "not");
         });
         return root;
     }
@@ -120,7 +118,7 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
     @OnBackground
     public void setList(List<?> list) {
         if(!exist) {
-            ((ToolBarActivity) getActivity()).getConteinerList().put("HomepageList", (List<Film>) list);
+            ((ToolBarActivity) requireActivity()).getConteinerList().put("HomepageList", (List<Film>) list);
         }
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) list, getContext(), this);

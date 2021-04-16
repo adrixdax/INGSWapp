@@ -15,8 +15,6 @@ import teaspoon.annotations.OnBackground;
 
 public class RetrofitResponse {
 
-    private static Boolean response = Boolean.FALSE;
-
     @OnBackground
     public static <type> void getResponse(String body, Object c, Context context, String structureClass, String callMethod, Object toGlide) {
         RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
@@ -60,12 +58,4 @@ public class RetrofitResponse {
         getResponse(body,c,context,structureClass,callMethod,null);
     }
 
-
-    public static Boolean getResponse() {
-        return response;
-    }
-
-    public static void setResponse(Boolean response) {
-        RetrofitResponse.response = response;
-    }
 }

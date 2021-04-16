@@ -17,6 +17,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.util.Objects;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentAvatarScreen extends Fragment implements View.OnClickListener {
@@ -34,17 +36,17 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.avatar_screen, container, false);
 
-        CircleImageView ironman = (CircleImageView) root.findViewById(R.id.profile_image);
-        CircleImageView spiderman = (CircleImageView) root.findViewById(R.id.profile_image2);
-        CircleImageView gamora = (CircleImageView) root.findViewById(R.id.profile_image3);
-        CircleImageView thanos = (CircleImageView) root.findViewById(R.id.profile_image4);
-        CircleImageView widow = (CircleImageView) root.findViewById(R.id.profile_image5);
-        CircleImageView wonderwoman = (CircleImageView) root.findViewById(R.id.profile_image6);
+        CircleImageView ironman = root.findViewById(R.id.profile_image);
+        CircleImageView spiderman = root.findViewById(R.id.profile_image2);
+        CircleImageView gamora = root.findViewById(R.id.profile_image3);
+        CircleImageView thanos = root.findViewById(R.id.profile_image4);
+        CircleImageView widow = root.findViewById(R.id.profile_image5);
+        CircleImageView wonderwoman = root.findViewById(R.id.profile_image6);
 
         ConstraintLayout.LayoutParams paramswidow = (ConstraintLayout.LayoutParams)widow.getLayoutParams();
-        paramswidow.setMargins(0, 0, 0, 100); //substitute parameters for left, top, right, bottom
+        paramswidow.setMargins(0, 0, 0, 100);
         ConstraintLayout.LayoutParams paramswonder = (ConstraintLayout.LayoutParams)wonderwoman.getLayoutParams();
-        paramswonder.setMargins(0, 0, 0, 100); //substitute parameters for left, top, right, bottom
+        paramswonder.setMargins(0, 0, 0, 100);
 
         PushDownAnim.setPushDownAnimTo(ironman, spiderman, gamora, thanos, widow, wonderwoman);
 
@@ -72,34 +74,34 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
         switch (v.getId()){
             case R.id.profile_image :
                 updateWithUrl(urlIron);
-                getActivity().onBackPressed();
+                requireActivity().onBackPressed();
                 break;
             case R.id.profile_image2 :
                 updateWithUrl(urlSpider);
-                getActivity().onBackPressed();
+                requireActivity().onBackPressed();
                 break;
             case R.id.profile_image3 :
                 updateWithUrl(urlGamora);
-                getActivity().onBackPressed();
+                requireActivity().onBackPressed();
                 break;
             case R.id.profile_image4 :
                 updateWithUrl(urlThanos);
-                getActivity().onBackPressed();
+                requireActivity().onBackPressed();
                 break;
             case R.id.profile_image5 :
                 updateWithUrl(urlWidow);
-                getActivity().onBackPressed();
+                requireActivity().onBackPressed();
                 break;
             case R.id.profile_image6 :
                 updateWithUrl(urlWonder);
-                getActivity().onBackPressed();
+                requireActivity().onBackPressed();
                 break;
 
         }
     }
 
     private void updateWithUrl(String url){
-        String uid = ((ToolBarActivity) getActivity()).getUid();
+        String uid = ((ToolBarActivity) requireActivity()).getUid();
         Query query = ToolBarActivity.getReference().orderByKey().equalTo(uid);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @SuppressLint("RestrictedApi")
@@ -107,6 +109,7 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     User model = dataSnapshot.getValue(User.class);
+                    assert model != null;
                     model.propic = url;
                     ToolBarActivity.getReference().child(uid).setValue(model);
                 }

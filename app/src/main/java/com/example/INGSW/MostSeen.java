@@ -24,6 +24,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class MostSeen extends Fragment implements RetrofitListInterface {
@@ -34,11 +35,9 @@ public class MostSeen extends Fragment implements RetrofitListInterface {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.most_seen_homepage, container, false);
-
-        title = (TextView) root.findViewById(R.id.textViewMostSeen);
+        title = root.findViewById(R.id.textViewMostSeen);
         mostSeenFilm = root.findViewById(R.id.recyclerViewMostSeen);
-
-        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        ((ToolBarActivity) requireActivity()).triggerProgessBar();
         RetrofitResponse.getResponse(
                 "Type=PostRequest&mostviewed=true",
                 this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
@@ -59,6 +58,6 @@ public class MostSeen extends Fragment implements RetrofitListInterface {
                 layoutManager.getOrientation());
         mostSeenFilm.addItemDecoration(dividerItemDecoration);
         mostSeenFilm.setVisibility(View.VISIBLE);
-        ((ToolBarActivity)getActivity()).stopProgressBar();
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

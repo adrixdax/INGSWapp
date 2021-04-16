@@ -18,6 +18,8 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class LeaveReviewAlert extends AppCompatDialogFragment {
 
     Button ok, annulla;
@@ -32,47 +34,28 @@ public class LeaveReviewAlert extends AppCompatDialogFragment {
     @NotNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        //return super.onCreateDialog(savedInstanceState);
-
 
         Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.leave_review_alert);
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
-
         ok = dialog.findViewById(R.id.ok);
         annulla = dialog.findViewById(R.id.annulla_button);
-
         PushDownAnim.setPushDownAnimTo(ok,annulla);
-
-        ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                getActivity().getSupportFragmentManager().popBackStack();
-                dialog.cancel();
-                dialog.dismiss();
-                dismiss();
-            }
+        ok.setOnClickListener(v -> {
+            requireActivity().getSupportFragmentManager().popBackStack();
+            dialog.cancel();
+            dialog.dismiss();
+            dismiss();
         });
-
-        annulla.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.closeOptionsMenu();
-                getDialog().dismiss();
-                dialog.cancel();
-                dialog.dismiss();
-                dismiss();
-            }
+        annulla.setOnClickListener(v -> {
+            dialog.closeOptionsMenu();
+            Objects.requireNonNull(getDialog()).dismiss();
+            dialog.cancel();
+            dialog.dismiss();
+            dismiss();
         });
-
-
         return dialog;
-
     }
-
-
-
 }

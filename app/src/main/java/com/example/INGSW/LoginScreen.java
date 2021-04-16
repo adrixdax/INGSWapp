@@ -76,8 +76,6 @@ public class LoginScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         try {
-
-
             super.onCreate(savedInstanceState);
             FirebaseDatabase db = FirebaseDatabase.getInstance();
             if (FirebaseApp.getApps(this).size() == 0) db.setPersistenceEnabled(true);
@@ -86,38 +84,29 @@ public class LoginScreen extends AppCompatActivity {
             layout = findViewById(R.id.loginscreen);
             circularProgressBar = findViewById(R.id.activityProgressBarLog);
             progressLayout = findViewById(R.id.layoutProgressLog);
-
             loginController = new LoginController(this);
-
             mAuth = FirebaseAuth.getInstance();
-
             TextView register = findViewById(R.id.RegisterText);
             register.setOnClickListener(v -> startActivity(new Intent(LoginScreen.super.getApplicationContext(), RegistrationScreen.class)));
-
             GoogleLogin = findViewById(R.id.sign_in_button);
             LoginButton = findViewById(R.id.LoginButton);
-
             PushDownAnim.setPushDownAnimTo(GoogleLogin, LoginButton)
                     .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
                     .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                     .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
                     .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
-
             SharedPreferences preferences = getSharedPreferences("access", MODE_PRIVATE);
             String access = preferences.getString("remember", "");
-
             if (access.equals("true")) {
                 Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
                 startActivity(intent);
             }
-
             LoginButton.setOnClickListener(v -> {
-
                 try {
                     startProgresBar();
                     loginController.verifyUserWithFirebase(editTextEmail.getText().toString().trim(), editTextPassword.getText().toString().trim(), mAuth, LoginScreen.this);
                 } catch (Exception e) {
-                    switch (e.getMessage()) {
+                    switch (Objects.requireNonNull(e.getMessage())) {
                         case "Empty Mail":
                             editTextEmail.setError("Mail vuota");
                             editTextEmail.requestFocus();
@@ -176,12 +165,7 @@ public class LoginScreen extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
-
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -193,6 +177,7 @@ public class LoginScreen extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             User u = new User();
             final User[] model = new User[1];
+            assert account != null;
             Query query = reference.orderByKey().equalTo(account.getId());
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @SuppressLint("RestrictedApi")
@@ -200,6 +185,7 @@ public class LoginScreen extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         model[0] = dataSnapshot.getValue(User.class);
+                        assert model[0] != null;
                         if (model[0].getPropic().equals(u.getPropic()))
                             reference.child(Objects.requireNonNull(account.getId())).setValue(u);
                     }
@@ -211,7 +197,6 @@ public class LoginScreen extends AppCompatActivity {
                 }
             });
 
-            // Signed in successfully, show authenticated UI.
             SharedPreferences preferences = getSharedPreferences("access", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("remember", "true");
@@ -245,8 +230,6 @@ public class LoginScreen extends AppCompatActivity {
             finish();
         }
         catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("ERROR", "signInResult:failed code=" + e.getStatusCode());
         }
     }

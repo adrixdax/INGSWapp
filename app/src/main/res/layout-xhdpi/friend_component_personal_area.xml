@@ -17,21 +17,20 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/circle_obj"
-        android:contentDescription="TODO" />
+        android:background="@drawable/circle_obj"/>
 
     <TextView
-        android:id="@+id/usernick_view"
+        android:id="@+id/username_nickView"
         android:layout_width="wrap_content"
         android:layout_height="10dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="28dp"
         android:layout_marginBottom="40dp"
-        android:layout_toEndOf="@+id/userprofilepic_view"
+        android:layout_toEndOf="@+id/friend_pic"
         android:autoSizeMaxTextSize="24sp"
         android:autoSizeMinTextSize="10sp"
         android:autoSizeTextType="uniform"

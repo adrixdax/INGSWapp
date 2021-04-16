@@ -32,8 +32,8 @@ public class SeenFilms extends Fragment implements RetrofitListInterface {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_seen_films, container, false);
         recyclerView = root.findViewById(R.id.recyclerViewUserSeen);
-        ((ToolBarActivity) getActivity()).triggerProgessBar();
-        RetrofitResponse.getResponse("Type=PostRequest&idList="+((ToolBarActivity)getContext()).getContaiinerItem().get("WATCH"),this,((ToolBarActivity)getContext()),Film.class.getCanonicalName(),"getFilmInList");
+        ((ToolBarActivity) requireActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse("Type=PostRequest&idList="+((ToolBarActivity)requireContext()).getContaiinerItem().get("WATCH"),this,((ToolBarActivity)getContext()),Film.class.getCanonicalName(),"getFilmInList");
         return root;
     }
 
@@ -43,12 +43,12 @@ public class SeenFilms extends Fragment implements RetrofitListInterface {
         if (newList.size() != 0) {
             ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
             adapter.setCss(SeenFilms.class);
-            adapter.setIdList(String.valueOf(((ToolBarActivity) getContext()).getContaiinerItem().get("WATCH")));
+            adapter.setIdList(String.valueOf(((ToolBarActivity) requireContext()).getContaiinerItem().get("WATCH")));
             recyclerView.setHasFixedSize(true);
             recyclerView.setItemViewCacheSize(newList.size());
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             recyclerView.setAdapter(adapter);
         }
-        ((ToolBarActivity) getActivity()).stopProgressBar();
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

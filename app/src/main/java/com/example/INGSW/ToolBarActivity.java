@@ -1,5 +1,6 @@
 package com.example.INGSW;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -32,6 +33,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import teaspoon.annotations.OnUi;
@@ -45,8 +47,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     CircularProgressBar progressBar;
     ConstraintLayout mainLayout;
     ConstraintLayout progressLayout;
-
-    private FirebaseAnalytics mFirebaseAnalytics;
 
     float x1, x2, y1, y2;
 
@@ -63,7 +63,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             FirebaseDatabase db = FirebaseDatabase.getInstance();
             ref = db.getReference("Users");
         } catch (Exception e) {
@@ -110,6 +110,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
         if (fragment != null) {
+            assert currentFragment != null;
             if ((!tag.equals(currentFragment.getTag())) && swipe) {
                 if (tag.equals("3"))
                     getSupportFragmentManager()
@@ -156,6 +157,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         return false;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Fragment fragment = null;
@@ -293,7 +295,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                 x2 = touchEvent.getX();
                 y2 = touchEvent.getY();
                 if (x1 < x2) {
-                    switch (tag) {
+                    switch (Objects.requireNonNull(tag)) {
                         case "1":
                             fragment = new SearchFilmScreen();
                             tag = "3";
@@ -307,7 +309,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
                     }
                 } else if (x2 < x1) {
-                    switch (tag) {
+                    switch (Objects.requireNonNull(tag)) {
                         case "1":
                             fragment = new PersonalArea();
                             tag = "2";
@@ -356,23 +358,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         this.progressBar.setVisibility(View.INVISIBLE);
     }
 
-
-
-    public CircularProgressBar getProgressBar() {
-        return this.progressBar;
-    }
-
-
-
-    public Fragment getActiveFragment() {
-        return this.activeFragment;
-    }
-
-
-
-    public void setActiveFragment(Fragment fragment) {
-        this.activeFragment = fragment;
-    }
 
 }
 

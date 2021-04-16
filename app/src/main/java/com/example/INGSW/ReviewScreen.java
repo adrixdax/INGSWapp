@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
 import com.example.INGSW.Component.DB.Classes.Reviews;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.ReviewsController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -25,9 +27,10 @@ import java.util.concurrent.ExecutionException;
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 
-public class ReviewScreen extends Fragment {
+public class ReviewScreen extends Fragment implements RetrofitListInterface {
 
     private final String idFilm;
+    private RecyclerView recyclerViewReviews;
 
 
     public ReviewScreen(String idFilm) {
@@ -40,52 +43,42 @@ public class ReviewScreen extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.review_fragment, container, false);
-
-        ReviewsController rc = new ReviewsController();
-        rc.setIdFilm(idFilm);
-
-        try {
-            String latestJson = (String) rc.execute("FilmReviews").get();
-
-
-
-            if (!latestJson.isEmpty()) {
-                rc.isCancelled();
-
-                List<Reviews> reviews = (List<Reviews>) getJsonToDecode(latestJson, Reviews.class);
-
-                LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false);
-                RecyclerView recyclerViewReviews = root.findViewById(R.id.recyclerViewReviews);
-                ReviewsAdapter adapter = new ReviewsAdapter(reviews, this, ((ToolBarActivity) (getActivity())).getReference());
-                adapter.setCss(ReviewScreen.class);
-                recyclerViewReviews.setHasFixedSize(false);
-                recyclerViewReviews.setLayoutManager(layoutManager);
-                recyclerViewReviews.setAdapter(adapter);
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewReviews.getContext(),
-                        layoutManager.getOrientation());
-                recyclerViewReviews.setItemViewCacheSize(reviews.size());
-                recyclerViewReviews.addItemDecoration(dividerItemDecoration);
-                recyclerViewReviews.setVisibility(View.VISIBLE);
-            }
-
-        } catch (ExecutionException | InterruptedException | JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        ((ToolBarActivity)requireActivity()).triggerProgessBar();
+        recyclerViewReviews = root.findViewById(R.id.recyclerViewReviews);
+        RetrofitResponse.getResponse("Type=PostRequest&idFilm=" + idFilm + "&insert=false",this,requireContext(),"","getReview");
 
 
         Button bottone = root.findViewById(R.id.buttonwritereview);
         bottone.setOnClickListener(v -> {
             Fragment nextFragment;
             FragmentTransaction transaction;
-            FragmentManager fm = ReviewScreen.this.getActivity().getSupportFragmentManager();
-            Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
             nextFragment = new InsertReviewScreen(idFilm);
-            transaction = ReviewScreen.this.getActivity().getSupportFragmentManager().beginTransaction();
+            transaction = ReviewScreen.this.requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nextFragment, "InsertFilmReview");
             transaction.addToBackStack(null);
             transaction.commit();
         });
 
         return root;
+    }
+
+    @Override
+    public void setList(List<?> newList) {
+        if (newList.size() != 0) {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+            ReviewsAdapter adapter = new ReviewsAdapter((List<Reviews>) newList, this, ToolBarActivity.getReference());
+            adapter.setCss(ReviewScreen.class);
+            recyclerViewReviews.setHasFixedSize(false);
+            recyclerViewReviews.setLayoutManager(layoutManager);
+            recyclerViewReviews.setAdapter(adapter);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewReviews.getContext(), layoutManager.getOrientation());
+            recyclerViewReviews.setItemViewCacheSize(newList.size());
+            recyclerViewReviews.addItemDecoration(dividerItemDecoration);
+            recyclerViewReviews.setVisibility(View.VISIBLE);
+        }
+        else {
+            System.out.println("Devo inserire il text error");
+        }
+        ((ToolBarActivity)requireActivity()).stopProgressBar();
     }
 }

@@ -68,7 +68,9 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
         try {
             listsFirends = (List<Contact>) getJsonToDecode(json, Contact.class);
             if (listsFirends != null) {
-                recycler.setAdapter(new ContactListAdapter(listsFirends, getContext(), this.selectedLists));
+                ContactListAdapter adapter = new ContactListAdapter(listsFirends, getContext(), this.selectedLists);
+                adapter.setCss(this.getClass());
+                recycler.setAdapter(adapter);
                 recycler.setLayoutManager(new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.VERTICAL, false));
                 recycler.setHasFixedSize(false);
             }
@@ -77,7 +79,7 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
         }
 
 
-        Button insertInLists = (Button) dialog.getWindow().findViewById(R.id.ShareWhitFriends);
+        Button insertInLists = dialog.getWindow().findViewById(R.id.ShareWhitFriends);
         PushDownAnim.setPushDownAnimTo(insertInLists);
         insertInLists.setOnClickListener(v -> {
             if (!custom) {

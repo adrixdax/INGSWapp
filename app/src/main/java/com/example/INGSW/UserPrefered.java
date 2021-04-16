@@ -28,7 +28,6 @@ import java.util.concurrent.ExecutionException;
 
 public class UserPrefered extends Fragment implements RetrofitListInterface {
 
-    private TextView title;
     private RecyclerView userPreferedFilms;
 
     @Nullable
@@ -36,10 +35,9 @@ public class UserPrefered extends Fragment implements RetrofitListInterface {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.users_prefered, container, false);
-        title = root.findViewById(R.id.textViewUserPrefered);
         userPreferedFilms = root.findViewById(R.id.recyclerViewUserPrefered);
 
-        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        ((ToolBarActivity)requireActivity()).triggerProgessBar();
         RetrofitResponse.getResponse(
                 "Type=PostRequest&userPrefered=true",
                 this,this.getContext(),Film.class.getCanonicalName(),"getFilm");
@@ -61,6 +59,6 @@ public class UserPrefered extends Fragment implements RetrofitListInterface {
                 layoutManager.getOrientation());
         userPreferedFilms.addItemDecoration(dividerItemDecoration);
         userPreferedFilms.setVisibility(View.VISIBLE);
-        ((ToolBarActivity)getActivity()).stopProgressBar();
+        ((ToolBarActivity)requireActivity()).stopProgressBar();
     }
 }

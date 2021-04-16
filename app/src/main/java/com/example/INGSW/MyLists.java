@@ -36,17 +36,17 @@ public class MyLists extends Fragment implements RetrofitListInterface {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_my_lists, container, false);
-        ImageButton addList = (ImageButton) root.findViewById(R.id.addListButton);
+        ImageButton addList = root.findViewById(R.id.addListButton);
         addList.setOnClickListener(v -> {
             AddCustomList nextFragment = new AddCustomList();
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nextFragment, "7");
             transaction.addToBackStack(null);
             transaction.commit();
         });
         recycler = root.findViewById(R.id.recyclerView2);
-        ((ToolBarActivity)getActivity()).triggerProgessBar();
-        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&custom=true&idFilm= -1",this,this.getContext(),UserLists.class.getCanonicalName(),"getList" );
+        ((ToolBarActivity)requireActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&custom=true&idFilm= -1",this,this.getContext(),UserLists.class.getCanonicalName(),"getList" );
         return root;
     }
 
@@ -58,7 +58,7 @@ public class MyLists extends Fragment implements RetrofitListInterface {
             recycler.setHasFixedSize(false);
             recycler.setItemViewCacheSize(newList.size());
         }
-        ((ToolBarActivity)getActivity()).stopProgressBar();
+        ((ToolBarActivity)requireActivity()).stopProgressBar();
     }
 
 }

@@ -154,7 +154,7 @@
         android:layout_height="wrap_content"
         android:maxWidth="125dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/i_preferiti_dagli_utenti"
+        android:text="I PREFERITI DEGLI UTENTI"
         android:textAllCaps="true"
         android:textAlignment="center"
         android:textColor="#FFFFFF"

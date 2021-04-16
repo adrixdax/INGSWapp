@@ -26,9 +26,6 @@ public class ReviewDetail extends Fragment {
     private final Reviews review;
     private CircleImageView userImage;
     private TextView userName;
-    private TextView reviewTitle;
-    private TextView reviewDescription;
-    private RatingBar ratingBar;
     private final DatabaseReference ref;
 
 
@@ -43,11 +40,11 @@ public class ReviewDetail extends Fragment {
 
         View root = inflater.inflate(R.layout.review_details, container, false);
 
-        userImage = (CircleImageView) root.findViewById(R.id.userprofilepic_view);
-        userName = (TextView) root.findViewById(R.id.usernick_view);
-        reviewTitle = (TextView) root.findViewById(R.id.review_title);
-        reviewDescription = (TextView) root.findViewById(R.id.textViewDescriptionReview);
-        ratingBar = (RatingBar) root.findViewById(R.id.ratingBar2);
+        userImage = root.findViewById(R.id.userprofilepic_view);
+        userName = root.findViewById(R.id.usernick_view);
+        TextView reviewTitle = root.findViewById(R.id.review_title);
+        TextView reviewDescription = root.findViewById(R.id.textViewDescriptionReview);
+        RatingBar ratingBar = root.findViewById(R.id.ratingBar2);
 
         getReviewer(review.getIduser(), root);
         reviewTitle.setText(review.getTitle());
@@ -70,6 +67,7 @@ public class ReviewDetail extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User model = dataSnapshot.getValue(User.class);
+                        assert model != null;
                         Glide.with(root.getContext()).load(model.getPropic()).into(userImage);
                         userName.setText(model.getNickname());
                     }
