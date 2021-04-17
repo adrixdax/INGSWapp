@@ -79,7 +79,7 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
         }
 
 
-        Button insertInLists = dialog.getWindow().findViewById(R.id.ShareWhitFriends);
+        Button insertInLists = dialog.getWindow().findViewById(R.id.ShareWithFriends);
         PushDownAnim.setPushDownAnimTo(insertInLists);
         insertInLists.setOnClickListener(v -> {
             if (!custom) {

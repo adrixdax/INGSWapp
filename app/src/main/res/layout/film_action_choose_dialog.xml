@@ -2,17 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayout"
-    android:layout_width="370dp"
-    android:layout_height="280dp"
-    android:layout_marginStart="19dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
     android:background="@drawable/rounded_list_obj">
 
 
     <Button
         android:id="@+id/share_button"
-        android:layout_width="309dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="92dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="85dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="#2F5685"
         android:fontFamily="@font/poppins_bold"
@@ -26,9 +28,12 @@
 
     <Button
         android:id="@+id/Remove_button"
-        android:layout_width="312dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="36dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginEnd="35dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="#A52222"
         android:fontFamily="@font/poppins_bold"

@@ -131,7 +131,7 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
             if (Objects.equals(css.getCanonicalName(), DialogCustomlList.class.getCanonicalName())) {
                 this.circleImageView = itemView.findViewById(R.id.list_image);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutAddInCustomList);
-                this.selectItem = itemView.findViewById(R.id.checkButtonAddList);
+                this.selectItem = itemView.findViewById(R.id.AddList);
                 this.textView = itemView.findViewById(R.id.NameOfCustomList);
             } else if (Objects.equals(css.getCanonicalName(), MyLists.class.getCanonicalName())) {
                 this.circleList = itemView.findViewById(R.id.CircolarCustomList);
