@@ -18,8 +18,7 @@
         app:layout_constraintEnd_toStartOf="@+id/linearLayout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"/>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -33,13 +32,14 @@
             android:orientation="horizontal">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="299dp"
-                android:layout_height="67dp">
+                android:layout_width="0dp"
+                android:layout_height="67dp"
+                android:layout_weight="3">
 
                 <View
                     android:id="@+id/view6"
-                    android:layout_width="286dp"
-                    android:layout_height="52dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:background="@drawable/circle_obj"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -49,7 +49,7 @@
 
                 <EditText
                     android:id="@+id/Text_of_search"
-                    android:layout_width="224dp"
+                    android:layout_width="215dp"
                     android:layout_height="37dp"
                     android:layout_marginStart="10dp"
                     android:background="@android:color/transparent"
@@ -81,15 +81,14 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="0dp">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <ImageView
                     android:id="@+id/playButton"
-                    android:layout_width="48dp"
-                    android:layout_height="45dp"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
                     android:backgroundTint="@color/CineBlue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/userButton"
@@ -99,8 +98,8 @@
 
                 <ImageView
                     android:id="@+id/userButton"
-                    android:layout_width="70dp"
-                    android:layout_height="45dp"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
                     android:backgroundTint="@color/CineBlue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -152,7 +151,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-
+                android:layout_marginBottom="55dp"
                 android:scrollbars="vertical"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
