@@ -45,7 +45,7 @@ public class ReviewScreen extends Fragment implements RetrofitListInterface {
         View root = inflater.inflate(R.layout.review_fragment, container, false);
         ((ToolBarActivity)requireActivity()).triggerProgessBar();
         recyclerViewReviews = root.findViewById(R.id.recyclerViewReviews);
-        RetrofitResponse.getResponse("Type=PostRequest&idFilm=" + idFilm + "&insert=false",this,requireContext(),"","getReview");
+        RetrofitResponse.getResponse("Type=PostRequest&idFilm=" + idFilm + "&insert=false",this,requireContext(),"getReview");
 
 
         Button bottone = root.findViewById(R.id.buttonwritereview);
