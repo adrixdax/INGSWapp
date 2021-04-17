@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
@@ -55,10 +56,10 @@ public class DialogCustomlList extends AppCompatDialogFragment implements Retrof
         PushDownAnim.setPushDownAnimTo(insertInLists);
         insertInLists.setOnClickListener(v -> {
             for (UserLists singlelist : selectedLists) {
-                RetrofitResponse.getResponse("Type=PostRequest&idList=" + singlelist.getIdUserList() + "&idFilm="+ idFilmToInsert + "&addFilm=true",DialogCustomlList.this,DialogCustomlList.this.getContext(),"getList" );
+                RetrofitResponse.getResponse("Type=PostRequest&idList=" + singlelist.getIdUserList() + "&idFilm="+ idFilmToInsert + "&addFilm=true",DialogCustomlList.this,DialogCustomlList.this.getContext(),"addFilm" );
             }
-
             selectedLists.clear();
+            Toast.makeText(this.getContext(),"Film aggiunto con successo",Toast.LENGTH_LONG).show();
             dialog.closeOptionsMenu();
             dialog.cancel();
             dialog.dismiss();
@@ -66,10 +67,6 @@ public class DialogCustomlList extends AppCompatDialogFragment implements Retrof
 
         return dialog;
 
-    }
-
-    public int getIdFilmToInsert() {
-        return idFilmToInsert;
     }
 
     public void setIdFilmToInsert(int idFilmToInsert) {

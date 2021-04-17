@@ -28,6 +28,7 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     private static ImageButton bell;
     private static Timer timer;
     private static Activity activity;
+    private static Boolean timerStatus=true;
 
     public NotifyUpdater(Timer timer, ImageButton bell, Activity activity,List<?> list){
         NotifyUpdater.bell = bell;
@@ -51,6 +52,11 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     }
 
     public static void newUpdate(){
+        if (!timerStatus){
+            timer.purge();
+            timer=new Timer();
+            timerStatus=true;
+        }
         timer.schedule(new NotifyUpdater(timer, bell, activity,notify),1);
     }
 
@@ -74,4 +80,10 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
             }
         }
     }
+
+    public static void stopUpdate(){
+        timer.cancel();
+        timerStatus=false;
+    }
+
 }

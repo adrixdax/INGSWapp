@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +45,9 @@ public class RetrofitResponse {
 
                 @Override
                 public void onFailure(Call<type> call, Throwable t) {
-                    Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
-                    t.printStackTrace();
+                    if (!(t instanceof SocketTimeoutException)){
+                        Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {

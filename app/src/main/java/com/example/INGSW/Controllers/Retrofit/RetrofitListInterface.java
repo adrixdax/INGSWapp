@@ -5,6 +5,6 @@ import teaspoon.annotations.OnBackground;
 public interface RetrofitListInterface {
 
     @OnBackground
-    public void setList(List<?> newList);
+    void setList(List<?> newList);
 
 }

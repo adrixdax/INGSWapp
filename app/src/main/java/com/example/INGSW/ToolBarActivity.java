@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
+import com.example.INGSW.Controllers.NotifyUpdater;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.UserController;
@@ -46,6 +47,18 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     ConstraintLayout progressLayout;
 
     float x1, x2, y1, y2;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        NotifyUpdater.stopUpdate();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NotifyUpdater.newUpdate();
+    }
 
     Map<String, List<Film>> conteinerList = new HashMap<>();
     private final Map<String, Object> contaiinerItem = new HashMap<>();
