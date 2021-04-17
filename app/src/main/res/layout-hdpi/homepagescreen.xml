@@ -7,13 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".home.HomepageScreen">
 
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/poppins_bold"
-        android:text="@string/ultimi_usciti"
+        android:text="@string/ultime_uscite"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,110 +23,154 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="300dp"
-        android:layout_height="150dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:scrollbars="horizontal"
-        android:layout_margin="@dimen/cardview_compat_inset_shadow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
+
     <ImageButton
         android:id="@+id/notifyBell"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/circle_obj"
+        android:src="@drawable/icons8_notification_30px_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/todo"
+        />
 
 
-    <Button
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/toSee"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="21dp"
-        android:background="@drawable/rounded_list_obj"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/poppins_bold"
-        android:text="Da vedere"
-        android:textSize="10dp"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/mostReviewed"
-        app:layout_constraintEnd_toStartOf="@+id/mostSeen"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="8dp"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:srcCompat="@drawable/tosee_theme"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/mostSeen"
         app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
 
-    <Button
-        android:id="@+id/mostSeen"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="21dp"
-        android:background="@drawable/rounded_list_obj"
-        android:clickable="true"
-        android:focusable="true"
-        android:textSize="10dp"
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="I PIù visti"
+        android:text="@string/da_vedere"
+        android:textAllCaps="true"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/userPrefered"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/toSee"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+        app:layout_constraintStart_toStartOf="@id/toSee"
+        app:layout_constraintEnd_toEndOf="@id/toSee"
+        app:layout_constraintTop_toTopOf="@id/toSee"
+        app:layout_constraintBottom_toBottomOf="@id/toSee"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20" />
 
-    <Button
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/mostReviewed"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/rounded_list_obj"
-        android:fontFamily="@font/poppins_bold"
-        android:text="I più recensiti"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:textSize="10dp"
-        android:clickable="true"
-        android:focusable="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="60dp"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:srcCompat="@drawable/mostreviewed_theme"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/userPrefered"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toSee" />
 
-
-    <Button
-        android:id="@+id/userPrefered"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/rounded_list_obj"
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="i preferiti degli utenti"
-        android:textSize="10dp"
+        android:text="i più recensiti"
+        android:textAllCaps="true"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:clickable="true"
-        android:focusable="true"
+        android:maxWidth="90dp"
+        app:layout_constraintStart_toStartOf="@id/mostReviewed"
+        app:layout_constraintEnd_toEndOf="@id/mostReviewed"
+        app:layout_constraintTop_toTopOf="@id/mostReviewed"
+        app:layout_constraintBottom_toBottomOf="@id/mostReviewed"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/mostSeen"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mostReviewed"
-        app:layout_constraintTop_toBottomOf="@+id/mostSeen" />
+        app:layout_constraintStart_toEndOf="@+id/toSee"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:srcCompat="@drawable/popcorn_theme" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/i_pi_visti"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="@id/mostSeen"
+        app:layout_constraintEnd_toEndOf="@id/mostSeen"
+        app:layout_constraintTop_toTopOf="@id/mostSeen"
+        app:layout_constraintBottom_toBottomOf="@id/mostSeen"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/userPrefered"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="60dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mostSeen"
+        app:layout_constraintStart_toEndOf="@id/mostReviewed"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        app:srcCompat="@drawable/prefered_theme" />
+
+    <TextView
+        android:id="@+id/textViewboh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="90dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="I PREFERITI DEGLI UTENTI"
+        android:textAllCaps="true"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toStartOf="@id/userPrefered"
+        app:layout_constraintEnd_toEndOf="@id/userPrefered"
+        app:layout_constraintTop_toTopOf="@id/userPrefered"
+        app:layout_constraintBottom_toBottomOf="@id/userPrefered"
+        android:shadowColor="@color/black"
+        android:shadowRadius="20" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

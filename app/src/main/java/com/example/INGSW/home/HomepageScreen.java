@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -123,6 +124,9 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) list, getContext(), this);
         adapter.setCss(HomepageScreen.class);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                layoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(list.size());
         recyclerView.setLayoutManager(layoutManager);

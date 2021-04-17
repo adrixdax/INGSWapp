@@ -29,18 +29,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginEnd="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="67dp"
-                android:layout_weight="3">
+                android:layout_weight="2.7">
 
                 <View
                     android:id="@+id/view6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:background="@drawable/circle_obj"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -49,25 +50,27 @@
 
                 <EditText
                     android:id="@+id/Text_of_search"
-                    android:layout_width="215dp"
-                    android:layout_height="37dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:imeOptions="actionSearch"
                     android:importantForAutofill="yes"
                     android:inputType="text"
                     android:singleLine="true"
                     android:textColor="#FFFFFF"
+                    android:layout_marginStart="10dp"
                     app:layout_constraintBottom_toBottomOf="@+id/view6"
+                    app:layout_constraintEnd_toStartOf="@id/search_button"
+                    app:layout_constraintHorizontal_weight="3"
                     app:layout_constraintStart_toStartOf="@+id/view6"
-                    app:layout_constraintTop_toTopOf="@+id/view6"
-                    tools:ignore="MissingConstraints" />
+                    app:layout_constraintTop_toTopOf="@+id/view6"/>
 
                 <ImageView
                     android:id="@+id/search_button"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="0.6"
+                    android:layout_marginEnd="5dp"
                     android:backgroundTint="#00FFFFFF"
                     app:layout_constraintBottom_toBottomOf="@+id/view6"
                     app:layout_constraintEnd_toEndOf="@+id/view6"
@@ -83,12 +86,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1.1">
 
                 <ImageView
                     android:id="@+id/playButton"
-                    android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:backgroundTint="@color/CineBlue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/userButton"
@@ -98,12 +101,13 @@
 
                 <ImageView
                     android:id="@+id/userButton"
-                    android:layout_width="60dp"
-                    android:layout_height="40dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:backgroundTint="@color/CineBlue"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/playButton"
                     app:srcCompat="@drawable/people_button" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
