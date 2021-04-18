@@ -8,20 +8,13 @@ import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ExecutionException;
 
 import teaspoon.annotations.OnUi;
-
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     private static List<?> notify = new ArrayList<>();

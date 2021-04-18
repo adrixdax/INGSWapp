@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.DB.Adapters.ContactListAdapter;
 import com.example.INGSW.Component.DB.Classes.Contact;
 import com.example.INGSW.Controllers.NotifyTestController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.UserServerController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thekhaeng.pushdownanim.PushDownAnim;
@@ -27,11 +29,10 @@ import java.util.concurrent.ExecutionException;
 
 import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
-public class DialogFriendsListOfShare extends AppCompatDialogFragment {
+public class DialogFriendsListOfShare extends AppCompatDialogFragment implements RetrofitListInterface {
 
 
     private RecyclerView recycler;
-    private List<Contact> listsFirends = new ArrayList<>();
     private final List<Contact> selectedLists = new ArrayList<>();
     private String film;
     private boolean custom;
@@ -55,28 +56,9 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
-
         recycler = dialog.findViewById(R.id.recyclerView);
-        String json = "";
-        try {
-            UserServerController usc = new UserServerController();
-            usc.setUserId(((ToolBarActivity) getActivity()).getUid());
-            json = (String) usc.execute("getFriends").get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            listsFirends = (List<Contact>) getJsonToDecode(json, Contact.class);
-            if (listsFirends != null) {
-                ContactListAdapter adapter = new ContactListAdapter(listsFirends, getContext(), this.selectedLists);
-                adapter.setCss(this.getClass());
-                recycler.setAdapter(adapter);
-                recycler.setLayoutManager(new LinearLayoutManager(dialog.getContext(), LinearLayoutManager.VERTICAL, false));
-                recycler.setHasFixedSize(false);
-            }
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+
+        RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + ((ToolBarActivity) requireActivity()).getUid(),this,getContext(),"getFriends");
 
 
         Button insertInLists = dialog.getWindow().findViewById(R.id.ShareWithFriends);
@@ -135,4 +117,12 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment {
         return dialog;
     }
 
+    @Override
+    public void setList(List<?> newList) {
+        ContactListAdapter adapter = new ContactListAdapter((List<Contact>) newList, getContext(), this.selectedLists);
+        adapter.setCss(this.getClass());
+        recycler.setAdapter(adapter);
+        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recycler.setHasFixedSize(false);
+    }
 }

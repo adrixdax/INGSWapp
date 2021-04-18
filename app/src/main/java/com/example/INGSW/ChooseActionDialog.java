@@ -1,12 +1,12 @@
 package com.example.INGSW;
 
 import android.app.Dialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.INGSW.Component.DB.Adapters.CustomListsAdapter;
 import com.example.INGSW.Component.DB.Classes.Contact;
@@ -81,13 +82,14 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
         PushDownAnim.setPushDownAnimTo(share, remove);
         filmTitle.setText(film == null ? titleList : film.getFilm_Title());
         share.setOnClickListener(v -> {
+            DialogFriendsListOfShare fragment;
             if (!custom) {
-                DialogFriendsListOfShare fragment = new DialogFriendsListOfShare(String.valueOf(film.getId_Film()));
-                fragment.show(getChildFragmentManager(), "DialogFriendsListOfShare");
+                fragment = new DialogFriendsListOfShare(String.valueOf(film.getId_Film()));
             } else {
-                DialogFriendsListOfShare fragment = new DialogFriendsListOfShare(true, idList);
-                fragment.show(getChildFragmentManager(), "DialogFriendsListOfShare");
+                fragment = new DialogFriendsListOfShare(true, idList);
             }
+            fragment.show(getParentFragmentManager(), "DialogFriendsListOfShare");
+            dismiss();
         });
 
         remove.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +105,6 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
                     RetrofitResponse.getResponse(
                             "Type=PostRequest&idList=" + idList,
                             fg, fg.getContext(), "getFilmInList");
-                    dismiss();
                 } else {
                     RetrofitResponse.getResponse("Type=PostRequest&removeList=true&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&idList=" + idList, ChooseActionDialog.this, getContext(), "deleteCustomList");
                     try {
@@ -112,8 +113,8 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
                         e.printStackTrace();
                     }
                     RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&custom=true&idFilm= -1", fg, fg.getContext(), "getList");
-                    dismiss();
                 }
+                dismiss();
             }
         });
         return dialog;

@@ -1,7 +1,6 @@
 package com.example.INGSW;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -18,9 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.NotifyAdapter;
 import com.example.INGSW.Component.DB.Classes.Notify;
-import com.example.INGSW.Component.DB.Classes.Reviews;
-import com.example.INGSW.Component.DB.Classes.UserLists;
-import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.NotifyUpdater;
 
 import org.jetbrains.annotations.NotNull;
@@ -38,12 +34,8 @@ public class NotifyPopUp extends AppCompatDialogFragment {
     private static ArrayList<Notify> notify = new ArrayList<>();
     private static TextView notifyTextError;
 
-    public NotifyPopUp(List<?> list, Activity act){
-        notify = new ArrayList<>((Collection<? extends Notify>) list);
-    }
-
     public NotifyPopUp(ArrayList<Notify> list) {
-        new NotifyPopUp(list, null);
+        notify = new ArrayList<>((Collection<? extends Notify>) list);
     }
 
     public NotifyPopUp() {
@@ -87,7 +79,7 @@ public class NotifyPopUp extends AppCompatDialogFragment {
     }
 
     public static void noMoreNotify() {
-        if ((notifyTextError != null) && (notify.size() == 0)) {
+        if ((notifyTextError != null) && (notify.isEmpty())) {
             update();
         }
     }

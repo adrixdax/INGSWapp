@@ -109,7 +109,7 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
             setList(film);
         }
         bell.setOnClickListener(v -> {
-            new NotifyPopUp(not.getNotify(), requireActivity()).show(requireActivity().getSupportFragmentManager(), "not");
+            new NotifyPopUp((ArrayList<Notify>) not.getNotify()).show(requireActivity().getSupportFragmentManager(), "not");
         });
         return root;
     }
