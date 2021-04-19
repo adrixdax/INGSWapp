@@ -28,7 +28,7 @@
         android:text="@string/le_mie_liste"
         android:textAlignment="center"
         android:textColor="#E8DFDF"
-        android:textSize="30sp"
+        android:textSize="10sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"

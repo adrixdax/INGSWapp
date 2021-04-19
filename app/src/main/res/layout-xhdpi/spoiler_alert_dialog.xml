@@ -61,8 +61,10 @@
 
     <TextView
         android:id="@+id/textView7"
-        android:layout_width="358dp"
-        android:layout_height="141dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
         android:text="Accedendo alla sezione RECENSIONI rischi di imbatterti in eventuali spoiler di trama. Vuoi procedere?"
         android:textAlignment="viewStart"
