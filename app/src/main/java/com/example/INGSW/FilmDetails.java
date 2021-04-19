@@ -1,6 +1,7 @@
 package com.example.INGSW;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.Films.Film;
-import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.thekhaeng.pushdownanim.PushDownAnim;
-
-import java.util.Objects;
 
 import teaspoon.annotations.OnUi;
 
@@ -58,6 +56,7 @@ public class FilmDetails extends Fragment {
         title.setText(film.getFilm_Title());
         Glide.with(root.getContext()).load(pic).into(posterPath);
         plot.setText(film.getPlot());
+        plot.setMovementMethod(new ScrollingMovementMethod());
         releaseDate.setText(film.getRelease_Date());
         StringBuilder genere = new StringBuilder();
         if (film.getGenres() != null)
@@ -68,7 +67,7 @@ public class FilmDetails extends Fragment {
             genere = new StringBuilder(genere.substring(0, genere.length() - 3));
         }
         genres.setText(genere.toString());
-        time.setText(String.valueOf(film.getRuntime()));
+        time.setText(new StringBuilder().append(film.getRuntime()).append(" min").toString());
 
         imageButtonWatch = root.findViewById(R.id.imageButtonWatch);
         imageButtonFavorites = root.findViewById(R.id.imageButtonFavorites);

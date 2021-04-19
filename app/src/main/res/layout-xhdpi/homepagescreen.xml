@@ -64,10 +64,11 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/da_vedere"
+        android:gravity="center"
         android:textAllCaps="true"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
@@ -95,14 +96,14 @@
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:fontFamily="@font/poppins_bold"
         android:text="i più recensiti"
         android:textAllCaps="true"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:maxWidth="90dp"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="@id/mostReviewed"
         app:layout_constraintEnd_toEndOf="@id/mostReviewed"
         app:layout_constraintTop_toTopOf="@id/mostReviewed"
@@ -125,10 +126,11 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/i_pi_visti"
+        android:gravity="center"
         android:textAllCaps="true"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
@@ -156,12 +158,13 @@
 
     <TextView
         android:id="@+id/textViewboh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:maxWidth="90dp"
         android:fontFamily="@font/poppins_bold"
         android:text="I PREFERITI DEGLI UTENTI"
         android:textAllCaps="true"
+        android:gravity="center"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="@id/userPrefered"

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.INGSW.Controllers.NotifyUpdater;
 import com.example.INGSW.home.HomepageScreen;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -41,6 +42,7 @@ public class LeaveReviewAlert extends AppCompatDialogFragment {
         annulla = dialog.findViewById(R.id.annulla_button);
         PushDownAnim.setPushDownAnimTo(ok,annulla);
         ok.setOnClickListener(v -> {
+            NotifyUpdater.stopUpdate();
             requireActivity().getSupportFragmentManager().popBackStack();
             dialog.cancel();
             dialog.dismiss();

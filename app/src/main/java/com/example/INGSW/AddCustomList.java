@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.INGSW.Component.DB.Classes.User;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -36,7 +35,6 @@ public class AddCustomList extends Fragment {
                 .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
 
         title = root.findViewById(R.id.editTextViewTitleList);
-
         description = root.findViewById(R.id.editTextListDescription);
 
         cancel.setOnClickListener(v -> requireActivity().onBackPressed());
