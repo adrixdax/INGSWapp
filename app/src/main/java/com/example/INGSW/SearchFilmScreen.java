@@ -46,7 +46,6 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
     private EditText Text_of_search;
     private RecyclerView recyclerViewFilm;
     private RecyclerView recyclerViewFriends;
-    private List<Film> filmInSearch = new ArrayList<>();
     private ArrayList<User> usersInSearchlist;
     private int playFlag, userFlag = 0;
     private TextView textError;
@@ -103,7 +102,6 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                     if (recyclerViewFilm != null && recyclerViewFilm.isShown())
                         recyclerViewFilm.setVisibility(View.GONE);
                     ((ToolBarActivity) requireActivity()).triggerProgessBar();
-                    filmInSearch = new ArrayList<>();
                     RetrofitResponse.getResponse("Type=PostRequest&name="+Text_of_search.getText().toString(),SearchFilmScreen.this,v.getContext(),"getFilm");
                 } else {
                     ((ToolBarActivity) requireActivity()).triggerProgessBar();

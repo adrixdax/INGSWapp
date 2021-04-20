@@ -12,7 +12,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitSingleton {
 
-    private final static String url = "http://87.1.139.228:8080";
+    private final static String url = "http://79.19.15.166:8080";
     private static retrofit2.Retrofit retrofit;
     public static retrofit2.Retrofit getRetrofit(){
         if (retrofit == null){
