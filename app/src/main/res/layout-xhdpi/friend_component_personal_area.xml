@@ -21,8 +21,8 @@
 
     <TextView
         android:id="@+id/username_nickView"
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"

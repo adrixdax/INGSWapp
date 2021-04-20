@@ -18,6 +18,7 @@ import com.example.INGSW.ChooseActionDialog;
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.DialogCustomlList;
 import com.example.INGSW.FilmInCustomList;
+import com.example.INGSW.FriendProfile;
 import com.example.INGSW.MyLists;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
@@ -56,9 +57,9 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        if (Objects.equals(css.getCanonicalName(), MyLists.class.getCanonicalName())) {
+        if (Objects.equals(css, MyLists.class) || Objects.equals(css, FriendProfile.class)) {
             listItem = layoutInflater.inflate(R.layout.lists_of_lists, parent, false);
-        } else if (Objects.equals(css.getCanonicalName(), DialogCustomlList.class.getCanonicalName())) {
+        } else if (Objects.equals(css, DialogCustomlList.class)) {
             listItem = layoutInflater.inflate(R.layout.list_custom_list_selected, parent, false);
         }
         return new CustomListsAdapter.ViewHolder(listItem, css);
@@ -86,7 +87,7 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
                 e.printStackTrace();
             }
         }
-        else if(Objects.equals(css, MyLists.class)) {
+        else if(Objects.equals(css, MyLists.class) || Objects.equals(css, FriendProfile.class)) {
             holder.circleList.setText(listofdata.get(position).getTitle());
             holder.circleList.setOnClickListener(v -> {
                 FilmInCustomList nextFragment = new FilmInCustomList(listofdata.get(position));
@@ -128,12 +129,12 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
 
         public ViewHolder(View itemView, Class css) {
             super(itemView);
-            if (Objects.equals(css.getCanonicalName(), DialogCustomlList.class.getCanonicalName())) {
+            if (Objects.equals(css, DialogCustomlList.class)) {
                 this.circleImageView = itemView.findViewById(R.id.list_image);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutAddInCustomList);
                 this.selectItem = itemView.findViewById(R.id.AddList);
                 this.textView = itemView.findViewById(R.id.NameOfCustomList);
-            } else if (Objects.equals(css.getCanonicalName(), MyLists.class.getCanonicalName())) {
+            } else if (Objects.equals(css.getCanonicalName(), MyLists.class.getCanonicalName()) || Objects.equals(css, FriendProfile.class) ) {
                 this.circleList = itemView.findViewById(R.id.CircolarCustomList);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutShowCustomList);
             }

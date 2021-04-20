@@ -110,7 +110,7 @@
         android:layout_height="0dp"
         app:layout_constraintHeight_max="75dp"
         app:layout_constrainedHeight="true"
-android:layout_margin="10dp"
+        android:layout_margin="10dp"
         android:background="@drawable/rounded_list_obj"
         android:clickable="true"
         android:focusable="true"

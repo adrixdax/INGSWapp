@@ -9,14 +9,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatCheckBox;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Classes.Contact;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.example.INGSW.DialogFriendsListOfShare;
+import com.example.INGSW.FriendProfile;
 import com.example.INGSW.ListOfFriendsScreen;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
-import com.example.INGSW.Component.DB.Classes.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -64,6 +66,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             } else {
                 getUser(listofdata.get(position).getUser1(), holder);
             }
+            holder.relativeLayoutFriend.setOnClickListener(v -> {
+                FriendProfile nextFragment = new FriendProfile(ContactListAdapter.this.listofdata.get(holder.getAdapterPosition()).getUser1().equals(((ToolBarActivity) myContext).getUid()) ? ContactListAdapter.this.listofdata.get(holder.getAdapterPosition()).getUser2() : ContactListAdapter.this.listofdata.get(holder.getAdapterPosition()).getUser1());
+                FragmentTransaction transaction = ((ToolBarActivity) myContext).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "Friend Profile");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            });
         }
         else {
             try {
@@ -80,7 +89,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                     if (!holder.checkButtonShare.isChecked()) {
                         holder.checkButtonShare.setChecked(true);
                         selectedLists.add(listofdata.get(position));
-
                     } else {
                         holder.checkButtonShare.setChecked(false);
                         selectedLists.remove(listofdata.get(position));
