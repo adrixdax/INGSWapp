@@ -56,7 +56,7 @@ public class InsertReviewScreen extends Fragment {
     }
 
     public boolean isValidReview(String titolo, float valutazione) throws Exception {
-        return validTitle(titolo) && validValutation(valutazione);
+        return validValutation(valutazione) && validTitle(titolo);
     }
 
 
@@ -80,15 +80,15 @@ public class InsertReviewScreen extends Fragment {
                     Toast.makeText(getContext(), "Devi selezionare almeno mezzo ciak", Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
-                if (e.getMessage().equals(IS_NUMBER)) {
+                if (e.getMessage().equals(IS_NUMBER.toString())) {
                     title.setError("Il titolo non può essere un numero");
                     title.requestFocus();
                 }
-                else if (e.getMessage().equals(TOO_LONG)){
+                else if (e.getMessage().equals(TOO_LONG.toString())){
                     title.setError("Il titolo è troppo lungo");
                     title.requestFocus();
                 }
-                else if (e.getMessage().equals(TOO_SHORT)){
+                else if (e.getMessage().equals(TOO_SHORT.toString())){
                     title.setError("Devi inserire un titolo");
                     title.requestFocus();
                 }

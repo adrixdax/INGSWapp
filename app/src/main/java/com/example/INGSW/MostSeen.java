@@ -54,9 +54,6 @@ public class MostSeen extends Fragment implements RetrofitListInterface {
         mostSeenFilm.setLayoutManager(layoutManager);
         mostSeenFilm.setItemViewCacheSize(newList.size());
         mostSeenFilm.setAdapter(adapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mostSeenFilm.getContext(),
-                layoutManager.getOrientation());
-        mostSeenFilm.addItemDecoration(dividerItemDecoration);
         mostSeenFilm.setVisibility(View.VISIBLE);
         ((ToolBarActivity) requireActivity()).stopProgressBar();
     }

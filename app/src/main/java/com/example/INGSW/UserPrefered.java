@@ -55,9 +55,6 @@ public class UserPrefered extends Fragment implements RetrofitListInterface {
         userPreferedFilms.setLayoutManager(layoutManager);
         userPreferedFilms.setAdapter(adapter);
         userPreferedFilms.setItemViewCacheSize(newList.size());
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(userPreferedFilms.getContext(),
-                layoutManager.getOrientation());
-        userPreferedFilms.addItemDecoration(dividerItemDecoration);
         userPreferedFilms.setVisibility(View.VISIBLE);
         ((ToolBarActivity)requireActivity()).stopProgressBar();
     }

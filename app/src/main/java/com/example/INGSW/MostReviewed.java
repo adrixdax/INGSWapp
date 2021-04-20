@@ -54,9 +54,6 @@ public class MostReviewed extends Fragment implements RetrofitListInterface {
         mostReviewedFilm.setItemViewCacheSize(newList.size());
         mostReviewedFilm.setLayoutManager(layoutManager);
         mostReviewedFilm.setAdapter(adapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mostReviewedFilm.getContext(),
-                layoutManager.getOrientation());
-        mostReviewedFilm.addItemDecoration(dividerItemDecoration);
         mostReviewedFilm.setVisibility(View.VISIBLE);
         ((ToolBarActivity) requireActivity()).stopProgressBar();
     }

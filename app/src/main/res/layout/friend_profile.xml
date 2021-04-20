@@ -22,6 +22,7 @@
         android:layout_height="0dp"
         android:layout_margin="10dp"
         android:text="@string/nickname"
+        android:fontFamily="@font/poppins_bold"
         android:textColor="#E6DDDD"
         app:autoSizeMaxTextSize="36sp"
         app:autoSizeMinTextSize="12sp"

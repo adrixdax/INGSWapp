@@ -67,9 +67,6 @@ public class ToSee extends Fragment implements RetrofitListInterface {
             toSeeFilms.setLayoutManager(layoutManager);
             toSeeFilms.setAdapter(adapter);
             toSeeFilms.setItemViewCacheSize(newList.size());
-            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(toSeeFilms.getContext(),
-                    layoutManager.getOrientation());
-            toSeeFilms.addItemDecoration(dividerItemDecoration);
             toSeeFilms.setVisibility(View.VISIBLE);
         }
         else{
