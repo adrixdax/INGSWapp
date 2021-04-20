@@ -5,6 +5,7 @@
     android:id="@+id/frameLayout5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="65dp"
     tools:context=".InsertReviewScreen">
 
 
@@ -86,7 +87,6 @@
         android:layout_width="127dp"
         android:layout_height="50dp"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="65dp"
         android:background="@drawable/rounded_corners"
         android:fontFamily="@font/poppins_bold"
         android:text="INSERISCI"

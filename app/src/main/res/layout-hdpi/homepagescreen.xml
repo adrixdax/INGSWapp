@@ -5,6 +5,7 @@
     android:id="@+id/HomePage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="60dp"
     tools:context=".home.HomepageScreen">
 
 
@@ -24,7 +25,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="5:2.8"
         android:layout_marginTop="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
@@ -84,7 +86,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="25dp"
-        android:layout_marginBottom="60dp"
         app:shapeAppearanceOverlay="@style/roundedImageView"
         app:srcCompat="@drawable/mostreviewed_theme"
         android:scaleType="centerCrop"
@@ -145,7 +146,6 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginEnd="25dp"
-        android:layout_marginBottom="60dp"
         android:scaleType="centerCrop"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
