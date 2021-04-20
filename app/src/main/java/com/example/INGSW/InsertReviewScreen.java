@@ -74,6 +74,7 @@ public class InsertReviewScreen extends Fragment {
             try {
                 if (isValidReview(String.valueOf(title.getText()), ratingBar.getRating())) {
                     RetrofitResponse.getResponse("Type=PostRequest&idFilm=" + idFilm + "&title=" + title.getText().toString() + "&description=" + (description.getText().toString().isEmpty() ? "\0" : String.valueOf(description.getText())) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true",this,getContext(),"addReview");
+                    ((ToolBarActivity) requireActivity()).onBackPressed(true);
                 }
                 else {
                     Toast.makeText(getContext(), "Devi selezionare almeno mezzo ciak", Toast.LENGTH_LONG).show();
@@ -92,7 +93,6 @@ public class InsertReviewScreen extends Fragment {
                     title.requestFocus();
                 }
             }
-            ((ToolBarActivity) requireActivity()).onBackPressed(true);
         });
         return root;
     }
