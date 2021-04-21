@@ -94,8 +94,23 @@
         app:layout_constraintEnd_toEndOf="@+id/listcommentsButton"
         app:layout_constraintStart_toStartOf="@+id/listcommentsButton"
         app:layout_constraintTop_toTopOf="@+id/listcommentsButton"
-        app:srcCompat="@drawable/recensioni"
         android:scaleType="fitCenter"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/friendsComments"
+        android:text="I commenti degli amici"
+        app:layout_constraintStart_toStartOf="@id/listcomments"
+        app:layout_constraintEnd_toEndOf="@id/listcomments"
+        app:layout_constraintTop_toTopOf="@id/listcomments"
+        app:layout_constraintBottom_toBottomOf="@id/listcomments"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_marginEnd="5dp"
+        />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"

@@ -32,6 +32,7 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -64,7 +65,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     @Override
     public ReviewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        if( css.getCanonicalName().equals(MyReviews.class.getCanonicalName())){
+        if(Objects.equals(css.getCanonicalName(), MyReviews.class.getCanonicalName())){
             listItem = layoutInflater.inflate(R.layout.component_myreviewlist, parent, false);
         }
         else {
@@ -78,7 +79,14 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public void onBindViewHolder(@NonNull ReviewsAdapter.ViewHolder holder, int position) {
         if (Objects.equals(css, MyReviews.class)) {
             try {
-              if( position < filmList.size()) Glide.with(startFragment).load(filmList.get(position).getPosterPath()).into((ImageView) holder.moviepic);
+              if( position < filmList.size() && filmList.size()==listofdata.size()) {
+                  for (Film f : filmList) {
+                      if (listofdata.get(position).getIdFilm() == f.getId_Film()) {
+                          Glide.with(startFragment).load(f.getPosterPath()).into(holder.moviepic);
+                          break;
+                      }
+                  }
+                }
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
                 holder.ratingBar.setClickable(false);
                 holder.ratingBar.setIsIndicator(true);
@@ -183,9 +191,8 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     @Override
     @OnBackground
     public void setList(List<?> newList) {
-        this.filmList.addAll(this.filmList.size(),(Collection<? extends Film>) newList);
+        this.filmList.addAll((Collection<? extends Film>) newList);
         notifyDataSetChanged();
-
     }
 
 

@@ -218,6 +218,9 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     @Override
     public void onBackPressed() {
+        if (progressBar.isActivated()){
+            stopProgressBar();
+        }
         FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
         String tag1 = "1";

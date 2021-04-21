@@ -59,7 +59,7 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         if (Objects.equals(css, MyLists.class) || Objects.equals(css, FriendProfile.class)) {
             listItem = layoutInflater.inflate(R.layout.lists_of_lists, parent, false);
-        } else if (Objects.equals(css, DialogCustomlList.class)) {
+        } else if (Objects.equals(css, DialogCustomlList.class) ) {
             listItem = layoutInflater.inflate(R.layout.list_custom_list_selected, parent, false);
         }
         return new CustomListsAdapter.ViewHolder(listItem, css);
