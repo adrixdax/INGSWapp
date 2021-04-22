@@ -19,6 +19,8 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.util.Objects;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentAvatarScreen extends Fragment implements View.OnClickListener {
@@ -36,7 +38,7 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.avatar_screen, container, false);
         FrameLayout.LayoutParams newLayoutParams = (FrameLayout.LayoutParams) root.getLayoutParams();
-        newLayoutParams.setMargins(0,0,0,120);
+        newLayoutParams.setMargins(0,0,0,requireActivity().getWindow().getDecorView().getRootView().findViewById(R.id.nav_view).getHeight());
         root.setLayoutParams(newLayoutParams);
         CircleImageView ironman = root.findViewById(R.id.profile_image);
         CircleImageView spiderman = root.findViewById(R.id.profile_image2);
