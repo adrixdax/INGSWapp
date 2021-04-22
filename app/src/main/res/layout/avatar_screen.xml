@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AvatarScreenActivity">
+    tools:context=".AvatarScreenActivity"
+    android:layout_marginBottom="10dp"
+    android:id="@+id/avatarLayout">
 
     <TextView
         android:id="@+id/textView"
@@ -14,82 +16,109 @@
         android:fontFamily="@font/poppins_bold"
         android:text="Seleziona il tuo Avatar"
         android:textAlignment="center"
+        android:gravity="center"
         android:textColor="#F3EFEF"
-        android:textSize="30sp"
+        android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_weight="1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
-        android:layout_width="142dp"
-        android:layout_height="160dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_launcher_background"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toStartOf="@+id/profile_image2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintBottom_toTopOf="@id/profile_image3"/>
+        app:layout_constraintBottom_toTopOf="@id/profile_image3"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image2"
-        android:layout_width="142dp"
-        android:layout_height="160dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_launcher_background"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
         app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintBottom_toTopOf="@id/profile_image4"/>
+        app:layout_constraintBottom_toTopOf="@id/profile_image4"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image3"
-        android:layout_width="142dp"
-        android:layout_height="160dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profile_image4"
-        app:layout_constraintTop_toBottomOf="@id/profile_image2"
-        app:layout_constraintBottom_toTopOf="@id/profile_image6"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image5"
-        android:layout_width="142dp"
-        android:layout_height="160dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toStartOf="@+id/profile_image6"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@+id/profile_image4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_image3"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image6"
-        android:layout_width="142dp"
-        android:layout_height="160dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profile_image5"
-        app:layout_constraintTop_toBottomOf="@id/profile_image4"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/profile_image"
+        app:layout_constraintBottom_toTopOf="@id/profile_image5"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image4"
-        android:layout_width="142dp"
-        android:layout_height="160dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:src="@drawable/ic_launcher_background"
-        app:layout_constraintEnd_toStartOf="@+id/profile_image3"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_image3"
+        app:layout_constraintTop_toBottomOf="@id/profile_image2"
+        app:layout_constraintBottom_toTopOf="@id/profile_image6"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_launcher_background"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toStartOf="@+id/profile_image6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile_image"
-        app:layout_constraintBottom_toTopOf="@id/profile_image5"/>
+        app:layout_constraintTop_toBottomOf="@id/profile_image3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_launcher_background"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profile_image5"
+        app:layout_constraintTop_toBottomOf="@id/profile_image4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_weight="1"
+        app:layout_constraintHorizontal_weight="1"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

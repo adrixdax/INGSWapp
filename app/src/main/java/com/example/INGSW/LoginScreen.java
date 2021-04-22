@@ -83,8 +83,8 @@ public class LoginScreen extends AppCompatActivity {
             reference = db.getReference("Users");
             setContentView(R.layout.loginscreen);
             layout = findViewById(R.id.loginscreen);
-            circularProgressBar = findViewById(R.id.activityProgressBarLog);
-            progressLayout = findViewById(R.id.layoutProgressLog);
+            circularProgressBar = findViewById(R.id.activityProgressBar);
+            progressLayout = findViewById(R.id.layoutProgress);
             loginController = new LoginController(this);
             mAuth = FirebaseAuth.getInstance();
             TextView register = findViewById(R.id.RegisterText);

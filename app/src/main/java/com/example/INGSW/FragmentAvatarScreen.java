@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -34,7 +35,9 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.avatar_screen, container, false);
-
+        FrameLayout.LayoutParams newLayoutParams = (FrameLayout.LayoutParams) root.getLayoutParams();
+        newLayoutParams.setMargins(0,0,0,120);
+        root.setLayoutParams(newLayoutParams);
         CircleImageView ironman = root.findViewById(R.id.profile_image);
         CircleImageView spiderman = root.findViewById(R.id.profile_image2);
         CircleImageView gamora = root.findViewById(R.id.profile_image3);
@@ -42,10 +45,6 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
         CircleImageView widow = root.findViewById(R.id.profile_image5);
         CircleImageView wonderwoman = root.findViewById(R.id.profile_image6);
 
-        ConstraintLayout.LayoutParams paramswidow = (ConstraintLayout.LayoutParams)widow.getLayoutParams();
-        paramswidow.setMargins(0, 0, 0, 100);
-        ConstraintLayout.LayoutParams paramswonder = (ConstraintLayout.LayoutParams)wonderwoman.getLayoutParams();
-        paramswonder.setMargins(0, 0, 0, 100);
 
         PushDownAnim.setPushDownAnimTo(ironman, spiderman, gamora, thanos, widow, wonderwoman);
 
