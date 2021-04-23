@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toSeeFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -60,17 +61,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewFilmInListCustom"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollableDescription"
-        app:layout_constraintBottom_toTopOf="@id/listcommentsButton"
-        app:layout_constraintVertical_weight="0.8"/>
-
     <ImageButton
         android:id="@+id/listcommentsButton"
         android:layout_width="0dp"
@@ -79,37 +69,27 @@
         android:background="@drawable/circle_obj"
         android:fontFamily="@font/poppins_bold"
         android:textColor="#EFE7E7"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollableDescription"
+        app:layout_constraintBottom_toTopOf="@id/recyclerViewFilmInListCustom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.85"
-        app:layout_constraintStart_toStartOf="@id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPlot"/>
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/listcomments"
-        android:layout_marginStart="6dp"
-        app:layout_constraintBottom_toBottomOf="@+id/listcommentsButton"
-        app:layout_constraintEnd_toEndOf="@+id/listcommentsButton"
-        app:layout_constraintStart_toStartOf="@+id/listcommentsButton"
-        app:layout_constraintTop_toTopOf="@+id/listcommentsButton"
-        android:scaleType="fitCenter"/>
+        app:layout_constraintStart_toStartOf="@id/guideline" />
 
     <TextView
+        android:id="@+id/friendsComments"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:id="@+id/friendsComments"
-        android:text="I commenti degli amici"
-        app:layout_constraintStart_toStartOf="@id/listcomments"
-        app:layout_constraintEnd_toEndOf="@id/listcomments"
-        app:layout_constraintTop_toTopOf="@id/listcomments"
-        app:layout_constraintBottom_toBottomOf="@id/listcomments"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textColor="@color/colorAccent"
+        android:layout_margin="4dp"
         android:fontFamily="@font/poppins_bold"
-        android:layout_marginEnd="5dp"
+        android:gravity="center"
+        android:text="I commenti degli amici"
+        android:textAlignment="center"
+        android:textColor="@color/colorAccent"
+        android:autoSizeTextType="uniform"
+        app:layout_constraintStart_toStartOf="@id/listcommentsButton"
+        app:layout_constraintEnd_toEndOf="@id/listcommentsButton"
+        app:layout_constraintTop_toTopOf="@id/listcommentsButton"
+        app:layout_constraintBottom_toBottomOf="@id/listcommentsButton"
         />
 
     <androidx.constraintlayout.widget.Guideline
@@ -118,5 +98,18 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFilmInListCustom"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/listcommentsButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_weight="0.8"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

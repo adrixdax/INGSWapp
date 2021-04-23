@@ -11,16 +11,19 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/ultime_uscite"
+        android:gravity="center"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/notifyBell"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -37,140 +40,185 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
 
-
     <ImageButton
         android:id="@+id/notifyBell"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        app:layout_constraintDimensionRatio="1:1"
+        android:layout_margin="15dp"
         android:background="@drawable/circle_obj"
         android:src="@drawable/icons8_notification_30px_1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recyclerView"
         android:contentDescription="@string/todo"
         />
 
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/toSee"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="8dp"
-        app:shapeAppearanceOverlay="@style/roundedImageView"
-        app:srcCompat="@drawable/tosee_theme"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/mostSeen"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/da_vedere"
-        android:textAllCaps="true"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@id/toSee"
-        app:layout_constraintEnd_toEndOf="@id/toSee"
-        app:layout_constraintTop_toTopOf="@id/toSee"
-        app:layout_constraintBottom_toBottomOf="@id/toSee"
-        android:shadowColor="@color/black"
-        android:shadowRadius="20" />
-
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/mostReviewed"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="25dp"
-        app:shapeAppearanceOverlay="@style/roundedImageView"
-        app:srcCompat="@drawable/mostreviewed_theme"
-        android:scaleType="centerCrop"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/recyclerView"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/userPrefered"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toSee" />
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:text="i più recensiti"
-        android:textAllCaps="true"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        android:maxWidth="90dp"
-        app:layout_constraintStart_toStartOf="@id/mostReviewed"
-        app:layout_constraintEnd_toEndOf="@id/mostReviewed"
-        app:layout_constraintTop_toTopOf="@id/mostReviewed"
-        app:layout_constraintBottom_toBottomOf="@id/mostReviewed"
-        android:shadowColor="@color/black"
-        android:shadowRadius="20" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/toSee"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:srcCompat="@drawable/tosee_theme"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/mostSeen"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/mostReviewed"
+            app:layout_constraintVertical_weight="0.75"
+            app:layout_constraintHorizontal_weight="0.75"/>
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/mostSeen"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="25dp"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/toSee"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
-        app:shapeAppearanceOverlay="@style/roundedImageView"
-        app:srcCompat="@drawable/popcorn_theme" />
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/da_vedere"
+            android:breakStrategy="simple"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toStartOf="@id/toSee"
+            app:layout_constraintEnd_toEndOf="@id/toSee"
+            app:layout_constraintTop_toTopOf="@id/toSee"
+            app:layout_constraintBottom_toBottomOf="@id/toSee"
+            android:shadowColor="@color/black"
+            android:shadowRadius="20" />
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_bold"
-        android:text="@string/i_pi_visti"
-        android:textAllCaps="true"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@id/mostSeen"
-        app:layout_constraintEnd_toEndOf="@id/mostSeen"
-        app:layout_constraintTop_toTopOf="@id/mostSeen"
-        app:layout_constraintBottom_toBottomOf="@id/mostSeen"
-        android:shadowColor="@color/black"
-        android:shadowRadius="20" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/mostReviewed"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:srcCompat="@drawable/mostreviewed_theme"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/userPrefered"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toSee"
+            app:layout_constraintVertical_weight="0.75"
+            app:layout_constraintHorizontal_weight="0.75"/>
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/userPrefered"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="25dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mostSeen"
-        app:layout_constraintStart_toEndOf="@id/mostReviewed"
-        app:shapeAppearanceOverlay="@style/roundedImageView"
-        app:srcCompat="@drawable/prefered_theme" />
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="i più recensiti"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform"
+            android:breakStrategy="simple"
+            app:layout_constraintStart_toStartOf="@id/mostReviewed"
+            app:layout_constraintEnd_toEndOf="@id/mostReviewed"
+            app:layout_constraintTop_toTopOf="@id/mostReviewed"
+            app:layout_constraintBottom_toBottomOf="@id/mostReviewed"
+            android:shadowColor="@color/black"
+            android:shadowRadius="20" />
 
-    <TextView
-        android:id="@+id/textViewboh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxWidth="90dp"
-        android:fontFamily="@font/poppins_bold"
-        android:text="I PREFERITI DEGLI UTENTI"
-        android:textAllCaps="true"
-        android:textAlignment="center"
-        android:textColor="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@id/userPrefered"
-        app:layout_constraintEnd_toEndOf="@id/userPrefered"
-        app:layout_constraintTop_toTopOf="@id/userPrefered"
-        app:layout_constraintBottom_toBottomOf="@id/userPrefered"
-        android:shadowColor="@color/black"
-        android:shadowRadius="20" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/mostSeen"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/toSee"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/userPrefered"
+            app:layout_constraintVertical_weight="0.75"
+            app:layout_constraintHorizontal_weight="0.75"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:srcCompat="@drawable/popcorn_theme" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/poppins_bold"
+            android:breakStrategy="simple"
+            android:text="@string/i_pi_visti"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toStartOf="@id/mostSeen"
+            app:layout_constraintEnd_toEndOf="@id/mostSeen"
+            app:layout_constraintTop_toTopOf="@id/mostSeen"
+            app:layout_constraintBottom_toBottomOf="@id/mostSeen"
+            android:shadowColor="@color/black"
+            android:shadowRadius="20" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/userPrefered"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="4dp"
+            app:layout_constraintDimensionRatio="1:1"
+            android:scaleType="centerCrop"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mostSeen"
+            app:layout_constraintStart_toEndOf="@id/mostReviewed"
+            app:shapeAppearanceOverlay="@style/roundedImageView"
+            app:srcCompat="@drawable/prefered_theme"
+            app:layout_constraintVertical_weight="0.75"
+            app:layout_constraintHorizontal_weight="0.75"/>
+
+        <TextView
+            android:id="@+id/textViewboh"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:maxWidth="90dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="I PREFERITI DEGLI UTENTI"
+            android:breakStrategy="simple"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            app:autoSizeMaxTextSize="24sp"
+            app:autoSizeMinTextSize="12sp"
+            app:autoSizeStepGranularity="2sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toStartOf="@id/userPrefered"
+            app:layout_constraintEnd_toEndOf="@id/userPrefered"
+            app:layout_constraintTop_toTopOf="@id/userPrefered"
+            app:layout_constraintBottom_toBottomOf="@id/userPrefered"
+            android:shadowColor="@color/black"
+            android:shadowRadius="20" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
