@@ -89,7 +89,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         mainLayout = findViewById(R.id.mainLayout);
         mainLayout.setVisibility(View.VISIBLE);
 
-        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + uid + "&searchDefaultList=true",this,this.getApplicationContext(),"getDefaultList");
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + uid + "&searchDefaultList=true", this, this.getApplicationContext(), "getDefaultList");
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         loadFragment(new HomepageScreen(), "1", false);
@@ -218,9 +218,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     @Override
     public void onBackPressed() {
-        if (progressBar.isActivated()){
-            stopProgressBar();
-        }
+        stopProgressBar();
+
         FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
         String tag1 = "1";
@@ -342,7 +341,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     }
 
 
-
     @OnUi
     public void triggerProgessBar() {
         mainLayout.setAlpha(0.1f);
@@ -364,12 +362,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     @Override
     public void setList(List<?> newList) {
         for (Object singlelist : newList) {
-            if (((UserLists)singlelist).getType().equals("PREFERED")) {
-                contaiinerItem.put("PREFERED", ((UserLists)singlelist).getIdUserList());
-            } else if (((UserLists)singlelist).getType().equals("WATCH")) {
-                contaiinerItem.put("WATCH", ((UserLists)singlelist).getIdUserList());
+            if (((UserLists) singlelist).getType().equals("PREFERED")) {
+                contaiinerItem.put("PREFERED", ((UserLists) singlelist).getIdUserList());
+            } else if (((UserLists) singlelist).getType().equals("WATCH")) {
+                contaiinerItem.put("WATCH", ((UserLists) singlelist).getIdUserList());
             } else {
-                contaiinerItem.put("TOWATCH", ((UserLists)singlelist).getIdUserList());
+                contaiinerItem.put("TOWATCH", ((UserLists) singlelist).getIdUserList());
             }
         }
     }
