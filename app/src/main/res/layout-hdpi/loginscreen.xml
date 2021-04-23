@@ -17,6 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="1:1"
+            android:layout_marginTop="10dp"
             app:srcCompat="@drawable/profile"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +46,7 @@
             android:id="@+id/mailTextView"
             class="com.google.android.material.textfield.TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:layout_marginTop="10dp"
@@ -55,8 +56,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loginText"
-            app:layout_constraintBottom_toTopOf="@id/passwordTextView"
-            app:layout_constraintVertical_weight="0.75"/>
+            app:layout_constraintBottom_toTopOf="@id/passwordTextView" />
 
         <EditText
             android:id="@+id/TextLoginEmail"
@@ -79,7 +79,7 @@
             android:id="@+id/passwordTextView"
             class="com.google.android.material.textfield.TextInputLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="60dp"
             android:layout_marginStart="25dp"
             android:layout_marginEnd="25dp"
             android:layout_marginTop="10dp"
@@ -89,8 +89,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/mailTextView"
-            app:layout_constraintBottom_toTopOf="@id/LoginButton"
-            app:layout_constraintVertical_weight="0.75"/>
+            app:layout_constraintBottom_toTopOf="@id/LoginButton" />
 
 
         <EditText
@@ -112,7 +111,7 @@
         <Button
             android:id="@+id/LoginButton"
             android:layout_width="200dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:background="@drawable/rounded_corners"
             android:backgroundTint="#1999CE"
@@ -122,15 +121,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/passwordTextView"
-            app:layout_constraintBottom_toTopOf="@id/sign_in_button"
-            app:layout_constraintVertical_weight="0.75"/>
+            app:layout_constraintBottom_toTopOf="@id/sign_in_button" />
 
 
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/sign_in_button"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:maxHeight="75dp"
             android:backgroundTint="#2A3D45"
             android:text="@string/google"
@@ -139,8 +137,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/LoginButton"
-            app:layout_constraintBottom_toBottomOf="@id/RegisterText"
-            app:layout_constraintVertical_weight="0.7">
+            app:layout_constraintBottom_toBottomOf="@id/RegisterText">
 
         </com.google.android.gms.common.SignInButton>
 
