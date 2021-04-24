@@ -11,11 +11,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
+import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
@@ -26,23 +29,24 @@ import java.util.List;
 public class FriendsListComments extends Fragment implements RetrofitListInterface {
 
     private final Boolean isUserOwner;
+    private final String idList;
     private RecyclerView friendsCommentsRecyclerView;
-    private ImageView like;
-    private ImageView dislike;
 
-    public FriendsListComments(Boolean isUserOwner){
+    public FriendsListComments(Boolean isUserOwner,String idList){
         this.isUserOwner=isUserOwner;
+        this.idList = idList;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.friend_list_comments, container, false);
-
+        ((ToolBarActivity)getActivity()).triggerProgessBar();
         TextView title = root.findViewById(R.id.textViewCommentList);
         friendsCommentsRecyclerView = root.findViewById(R.id.recyclerViewFriendsComment);
-        like = root.findViewById(R.id.likeList);
-        dislike = root.findViewById(R.id.dislikeList);
+        ImageView like = root.findViewById(R.id.likeList);
+        ImageView dislike = root.findViewById(R.id.dislikeList);
+        RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" +idList + "&insert=false&typeOfReview=LIST",this, getContext(),"getReview");
         if (isUserOwner){
             title.setText("I commenti dei tuoi amici:");
             like.setVisibility(View.GONE);
@@ -53,6 +57,20 @@ public class FriendsListComments extends Fragment implements RetrofitListInterfa
             title.setWidth(root.getWidth());
             like.setVisibility(View.VISIBLE);
             dislike.setVisibility(View.VISIBLE);
+            like.setOnClickListener(v -> {
+                InsertListReviewScreen nextFragment = new InsertListReviewScreen(true);
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            });
+            dislike.setOnClickListener(v -> {
+                InsertListReviewScreen nextFragment = new InsertListReviewScreen(false);
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            });
         }
 
         return root;
@@ -60,5 +78,19 @@ public class FriendsListComments extends Fragment implements RetrofitListInterfa
 
     @Override
     public void setList(List<?> newList) {
+        if (newList.size() != 0) {
+            ReviewsAdapter adapter = new ReviewsAdapter((List<Reviews>) newList,this,ToolBarActivity.getReference());
+            adapter.setCss(FriendsListComments.class);
+            friendsCommentsRecyclerView.setHasFixedSize(false);
+            friendsCommentsRecyclerView.setItemViewCacheSize(newList.size());
+            LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+            friendsCommentsRecyclerView.setLayoutManager(layoutManager);
+            friendsCommentsRecyclerView.setAdapter(adapter);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(friendsCommentsRecyclerView.getContext(),
+                    layoutManager.getOrientation());
+            friendsCommentsRecyclerView.addItemDecoration(dividerItemDecoration);
+            friendsCommentsRecyclerView.setVisibility(View.VISIBLE);
+        }
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

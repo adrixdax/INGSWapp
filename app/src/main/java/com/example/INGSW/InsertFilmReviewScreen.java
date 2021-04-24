@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutionException;
 import static com.example.INGSW.Utility.TitleException.*;
 
 
-public class InsertReviewScreen extends Fragment {
+public class InsertFilmReviewScreen extends Fragment {
 
 
     private RatingBar ratingBar;
@@ -28,7 +28,7 @@ public class InsertReviewScreen extends Fragment {
     private EditText title;
     private EditText description;
 
-    public InsertReviewScreen(String idFilm) {
+    public InsertFilmReviewScreen(String idFilm) {
         this.idFilm = idFilm;
     }
 
@@ -73,7 +73,7 @@ public class InsertReviewScreen extends Fragment {
         insert.setOnClickListener(v -> {
             try {
                 if (isValidReview(String.valueOf(title.getText()), ratingBar.getRating())) {
-                    RetrofitResponse.getResponse("Type=PostRequest&idFilm=" + idFilm + "&title=" + title.getText().toString() + "&description=" + (description.getText().toString().isEmpty() ? "\0" : String.valueOf(description.getText())) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true",this,getContext(),"addReview");
+                    RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idFilm + "&title=" + title.getText().toString() + "&description=" + (description.getText().toString().isEmpty() ? "\0" : String.valueOf(description.getText())) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=FILM",this,getContext(),"addReview");
                     ((ToolBarActivity) requireActivity()).onBackPressed(true);
                 }
                 else {

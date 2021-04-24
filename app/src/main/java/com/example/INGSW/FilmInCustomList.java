@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,21 +49,21 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
 
         TextView title = root.findViewById(R.id.textViewTooSee);
         filmInCustomList = root.findViewById(R.id.recyclerViewFilmInListCustom);
-        ImageView friendsComments = root.findViewById(R.id.listcomments);
+        ImageButton friendsComments = root.findViewById(R.id.listcommentsButton);
         TextView description = root.findViewById(R.id.listDescription);
         description.setText(list.getDescription());
         title.setText(list.getTitle());
 
         friendsComments.setOnClickListener(v -> {
             if (list.getIdUser().equals(((ToolBarActivity)(requireActivity())).getUid())){
-                    FriendsListComments nextFragment = new FriendsListComments(true);
+                    FriendsListComments nextFragment = new FriendsListComments(true,String.valueOf(list.getIdUserList()));
                     FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
                     transaction.addToBackStack(null);
                     transaction.commit();
             }
             else {
-                FriendsListComments nextFragment = new FriendsListComments(false);
+                FriendsListComments nextFragment = new FriendsListComments(false,String.valueOf(list.getIdUserList()));
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
                 transaction.addToBackStack(null);

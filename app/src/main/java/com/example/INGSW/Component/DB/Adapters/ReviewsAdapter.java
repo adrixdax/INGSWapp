@@ -1,6 +1,7 @@
 package com.example.INGSW.Component.DB.Adapters;
 
 import android.annotation.SuppressLint;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +55,10 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment, DatabaseReference ref) {
         this.listofdata = listofdata;
-        for (Reviews rev : listofdata) {
-            RetrofitResponse.getResponse("Type=PostRequest&filmId=" + rev.getIdFilm(), ReviewsAdapter.this, null, "getFilmById");
+        if (listofdata.size() != 0 && listofdata.get(0).getTypeOfReview().equals("FILM")) {
+            for (Reviews rev : listofdata) {
+                RetrofitResponse.getResponse("Type=PostRequest&filmId=" + rev.getIdRecordRef(), ReviewsAdapter.this, null, "getFilmById");
+            }
         }
         this.startFragment = startFragment;
         this.ref = ref;
@@ -81,7 +84,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             try {
               if( position < filmList.size() && filmList.size()==listofdata.size()) {
                   for (Film f : filmList) {
-                      if (listofdata.get(position).getIdFilm() == f.getId_Film()) {
+                      if (listofdata.get(position).getIdRecordRef() == f.getId_Film()) {
                           Glide.with(startFragment).load(f.getPosterPath()).into(holder.moviepic);
                           break;
                       }

@@ -127,7 +127,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                         e.printStackTrace();
                     }
                     FilmTestController con = new FilmTestController();
-                    con.setIdFilm(String.valueOf(rev.getIdFilm()));
+                    con.setIdFilm(String.valueOf(rev.getIdRecordRef()));
                     //holder.notifyText.setText(new StringBuilder().append("vuole farti vedere la sua recensione riguardo: ").append(((List<Film>) (JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmById").get()), Film.class))).get(0).getFilm_Title()));
                     break;
             }
@@ -224,7 +224,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                         e.printStackTrace();
                     }
                     FilmTestController con = new FilmTestController();
-                    con.setIdFilm(String.valueOf(rev.getIdFilm()));
+                    con.setIdFilm(String.valueOf(rev.getIdRecordRef()));
                     holder.notifyText.setText(new StringBuilder().append("vuole farti vedere la sua recensione riguardo: ").append(((List<Film>) (JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmById").get()), Film.class))).get(0).getFilm_Title()));
                 } catch (ExecutionException | InterruptedException | JsonProcessingException e) {
                     e.printStackTrace();

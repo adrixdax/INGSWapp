@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,14 +16,8 @@ import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
 import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.ReviewsController;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 
 public class ReviewScreen extends Fragment implements RetrofitListInterface {
@@ -52,7 +45,7 @@ public class ReviewScreen extends Fragment implements RetrofitListInterface {
         bottone.setOnClickListener(v -> {
             Fragment nextFragment;
             FragmentTransaction transaction;
-            nextFragment = new InsertReviewScreen(idFilm);
+            nextFragment = new InsertFilmReviewScreen(idFilm);
             transaction = ReviewScreen.this.requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nextFragment, "InsertFilmReview");
             transaction.addToBackStack(null);

@@ -14,10 +14,12 @@ public class Reviews {
     private String description;
     @JsonProperty("val")
     private double val;
-    @JsonProperty("idFilm")
-    private int idFilm;
+    @JsonProperty("idRecordRef")
+    private int idRecordRef;
     @JsonProperty("iduser")
     private String iduser;
+    @JsonProperty("typeOfReview")
+    private String typeOfReview;
 
 
     @JsonCreator
@@ -25,14 +27,16 @@ public class Reviews {
                    @JsonProperty("title") String title,
                    @JsonProperty("description") String description,
                    @JsonProperty("val") double val,
-                   @JsonProperty("idFilm") int idFilm,
-                   @JsonProperty("iduser") String iduser) {
+                   @JsonProperty("idRecordRef") int idRecordRef,
+                   @JsonProperty("iduser") String iduser,
+                   @JsonProperty("typeOfReview") String typeOfReview) {
         this.id_review = id_review;
         this.title = title;
         this.description = description;
         this.val = val;
-        this.idFilm = idFilm;
+        this.idRecordRef = idRecordRef;
         this.iduser = iduser;
+        this.typeOfReview=typeOfReview;
     }
 
     public int getId_review() {
@@ -72,13 +76,13 @@ public class Reviews {
         this.val = val;
     }
 
-    public int getIdFilm() {
-        return idFilm;
+    public int getIdRecordRef() {
+        return idRecordRef;
     }
 
-    @JsonSetter("idFilm")
-    public void setIdFilm(int idFilm) {
-        this.idFilm = idFilm;
+    @JsonSetter("idRecordRef")
+    public void setIdRecordRef(int idRecordRef) {
+        this.idRecordRef = idRecordRef;
     }
 
     public String getIduser() {
@@ -88,5 +92,14 @@ public class Reviews {
     @JsonSetter("iduser")
     public void setIduser(String iduser) {
         this.iduser = iduser;
+    }
+
+    public String getTypeOfReview() {
+        return typeOfReview;
+    }
+
+    @JsonSetter("typeOfReview")
+    public void setTypeOfReview(String typeOfReview) {
+        this.typeOfReview = typeOfReview;
     }
 }

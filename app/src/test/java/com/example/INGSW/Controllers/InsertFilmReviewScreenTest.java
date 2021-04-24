@@ -1,6 +1,6 @@
 package com.example.INGSW.Controllers;
 
-import com.example.INGSW.InsertReviewScreen;
+import com.example.INGSW.InsertFilmReviewScreen;
 import com.example.INGSW.Utility.TitleException;
 
 import org.junit.Assert;
@@ -10,9 +10,9 @@ import java.util.Random;
 
 import static org.junit.Assert.*;
 
-public class InsertReviewScreenTest {
+public class InsertFilmReviewScreenTest {
 
-    InsertReviewScreen screen = new InsertReviewScreen("5353");
+    InsertFilmReviewScreen screen = new InsertFilmReviewScreen("5353");
 
     public float randomNumber(){
         return new Random().nextFloat();

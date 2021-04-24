@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="60dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/textValutateList"
+        android:text="Valuta la lista:"
+        app:autoSizeTextType="uniform"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:fontFamily="@font/poppins_bold"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"/>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/likeButton"
+        android:src="@drawable/like_no_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/dislikeButton"
+        app:layout_constraintBottom_toTopOf="@id/viewListComment"
+        app:layout_constraintEnd_toStartOf="@+id/dislikeButton"
+        app:layout_constraintVertical_weight="0.4"/>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/dislikeButton"
+        android:src="@drawable/dislike_no_background"
+        app:layout_constraintStart_toEndOf="@id/likeButton"
+        app:layout_constraintTop_toBottomOf="@id/textValutateList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/likeButton" />
+    <view
+        android:id="@+id/viewListComment"
+        class="com.google.android.material.textfield.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="12dp"
+        android:background="@drawable/rounded_list_obj"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likeButton"
+        app:layout_constraintBottom_toTopOf="@+id/insertCommentButton"
+        app:layout_constraintVertical_weight="2"/>
+
+    <EditText
+        android:id="@+id/editTextListDescription"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:fontFamily="@font/poppins_bold"
+        android:gravity="top|left"
+        android:hint="Descrizione"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:maxHeight="240dp"
+        android:textColor="#F3ECEC"
+        android:textColorHint="#7AF3EFEF"
+        app:layout_constraintBottom_toBottomOf="@+id/viewListComment"
+        app:layout_constraintEnd_toEndOf="@+id/viewListComment"
+        app:layout_constraintStart_toStartOf="@+id/viewListComment"
+        app:layout_constraintTop_toTopOf="@+id/viewListComment" />
+
+    <Button
+        android:id="@+id/insertCommentButton"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/rounded_corners"
+        android:text="Insersci il commento"
+        android:textAlignment="center"
+        android:textColor="#E8DCDC"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewListComment" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
