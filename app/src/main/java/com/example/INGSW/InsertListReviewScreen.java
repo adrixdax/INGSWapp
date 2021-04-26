@@ -64,7 +64,7 @@ public class InsertListReviewScreen extends Fragment {
                             descr = "ha lasciato "+(isPositive?"un \"mi piace\"":"un \"non mi piace\"");
                         else {
                             descr = editTextDescription.getText().toString();
-                            descr=descr.replaceAll("'", String.valueOf('\''));
+                            descr=descr.replaceAll("'", "''");
                         }
                 RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idList + "&title="+"\0"+"&description=" + descr + "&val=" + (isPositive?"1.0":"0.0") + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=LIST",this,getContext(),"addReview");
                 getActivity().onBackPressed();

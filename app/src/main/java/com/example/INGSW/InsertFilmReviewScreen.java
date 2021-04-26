@@ -73,7 +73,8 @@ public class InsertFilmReviewScreen extends Fragment {
         insert.setOnClickListener(v -> {
             try {
                 if (isValidReview(String.valueOf(title.getText()), ratingBar.getRating())) {
-                    RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idFilm + "&title=" + title.getText().toString() + "&description=" + (description.getText().toString().isEmpty() ? "\0" : String.valueOf(description.getText())) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=FILM",this,getContext(),"addReview");
+
+                    RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idFilm + "&title=" + title.getText().toString().replaceAll("'","''") + "&description=" + (description.getText().toString().isEmpty() ? "\0" : description.getText().toString().replaceAll("'", "''")) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=FILM",this,getContext(),"addReview");
                     ((ToolBarActivity) requireActivity()).onBackPressed(true);
                 }
                 else {
