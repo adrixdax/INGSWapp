@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,14 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
 import com.example.INGSW.Component.DB.Classes.Reviews;
-import com.example.INGSW.Component.Films.Film;
-import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 
@@ -58,14 +54,14 @@ public class FriendsListComments extends Fragment implements RetrofitListInterfa
             like.setVisibility(View.VISIBLE);
             dislike.setVisibility(View.VISIBLE);
             like.setOnClickListener(v -> {
-                InsertListReviewScreen nextFragment = new InsertListReviewScreen(true);
+                InsertListReviewScreen nextFragment = new InsertListReviewScreen(true,idList);
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
                 transaction.addToBackStack(null);
                 transaction.commit();
             });
             dislike.setOnClickListener(v -> {
-                InsertListReviewScreen nextFragment = new InsertListReviewScreen(false);
+                InsertListReviewScreen nextFragment = new InsertListReviewScreen(false,idList);
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
                 transaction.addToBackStack(null);
@@ -83,7 +79,7 @@ public class FriendsListComments extends Fragment implements RetrofitListInterfa
             adapter.setCss(FriendsListComments.class);
             friendsCommentsRecyclerView.setHasFixedSize(false);
             friendsCommentsRecyclerView.setItemViewCacheSize(newList.size());
-            LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
             friendsCommentsRecyclerView.setLayoutManager(layoutManager);
             friendsCommentsRecyclerView.setAdapter(adapter);
             DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(friendsCommentsRecyclerView.getContext(),

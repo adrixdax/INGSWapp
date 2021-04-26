@@ -20,10 +20,13 @@ import com.example.INGSW.Component.DB.Classes.Reviews;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
+import com.example.INGSW.FriendsListComments;
+import com.example.INGSW.ListComment;
 import com.example.INGSW.MyReviews;
 import com.example.INGSW.R;
 import com.example.INGSW.ReviewDetail;
 import com.example.INGSW.Component.DB.Classes.User;
+import com.example.INGSW.ReviewScreen;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +55,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     private View listItem;
     private final Fragment startFragment;
     private final DatabaseReference ref;
+    private User model;
+
+    private Boolean isUserOwner;
 
     public ReviewsAdapter(List<Reviews> listofdata, Fragment startFragment, DatabaseReference ref) {
         this.listofdata = listofdata;
@@ -68,12 +74,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     @Override
     public ReviewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        if(Objects.equals(css.getCanonicalName(), MyReviews.class.getCanonicalName())){
+        if(Objects.equals(css, MyReviews.class)){
             listItem = layoutInflater.inflate(R.layout.component_myreviewlist, parent, false);
         }
-        else {
+        else if (Objects.equals(css, ReviewScreen.class)){
             listItem = layoutInflater.inflate(R.layout.film_review, parent, false);
         }
+        else listItem = layoutInflater.inflate(R.layout.component_list_review, parent, false);
         return new ReviewsAdapter.ViewHolder(listItem,css);
     }
 
@@ -118,7 +125,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 e.printStackTrace();
             }
 
-        } else {
+        } else if (Objects.equals(css, ReviewScreen.class)){
             try {
                 getReviewer(listofdata.get(position).getIduser(), holder);
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
@@ -149,6 +156,34 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 e.printStackTrace();
             }
         }
+        else {
+            getReviewer(listofdata.get(position).getIduser(), holder);
+            System.out.println(listofdata.get(position).getDescription());
+            holder.reviewDescription.setText(listofdata.get(position).getDescription());
+            String[] line = listofdata.get(position).getDescription().split(Objects.requireNonNull(System.getProperty("line.separator")));
+            if (line.length > 5) {
+                int lunghezza = 0;
+                for (int i = 0; i < 5; i++) {
+                    lunghezza = lunghezza + line[i].length();
+                }
+                holder.reviewDescription.setText(listofdata.get(position).getDescription().substring(0, lunghezza + 4) + "...");
+            } else if (listofdata.get(position).getDescription().length() >= 300) {
+                holder.reviewDescription.setText(listofdata.get(position).getDescription().substring(0, 150 - 3) + "...");
+            } else {
+                holder.reviewDescription.setText(listofdata.get(position).getDescription());
+            }
+            if (Double.compare(listofdata.get(position).getVal(), 1.0f) == 0){
+                holder.friendReaction.setBackground(startFragment.getActivity().getDrawable(R.drawable.like_no_background));
+            }
+            else {
+                holder.friendReaction.setBackground(startFragment.getActivity().getDrawable(R.drawable.dislike_no_background));
+            }
+            holder.relativeLayoutReviewList.setOnClickListener(v -> {
+                ListComment listCommentDialog = new ListComment(model.getNickname(),listofdata.get(position).getDescription(),listofdata.get(position).getVal());
+                listCommentDialog.show(startFragment.getActivity().getSupportFragmentManager(), "comments");
+            });
+
+        }
 
     }
 
@@ -173,17 +208,14 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 @OnUi
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        User model = dataSnapshot.getValue(User.class);
+                        model = dataSnapshot.getValue(User.class);
                         assert model != null;
                         with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.userImage.findViewById(R.id.userprofilepic_view));
                         holder.userNickView.setText(model.getNickname());
                     }
-
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-
                 }
             });
         } catch (Exception e) {
@@ -208,6 +240,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         public TextView reviewDescription;
         public RatingBar ratingBar;
         public RelativeLayout relativeLayoutReviewList;
+        public ImageView friendReaction;
 
 
         public ViewHolder(View itemView, Class css) {
@@ -218,11 +251,17 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 this.userImage = itemView.findViewById(R.id.userprofilepic_view);
                 this.userNickView = itemView.findViewById(R.id.usernick_view);
             }
-            this.reviewTitle = itemView.findViewById(R.id.review_title);
+            if (!(Objects.equals(css,FriendsListComments.class))) {
+                this.reviewTitle = itemView.findViewById(R.id.review_title);
+            }
             this.reviewDescription = itemView.findViewById(R.id.textViewDescriptionReview);
-            this.ratingBar = itemView.findViewById(R.id.ratingBar2);
+            if (Objects.equals(css, MyReviews.class) || Objects.equals(css,ReviewScreen.class)) {
+                this.ratingBar = itemView.findViewById(R.id.ratingBar2);
+            }
+            else {
+                this.friendReaction = itemView.findViewById(R.id.friendReaction);
+            }
             relativeLayoutReviewList = itemView.findViewById(R.id.relativeLayoutReviewList);
-
             PushDownAnim.setPushDownAnimTo(relativeLayoutReviewList);
         }
 

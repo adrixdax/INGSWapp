@@ -1,6 +1,7 @@
 package com.example.INGSW;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,11 +48,12 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
 
         View root = inflater.inflate(R.layout.film_in_list_custom, container, false);
 
-        TextView title = root.findViewById(R.id.textViewTooSee);
+        TextView title = root.findViewById(R.id.customListName);
         filmInCustomList = root.findViewById(R.id.recyclerViewFilmInListCustom);
         ImageButton friendsComments = root.findViewById(R.id.listcommentsButton);
         TextView description = root.findViewById(R.id.listDescription);
         description.setText(list.getDescription());
+        description.setMovementMethod(new ScrollingMovementMethod());
         title.setText(list.getTitle());
 
         friendsComments.setOnClickListener(v -> {
