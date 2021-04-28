@@ -11,6 +11,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,7 +50,8 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
     private ArrayList<User> usersInSearchlist;
     private int playFlag, userFlag = 0;
     private TextView textError;
-    private UsersListAdapter adapter;
+    private UsersListAdapter useradapter;
+    private ListOfFilmAdapter adapter;
     List<Notify> notifyList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -113,8 +115,8 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                     recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
                     usersInSearchlist = new ArrayList<>();
                     ArrayList<Boolean> areFriends = new ArrayList<>();
-                    adapter = new UsersListAdapter(getContext(), usersInSearchlist, areFriends);
-                    if (adapter.getItemCount() == 0) {
+                    useradapter = new UsersListAdapter(getContext(), usersInSearchlist, areFriends);
+                    if (useradapter.getItemCount() == 0) {
                         textError.setText("Nessun Utente trovato ");
                     }
                     textError.setText("");
@@ -122,7 +124,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                     DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFriends.getContext(),
                             layoutManager.getOrientation());
                     recyclerViewFriends.addItemDecoration(dividerItemDecoration);
-                    recyclerViewFriends.setAdapter(adapter);
+                    recyclerViewFriends.setAdapter(useradapter);
                     recyclerViewFilm.setItemViewCacheSize(usersInSearchlist.size());
                     Query query = ToolBarActivity.getReference().orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(Text_of_search.getText() + "\uf8ff");
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -165,7 +167,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                                         }
                                         areFriends.add(friend);
                                     }
-                                    adapter.notifyDataSetChanged();
+                                    useradapter.notifyDataSetChanged();
                                 }
                                 ((ToolBarActivity) requireActivity()).stopProgressBar();
                             } catch (Exception exception) {
@@ -198,6 +200,17 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (adapter != null) {
+            System.out.println(adapter.getItemCount());
+            recyclerViewFilm.setAdapter(adapter);
+            recyclerViewFilm.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));            recyclerViewFilm.setAdapter(adapter);
+            recyclerViewFilm.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
     public void setList(List<?> newList) {
         if (playFlag == 0) {
             notifyList = (List<Notify>) newList;
@@ -208,8 +221,9 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
             } else {
                 textError.setText("");
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), ((ToolBarActivity) requireActivity()).activeFragment);
+                adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), ((ToolBarActivity) requireActivity()).activeFragment);
                 adapter.setCss(SearchFilmScreen.class);
+                adapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
                 recyclerViewFilm.setHasFixedSize(true);
                 recyclerViewFilm.setItemViewCacheSize(newList.size());
                 recyclerViewFilm.setLayoutManager(layoutManager);
@@ -219,7 +233,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                 recyclerViewFilm.addItemDecoration(dividerItemDecoration);
                 recyclerViewFilm.setVisibility(View.VISIBLE);
             }
-            ((ToolBarActivity) requireActivity()).stopProgressBar();
         }
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }
