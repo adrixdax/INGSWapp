@@ -69,7 +69,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ListOfFilmAdapter.ViewHolder holder, int position) {
-        if (css.getCanonicalName().equals(HomepageScreen.class.getCanonicalName())) {
+        if (Objects.equals(css.getCanonicalName(), HomepageScreen.class.getCanonicalName())) {
             try {
                 with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
                 holder.relativeLayout.setOnClickListener(v -> {
@@ -82,7 +82,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (css.getCanonicalName().equals(SearchFilmScreen.class.getCanonicalName())) {
+        } else if (Objects.equals(css.getCanonicalName(), SearchFilmScreen.class.getCanonicalName())) {
 
             with(holder.itemView).load(listOfData.get(position).getPosterPath() == null ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
                     .into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
@@ -99,7 +99,6 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             holder.textViewCategories.setText(genere.toString());
             holder.textViewPlot.setText(listOfData.get(position).getPlot().isEmpty() ? "Non è stata trovata alcuna trama per questo film" : listOfData.get(position).getPlot());
             holder.relativeLayout.setOnClickListener(v -> {
-
                 FilmDetails nextFragment = new FilmDetails(listOfData.get(holder.getAdapterPosition()));
                 FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "5");
