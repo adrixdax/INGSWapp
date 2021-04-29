@@ -13,19 +13,14 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.DB.Adapters.CustomListsAdapter;
 import com.example.INGSW.Component.DB.Adapters.ReportListsAdapter;
-import com.example.INGSW.Component.DB.Classes.UserLists;
-import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Utility.ReportType;
-import com.google.firebase.database.core.Repo;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DialogReportList extends AppCompatDialogFragment {
@@ -71,9 +66,7 @@ public class DialogReportList extends AppCompatDialogFragment {
             dialog.cancel();
             dialog.dismiss();
         });
-
         return dialog;
-
     }
 
 }

@@ -34,7 +34,6 @@ import static com.bumptech.glide.Glide.with;
 
 public class ReportListsAdapter extends RecyclerView.Adapter<ReportListsAdapter.ViewHolder> {
     private static final List<String> listofdata = new ArrayList<>();
-
     private final List<ReportType> selectedList;
 
 
@@ -44,12 +43,14 @@ public class ReportListsAdapter extends RecyclerView.Adapter<ReportListsAdapter.
     }
 
     private void createList() {
-        listofdata.add(ReportType.LIGUAGGIO_OFFENSIVO.toString().replace('_',' '));
-        listofdata.add(ReportType.DISCRIMINAZIONE.toString().replace('_',' '));
-        listofdata.add(ReportType.INCITAZIONE_ALLO_ODIO.toString().replace('_',' ').replaceFirst("ALLO", "ALL'"));
-        listofdata.add(ReportType.RECENSIONE_PRIVA_DI_SENSO.toString().replace('_',' '));
-        listofdata.add(ReportType.BLASFEMIA.toString().replace('_',' '));
-        listofdata.add(ReportType.SPAM.toString().replace('_',' '));
+        if (listofdata.isEmpty()) {
+            listofdata.add(ReportType.LIGUAGGIO_OFFENSIVO.toString().replace('_', ' '));
+            listofdata.add(ReportType.DISCRIMINAZIONE.toString().replace('_', ' '));
+            listofdata.add(ReportType.INCITAZIONE_ALLO_ODIO.toString().replace('_', ' ').replaceFirst("ALLO", "ALL'"));
+            listofdata.add(ReportType.RECENSIONE_PRIVA_DI_SENSO.toString().replace('_', ' '));
+            listofdata.add(ReportType.BLASFEMIA.toString().replace('_', ' '));
+            listofdata.add(ReportType.SPAM.toString().replace('_', ' '));
+        }
     }
 
 
