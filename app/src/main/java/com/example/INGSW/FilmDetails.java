@@ -51,7 +51,7 @@ public class FilmDetails extends Fragment {
         TextView genres = root.findViewById(R.id.textViewCategories);
         TextView time = root.findViewById(R.id.textViewTime);
 
-        String pic = film.getPosterPath().equals("") ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : film.getPosterPath();
+        String pic = film.getPosterPath() == null ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : film.getPosterPath();
 
         title.setText(film.getFilm_Title());
         Glide.with(root.getContext()).load(pic).into(posterPath);

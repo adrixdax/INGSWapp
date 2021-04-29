@@ -92,7 +92,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
               if( position < filmList.size() && filmList.size()==listofdata.size()) {
                   for (Film f : filmList) {
                       if (listofdata.get(position).getIdRecordRef() == f.getId_Film()) {
-                          Glide.with(startFragment).load(f.getPosterPath()).into(holder.moviepic);
+                          Glide.with(startFragment).load(f.getPosterPath() == null ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : f.getPosterPath()).into(holder.moviepic);
                           break;
                       }
                   }

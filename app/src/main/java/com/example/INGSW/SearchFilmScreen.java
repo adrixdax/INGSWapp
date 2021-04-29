@@ -205,7 +205,8 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
         if (adapter != null) {
             System.out.println(adapter.getItemCount());
             recyclerViewFilm.setAdapter(adapter);
-            recyclerViewFilm.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));            recyclerViewFilm.setAdapter(adapter);
+            recyclerViewFilm.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            recyclerViewFilm.setAdapter(adapter);
             recyclerViewFilm.setVisibility(View.VISIBLE);
         }
     }
