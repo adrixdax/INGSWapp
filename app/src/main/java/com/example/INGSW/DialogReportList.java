@@ -19,19 +19,27 @@ import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Utility.ReportType;
+import com.google.firebase.database.core.Repo;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class DialogReportList extends AppCompatDialogFragment implements RetrofitListInterface {
+public class DialogReportList extends AppCompatDialogFragment {
 
 
-    private RecyclerView recycler;
     private final List<ReportType> selectedLists = new ArrayList<>();
     private int idRecordToReport;
+
+    public DialogReportList(){
+    }
+
+    public DialogReportList(int idRecordToReport){
+        this.idRecordToReport = idRecordToReport;
+    }
 
     @NotNull
     @Override
@@ -41,20 +49,23 @@ public class DialogReportList extends AppCompatDialogFragment implements Retrofi
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCancelable(true);
-
-
-        recycler = dialog.findViewById(R.id.recyclerView);
-
+        RecyclerView recycler = dialog.findViewById(R.id.recyclerView);
+        ReportListsAdapter adapter = new ReportListsAdapter(selectedLists);
+        recycler.setAdapter(adapter);
+        recycler.setItemViewCacheSize(adapter.getItemCount());
+        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recycler.setHasFixedSize(false);
 
         Button addReport = (Button) dialog.getWindow().findViewById(R.id.ReportButton);
         PushDownAnim.setPushDownAnimTo(addReport);
         addReport.setOnClickListener(v -> {
-            String reportTypes="";
+            StringBuilder reportTypes= new StringBuilder();
             for (ReportType singlelist : selectedLists) {
-                 reportTypes =  reportTypes + ":" + singlelist.toString();
+                 reportTypes.append(singlelist.toString()).append(":");
             }
+            String report = reportTypes.substring(0,reportTypes.length()-1);
             selectedLists.clear();
-            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity)getActivity()).getUid() + "&id_recordRef="+ idRecordToReport + "&reportType="+ reportTypes+ "&addReport=true", DialogReportList.this, DialogReportList.this.getContext(),"addReport" );
+            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity)getActivity()).getUid() + "&id_recordRef="+ idRecordToReport + "&reportType="+ report+ "&addReport=true", DialogReportList.this, DialogReportList.this.getContext(),"addReport" );
             Toast.makeText(this.getContext(), "Segnalazione inviata con successo", Toast.LENGTH_LONG).show();
             dialog.closeOptionsMenu();
             dialog.cancel();
@@ -65,15 +76,4 @@ public class DialogReportList extends AppCompatDialogFragment implements Retrofi
 
     }
 
-    public void setIdRecordToReport(int idRecordToReport) {
-        this.idRecordToReport = idRecordToReport;
-    }
-
-    @Override
-    public void setList(List<?> newList) {
-        recycler.setAdapter(new ReportListsAdapter(this.selectedLists));
-        recycler.setItemViewCacheSize(newList.size());
-        recycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        recycler.setHasFixedSize(false);
-    }
 }

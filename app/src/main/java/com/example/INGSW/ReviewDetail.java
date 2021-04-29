@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -51,6 +52,10 @@ public class ReviewDetail extends Fragment {
         ratingBar.setRating((float) review.getVal());
         ratingBar.setClickable(false);
         ratingBar.setIsIndicator(true);
+        Button reportButton = root.findViewById(R.id.ReportButton);
+        reportButton.setOnClickListener(v -> {
+            new DialogReportList(review.getId_review()).show(getChildFragmentManager(),"Report");
+        });
 
 
         return root;

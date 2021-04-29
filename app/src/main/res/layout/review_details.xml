@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="70dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userprofilepic_view"
@@ -14,44 +14,48 @@
         android:background="@drawable/circle_obj"
         android:contentDescription="TODO"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/usernick_view"
+        app:layout_constraintBottom_toTopOf="@id/ratingBar2"/>
 
 
     <TextView
         android:id="@+id/usernick_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginStart="24dp"
         android:autoSizeMaxTextSize="30sp"
         android:autoSizeMinTextSize="10sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/poppins_bold"
-        android:maxWidth="220dp"
         android:text="nickname"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/userprofilepic_view"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/userprofilepic_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/userprofilepic_view"/>
 
     <TextView
         android:id="@+id/review_title"
-        android:layout_width="357dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:autoSizeMaxTextSize="24sp"
-        android:autoSizeMinTextSize="10sp"
-        android:autoSizeTextType="uniform"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="18sp"
+        app:autoSizeMaxTextSize="24sp"
+        app:autoSizeMinTextSize="10sp"
+        app:autoSizeTextType="uniform"
         android:fontFamily="@font/poppins_bold"
-        android:maxWidth="100dp"
         android:text="REVIEW TITLE"
         android:textAlignment="viewStart"
         android:textColor="@color/ColorAccent"
-        android:textSize="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ratingBar2" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar2"
+        app:layout_constraintBottom_toTopOf="@id/textViewDescriptionReview"/>
 
     <RatingBar
         android:id="@+id/ratingBar2"
@@ -70,27 +74,42 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.051"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userprofilepic_view" />
+        app:layout_constraintTop_toBottomOf="@+id/userprofilepic_view"
+        app:layout_constraintBottom_toTopOf="@id/review_title"/>
 
     <TextView
         android:id="@+id/textViewDescriptionReview"
-        android:layout_width="357dp"
-        android:layout_height="380dp"
-        android:layout_marginBottom="70dp"
-        android:autoSizeMaxTextSize="24sp"
-        android:autoSizeMinTextSize="10sp"
-        android:autoSizeTextType="uniform"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:textSize="12sp"
+        app:autoSizeMaxTextSize="24sp"
+        app:autoSizeMinTextSize="10sp"
+        app:autoSizeTextType="uniform"
         android:fontFamily="@font/poppins_bold"
-        android:maxWidth="100dp"
         android:scrollbars="vertical"
         android:text="REVIEW Description"
         android:textColor="#FFFFFF"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/review_title"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintBottom_toTopOf="@id/ReportButton" />
 
+    <Button
+        android:id="@+id/ReportButton"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Segnala"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewDescriptionReview"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

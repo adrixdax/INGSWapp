@@ -33,10 +33,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import static com.bumptech.glide.Glide.with;
 
 public class ReportListsAdapter extends RecyclerView.Adapter<ReportListsAdapter.ViewHolder> {
-    private static List<ReportType> listofdata = new ArrayList<>();
+    private static final List<String> listofdata = new ArrayList<>();
 
-    private View listItem;
-    private List<ReportType> selectedList = null;
+    private final List<ReportType> selectedList;
 
 
     public ReportListsAdapter(List<ReportType> selectedList) {
@@ -45,12 +44,12 @@ public class ReportListsAdapter extends RecyclerView.Adapter<ReportListsAdapter.
     }
 
     private void createList() {
-        listofdata.add(ReportType.LIGUAGGIO_OFFENSIVO);
-        listofdata.add(ReportType.DISCRIMINAZIONE);
-        listofdata.add(ReportType.INCITAZIONE_ALLO_ODIO);
-        listofdata.add(ReportType.RECENSIONE_PRIVA_DI_SENSO);
-        listofdata.add(ReportType.BLASFEMIA);
-        listofdata.add(ReportType.SPAM);
+        listofdata.add(ReportType.LIGUAGGIO_OFFENSIVO.toString().replace('_',' '));
+        listofdata.add(ReportType.DISCRIMINAZIONE.toString().replace('_',' '));
+        listofdata.add(ReportType.INCITAZIONE_ALLO_ODIO.toString().replace('_',' ').replaceFirst("ALLO", "ALL'"));
+        listofdata.add(ReportType.RECENSIONE_PRIVA_DI_SENSO.toString().replace('_',' '));
+        listofdata.add(ReportType.BLASFEMIA.toString().replace('_',' '));
+        listofdata.add(ReportType.SPAM.toString().replace('_',' '));
     }
 
 
@@ -58,24 +57,24 @@ public class ReportListsAdapter extends RecyclerView.Adapter<ReportListsAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        listItem = layoutInflater.inflate(R.layout.list_report_type, parent, false);
+        View listItem = layoutInflater.inflate(R.layout.list_report_type, parent, false);
         return new ReportListsAdapter.ViewHolder(listItem);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
-            holder.textView.setText(listofdata.get(position).toString());
+            holder.textView.setText(listofdata.get(position));
             holder.selectItem.setOnCheckedChangeListener(null);
             holder.selectItem.setChecked(false);
             holder.selectItem.setClickable(false);
             holder.relativeLayout.setOnClickListener(v -> {
                 if (!holder.selectItem.isChecked()) {
                     holder.selectItem.setChecked(true);
-                    selectedList.add(listofdata.get(position));
+                    selectedList.add(ReportType.valueOf(listofdata.get(position).replace('\'','O').replace(' ','_')));
                 } else {
                     holder.selectItem.setChecked(false);
-                    selectedList.remove(listofdata.get(position));
+                    selectedList.remove(ReportType.valueOf(listofdata.get(position).replace('\'','O').replace(' ','_')));
                 }
             });
         } catch (Exception e) {
