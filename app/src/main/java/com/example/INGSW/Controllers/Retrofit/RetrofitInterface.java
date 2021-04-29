@@ -70,4 +70,7 @@ public interface RetrofitInterface {
     @POST("/user")
     Call<List<Contact>> getFriends(@Body String body);
 
+    @POST("/report")
+    Call<String>  addReport(@Body String body);
+
 }
