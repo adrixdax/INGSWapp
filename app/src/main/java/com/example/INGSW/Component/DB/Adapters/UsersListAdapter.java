@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.INGSW.Component.DB.Classes.Contact;
+import com.example.INGSW.Component.DB.Classes.Notify;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.Component.DB.Classes.User;
@@ -27,14 +30,15 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
 
     private final int size = 0;
     private final ArrayList<User> userlist;
-    private final ArrayList<Boolean> areFriends;
+    private final ArrayList<Contact> areFriends;
+    private final ArrayList<Notify> isFriendRequestSent;
     Context context;
 
-    public UsersListAdapter(Context context, ArrayList<User> userlist, ArrayList<Boolean> areFriends) {
+    public UsersListAdapter(Context context, ArrayList<User> userlist, ArrayList<Contact> areFriends, ArrayList<Notify> isFriendRequestSent) {
         this.context = context;
         this.userlist = userlist;
         this.areFriends = areFriends;
-
+        this.isFriendRequestSent = isFriendRequestSent;
     }
 
     @NonNull
@@ -49,37 +53,42 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         User model = userlist.get(position);
         holder.nick.setText(model.getNickname());
         with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-        if (areFriends.get(position)) {
-            holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
-        } else {
-            holder.addButton.setImageResource(R.drawable.icons8_plus_26px);
+        Boolean areFriend = false;
+        for (Contact c : areFriends) {
+            if (userlist.get(position).getIdUser().equals(c.getUser1()) || userlist.get(position).getIdUser().equals(c.getUser2())) {
+                holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
+                areFriend = true;
+                break;
+            } else {
+                holder.addButton.setImageResource(R.drawable.icons8_plus_26px);
+            }
         }
-        if (!areFriends.get(position)) {
-            holder.addButton.setOnClickListener(new View.OnClickListener() {
-                boolean send = false;
-
-                @Override
-                public void onClick(View v) {
-                    if (!send)  {}/*{
-                        NotifyTestController ntc = new NotifyTestController();
-                        ntc.setIdSender(((ToolBarActivity) v.getContext()).getUid());
-                        ntc.setIdReceiver(model.getIdUser());
-                        ntc.setType("FRIENDSHIP_REQUEST");
-                        try {
-                            ntc.execute("SendFriendshipRequest").get();
-                            ntc.isCancelled();
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        send = true;
+        if (!areFriend) {
+            for (Notify not : isFriendRequestSent) {
+                if (not.getState().equals("PENDING") || not.getState().equals("SEEN")) {
+                    if (userlist.get(position).getIdUser().equals(not.getId_receiver())) {
                         holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
-                        areFriends.set(position, true);
-                    }*/
+                        areFriend = true;
+                        break;
+                    } else {
+                        holder.addButton.setImageResource(R.drawable.icons8_plus_26px);
+                    }
+                } else {
+                    isFriendRequestSent.remove(not);
+                    notifyDataSetChanged();
                 }
-
-            });
+            }
         }
-    }
+        if (!areFriend) {
+            holder.addButton.setOnClickListener((v) -> {
+                    {
+                        RetrofitResponse.getResponse("Type=PostRequest&id_sender=" + ((ToolBarActivity)context).getUid() + "&id_receiver=" + userlist.get(position).getIdUser() + "&type=FRIENDSHIP_REQUEST&id_recordref=0&sendNotify=true", this, context, "createNotify");
+                        holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
+                    }
+                });
+
+            }
+        }
 
 
     @Override

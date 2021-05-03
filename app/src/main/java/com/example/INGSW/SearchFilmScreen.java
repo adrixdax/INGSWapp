@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.INGSW.Component.DB.Adapters.UsersListAdapter;
+import com.example.INGSW.Component.DB.Classes.Contact;
 import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.DB.Classes.User;
 import com.example.INGSW.Component.Films.Film;
@@ -34,7 +35,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import teaspoon.annotations.OnUi;
 
@@ -45,6 +48,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
     private RecyclerView recyclerViewFilm;
     private RecyclerView recyclerViewFriends;
     private ArrayList<User> usersInSearchlist;
+    private ArrayList<Contact> contactsList;
     private int playFlag, userFlag = 0;
     private TextView textError;
     private UsersListAdapter useradapter;
@@ -111,8 +115,8 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                     recyclerViewFriends.setHasFixedSize(true);
                     recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
                     usersInSearchlist = new ArrayList<>();
-                    ArrayList<Boolean> areFriends = new ArrayList<>();
-                    useradapter = new UsersListAdapter(getContext(), usersInSearchlist, areFriends);
+                    contactsList = new ArrayList<>();
+                    useradapter = new UsersListAdapter(getContext(), usersInSearchlist,contactsList, (ArrayList<Notify>) notifyList);
                     if (useradapter.getItemCount() == 0) {
                         textError.setText("Nessun Utente trovato ");
                     }
@@ -128,45 +132,18 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                         @SuppressLint("RestrictedApi")
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            try {
+                            String uid = ((ToolBarActivity) (requireActivity())).getUid();
                                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                     User model = dataSnapshot.getValue(User.class);
-                                    if (!((ToolBarActivity) (requireActivity())).getUid().equals(dataSnapshot.getKey())) {
-                                        UserServerController con = new UserServerController();
-                                        con.setUserId(((ToolBarActivity) (requireActivity())).getUid());
-                                        con.setIdOtherUser(dataSnapshot.getKey());
-                                        assert model != null;
-                                        model.setIdUser(dataSnapshot.getKey());
+                                    model.setIdUser(dataSnapshot.getKey());
+                                    if (!(uid.equals(dataSnapshot.getKey()))) {
                                         usersInSearchlist.add(model);
-                                        boolean friend = false;
-                                        RetrofitResponse.getResponse("&idUser="+ model.getIdUser(),SearchFilmScreen.this,v.getContext(),"getNotify");
-                                        if (!notifyList.isEmpty()) {
-                                            int i = 0;
-                                            while (i < notifyList.size() && !friend) {
-                                                if (notifyList.get(i).getId_sender().equals(((ToolBarActivity) requireActivity()).getUid())) {
-                                                    friend = true;
-                                                }
-                                                i++;
-                                            }
-                                        }
-                                        if (!friend) {
-                                            UserServerController usc = new UserServerController();
-                                            usc.setUserId(((ToolBarActivity) requireActivity()).getUid());
-                                            usc.setIdOtherUser(model.getIdUser());
-                                            if (Boolean.parseBoolean((String) usc.execute("isFriends").get())) {
-                                                friend = true;
-                                            }
-                                        }
-                                        areFriends.add(friend);
+                                        useradapter.notifyDataSetChanged();
                                     }
-                                    useradapter.notifyDataSetChanged();
                                 }
-                                ((ToolBarActivity) requireActivity()).stopProgressBar();
-                            } catch (Exception exception) {
-                                exception.printStackTrace();
-                            }
+                            RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + uid,SearchFilmScreen.this,SearchFilmScreen.this.getContext(),"getFriends");
+                            RetrofitResponse.getResponse(uid,SearchFilmScreen.this,SearchFilmScreen.this.getContext(),"getFriendShipNotify");
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
@@ -206,8 +183,14 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
     @Override
     public void setList(List<?> newList) {
         if (playFlag == 0) {
-            notifyList = (List<Notify>) newList;
-        } else if(playFlag==1){
+            if (!(newList.isEmpty())) {
+                if (newList.get(0) instanceof Notify)
+                    notifyList.addAll((Collection<? extends Notify>) newList);
+                else
+                    contactsList.addAll((Collection<? extends Contact>) newList);
+                useradapter.notifyDataSetChanged();
+            }
+        }else if(playFlag==1){
             if (newList.isEmpty()) {
                 recyclerViewFilm.setVisibility(View.INVISIBLE);
                 textError.setText("Nessun Film trovato");

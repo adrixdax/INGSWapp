@@ -27,6 +27,9 @@ public interface RetrofitInterface {
     Call<List<Notify>> getNotify(@Query("idUser") String param);
 
     @GET("/notify")
+    Call<List<Notify>> getFriendShipNotify(@Query("friendId") String param);
+
+    @GET("/notify")
     Call<String> setSeen(@Query("Seen") String param);
 
     @GET("/notify")
@@ -36,8 +39,7 @@ public interface RetrofitInterface {
     Call<String> setRefused(@Query("Refused") String param);
 
     @POST("/notify")
-
-    Call<String> shareFriendsContent(@Body String body);
+    Call<String> createNotify(@Body String body);
 
     @POST("/list")
     Call<List<UserLists>> getList(@Body String body);

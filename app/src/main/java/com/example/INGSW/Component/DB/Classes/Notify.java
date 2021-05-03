@@ -58,4 +58,11 @@ public class Notify {
         this.state = state;
     }
 
+    public String getId_receiver() {
+        return id_receiver;
+    }
+
+    public void setId_receiver(String id_receiver) {
+        this.id_receiver = id_receiver;
+    }
 }

@@ -64,14 +64,14 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment implements
             if (!custom) {
                 if (!selectedLists.isEmpty()) {
                     for (Contact friend : selectedLists) {
-                        RetrofitResponse.getResponse("Type=PostRequest&id_sender=" + uid + "&id_receiver=" + (friend.getUser1().equals(uid) ? friend.getUser2() : friend.getUser1()) + "&type=FILM&id_recordref=" + film + "&sendNotify=true", this, this.getContext(), "shareFriendsContent");
+                        RetrofitResponse.getResponse("Type=PostRequest&id_sender=" + uid + "&id_receiver=" + (friend.getUser1().equals(uid) ? friend.getUser2() : friend.getUser1()) + "&type=FILM&id_recordref=" + film + "&sendNotify=true", this, this.getContext(), "createNotify");
                     }
                 }
                 dismiss();
             } else {
                 if (!selectedLists.isEmpty()) {
                     for (Contact friend : selectedLists) {
-                        RetrofitResponse.getResponse("Type=PostRequest&id_sender=" + uid + "&id_receiver=" + (friend.getUser1().equals(uid) ? friend.getUser2() : friend.getUser1()) + "&type=LIST&id_recordref=" + idList + "&sendNotify=true", this, this.getContext(), "shareFriendsContent");
+                        RetrofitResponse.getResponse("Type=PostRequest&id_sender=" + uid + "&id_receiver=" + (friend.getUser1().equals(uid) ? friend.getUser2() : friend.getUser1()) + "&type=LIST&id_recordref=" + idList + "&sendNotify=true", this, this.getContext(), "createNotify");
                     }
                     dismiss();
                 }
