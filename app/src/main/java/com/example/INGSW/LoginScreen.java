@@ -187,11 +187,16 @@ public class LoginScreen extends AppCompatActivity {
                 @SuppressLint("RestrictedApi")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        model[0] = dataSnapshot.getValue(User.class);
-                        assert model[0] != null;
-                        if (model[0].getPropic().equals(u.getPropic()))
-                            reference.child(Objects.requireNonNull(account.getId())).setValue(u);
+                    if (snapshot.getChildrenCount() != 0) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            model[0] = dataSnapshot.getValue(User.class);
+                            assert model[0] != null;
+                            if (model[0].getPropic().equals(u.getPropic()))
+                                reference.child(Objects.requireNonNull(account.getId())).setValue(u);
+                        }
+                    }
+                    else {
+                        reference.child(Objects.requireNonNull(account.getId())).setValue(u);
                     }
                 }
 
