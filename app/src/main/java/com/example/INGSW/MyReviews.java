@@ -11,16 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.ReviewsAdapter;
 import com.example.INGSW.Component.DB.Classes.Reviews;
-import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.ReviewsController;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
-
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 
 public class MyReviews extends Fragment implements RetrofitListInterface {

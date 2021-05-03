@@ -11,7 +11,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,9 +25,8 @@ import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.DB.Classes.User;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
-import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
-import com.example.INGSW.Controllers.UserServerController;
+import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -37,7 +35,6 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import teaspoon.annotations.OnUi;
 
@@ -142,28 +139,23 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                                         model.setIdUser(dataSnapshot.getKey());
                                         usersInSearchlist.add(model);
                                         boolean friend = false;
-                                        try {
-                                            RetrofitResponse.getResponse("&idUser="+ model.getIdUser(),SearchFilmScreen.this,v.getContext(),"getNotify");
-                                            if (!notifyList.isEmpty()) {
-                                                int i = 0;
-                                                while (i < notifyList.size() && !friend) {
-                                                    if (notifyList.get(i).getId_sender().equals(((ToolBarActivity) requireActivity()).getUid())) {
-                                                        friend = true;
-                                                    }
-                                                    i++;
-                                                }
-                                            }
-                                            if (!friend) {
-                                                UserServerController usc = new UserServerController();
-                                                usc.setUserId(((ToolBarActivity) requireActivity()).getUid());
-                                                usc.setIdOtherUser(model.getIdUser());
-                                                if (Boolean.parseBoolean((String) usc.execute("isFriends").get())) {
+                                        RetrofitResponse.getResponse("&idUser="+ model.getIdUser(),SearchFilmScreen.this,v.getContext(),"getNotify");
+                                        if (!notifyList.isEmpty()) {
+                                            int i = 0;
+                                            while (i < notifyList.size() && !friend) {
+                                                if (notifyList.get(i).getId_sender().equals(((ToolBarActivity) requireActivity()).getUid())) {
                                                     friend = true;
                                                 }
+                                                i++;
                                             }
-
-                                        } catch (ExecutionException | InterruptedException e) {
-                                            e.printStackTrace();
+                                        }
+                                        if (!friend) {
+                                            UserServerController usc = new UserServerController();
+                                            usc.setUserId(((ToolBarActivity) requireActivity()).getUid());
+                                            usc.setIdOtherUser(model.getIdUser());
+                                            if (Boolean.parseBoolean((String) usc.execute("isFriends").get())) {
+                                                friend = true;
+                                            }
                                         }
                                         areFriends.add(friend);
                                     }

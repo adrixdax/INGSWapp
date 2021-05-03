@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,17 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
-import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.UserServerController;
-import com.example.INGSW.Utility.JSONDecoder;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 public class FilmInCustomList extends Fragment implements RetrofitListInterface {
 

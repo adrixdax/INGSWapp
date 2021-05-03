@@ -2,36 +2,23 @@ package com.example.INGSW;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.INGSW.Component.DB.Adapters.CustomListsAdapter;
-import com.example.INGSW.Component.DB.Classes.Contact;
-import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
-import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.UserServerController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class ChooseActionDialog extends AppCompatDialogFragment {
 

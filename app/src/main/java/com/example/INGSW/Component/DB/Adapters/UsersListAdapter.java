@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.R;
 import com.example.INGSW.ToolBarActivity;
 import com.example.INGSW.Component.DB.Classes.User;
@@ -61,7 +60,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
 
                 @Override
                 public void onClick(View v) {
-                    if (!send) {
+                    if (!send)  {}/*{
                         NotifyTestController ntc = new NotifyTestController();
                         ntc.setIdSender(((ToolBarActivity) v.getContext()).getUid());
                         ntc.setIdReceiver(model.getIdUser());
@@ -75,7 +74,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
                         send = true;
                         holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
                         areFriends.set(position, true);
-                    }
+                    }*/
                 }
 
             });

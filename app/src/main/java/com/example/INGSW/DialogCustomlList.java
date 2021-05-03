@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
@@ -16,20 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.CustomListsAdapter;
 import com.example.INGSW.Component.DB.Classes.UserLists;
-import com.example.INGSW.Controllers.FilmTestController;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.UserServerController;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class DialogCustomlList extends AppCompatDialogFragment implements RetrofitListInterface {
 

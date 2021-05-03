@@ -12,10 +12,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.ReviewsController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
-
-import java.util.concurrent.ExecutionException;
 
 import static com.example.INGSW.Utility.TitleException.*;
 

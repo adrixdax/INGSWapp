@@ -14,20 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Adapters.ContactListAdapter;
 import com.example.INGSW.Component.DB.Classes.Contact;
-import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.UserServerController;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
-
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 public class DialogFriendsListOfShare extends AppCompatDialogFragment implements RetrofitListInterface {
 
@@ -64,55 +60,25 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment implements
         Button insertInLists = dialog.getWindow().findViewById(R.id.ShareWithFriends);
         PushDownAnim.setPushDownAnimTo(insertInLists);
         insertInLists.setOnClickListener(v -> {
+            String uid = ((ToolBarActivity) this.requireActivity()).getUid();
             if (!custom) {
                 if (!selectedLists.isEmpty()) {
-                    for (Contact singlelist : selectedLists) {
-                        NotifyTestController ntc = new NotifyTestController();
-                        try {
-                            ntc.setIdSender(((ToolBarActivity) getActivity()).getUid());
-                            if (singlelist.getUser1().equals(ntc.getIdSender())) {
-                                ntc.setIdReceiver(singlelist.getUser2());
-                            } else {
-                                ntc.setIdReceiver(singlelist.getUser1());
-                            }
-                            ntc.setType("FILM");
-                            ntc.setIdRecordref(film);
-                            ntc.execute("shareFriendsContent").get();
-                            ntc.isCancelled();
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    for (Contact friend : selectedLists) {
+                        RetrofitResponse.getResponse("Type=PostRequest&id_sender=" + uid + "&id_receiver=" + (friend.getUser1().equals(uid) ? friend.getUser2() : friend.getUser1()) + "&type=FILM&id_recordref=" + film + "&sendNotify=true", this, this.getContext(), "shareFriendsContent");
                     }
                 }
                 dismiss();
-
             } else {
-
                 if (!selectedLists.isEmpty()) {
-                    for (Contact singlelist : selectedLists) {
-                        NotifyTestController ntc = new NotifyTestController();
-                        try {
-                            ntc.setIdSender(((ToolBarActivity) getActivity()).getUid());
-                            if (singlelist.getUser1().equals(ntc.getIdSender())) {
-                                ntc.setIdReceiver(singlelist.getUser2());
-                            } else {
-                                ntc.setIdReceiver(singlelist.getUser1());
-                            }
-                            ntc.setType("LIST");
-                            ntc.setIdRecordref(idList);
-                            ntc.execute("shareFriendsContent").get();
-                            ntc.isCancelled();
-                        } catch (ExecutionException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                    for (Contact friend : selectedLists) {
+                        RetrofitResponse.getResponse("Type=PostRequest&id_sender=" + uid + "&id_receiver=" + (friend.getUser1().equals(uid) ? friend.getUser2() : friend.getUser1()) + "&type=LIST&id_recordref=" + idList + "&sendNotify=true", this, this.getContext(), "shareFriendsContent");
                     }
+                    dismiss();
                 }
-                dismiss();
+                dialog.closeOptionsMenu();
+                dialog.cancel();
+                dialog.dismiss();
             }
-
-            dialog.closeOptionsMenu();
-            dialog.cancel();
-            dialog.dismiss();
         });
         return dialog;
     }

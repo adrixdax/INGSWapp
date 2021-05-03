@@ -1,7 +1,6 @@
 package com.example.INGSW;
 
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,16 +15,8 @@ import com.example.INGSW.Component.DB.Adapters.CustomListsAdapter;
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.UserServerController;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import retrofit2.Retrofit;
-
-import static com.example.INGSW.Utility.JSONDecoder.getJsonToDecode;
 
 
 public class MyLists extends Fragment implements RetrofitListInterface {

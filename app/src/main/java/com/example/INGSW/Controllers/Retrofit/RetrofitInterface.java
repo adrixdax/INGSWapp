@@ -14,6 +14,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
+
 public interface RetrofitInterface {
 
     @POST("/film")
@@ -33,6 +34,10 @@ public interface RetrofitInterface {
 
     @GET("/notify")
     Call<String> setRefused(@Query("Refused") String param);
+
+    @POST("/notify")
+
+    Call<String> shareFriendsContent(@Body String body);
 
     @POST("/list")
     Call<List<UserLists>> getList(@Body String body);

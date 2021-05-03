@@ -10,17 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.Films.Film;
 import com.example.INGSW.Component.Films.ListOfFilmAdapter;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Utility.JSONDecoder;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 
 public class MyFavs extends Fragment implements RetrofitListInterface {

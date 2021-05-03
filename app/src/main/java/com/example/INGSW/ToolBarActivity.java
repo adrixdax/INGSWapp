@@ -24,7 +24,6 @@ import com.example.INGSW.Controllers.UserController;
 import com.example.INGSW.home.HomepageScreen;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,7 +39,6 @@ import java.util.Objects;
 import teaspoon.annotations.OnUi;
 
 public class ToolBarActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, RetrofitListInterface {
-
 
     Fragment activeFragment;
     CircularProgressBar progressBar;
