@@ -76,7 +76,7 @@ public interface RetrofitInterface {
     Call<String> addReview(@Body String body);
 
     @POST("/registration")
-    Call<Boolean> getRegistration(@Body String body);
+    Call<String> getRegistration(@Body String body);
 
     @POST("/user")
     Call<List<Contact>> getFriends(@Body String body);

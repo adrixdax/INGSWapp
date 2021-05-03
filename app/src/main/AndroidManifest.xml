@@ -22,7 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Authapp"
         android:noHistory = "true"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="false"
+        android:largeHeap="true">
         <activity android:name=".AvatarScreenActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>

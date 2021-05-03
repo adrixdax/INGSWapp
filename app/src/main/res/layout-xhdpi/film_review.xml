@@ -60,7 +60,7 @@
             android:fontFamily="@font/poppins_bold"
             android:text="REVIEW TITLE"
             android:textAlignment="viewStart"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/ColorAccent"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
