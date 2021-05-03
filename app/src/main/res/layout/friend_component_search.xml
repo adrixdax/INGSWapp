@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayoutNotify"
     android:layout_width="match_parent"
     android:layout_height="130dp"
@@ -38,8 +39,8 @@
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:autoSizeMaxTextSize="24sp"
-        android:autoSizeMinTextSize="10sp"/>
+        app:autoSizeMaxTextSize="24sp"
+        app:autoSizeMinTextSize="10sp"/>
 
     <ImageButton
         android:id="@+id/addFriendButton"

@@ -35,7 +35,7 @@ public class NotifyPopUp extends AppCompatDialogFragment {
     private static TextView notifyTextError;
 
     public NotifyPopUp(ArrayList<Notify> list) {
-        notify = new ArrayList<>((Collection<? extends Notify>) list);
+        notify = new ArrayList<>(list);
     }
 
     public NotifyPopUp() {

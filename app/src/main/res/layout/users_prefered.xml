@@ -19,7 +19,7 @@
                 android:id="@+id/textViewUserPrefered"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:autoSizeTextType="uniform"
+                app:autoSizeTextType="uniform"
                 android:fontFamily="@font/poppins_bold"
                 android:text="I preferiti degli utenti"
                 android:textAllCaps="true"

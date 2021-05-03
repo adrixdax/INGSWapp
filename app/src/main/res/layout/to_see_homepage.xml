@@ -20,7 +20,7 @@
                 android:id="@+id/textViewTooSee"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:autoSizeTextType="uniform"
+                app:autoSizeTextType="uniform"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Devi ancora vedere"
                 android:textAlignment="center"

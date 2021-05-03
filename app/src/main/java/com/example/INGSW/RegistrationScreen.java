@@ -92,7 +92,7 @@ public class RegistrationScreen extends AppCompatActivity {
                                     editTextMail.setError("Perfavore inserisci un indirizzo Mail valido");
                                     editTextMail.requestFocus();
                                     break;
-                                case "Empty password":
+                                case "Empty Password":
                                     editTextPassword.setError("La password è necessaria!");
                                     editTextPassword.requestFocus();
                                     break;
@@ -114,6 +114,9 @@ public class RegistrationScreen extends AppCompatActivity {
                                     break;
                             }
 
+                        }
+                        finally {
+                            stopProgressBar();
                         }
                     }
                     else{

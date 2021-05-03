@@ -131,6 +131,9 @@ public class LoginScreen extends AppCompatActivity {
                     }
 
                 }
+                finally {
+                    stopProgressBar();
+                }
             });
 
             editTextEmail = findViewById(R.id.TextLoginEmail);
@@ -232,6 +235,9 @@ public class LoginScreen extends AppCompatActivity {
         }
         catch (ApiException e) {
             Log.w("ERROR", "signInResult:failed code=" + e.getStatusCode());
+        }
+        finally {
+            stopProgressBar();
         }
     }
 

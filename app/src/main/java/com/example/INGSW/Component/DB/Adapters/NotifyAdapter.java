@@ -16,22 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.INGSW.Component.DB.Classes.Notify;
 import com.example.INGSW.Component.DB.Classes.Reviews;
+import com.example.INGSW.Component.DB.Classes.User;
 import com.example.INGSW.Component.DB.Classes.UserLists;
 import com.example.INGSW.Component.Films.Film;
-import com.example.INGSW.Controllers.FilmTestController;
-import com.example.INGSW.Controllers.NotifyTestController;
 import com.example.INGSW.Controllers.NotifyUpdater;
 import com.example.INGSW.Controllers.Retrofit.RetrofitListInterface;
 import com.example.INGSW.Controllers.Retrofit.RetrofitResponse;
-import com.example.INGSW.Controllers.ReviewsController;
-import com.example.INGSW.Controllers.UserServerController;
 import com.example.INGSW.NotifyPopUp;
 import com.example.INGSW.R;
 import com.example.INGSW.ReviewDetail;
 import com.example.INGSW.ToolBarActivity;
-import com.example.INGSW.Component.DB.Classes.User;
-import com.example.INGSW.Utility.JSONDecoder;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,7 +36,6 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -50,9 +43,9 @@ import static com.bumptech.glide.Glide.with;
 
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder> implements RetrofitListInterface {
     private final ArrayList<Notify> listOfData;
-    private ArrayList<UserLists> lists;
-    private ArrayList<Film> films = new ArrayList<>();
-    private ArrayList<Reviews> reviews;
+    private final ArrayList<UserLists> lists = new ArrayList<>();
+    private final ArrayList<Film> films = new ArrayList<>();
+    private final ArrayList<Reviews> reviews = new ArrayList<>();
     private final DatabaseReference ref;
     private final Context myContext;
     private final NotifyPopUp dialog;
@@ -93,42 +86,14 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 case "FILM":
                      RetrofitResponse.getResponse("Type=PostRequest&filmId=" + not.getId_recordref(), NotifyAdapter.this, null, "getFilmById");
                      break;
-                case "FRIENDSHIP_REQUEST":
-                    //holder.notifyText.setText("vuole essere tuo Amico");
-                    break;
                 case "LIST":
-
-                    //Retrofit
-
-                    FilmTestController controller = new FilmTestController();
-                    //controller.setIdList(String.valueOf(listOfData.get(position).getId_recordref()));
-                    try {
-                        String json = (String) controller.execute("listName").get();
-                        try {
-                            UserLists list = ((List<UserLists>) (JSONDecoder.getJsonToDecode(json, UserLists.class))).get(0);
-                      //      holder.notifyText.setText("vuole consigliarti la lista: \"" + list.getTitle() + "\"");
-                        } catch (JsonProcessingException e) {
-                            e.printStackTrace();
-                        }
-                    } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    RetrofitResponse.getResponse(String.valueOf(not.getId_recordref()),this,myContext,"getListById");
                     break;
-                case "REVIEW":
-
-                    //Retrofit
-
-                    ReviewsController revCon = new ReviewsController();
-                    //revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
-                    Reviews rev = null;
-                    try {
-                        rev = ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0);
-                    } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
-                    }
-                    FilmTestController con = new FilmTestController();
-                    con.setIdFilm(String.valueOf(rev.getIdRecordRef()));
-                    //holder.notifyText.setText(new StringBuilder().append("vuole farti vedere la sua recensione riguardo: ").append(((List<Film>) (JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmById").get()), Film.class))).get(0).getFilm_Title()));
+                case "REVIEW": {
+                    RetrofitResponse.getResponse(String.valueOf(not.getId_recordref()),this,myContext,"getSingleReview");
+                    break;
+                }
+                default:
                     break;
             }
         }
@@ -142,6 +107,17 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         if (newList.size() != 0){
             if (Film.class.equals(newList.get(0).getClass())) {
                 films.addAll(films.size(), (Collection<? extends Film>) newList);
+                notifyDataSetChanged();
+            }
+            else if (UserLists.class.equals(newList.get(0).getClass())){
+                lists.addAll(lists.size(), (Collection<? extends UserLists>) newList);
+                notifyDataSetChanged();
+            }
+            else{
+                for (Object r : newList){
+                    RetrofitResponse.getResponse("Type=PostRequest&filmId="+ ((Reviews) r).getIdRecordRef(),this,this.myContext,"getFilmById");
+                }
+                reviews.addAll(reviews.size(), (Collection<? extends Reviews>) newList);
                 notifyDataSetChanged();
             }
         }
@@ -197,37 +173,20 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 holder.notifyText.setText("vuole essere tuo Amico");
                 break;
             case "LIST":
-                //Retrofit
-                FilmTestController controller = new FilmTestController();
-                controller.setIdList(String.valueOf(listOfData.get(position).getId_recordref()));
-                try {
-                    String json = (String) controller.execute("listName").get();
-                    try {
-                        UserLists list = ((List<UserLists>) (JSONDecoder.getJsonToDecode(json, UserLists.class))).get(0);
-                        holder.notifyText.setText("vuole consigliarti la lista: \"" + list.getTitle() + "\"");
-                    } catch (JsonProcessingException e) {
-                        e.printStackTrace();
+                for (UserLists l : lists){
+                    if (l.getIdUser().equals(listOfData.get(position).getId_sender())){
+                        holder.notifyText.setText("ti consiglia la sua lista "+l.getTitle());
                     }
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
+            }
                 break;
             case "REVIEW":
-                //Retrofit
-                try {
-                    ReviewsController revCon = new ReviewsController();
-                    revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
-                    Reviews rev = null;
-                    try {
-                        rev = ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0);
-                    } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
+                for (Reviews r : reviews) {
+                    for (Film f : films) {
+                        if (r.getIdRecordRef()==f.getId_Film()) {
+                            holder.notifyText.setText("vuole farti vedere la recensione riguardo:\n" + f.getFilm_Title());
+                            break;
+                        }
                     }
-                    FilmTestController con = new FilmTestController();
-                    con.setIdFilm(String.valueOf(rev.getIdRecordRef()));
-                    holder.notifyText.setText(new StringBuilder().append("vuole farti vedere la sua recensione riguardo: ").append(((List<Film>) (JSONDecoder.getJsonToDecode(String.valueOf(con.execute("filmById").get()), Film.class))).get(0).getFilm_Title()));
-                } catch (ExecutionException | InterruptedException | JsonProcessingException e) {
-                    e.printStackTrace();
                 }
                 break;
         }
@@ -236,7 +195,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             listOfData.get(position).setState("ACCEPTED");
             switch (listOfData.get(position).getType()) {
                 case "FILM": {
-                    new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
+                    RetrofitResponse.getResponse(String.valueOf(listOfData.get(position).getId_Notify()),this,this.myContext,"setAccepted");
                     Toast.makeText(v.getContext(), "Ora questo film è nei tuoi film da vedere :)", Toast.LENGTH_SHORT).show();
                     listOfData.remove(position);
                     notifyItemRemoved(position);
@@ -245,17 +204,8 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     break;
                 }
                 case "FRIENDSHIP_REQUEST": {
-                    UserServerController usc = new UserServerController();
-                    usc.setUserId(((ToolBarActivity) myContext).getUid());
-                    usc.setIdOtherUser(listOfData.get(position).getId_sender());
-                    try {
-                        usc.execute("acceptedFriendsRequest").get();
-                        usc.isCancelled();
-                        new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
-                        Toast.makeText(v.getContext(), "Ora siete amici", Toast.LENGTH_SHORT).show();
-                    } catch (ExecutionException | InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    RetrofitResponse.getResponse("Type=PostRequest&addFriends=true&idUser=" + ((ToolBarActivity) myContext).getUid() + "&idOtherUser=" + listOfData.get(position).getId_sender(),this,myContext,"addFriend");
+                    Toast.makeText(v.getContext(), "Ora siete amici", Toast.LENGTH_SHORT).show();
                     listOfData.remove(position);
                     this.notifyItemRemoved(position);
                     notifyItemRangeChanged(position,listOfData.size());
@@ -263,7 +213,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     break;
                 }
                 case "LIST": {
-                    new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
+                    RetrofitResponse.getResponse(String.valueOf(listOfData.get(position).getId_Notify()),this,this.myContext,"setAccepted");
                     Toast.makeText(v.getContext(), "Hai una nuova lista", Toast.LENGTH_SHORT).show();
                     listOfData.remove(position);
                     this.notifyItemRemoved(position);
@@ -272,14 +222,11 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     break;
                 }
                 case "REVIEW": {
-                    new NotifyTestController().execute("Accepted=" + listOfData.get(position).getId_Notify());
-                    ReviewsController revCon = new ReviewsController();
-                    revCon.setIdReview(String.valueOf(listOfData.get(position).getId_recordref()));
+                    RetrofitResponse.getResponse(String.valueOf(listOfData.get(position).getId_Notify()),this,this.myContext,"setAccepted");
                     Reviews revObj = null;
-                    try {
-                        revObj = ((List<Reviews>) JSONDecoder.getJsonToDecode((String) revCon.execute("singleReview").get(), Reviews.class)).get(0);
-                    } catch (JsonProcessingException | InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
+                    for (Reviews r : reviews){
+                        if (r.getId_review()==listOfData.get(position).getId_recordref())
+                            revObj=r;
                     }
                     listOfData.remove(position);
                     this.notifyItemRemoved(position);
@@ -297,10 +244,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             verifyNoMoreNotify();
         });
         holder.no.setOnClickListener(v -> {
-            listOfData.get(position).setState("REFUSED");
-            Toast.makeText(v.getContext(), "Non hai accettato", Toast.LENGTH_SHORT).show();
-            holder.newNotify.setVisibility(View.INVISIBLE);
-            new NotifyTestController().execute("Refused=" + listOfData.get(position).getId_Notify());
+            RetrofitResponse.getResponse(String.valueOf(listOfData.get(position).getId_Notify()),this,myContext,"setRefused");
             listOfData.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position,listOfData.size());
@@ -318,7 +262,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     public void changeStatus(){
         for (Notify not : listOfData){
             if (not.getState().equals("PENDING"))
-            new NotifyTestController().execute("Seen="+not.getId_Notify());
+            RetrofitResponse.getResponse(String.valueOf(not.getId_Notify()),this,this.myContext,"setSeen");
         }
     }
 
@@ -327,6 +271,5 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             NotifyPopUp.noMoreNotify();
         }
     }
-
 
 }

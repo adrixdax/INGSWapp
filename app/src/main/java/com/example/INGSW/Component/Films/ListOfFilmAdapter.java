@@ -121,8 +121,8 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
 
             });
             holder.relativeLayout.setOnLongClickListener(v -> {
-                    ChooseActionDialog dlg = new ChooseActionDialog(listOfData.get(holder.getAdapterPosition()), idList,startFragment);
-                    dlg.show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
+                    new ChooseActionDialog(listOfData.get(position), idList,startFragment).show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
+                    notifyDataSetChanged();
                     return true;
             });
         } else {

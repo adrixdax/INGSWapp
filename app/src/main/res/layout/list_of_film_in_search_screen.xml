@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayoutNotify"
     android:layout_width="match_parent"
     android:layout_height="150dp"
@@ -26,7 +27,7 @@
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:maxWidth="300dp"
-        android:autoSizeTextType="uniform"/>
+        app:autoSizeTextType="uniform"/>
 
     <TextView
         android:id="@+id/textViewRelaseDate"
@@ -39,7 +40,7 @@
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="80dp"
-        android:autoSizeTextType="uniform"/>
+        app:autoSizeTextType="uniform"/>
 
     <TextView
         android:id="@+id/textViewTime"
@@ -52,7 +53,7 @@
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="50dp"
-        android:autoSizeTextType="uniform"/>
+        app:autoSizeTextType="uniform"/>
 
     <TextView
         android:id="@+id/textViewCategories"
@@ -65,7 +66,7 @@
         android:fontFamily="@font/poppins_bold"
         android:textSize="10sp"
         android:maxHeight="17dp"
-        android:autoSizeTextType="uniform"/>
+        app:autoSizeTextType="uniform"/>
 
     <TextView
         android:id="@+id/textViewPlot"
@@ -79,6 +80,6 @@
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="250dp"
         android:maxHeight="66dp"
-        android:autoSizeTextType="uniform"/>
+        app:autoSizeTextType="uniform"/>
 
 </RelativeLayout>

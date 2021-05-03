@@ -80,7 +80,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/rounded_corners"
-        android:text="Insersci il commento"
+        android:text="Inserisci il commento"
         android:textAlignment="center"
         android:textColor="#E8DCDC"
         android:textSize="18sp"

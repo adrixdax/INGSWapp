@@ -29,7 +29,7 @@ public class RetrofitResponse {
                         try {
                             if (response.body() instanceof List) {
                                 Method methodClassCalled = c.getClass().getMethod("setList", List.class);
-                                methodClassCalled.invoke(c, response.body() != null ? response.body() : new ArrayList<>());
+                                methodClassCalled.invoke(c, response.body());
                             }
                             else if (response.body() instanceof String){
                                 System.out.println(response.body());

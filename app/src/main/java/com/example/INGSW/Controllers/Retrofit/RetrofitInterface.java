@@ -37,6 +37,9 @@ public interface RetrofitInterface {
     @POST("/list")
     Call<List<UserLists>> getList(@Body String body);
 
+    @GET("/list")
+    Call<List<UserLists>> getListById(@Query("idUserList") String param);
+
     @POST("/user")
     Call<List<UserLists>> getDefaultList(@Body String body);
 
@@ -58,6 +61,9 @@ public interface RetrofitInterface {
     @POST("/list")
     Call<Boolean> isFilmInList(@Body String body);
 
+    @GET("/review")
+    Call<List<Reviews>> getSingleReview(@Query("id_review") String idReview);
+
     @POST("/review")
     Call<List<Reviews>> getReview(@Body String body);
 
@@ -69,6 +75,9 @@ public interface RetrofitInterface {
 
     @POST("/user")
     Call<List<Contact>> getFriends(@Body String body);
+
+    @POST("/user")
+    Call<String> addFriend(@Body String body);
 
     @POST("/report")
     Call<String>  addReport(@Body String body);

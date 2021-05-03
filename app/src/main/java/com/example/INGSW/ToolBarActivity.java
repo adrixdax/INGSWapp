@@ -24,6 +24,7 @@ import com.example.INGSW.Controllers.UserController;
 import com.example.INGSW.home.HomepageScreen;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -139,44 +140,51 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                                 .commit();
                 }
             } else if (!tag.equals(currentFragment.getTag())) {
+                if (activeFragment == null){
+                    ((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(1).setChecked(true);
+                }
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.nav_host_fragment, fragment, tag)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .commit();
-                activeFragment = fragment;
-                return true;
             }
+            activeFragment = fragment;
+            return true;
         }
         return false;
     }
 
     @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    private boolean onNavigationItemSelected (MenuItem item, boolean swipe){
         Fragment fragment = null;
         String tag = "";
-
         switch (item.getItemId()) {
             case R.id.navigation_home:
+                item.setChecked(item.getItemId() == R.id.navigation_home);
                 fragment = new HomepageScreen();
                 tag = "1";
                 break;
-
             case R.id.navigation_personal_area:
+                item.setChecked(item.getItemId() == R.id.navigation_personal_area);
                 fragment = new PersonalArea();
                 tag = "2";
                 break;
-
             case R.id.navigation_search:
+                item.setChecked(item.getItemId() == R.id.navigation_search);
                 fragment = new SearchFilmScreen();
                 tag = "3";
                 break;
-
         }
-
-        return loadFragment(fragment, tag, false);
+        return loadFragment(fragment, tag, swipe);
     }
+
+
+
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return onNavigationItemSelected(item,false);
+    }
+
 
     public Map<String, List<Film>> getConteinerList() {
         return conteinerList;
@@ -282,7 +290,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     }
 
     public boolean onTouchEvent(MotionEvent touchEvent) {
-        Fragment fragment = null;
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert currentFragment != null;
         String tag = currentFragment.getTag();
@@ -298,13 +305,9 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                 if (x1 < x2) {
                     switch (Objects.requireNonNull(tag)) {
                         case "1":
-                            fragment = new SearchFilmScreen();
-                            tag = "3";
-                            break;
+                            return onNavigationItemSelected(((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(0),true);
                         case "2":
-                            fragment = new HomepageScreen();
-                            tag = "1";
-                            break;
+                            return onNavigationItemSelected(((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(1),true);
                         case "3":
                             break;
 
@@ -312,21 +315,14 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                 } else if (x2 < x1) {
                     switch (Objects.requireNonNull(tag)) {
                         case "1":
-                            fragment = new PersonalArea();
-                            tag = "2";
-                            break;
+                            return onNavigationItemSelected(((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(2),true);
                         case "2":
                             break;
                         case "3":
-                            fragment = new HomepageScreen();
-                            tag = "1";
-                            break;
+                            return onNavigationItemSelected(((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(1),true);
                     }
                 }
-                return loadFragment(fragment, tag, true);
-
         }
-
         return false;
     }
 
