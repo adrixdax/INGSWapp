@@ -34,7 +34,13 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
         new NotifyUpdater(timer,bell,activity,new ArrayList<>());
     }
 
-    public List<?> getNotify(){
+    public synchronized List<?> getNotify(){
+        newUpdate();
+        try {
+            wait(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return notify;
     }
 

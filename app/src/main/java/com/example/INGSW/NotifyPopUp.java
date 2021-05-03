@@ -75,6 +75,7 @@ public class NotifyPopUp extends AppCompatDialogFragment {
 
     @OnUi
     private static void update() {
+        NotifyUpdater.newUpdate();
         notifyTextError.setText("Nessuna nuova notifica");
     }
 
