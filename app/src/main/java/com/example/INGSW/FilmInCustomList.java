@@ -85,9 +85,6 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
             LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
             filmInCustomList.setLayoutManager(layoutManager);
             filmInCustomList.setAdapter(adapter);
-            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(filmInCustomList.getContext(),
-                    layoutManager.getOrientation());
-            filmInCustomList.addItemDecoration(dividerItemDecoration);
             filmInCustomList.setVisibility(View.VISIBLE);
         }
         ((ToolBarActivity) requireActivity()).stopProgressBar();
