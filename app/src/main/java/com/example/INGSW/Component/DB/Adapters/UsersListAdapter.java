@@ -53,7 +53,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         User model = userlist.get(position);
         holder.nick.setText(model.getNickname());
         with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
-        Boolean areFriend = false;
+        boolean areFriend = false;
         for (Contact c : areFriends) {
             if (userlist.get(position).getIdUser().equals(c.getUser1()) || userlist.get(position).getIdUser().equals(c.getUser2())) {
                 holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
