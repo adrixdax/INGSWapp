@@ -258,9 +258,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     public void onBackPressed(boolean completed) {
         FragmentManager fm = getSupportFragmentManager();
         Fragment currentFragment = fm.findFragmentById(R.id.nav_host_fragment);
-        String tag1 = "1";
-        String tag2 = "2";
-        String tag3 = "3";
 
         assert currentFragment != null;
         assert currentFragment.getTag() != null;

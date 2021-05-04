@@ -35,7 +35,7 @@ public class RegistrationController {
     }
 
 
-    public void registerUser(String email, String password, String rePassword,String nickname,String propic) throws Exception {
+    public void registerUser(String email, String password, String rePassword, String nickname) throws Exception {
         if (nickname.isEmpty()) {
             throw new Exception("Empty nickname");
         }

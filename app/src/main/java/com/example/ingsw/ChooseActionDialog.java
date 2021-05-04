@@ -27,10 +27,6 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
     TextView filmTitle;
     Fragment fg;
 
-    public boolean isCustom() {
-        return custom;
-    }
-
     boolean custom = false;
     Film film;
     String idList;

@@ -27,7 +27,6 @@ import static com.bumptech.glide.Glide.with;
 
 public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.UsersViewHolder> {
 
-    private final int size = 0;
     private final ArrayList<User> userlist;
     private final ArrayList<Contact> areFriends;
     private final ArrayList<Notify> isFriendRequestSent;

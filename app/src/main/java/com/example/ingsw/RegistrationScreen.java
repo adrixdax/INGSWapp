@@ -51,8 +51,6 @@ public class RegistrationScreen extends AppCompatActivity {
 
         RegistrationController reg = new RegistrationController(RegistrationScreen.this,propic);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
         CircleImageView profileImage = findViewById(R.id.propic_image);
         Glide.with(this).load(propic).into(profileImage);
 
@@ -74,7 +72,7 @@ public class RegistrationScreen extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     if(!dataSnapshot.exists()) {
                         try{
-                        reg.registerUser(editTextMail.getText().toString().trim(),editTextPassword.getText().toString().trim(),repeatPassword.getText().toString().trim(),editTextNickName.getText().toString().trim(),propic);
+                        reg.registerUser(editTextMail.getText().toString().trim(),editTextPassword.getText().toString().trim(),repeatPassword.getText().toString().trim(),editTextNickName.getText().toString().trim());
                         } catch (Exception e) {
                             switch (Objects.requireNonNull(e.getMessage())) {
                                 case "Empty nickname":
