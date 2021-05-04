@@ -28,7 +28,6 @@
             />
 
         <ImageView
-            android:id="@+id/pencilRegistrationScreen"
             android:layout_width="35dp"
             android:layout_height="45dp"
             app:layout_constraintBottom_toBottomOf="@id/propic_image"

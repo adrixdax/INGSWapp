@@ -33,7 +33,7 @@
         android:layout_marginBottom="40dp"
         android:layout_toStartOf="@+id/addFriendButton"
         android:layout_toEndOf="@+id/userprofilepic_view"
-        android:autoSizeTextType="uniform"
+        app:autoSizeTextType="uniform"
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="100dp"
         android:textAlignment="center"

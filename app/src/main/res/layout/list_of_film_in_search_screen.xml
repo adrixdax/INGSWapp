@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:Tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayoutNotify"
     android:layout_width="match_parent"
     android:layout_height="150dp"
@@ -40,7 +41,8 @@
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="80dp"
-        app:autoSizeTextType="uniform"/>
+        app:autoSizeTextType="uniform"
+        Tools:ignore="SmallSp"/>
 
     <TextView
         android:id="@+id/textViewTime"
@@ -53,7 +55,8 @@
         android:textColor="#FFFFFF"
         android:fontFamily="@font/poppins_bold"
         android:maxWidth="50dp"
-        app:autoSizeTextType="uniform"/>
+        app:autoSizeTextType="uniform"
+        Tools:ignore="SmallSp"/>
 
     <TextView
         android:id="@+id/textViewCategories"
@@ -66,7 +69,8 @@
         android:fontFamily="@font/poppins_bold"
         android:textSize="10sp"
         android:maxHeight="17dp"
-        app:autoSizeTextType="uniform"/>
+        app:autoSizeTextType="uniform"
+        Tools:ignore="SmallSp"/>
 
     <TextView
         android:id="@+id/textViewPlot"

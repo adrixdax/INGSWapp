@@ -2,26 +2,27 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/HomePage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="60dp"
-    tools:context="com.cbd.ingsw.ToolBarActivity">
+    tools:context=".ToolBarActivity">
 
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="80dp"
         android:fontFamily="@font/poppins_bold"
         android:text="@string/ultime_uscite"
         android:gravity="center"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/notifyBell"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/recyclerView"/>
 
@@ -84,7 +85,6 @@
             />
 
         <TextView
-            android:id="@+id/textView9"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/poppins_bold"
@@ -124,7 +124,6 @@
             app:riv_tile_mode="clamp"/>
 
         <TextView
-            android:id="@+id/textView10"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/poppins_bold"
@@ -166,7 +165,6 @@
             app:riv_tile_mode="clamp"/>
 
         <TextView
-            android:id="@+id/textView8"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fontFamily="@font/poppins_bold"
@@ -207,7 +205,6 @@
             app:riv_tile_mode="clamp"/>
 
         <TextView
-            android:id="@+id/textViewboh"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:maxWidth="90dp"
