@@ -49,7 +49,7 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
         myreviews.setOnClickListener(this);
         friends.setOnClickListener(this);
 
-        PushDownAnim.setPushDownAnimTo(mylists, myfavs, seenfilms, logout, myreviews, pencil,friends)
+        PushDownAnim.setPushDownAnimTo(mylists, myfavs, seenfilms, logout, myreviews, pencil, friends)
                 .setDurationPush(PushDownAnim.DEFAULT_PUSH_DURATION)
                 .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                 .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
@@ -62,23 +62,24 @@ public class PersonalArea extends Fragment implements View.OnClickListener {
             ((ToolBarActivity) requireActivity()).setLoadUser(loadingUser());
         }
         Query query = ToolBarActivity.getReference().orderByKey().equalTo((((ToolBarActivity) requireActivity()).getUid()));
-                query.addValueEventListener(new ValueEventListener() {
-                    @SuppressLint("RestrictedApi")
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            User model = dataSnapshot.getValue(User.class);
-                            assert model != null;
-                            nicknameView.setText(model.getNickname());
-                            mailView.setText(model.getEmail());
-                            if (getActivity()  != null) Glide.with(root.getContext()).load(model.getPropic()).into(propicView);
-                        }
-                    }
+        query.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    User model = dataSnapshot.getValue(User.class);
+                    assert model != null;
+                    nicknameView.setText(model.getNickname());
+                    mailView.setText(model.getEmail());
+                    if (getActivity() != null)
+                        Glide.with(root.getContext()).load(model.getPropic()).into(propicView);
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
 
 
         logout.setOnClickListener(v -> {

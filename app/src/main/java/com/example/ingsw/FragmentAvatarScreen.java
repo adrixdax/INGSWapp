@@ -35,7 +35,7 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.avatar_screen, container, false);
         FrameLayout.LayoutParams newLayoutParams = (FrameLayout.LayoutParams) root.getLayoutParams();
-        newLayoutParams.setMargins(0,0,0,requireActivity().getWindow().getDecorView().getRootView().findViewById(R.id.nav_view).getHeight());
+        newLayoutParams.setMargins(0, 0, 0, requireActivity().getWindow().getDecorView().getRootView().findViewById(R.id.nav_view).getHeight());
         root.setLayoutParams(newLayoutParams);
         CircleImageView ironman = root.findViewById(R.id.profile_image);
         CircleImageView spiderman = root.findViewById(R.id.profile_image2);
@@ -64,32 +64,31 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
     }
 
 
-
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.profile_image :
+        switch (v.getId()) {
+            case R.id.profile_image:
                 updateWithUrl(urlIron);
                 requireActivity().onBackPressed();
                 break;
-            case R.id.profile_image2 :
+            case R.id.profile_image2:
                 updateWithUrl(urlSpider);
                 requireActivity().onBackPressed();
                 break;
-            case R.id.profile_image3 :
+            case R.id.profile_image3:
                 updateWithUrl(urlGamora);
                 requireActivity().onBackPressed();
                 break;
-            case R.id.profile_image4 :
+            case R.id.profile_image4:
                 updateWithUrl(urlThanos);
                 requireActivity().onBackPressed();
                 break;
-            case R.id.profile_image5 :
+            case R.id.profile_image5:
                 updateWithUrl(urlWidow);
                 requireActivity().onBackPressed();
                 break;
-            case R.id.profile_image6 :
+            case R.id.profile_image6:
                 updateWithUrl(urlWonder);
                 requireActivity().onBackPressed();
                 break;
@@ -97,7 +96,7 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
         }
     }
 
-    private void updateWithUrl(String url){
+    private void updateWithUrl(String url) {
         String uid = ((ToolBarActivity) requireActivity()).getUid();
         Query query = ToolBarActivity.getReference().orderByKey().equalTo(uid);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -111,6 +110,7 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
                     ToolBarActivity.getReference().child(uid).setValue(model);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }

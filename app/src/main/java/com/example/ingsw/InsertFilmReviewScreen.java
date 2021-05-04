@@ -14,15 +14,17 @@ import androidx.fragment.app.Fragment;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
-import static com.example.ingsw.utility.TitleException.*;
+import static com.example.ingsw.utility.TitleException.IS_NUMBER;
+import static com.example.ingsw.utility.TitleException.TOO_LONG;
+import static com.example.ingsw.utility.TitleException.TOO_SHORT;
 
 
 @SuppressWarnings("SameReturnValue")
 public class InsertFilmReviewScreen extends Fragment {
 
 
-    private RatingBar ratingBar;
     private final String idFilm;
+    private RatingBar ratingBar;
     private EditText title;
     private EditText description;
 
@@ -72,22 +74,19 @@ public class InsertFilmReviewScreen extends Fragment {
             try {
                 if (isValidReview(String.valueOf(title.getText()), ratingBar.getRating())) {
 
-                    RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idFilm + "&title=" + title.getText().toString().replaceAll("'","''") + "&description=" + (description.getText().toString().isEmpty() ? "\0" : description.getText().toString().replaceAll("'", "''")) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=FILM",this,getContext(),"addReview");
+                    RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idFilm + "&title=" + title.getText().toString().replaceAll("'", "''") + "&description=" + (description.getText().toString().isEmpty() ? "\0" : description.getText().toString().replaceAll("'", "''")) + "&val=" + ratingBar.getRating() + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=FILM", this, getContext(), "addReview");
                     ((ToolBarActivity) requireActivity()).onBackPressed(true);
-                }
-                else {
+                } else {
                     Toast.makeText(getContext(), "Devi selezionare almeno mezzo ciak", Toast.LENGTH_LONG).show();
                 }
             } catch (Exception e) {
                 if (e.getMessage().equals(IS_NUMBER.toString())) {
                     title.setError("Il titolo non può essere un numero");
                     title.requestFocus();
-                }
-                else if (e.getMessage().equals(TOO_LONG.toString())){
+                } else if (e.getMessage().equals(TOO_LONG.toString())) {
                     title.setError("Il titolo è troppo lungo");
                     title.requestFocus();
-                }
-                else if (e.getMessage().equals(TOO_SHORT.toString())){
+                } else if (e.getMessage().equals(TOO_SHORT.toString())) {
                     title.setError("Devi inserire un titolo");
                     title.requestFocus();
                 }

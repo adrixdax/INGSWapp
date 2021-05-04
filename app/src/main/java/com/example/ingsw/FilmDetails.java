@@ -42,7 +42,7 @@ public class FilmDetails extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        counter=0;
+        counter = 0;
         View root = inflater.inflate(R.layout.film_details, container, false);
 
         TextView title = root.findViewById(R.id.textViewFilmTitle);
@@ -60,8 +60,7 @@ public class FilmDetails extends Fragment {
         plot.setMovementMethod(new ScrollingMovementMethod());
         releaseDate.setText(film.getRelease_Date());
         StringBuilder genere = new StringBuilder();
-        if (film.getGenres() != null)
-        {
+        if (film.getGenres() != null) {
             for (int i = 0; i < film.getGenres().length; i++) {
                 genere.append(film.getGenres()[i]).append(" - ");
             }
@@ -79,34 +78,34 @@ public class FilmDetails extends Fragment {
         ((ToolBarActivity) requireActivity()).triggerProgessBar();
 
         RetrofitResponse.getResponse(
-                    "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("PREFERED")
-                            + "&idFilm=" + film.getId_Film(),
-                    FilmDetails.this,getContext(),"isFilmInList",imageButtonFavorites);
+                "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("PREFERED")
+                        + "&idFilm=" + film.getId_Film(),
+                FilmDetails.this, getContext(), "isFilmInList", imageButtonFavorites);
 
         RetrofitResponse.getResponse(
-                    "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("WATCH")
-                            + "&idFilm=" + film.getId_Film(),
-                    FilmDetails.this,getContext(),"isFilmInList",imageButtonWatch);
+                "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("WATCH")
+                        + "&idFilm=" + film.getId_Film(),
+                FilmDetails.this, getContext(), "isFilmInList", imageButtonWatch);
         RetrofitResponse.getResponse(
-                    "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")
-                            + "&idFilm=" + film.getId_Film(),
-                    FilmDetails.this,getContext(),"isFilmInList",imageButtonToWatch);
+                "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")
+                        + "&idFilm=" + film.getId_Film(),
+                FilmDetails.this, getContext(), "isFilmInList", imageButtonToWatch);
 
         imageButtonWatch.setOnClickListener(v -> {
             if (!imageButtonWatchblue) {
                 Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_50px).into(imageButtonWatch);
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("WATCH")
-                                + "&idFilm=" + film.getId_Film() +"&addFilm=true",
-                        FilmDetails.this,getContext(),"addFilm");
+                                + "&idFilm=" + film.getId_Film() + "&addFilm=true",
+                        FilmDetails.this, getContext(), "addFilm");
 
                 imageButtonWatchblue = true;
             } else {
                 Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_30px_4).into(imageButtonWatch);
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("WATCH")
-                                + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
-                        FilmDetails.this,getContext(),"removeFilmInList");
+                                + "&idFilm=" + film.getId_Film() + "&removeFilm=true",
+                        FilmDetails.this, getContext(), "removeFilmInList");
 
                 imageButtonWatchblue = false;
             }
@@ -117,15 +116,15 @@ public class FilmDetails extends Fragment {
                 Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")
-                                + "&idFilm=" + film.getId_Film() +"&addFilm=true",
-                        FilmDetails.this,getContext(),"addFilm");
+                                + "&idFilm=" + film.getId_Film() + "&addFilm=true",
+                        FilmDetails.this, getContext(), "addFilm");
                 imageButtonToWatchblue = true;
             } else {
                 Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px).into(imageButtonToWatch);
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")
-                                + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
-                        FilmDetails.this,getContext(),"removeFilmInList");
+                                + "&idFilm=" + film.getId_Film() + "&removeFilm=true",
+                        FilmDetails.this, getContext(), "removeFilmInList");
                 imageButtonToWatchblue = false;
             }
         });
@@ -136,15 +135,15 @@ public class FilmDetails extends Fragment {
                 Glide.with(root.getContext()).load(R.drawable.icons8_star_32px).into(imageButtonFavorites);
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("PREFERED")
-                                + "&idFilm=" + film.getId_Film() +"&addFilm=true",
-                        FilmDetails.this,getContext(),"addFilm");
+                                + "&idFilm=" + film.getId_Film() + "&addFilm=true",
+                        FilmDetails.this, getContext(), "addFilm");
                 imageButtonFavoritesblue = true;
             } else {
                 Glide.with(root.getContext()).load(R.drawable.icons8_star_26px).into(imageButtonFavorites);
                 RetrofitResponse.getResponse(
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("PREFERED")
-                                + "&idFilm=" + film.getId_Film() +"&removeFilm=true",
-                        FilmDetails.this,getContext(),"removeFilmInList");
+                                + "&idFilm=" + film.getId_Film() + "&removeFilm=true",
+                        FilmDetails.this, getContext(), "removeFilmInList");
 
                 imageButtonFavoritesblue = false;
             }
@@ -158,10 +157,10 @@ public class FilmDetails extends Fragment {
             transaction = FilmDetails.this.requireActivity().getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.nav_host_fragment, nextFragment, "FilmReviews");
 
-            if(imageButtonWatchblue){
+            if (imageButtonWatchblue) {
                 transaction.addToBackStack(null);
                 transaction.commit();
-            }else {
+            } else {
                 SpoilerAlertDIalog dlg = new SpoilerAlertDIalog(transaction);
                 dlg.show(getChildFragmentManager(), "SpoilerAllert");
             }
@@ -183,20 +182,20 @@ public class FilmDetails extends Fragment {
 
     @OnUi
     public void glideObject(Boolean b, Object toGlide) {
-        if (toGlide.equals(imageButtonFavorites) && b){
+        if (toGlide.equals(imageButtonFavorites) && b) {
             Glide.with(requireContext()).load(R.drawable.icons8_star_32px).into(imageButtonFavorites);
-            imageButtonFavoritesblue=true;
+            imageButtonFavoritesblue = true;
         }
         if (toGlide.equals(imageButtonWatch) && b) {
             Glide.with(requireContext()).load(R.drawable.icons8_closed_eye_50px).into(imageButtonWatch);
-            imageButtonWatchblue=true;
+            imageButtonWatchblue = true;
         }
 
         if (toGlide.equals(imageButtonToWatch) && b) {
             Glide.with(requireContext()).load(R.drawable.icons8_clock_32px_1).into(imageButtonToWatch);
-            imageButtonToWatchblue=true;
+            imageButtonToWatchblue = true;
         }
         counter++;
-        if (counter==3) ((ToolBarActivity) requireActivity()).stopProgressBar();
+        if (counter == 3) ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

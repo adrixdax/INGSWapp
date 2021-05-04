@@ -12,17 +12,19 @@ import com.example.ingsw.ToolBarActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class LoginController{
+public class LoginController {
 
-    private final Activity activity;
     final int RC_SIGN_IN = 0;
+    private final Activity activity;
 
 
-    public LoginController(Activity current){
+    public LoginController(Activity current) {
         this.activity = current;
     }
 
-    /**NOTA: Risulta fondamentale ai fini della funzionalità dell' interfaccia far si che determinate componenti quali l'activity per esempio, vengano passati al controller tramite appositi metodi **/
+    /**
+     * NOTA: Risulta fondamentale ai fini della funzionalità dell' interfaccia far si che determinate componenti quali l'activity per esempio, vengano passati al controller tramite appositi metodi
+     **/
 
     public void signIn(GoogleSignInClient mGoogleSignInClient) {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
@@ -32,39 +34,37 @@ public class LoginController{
     public void verifyUserWithFirebase(String mail, String password, FirebaseAuth mAuth, Activity loginscreen) throws Exception {
 
 
-        if(mail.isEmpty()){
+        if (mail.isEmpty()) {
             throw new Exception("Empty Mail");
         }
 
-        if(!Patterns.EMAIL_ADDRESS.matcher(mail).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
             throw new Exception("Invalid Mail");
         }
 
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             throw new Exception("Empty Password");
         }
 
-        if(password.length() < 6){
+        if (password.length() < 6) {
             throw new Exception("Password Length");
         }
 
-        mAuth.signInWithEmailAndPassword(mail,password).addOnCompleteListener(task -> {
-            if(task.isSuccessful()){
-                SharedPreferences preferences =   LoginController.this.activity.getSharedPreferences("access",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor =  preferences.edit();
-                editor.putString("remember","true");
+        mAuth.signInWithEmailAndPassword(mail, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                SharedPreferences preferences = LoginController.this.activity.getSharedPreferences("access", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("remember", "true");
                 editor.apply();
 
-                Toast.makeText(loginscreen,"LOGIN EFFETTUATO",Toast.LENGTH_LONG).show();
-                ((LoginScreen)loginscreen).stopProgressBar();
+                Toast.makeText(loginscreen, "LOGIN EFFETTUATO", Toast.LENGTH_LONG).show();
+                ((LoginScreen) loginscreen).stopProgressBar();
                 loginscreen.startActivity(new Intent(loginscreen, ToolBarActivity.class));
                 //manda al profilo utente/homepage dell' app
-            }
-            else{
-                Toast.makeText(loginscreen,"LOGIN FALLITO",Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(loginscreen, "LOGIN FALLITO", Toast.LENGTH_LONG).show();
             }
         });
-
 
 
     }

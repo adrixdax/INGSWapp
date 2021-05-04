@@ -31,10 +31,10 @@ public class UserPrefered extends Fragment implements RetrofitListInterface {
         View root = inflater.inflate(R.layout.users_prefered, container, false);
         userPreferedFilms = root.findViewById(R.id.recyclerViewUserPrefered);
 
-        ((ToolBarActivity)requireActivity()).triggerProgessBar();
+        ((ToolBarActivity) requireActivity()).triggerProgessBar();
         RetrofitResponse.getResponse(
                 "Type=PostRequest&userPrefered=true",
-                this,this.getContext(),"getFilm");
+                this, this.getContext(), "getFilm");
 
         return root;
     }
@@ -50,6 +50,6 @@ public class UserPrefered extends Fragment implements RetrofitListInterface {
         userPreferedFilms.setAdapter(adapter);
         userPreferedFilms.setItemViewCacheSize(newList.size());
         userPreferedFilms.setVisibility(View.VISIBLE);
-        ((ToolBarActivity)requireActivity()).stopProgressBar();
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

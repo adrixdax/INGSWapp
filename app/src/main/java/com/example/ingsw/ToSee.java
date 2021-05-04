@@ -36,10 +36,10 @@ public class ToSee extends Fragment implements RetrofitListInterface {
 
         toSeeFilms = root.findViewById(R.id.recyclerViewToSee);
         textToSeeError = root.findViewById(R.id.textToSeeError);
-        ((ToolBarActivity)requireActivity()).triggerProgessBar();
-            RetrofitResponse.getResponse(
-                    "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH"),
-                    this,this.getContext(),"getFilmInList");
+        ((ToolBarActivity) requireActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse(
+                "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH"),
+                this, this.getContext(), "getFilmInList");
 
         return root;
     }
@@ -60,8 +60,7 @@ public class ToSee extends Fragment implements RetrofitListInterface {
             toSeeFilms.setAdapter(adapter);
             toSeeFilms.setItemViewCacheSize(newList.size());
             toSeeFilms.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             textToSeeError.setText("Non ci sono film da vedere");
         }
         ((ToolBarActivity) requireActivity()).stopProgressBar();

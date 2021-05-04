@@ -37,13 +37,10 @@ import static com.bumptech.glide.Glide.with;
 public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.ViewHolder> {
 
     private final List<Film> listOfData;
-    String idList="";
-
-
-    private Class css = null;
-
     private final Context mContext;
     private final Fragment startFragment;
+    String idList = "";
+    private Class css = null;
 
     public ListOfFilmAdapter(List<Film> listOfData, Context mContext, Fragment startFragment) {
         this.listOfData = listOfData;
@@ -121,9 +118,9 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
 
             });
             holder.relativeLayout.setOnLongClickListener(v -> {
-                    new ChooseActionDialog(listOfData.get(position), idList,startFragment).show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
-                    notifyDataSetChanged();
-                    return true;
+                new ChooseActionDialog(listOfData.get(position), idList, startFragment).show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
+                notifyDataSetChanged();
+                return true;
             });
         } else {
             with(holder.itemView).load(listOfData.get(position).getPosterPath().equals("") ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath())
@@ -174,6 +171,17 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
         return 0;
     }
 
+    public void setCss(Class css) {
+        this.css = css;
+    }
+
+    public String getIdList() {
+        return idList;
+    }
+
+    public void setIdList(String idList) {
+        this.idList = idList;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView imageView;
@@ -205,18 +213,6 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
             }
             PushDownAnim.setPushDownAnimTo(relativeLayout);
         }
-    }
-
-    public void setCss(Class css) {
-        this.css = css;
-    }
-
-    public String getIdList() {
-        return idList;
-    }
-
-    public void setIdList(String idList) {
-        this.idList = idList;
     }
 }
 

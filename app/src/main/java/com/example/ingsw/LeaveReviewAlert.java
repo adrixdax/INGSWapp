@@ -21,7 +21,7 @@ public class LeaveReviewAlert extends AppCompatDialogFragment {
 
     Button ok, annulla;
 
-    public LeaveReviewAlert(){
+    public LeaveReviewAlert() {
 
     }
 
@@ -36,7 +36,7 @@ public class LeaveReviewAlert extends AppCompatDialogFragment {
         dialog.setCancelable(true);
         ok = dialog.findViewById(R.id.ok);
         annulla = dialog.findViewById(R.id.annulla_button);
-        PushDownAnim.setPushDownAnimTo(ok,annulla);
+        PushDownAnim.setPushDownAnimTo(ok, annulla);
         ok.setOnClickListener(v -> {
             NotifyUpdater.stopUpdate();
             requireActivity().getSupportFragmentManager().popBackStack();

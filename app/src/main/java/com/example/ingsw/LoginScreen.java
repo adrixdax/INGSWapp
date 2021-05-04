@@ -1,4 +1,3 @@
-
 package com.example.ingsw;
 
 import android.annotation.SuppressLint;
@@ -50,27 +49,21 @@ import teaspoon.annotations.OnUi;
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 public class LoginScreen extends AppCompatActivity {
 
+    final int RC_SIGN_IN = 0;
     /**
      * Dichiarazione dei campi di testo e bottoni con i quali interagirà l'utente
      **/
 
     LoginController loginController;
-    final int RC_SIGN_IN = 0;
-
-
-    private EditText editTextEmail, editTextPassword;
-    private Button LoginButton;
-
-
-    private FirebaseAuth mAuth;
-
     SignInButton GoogleLogin;
     GoogleSignInClient mGoogleSignInClient;
     DatabaseReference reference;
-
     ConstraintLayout progressLayout;
     CircularProgressBar circularProgressBar;
     ConstraintLayout layout;
+    private EditText editTextEmail, editTextPassword;
+    private Button LoginButton;
+    private FirebaseAuth mAuth;
 
     /**
      * Metodo che alla creazione dell' activity prepara le nuove variabili e riconosce le componenti
@@ -131,8 +124,7 @@ public class LoginScreen extends AppCompatActivity {
                             break;
                     }
 
-                }
-                finally {
+                } finally {
                     stopProgressBar();
                 }
             });
@@ -195,8 +187,7 @@ public class LoginScreen extends AppCompatActivity {
                             if (model[0].getPropic().equals(u.getPropic()))
                                 reference.child(Objects.requireNonNull(account.getId())).setValue(u);
                         }
-                    }
-                    else {
+                    } else {
                         reference.child(Objects.requireNonNull(account.getId())).setValue(u);
                     }
                 }
@@ -211,7 +202,7 @@ public class LoginScreen extends AppCompatActivity {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("remember", "true");
             editor.apply();
-            RetrofitResponse.getResponse("Type=PostRequest&google=" + account.getId(),LoginScreen.this,this,"getRegistration");
+            RetrofitResponse.getResponse("Type=PostRequest&google=" + account.getId(), LoginScreen.this, this, "getRegistration");
             u.nickname = Objects.requireNonNull(account.getEmail()).split("@")[0];
             u.email = account.getEmail();
             int switchCase = new Random().ints(0, 5).findAny().getAsInt();
@@ -238,17 +229,15 @@ public class LoginScreen extends AppCompatActivity {
             stopProgressBar();
             startActivity(new Intent(LoginScreen.this, ToolBarActivity.class));
             finish();
-        }
-        catch (ApiException e) {
+        } catch (ApiException e) {
             Log.w("ERROR", "signInResult:failed code=" + e.getStatusCode());
-        }
-        finally {
+        } finally {
             stopProgressBar();
         }
     }
 
     @OnUi
-    public void startProgresBar(){
+    public void startProgresBar() {
         layout.setAlpha(0.1f);
         progressLayout.setVisibility(View.VISIBLE);
         this.circularProgressBar.setVisibility(View.VISIBLE);
@@ -257,7 +246,7 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     @OnUi
-    public void stopProgressBar(){
+    public void stopProgressBar() {
         progressLayout.setVisibility(View.INVISIBLE);
         layout.setAlpha(1.0f);
         circularProgressBar.setVisibility(View.INVISIBLE);

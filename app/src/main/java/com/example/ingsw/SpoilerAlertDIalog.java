@@ -38,7 +38,7 @@ public class SpoilerAlertDIalog extends AppCompatDialogFragment {
         Button procedi = dialog.findViewById(R.id.procedi_button);
         Button annulla = dialog.findViewById(R.id.annulla_button);
 
-        PushDownAnim.setPushDownAnimTo(procedi,annulla);
+        PushDownAnim.setPushDownAnimTo(procedi, annulla);
 
         procedi.setOnClickListener(v -> {
             transaction.addToBackStack(null);
@@ -62,7 +62,6 @@ public class SpoilerAlertDIalog extends AppCompatDialogFragment {
         return dialog;
 
     }
-
 
 
 }

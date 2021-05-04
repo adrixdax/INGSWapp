@@ -37,8 +37,8 @@ public class MyLists extends Fragment implements RetrofitListInterface {
             transaction.commit();
         });
         recycler = root.findViewById(R.id.recyclerView2);
-        ((ToolBarActivity)requireActivity()).triggerProgessBar();
-        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&custom=true&idFilm= -1",this,this.getContext(),"getList" );
+        ((ToolBarActivity) requireActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&custom=true&idFilm= -1", this, this.getContext(), "getList");
         return root;
     }
 
@@ -50,7 +50,7 @@ public class MyLists extends Fragment implements RetrofitListInterface {
             recycler.setHasFixedSize(false);
             recycler.setItemViewCacheSize(newList.size());
         }
-        ((ToolBarActivity)requireActivity()).stopProgressBar();
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 
 }

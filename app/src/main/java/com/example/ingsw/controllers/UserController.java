@@ -35,6 +35,7 @@ public class UserController {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         setTempUser(snapshot.getValue(User.class));
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                     }

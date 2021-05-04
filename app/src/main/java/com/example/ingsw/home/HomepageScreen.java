@@ -12,12 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ingsw.component.db.classes.Notify;
-import com.example.ingsw.component.films.Film;
-import com.example.ingsw.component.films.ListOfFilmAdapter;
-import com.example.ingsw.controllers.NotifyUpdater;
-import com.example.ingsw.controllers.retrofit.RetrofitResponse;
-import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.MostReviewed;
 import com.example.ingsw.MostSeen;
 import com.example.ingsw.NotifyPopUp;
@@ -25,6 +19,12 @@ import com.example.ingsw.R;
 import com.example.ingsw.ToSee;
 import com.example.ingsw.ToolBarActivity;
 import com.example.ingsw.UserPrefered;
+import com.example.ingsw.component.db.classes.Notify;
+import com.example.ingsw.component.films.Film;
+import com.example.ingsw.component.films.ListOfFilmAdapter;
+import com.example.ingsw.controllers.NotifyUpdater;
+import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
+import com.example.ingsw.controllers.retrofit.RetrofitResponse;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -40,8 +40,8 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
     List<Film> film;
     RoundedImageView mostSeen, tooSee, mostReviewed, userPrefered;
     ImageButton bell;
-    private boolean exist = false;
     RecyclerView recyclerView;
+    private boolean exist = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.homepagescreen, container, false);
@@ -97,13 +97,13 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
         });
 
 
-        film = ((ToolBarActivity) requireActivity()).getConteinerList().get("HomepageList") ;
+        film = ((ToolBarActivity) requireActivity()).getConteinerList().get("HomepageList");
 
         if (((ToolBarActivity) requireActivity()).getConteinerList().get("HomepageList") == null) {
-            ((ToolBarActivity)requireActivity()).triggerProgessBar();
+            ((ToolBarActivity) requireActivity()).triggerProgessBar();
             film = new ArrayList<>();
-            RetrofitResponse.getResponse("Type=PostRequest&latest=true",this,this.getContext(),"getFilm");
-        }else {
+            RetrofitResponse.getResponse("Type=PostRequest&latest=true", this, this.getContext(), "getFilm");
+        } else {
             exist = true;
             setList(film);
         }
@@ -115,7 +115,7 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
     @Override
     @OnBackground
     public void setList(List<?> list) {
-        if(!exist) {
+        if (!exist) {
             ((ToolBarActivity) requireActivity()).getConteinerList().put("HomepageList", (List<Film>) list);
         }
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);

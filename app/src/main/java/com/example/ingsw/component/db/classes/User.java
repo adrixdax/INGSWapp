@@ -2,14 +2,14 @@ package com.example.ingsw.component.db.classes;
 
 public class User {
 
-    public String nickname, email,propic,idUser;
+    public String nickname, email, propic, idUser;
 
 
-    public User(){
+    public User() {
 
     }
 
-    public User(String nickname, String email,String propic){
+    public User(String nickname, String email, String propic) {
         this.nickname = nickname;
         this.email = email;
         this.propic = propic;

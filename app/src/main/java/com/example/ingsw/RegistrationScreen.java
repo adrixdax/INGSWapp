@@ -13,7 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.ingsw.controllers.RegistrationController;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,9 +31,9 @@ import teaspoon.annotations.OnUi;
 
 public class RegistrationScreen extends AppCompatActivity {
 
-    private Button registerUser;
-    private EditText editTextNickName,editTextMail,editTextPassword,repeatPassword;
     private final String propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
+    private Button registerUser;
+    private EditText editTextNickName, editTextMail, editTextPassword, repeatPassword;
     private ConstraintLayout mainLayout;
     private ConstraintLayout progresLayout;
     private CircularProgressBar progressBar;
@@ -49,7 +48,7 @@ public class RegistrationScreen extends AppCompatActivity {
         progresLayout = findViewById(R.id.regProgressLayout);
         progressBar = findViewById(R.id.regProgressBar);
 
-        RegistrationController reg = new RegistrationController(RegistrationScreen.this,propic);
+        RegistrationController reg = new RegistrationController(RegistrationScreen.this, propic);
 
         CircleImageView profileImage = findViewById(R.id.propic_image);
         Glide.with(this).load(propic).into(profileImage);
@@ -61,18 +60,18 @@ public class RegistrationScreen extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextTextPassword);
         repeatPassword = findViewById(R.id.editTextTextRepeatPassword);
 
-        registerUser  = findViewById(R.id.registerUserButton);
+        registerUser = findViewById(R.id.registerUserButton);
         registerUser.setOnClickListener(v -> {
             this.startProgresBar();
             DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
             DatabaseReference userNameRef = rootRef.child("Users");
-            Query queries=userNameRef.orderByChild("nickname").equalTo(editTextNickName.getText().toString());
+            Query queries = userNameRef.orderByChild("nickname").equalTo(editTextNickName.getText().toString());
             ValueEventListener eventListener = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    if(!dataSnapshot.exists()) {
-                        try{
-                        reg.registerUser(editTextMail.getText().toString().trim(),editTextPassword.getText().toString().trim(),repeatPassword.getText().toString().trim(),editTextNickName.getText().toString().trim());
+                    if (!dataSnapshot.exists()) {
+                        try {
+                            reg.registerUser(editTextMail.getText().toString().trim(), editTextPassword.getText().toString().trim(), repeatPassword.getText().toString().trim(), editTextNickName.getText().toString().trim());
                         } catch (Exception e) {
                             switch (Objects.requireNonNull(e.getMessage())) {
                                 case "Empty nickname":
@@ -109,12 +108,10 @@ public class RegistrationScreen extends AppCompatActivity {
                                     break;
                             }
 
-                        }
-                        finally {
+                        } finally {
                             stopProgressBar();
                         }
-                    }
-                    else{
+                    } else {
                         editTextNickName.setError("Nickname già in uso");
                         editTextNickName.requestFocus();
 
@@ -122,7 +119,8 @@ public class RegistrationScreen extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCancelled(@NotNull DatabaseError databaseError) {}
+                public void onCancelled(@NotNull DatabaseError databaseError) {
+                }
             };
             queries.addListenerForSingleValueEvent(eventListener);
         });
@@ -137,7 +135,7 @@ public class RegistrationScreen extends AppCompatActivity {
     }
 
     @OnUi
-    public void startProgresBar(){
+    public void startProgresBar() {
         mainLayout.setAlpha(0.1f);
         progresLayout.setVisibility(View.VISIBLE);
         this.progressBar.setVisibility(View.VISIBLE);
@@ -146,12 +144,11 @@ public class RegistrationScreen extends AppCompatActivity {
     }
 
     @OnUi
-    public void stopProgressBar(){
+    public void stopProgressBar() {
         progresLayout.setVisibility(View.INVISIBLE);
         mainLayout.setAlpha(1.0f);
         progressBar.setVisibility(View.INVISIBLE);
     }
-
 
 
 }

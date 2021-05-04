@@ -40,7 +40,7 @@ public class AddCustomList extends Fragment {
         cancel.setOnClickListener(v -> requireActivity().onBackPressed());
 
         add.setOnClickListener(v -> {
-            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&addList=true&listTitle=" + title.getText() + (String.valueOf(description.getText()).length() != 0 ? "&listDescription=" + description.getText() : ""),AddCustomList.this,getContext(),"addList");
+            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&addList=true&listTitle=" + title.getText() + (String.valueOf(description.getText()).length() != 0 ? "&listDescription=" + description.getText() : ""), AddCustomList.this, getContext(), "addList");
             requireActivity().onBackPressed();
 
         });

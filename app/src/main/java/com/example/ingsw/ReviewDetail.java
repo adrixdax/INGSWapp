@@ -26,9 +26,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ReviewDetail extends Fragment {
 
     private final Reviews review;
+    private final DatabaseReference ref;
     private CircleImageView userImage;
     private TextView userName;
-    private final DatabaseReference ref;
 
 
     public ReviewDetail(Reviews review, DatabaseReference ref) {
@@ -53,7 +53,7 @@ public class ReviewDetail extends Fragment {
         ratingBar.setClickable(false);
         ratingBar.setIsIndicator(true);
         Button reportButton = root.findViewById(R.id.ReportButton);
-        reportButton.setOnClickListener(v -> new DialogReportList(review.getId_review()).show(getChildFragmentManager(),"Report"));
+        reportButton.setOnClickListener(v -> new DialogReportList(review.getId_review()).show(getChildFragmentManager(), "Report"));
 
 
         return root;
@@ -73,6 +73,7 @@ public class ReviewDetail extends Fragment {
                         userName.setText(model.getNickname());
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 

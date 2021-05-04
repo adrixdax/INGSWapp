@@ -23,34 +23,32 @@ public class RetrofitResponse {
         RetrofitInterface service = RetrofitSingleton.getRetrofit().create(RetrofitInterface.class);
         System.out.println(body);
         try {
-            Method methodRetrofit = service.getClass().getMethod(callMethod,String.class);
+            Method methodRetrofit = service.getClass().getMethod(callMethod, String.class);
             Call<type> call = (Call<type>) methodRetrofit.invoke(service, body);
             call.enqueue(new Callback<type>() {
                 @Override
                 public void onResponse(@NotNull Call<type> call, @NotNull Response<type> response) {
-                        try {
-                            if (response.body() instanceof List) {
-                                Method methodClassCalled = c.getClass().getMethod("setList", List.class);
-                                //noinspection JavaReflectionInvocation
-                                methodClassCalled.invoke(c, response.body());
-                            }
-                            else if (response.body() instanceof String){
-                                System.out.println(response.body());
-                            }
-                            else if (response.body() instanceof Boolean && toGlide != null){
-                                Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class,Object.class);
-                                //noinspection JavaReflectionInvocation
-                                methodClassCalled.invoke(c, response.body(),toGlide);
-                            }
-                        }catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                            e.printStackTrace();
+                    try {
+                        if (response.body() instanceof List) {
+                            Method methodClassCalled = c.getClass().getMethod("setList", List.class);
+                            //noinspection JavaReflectionInvocation
+                            methodClassCalled.invoke(c, response.body());
+                        } else if (response.body() instanceof String) {
+                            System.out.println(response.body());
+                        } else if (response.body() instanceof Boolean && toGlide != null) {
+                            Method methodClassCalled = c.getClass().getMethod("glideObject", Boolean.class, Object.class);
+                            //noinspection JavaReflectionInvocation
+                            methodClassCalled.invoke(c, response.body(), toGlide);
                         }
+                    } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                        e.printStackTrace();
                     }
+                }
 
                 @Override
                 public void onFailure(@NotNull Call<type> call, @NotNull Throwable t) {
-                    if (!(t instanceof SocketTimeoutException)){
-                        Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
+                    if (!(t instanceof SocketTimeoutException)) {
+                        Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
                     }
                 }
             });
@@ -60,7 +58,7 @@ public class RetrofitResponse {
     }
 
     public static void getResponse(String body, Object c, Context context, String callMethod) {
-        getResponse(body,c,context,callMethod,null);
+        getResponse(body, c, context, callMethod, null);
     }
 
 }

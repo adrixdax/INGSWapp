@@ -29,8 +29,8 @@ public class FriendsListComments extends Fragment implements RetrofitListInterfa
     private final String idList;
     private RecyclerView friendsCommentsRecyclerView;
 
-    public FriendsListComments(Boolean isUserOwner,String idList){
-        this.isUserOwner=isUserOwner;
+    public FriendsListComments(Boolean isUserOwner, String idList) {
+        this.isUserOwner = isUserOwner;
         this.idList = idList;
     }
 
@@ -38,31 +38,30 @@ public class FriendsListComments extends Fragment implements RetrofitListInterfa
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.friend_list_comments, container, false);
-        ((ToolBarActivity)getActivity()).triggerProgessBar();
+        ((ToolBarActivity) getActivity()).triggerProgessBar();
         TextView title = root.findViewById(R.id.textViewCommentList);
         friendsCommentsRecyclerView = root.findViewById(R.id.recyclerViewFriendsComment);
         ImageView like = root.findViewById(R.id.likeList);
         ImageView dislike = root.findViewById(R.id.dislikeList);
-        RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" +idList + "&insert=false&typeOfReview=LIST",this, getContext(),"getReview");
-        if (isUserOwner){
+        RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idList + "&insert=false&typeOfReview=LIST", this, getContext(), "getReview");
+        if (isUserOwner) {
             title.setText("I commenti dei tuoi amici:");
             like.setVisibility(View.GONE);
             dislike.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             title.setText("Valuta questa lista:");
             title.setWidth(root.getWidth());
             like.setVisibility(View.VISIBLE);
             dislike.setVisibility(View.VISIBLE);
             like.setOnClickListener(v -> {
-                InsertListReviewScreen nextFragment = new InsertListReviewScreen(true,idList);
+                InsertListReviewScreen nextFragment = new InsertListReviewScreen(true, idList);
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
                 transaction.addToBackStack(null);
                 transaction.commit();
             });
             dislike.setOnClickListener(v -> {
-                InsertListReviewScreen nextFragment = new InsertListReviewScreen(false,idList);
+                InsertListReviewScreen nextFragment = new InsertListReviewScreen(false, idList);
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
                 transaction.addToBackStack(null);
@@ -76,7 +75,7 @@ public class FriendsListComments extends Fragment implements RetrofitListInterfa
     @Override
     public void setList(List<?> newList) {
         if (newList.size() != 0) {
-            ReviewsAdapter adapter = new ReviewsAdapter((List<Reviews>) newList,this,ToolBarActivity.getReference());
+            ReviewsAdapter adapter = new ReviewsAdapter((List<Reviews>) newList, this, ToolBarActivity.getReference());
             adapter.setCss(FriendsListComments.class);
             friendsCommentsRecyclerView.setHasFixedSize(false);
             friendsCommentsRecyclerView.setItemViewCacheSize(newList.size());

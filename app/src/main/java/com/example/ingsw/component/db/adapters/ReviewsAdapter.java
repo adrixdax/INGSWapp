@@ -15,17 +15,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.ingsw.component.db.classes.Reviews;
-import com.example.ingsw.component.films.Film;
-import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
-import com.example.ingsw.controllers.retrofit.RetrofitResponse;
 import com.example.ingsw.FriendsListComments;
 import com.example.ingsw.ListComment;
 import com.example.ingsw.MyReviews;
 import com.example.ingsw.R;
 import com.example.ingsw.ReviewDetail;
-import com.example.ingsw.component.db.classes.User;
 import com.example.ingsw.ReviewScreen;
+import com.example.ingsw.component.db.classes.Reviews;
+import com.example.ingsw.component.db.classes.User;
+import com.example.ingsw.component.films.Film;
+import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
+import com.example.ingsw.controllers.retrofit.RetrofitResponse;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -50,9 +50,9 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
 
     private final List<Reviews> listofdata;
     private final List<Film> filmList = new ArrayList<>();
-    private Class css = null;
     private final Fragment startFragment;
     private final DatabaseReference ref;
+    private Class css = null;
     private User model;
 
     private Boolean isUserOwner;
@@ -73,14 +73,12 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public ReviewsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem;
-        if(Objects.equals(css, MyReviews.class)){
+        if (Objects.equals(css, MyReviews.class)) {
             listItem = layoutInflater.inflate(R.layout.component_myreviewlist, parent, false);
-        }
-        else if (Objects.equals(css, ReviewScreen.class)){
+        } else if (Objects.equals(css, ReviewScreen.class)) {
             listItem = layoutInflater.inflate(R.layout.film_review, parent, false);
-        }
-        else listItem = layoutInflater.inflate(R.layout.component_list_review, parent, false);
-        return new ReviewsAdapter.ViewHolder(listItem,css);
+        } else listItem = layoutInflater.inflate(R.layout.component_list_review, parent, false);
+        return new ReviewsAdapter.ViewHolder(listItem, css);
     }
 
     @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
@@ -88,13 +86,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
     public void onBindViewHolder(@NonNull ReviewsAdapter.ViewHolder holder, int position) {
         if (Objects.equals(css, MyReviews.class)) {
             try {
-              if( position < filmList.size() && filmList.size()==listofdata.size()) {
-                  for (Film f : filmList) {
-                      if (listofdata.get(position).getIdRecordRef() == f.getId_Film()) {
-                          Glide.with(startFragment).load(f.getPosterPath() == null ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : f.getPosterPath()).into(holder.moviepic);
-                          break;
-                      }
-                  }
+                if (position < filmList.size() && filmList.size() == listofdata.size()) {
+                    for (Film f : filmList) {
+                        if (listofdata.get(position).getIdRecordRef() == f.getId_Film()) {
+                            Glide.with(startFragment).load(f.getPosterPath() == null ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : f.getPosterPath()).into(holder.moviepic);
+                            break;
+                        }
+                    }
                 }
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
                 holder.ratingBar.setClickable(false);
@@ -124,7 +122,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                 e.printStackTrace();
             }
 
-        } else if (Objects.equals(css, ReviewScreen.class)){
+        } else if (Objects.equals(css, ReviewScreen.class)) {
             try {
                 getReviewer(listofdata.get(position).getIduser(), holder);
                 holder.ratingBar.setRating((float) listofdata.get(position).getVal());
@@ -154,8 +152,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             getReviewer(listofdata.get(position).getIduser(), holder);
             System.out.println(listofdata.get(position).getDescription());
             holder.reviewDescription.setText(listofdata.get(position).getDescription());
@@ -171,14 +168,13 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
             } else {
                 holder.reviewDescription.setText(listofdata.get(position).getDescription());
             }
-            if (Double.compare(listofdata.get(position).getVal(), 1.0f) == 0){
+            if (Double.compare(listofdata.get(position).getVal(), 1.0f) == 0) {
                 holder.friendReaction.setBackground(startFragment.getActivity().getDrawable(R.drawable.like_no_background));
-            }
-            else {
+            } else {
                 holder.friendReaction.setBackground(startFragment.getActivity().getDrawable(R.drawable.dislike_no_background));
             }
             holder.relativeLayoutReviewList.setOnClickListener(v -> {
-                ListComment listCommentDialog = new ListComment(model.getNickname(),listofdata.get(position).getDescription(),listofdata.get(position).getVal());
+                ListComment listCommentDialog = new ListComment(model.getNickname(), listofdata.get(position).getDescription(), listofdata.get(position).getVal());
                 listCommentDialog.show(startFragment.getActivity().getSupportFragmentManager(), "comments");
             });
 
@@ -213,6 +209,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
                         holder.userNickView.setText(model.getNickname());
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
@@ -229,35 +226,41 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public Class getCss() {
+        return css;
+    }
+
+    public void setCss(Class css) {
+        this.css = css;
+    }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        public final TextView reviewDescription;
+        public final RelativeLayout relativeLayoutReviewList;
         public CircleImageView userImage;
         public ImageView moviepic;
         public TextView userNickView;
         public TextView reviewTitle;
-        public final TextView reviewDescription;
         public RatingBar ratingBar;
-        public final RelativeLayout relativeLayoutReviewList;
         public ImageView friendReaction;
 
 
         public ViewHolder(View itemView, Class css) {
             super(itemView);
-            if(Objects.equals(css, MyReviews.class)){
+            if (Objects.equals(css, MyReviews.class)) {
                 this.moviepic = itemView.findViewById(R.id.moviepic_view);
-            }else {
+            } else {
                 this.userImage = itemView.findViewById(R.id.userprofilepic_view);
                 this.userNickView = itemView.findViewById(R.id.usernick_view);
             }
-            if (!(Objects.equals(css,FriendsListComments.class))) {
+            if (!(Objects.equals(css, FriendsListComments.class))) {
                 this.reviewTitle = itemView.findViewById(R.id.review_title);
             }
             this.reviewDescription = itemView.findViewById(R.id.textViewDescriptionReview);
-            if (Objects.equals(css, MyReviews.class) || Objects.equals(css,ReviewScreen.class)) {
+            if (Objects.equals(css, MyReviews.class) || Objects.equals(css, ReviewScreen.class)) {
                 this.ratingBar = itemView.findViewById(R.id.ratingBar2);
-            }
-            else {
+            } else {
                 this.friendReaction = itemView.findViewById(R.id.friendReaction);
             }
             relativeLayoutReviewList = itemView.findViewById(R.id.relativeLayoutReviewList);
@@ -265,13 +268,5 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHold
         }
 
 
-    }
-
-    public Class getCss() {
-        return css;
-    }
-
-    public void setCss(Class css) {
-        this.css = css;
     }
 }

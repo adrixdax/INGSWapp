@@ -21,7 +21,7 @@ public class ListComment extends AppCompatDialogFragment {
     private final String text;
     private final double valutation;
 
-    public ListComment (String username, String text,double valutation){
+    public ListComment(String username, String text, double valutation) {
         this.username = username;
         this.text = text;
         this.valutation = valutation;
@@ -42,10 +42,9 @@ public class ListComment extends AppCompatDialogFragment {
         comment.setText(text);
         comment.setMovementMethod(new ScrollingMovementMethod());
         ImageView reaction = dialog.findViewById(R.id.reaction);
-        if (Double.compare(valutation, 1.0f) == 0){
+        if (Double.compare(valutation, 1.0f) == 0) {
             reaction.setBackground(requireActivity().getDrawable(R.drawable.like_no_background));
-        }
-        else {
+        } else {
             reaction.setBackground(requireActivity().getDrawable(R.drawable.dislike_no_background));
         }
         return dialog;

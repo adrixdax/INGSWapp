@@ -1,20 +1,19 @@
 package com.example.ingsw;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.ingsw.controllers.RegistrationController;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class AvatarScreenActivity extends AppCompatActivity implements View.OnClickListener  {
+public class AvatarScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     final String urlIron = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
@@ -23,7 +22,6 @@ public class AvatarScreenActivity extends AppCompatActivity implements View.OnCl
     final String urlThanos = "https://i.pinimg.com/236x/fa/60/b8/fa60b89014f5807b5a013e83aba32aab.jpg";
     final String urlWidow = "https://i.pinimg.com/564x/90/15/d9/9015d92696baf129a8b4d273625fbfdd.jpg";
     final String urlWonder = "https://i.pinimg.com/564x/5b/71/ab/5b71ab4ea082c3c11e77312a64bba835.jpg";
-
 
 
     @Override
@@ -57,32 +55,31 @@ public class AvatarScreenActivity extends AppCompatActivity implements View.OnCl
     }
 
 
-
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.profile_image :
+        switch (v.getId()) {
+            case R.id.profile_image:
                 RegistrationController.setAvatar(urlIron);
                 onBackPressed();
                 break;
-            case R.id.profile_image2 :
+            case R.id.profile_image2:
                 RegistrationController.setAvatar(urlSpider);
                 onBackPressed();
                 break;
-            case R.id.profile_image3 :
+            case R.id.profile_image3:
                 RegistrationController.setAvatar(urlGamora);
                 onBackPressed();
                 break;
-            case R.id.profile_image4 :
+            case R.id.profile_image4:
                 RegistrationController.setAvatar(urlThanos);
                 onBackPressed();
                 break;
-            case R.id.profile_image5 :
+            case R.id.profile_image5:
                 RegistrationController.setAvatar(urlWidow);
                 onBackPressed();
                 break;
-            case R.id.profile_image6 :
+            case R.id.profile_image6:
                 RegistrationController.setAvatar(urlWonder);
                 onBackPressed();
                 break;

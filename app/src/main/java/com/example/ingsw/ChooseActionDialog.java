@@ -35,14 +35,14 @@ public class ChooseActionDialog extends AppCompatDialogFragment {
     public ChooseActionDialog(Film film, String idList, Fragment active) {
         this.film = film;
         this.idList = idList;
-        this.fg=active;
+        this.fg = active;
     }
 
-    public ChooseActionDialog(boolean custom, String idList, String titleList,Fragment active) {
+    public ChooseActionDialog(boolean custom, String idList, String titleList, Fragment active) {
         this.custom = custom;
         this.titleList = titleList;
         this.idList = idList;
-        this.fg=active;
+        this.fg = active;
     }
 
     public ChooseActionDialog(Context ctx) {

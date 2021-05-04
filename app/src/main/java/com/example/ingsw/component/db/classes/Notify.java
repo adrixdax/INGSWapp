@@ -7,9 +7,9 @@ public class Notify {
 
     private final int id_Notify;
     private final String id_sender;
+    private final int id_recordref;
     private String id_receiver;
     private String type;
-    private final int id_recordref;
     private String state;
     private long dateOfSend;
 
@@ -21,13 +21,13 @@ public class Notify {
                   @JsonProperty("id_recordref") int id_recordref,
                   @JsonProperty("status") String status,
                   @JsonProperty("dateOfSend") long dateOfSend) {
-        this.id_Notify=id_Notify;
-        this.id_sender=id_sender;
-        this.id_receiver=id_receiver;
-        this.type=type;
-        this.id_recordref=id_recordref;
-        this.state=status;
-        this.dateOfSend=dateOfSend;
+        this.id_Notify = id_Notify;
+        this.id_sender = id_sender;
+        this.id_receiver = id_receiver;
+        this.type = type;
+        this.id_recordref = id_recordref;
+        this.state = status;
+        this.dateOfSend = dateOfSend;
     }
 
     public int getId_Notify() {

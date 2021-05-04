@@ -87,6 +87,6 @@ public interface RetrofitInterface {
     Call<String> addFriend(@Body String body);
 
     @POST("/report")
-    Call<String>  addReport(@Body String body);
+    Call<String> addReport(@Body String body);
 
 }

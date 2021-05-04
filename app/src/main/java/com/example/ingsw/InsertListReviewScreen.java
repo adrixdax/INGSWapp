@@ -17,12 +17,12 @@ import com.example.ingsw.controllers.retrofit.RetrofitResponse;
 
 public class InsertListReviewScreen extends Fragment {
 
-    private Boolean isPositive;
     private final String idList;
+    private Boolean isPositive;
 
-    public InsertListReviewScreen(Boolean isPositive,String idList){
-        this.isPositive=isPositive;
-        this.idList=idList;
+    public InsertListReviewScreen(Boolean isPositive, String idList) {
+        this.isPositive = isPositive;
+        this.idList = idList;
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -34,35 +34,34 @@ public class InsertListReviewScreen extends Fragment {
         ImageView dislikeButton = root.findViewById(R.id.dislikeButton);
         Button insertReview = root.findViewById(R.id.insertCommentButton);
         EditText editTextDescription = root.findViewById(R.id.editTextListDescription);
-        if (isPositive){
+        if (isPositive) {
             likeButton.setBackground(requireContext().getDrawable(R.drawable.rounded_corners));
             dislikeButton.setBackgroundResource(0);
-        }
-        else {
+        } else {
             dislikeButton.setBackground(requireContext().getDrawable(R.drawable.rounded_corners));
             likeButton.setBackgroundResource(0);
         }
         likeButton.setOnClickListener(v -> {
             likeButton.setBackground(requireContext().getDrawable(R.drawable.rounded_corners));
             dislikeButton.setBackgroundResource(0);
-            isPositive=true;
+            isPositive = true;
         });
         dislikeButton.setOnClickListener(v -> {
             dislikeButton.setBackground(requireContext().getDrawable(R.drawable.rounded_corners));
             likeButton.setBackgroundResource(0);
-            isPositive=false;
+            isPositive = false;
         });
         insertReview.setOnClickListener(v -> {
-                String descr;
-                        if(editTextDescription.getText().toString().isEmpty())
-                            descr = "ha lasciato "+(isPositive?"un \"mi piace\"":"un \"non mi piace\"");
-                        else {
-                            descr = editTextDescription.getText().toString();
-                            descr=descr.replaceAll("'", "''");
-                        }
-                RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idList + "&title="+"\0"+"&description=" + descr + "&val=" + (isPositive?"1.0":"0.0") + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=LIST",this,getContext(),"addReview");
-                getActivity().onBackPressed();
-            });
+            String descr;
+            if (editTextDescription.getText().toString().isEmpty())
+                descr = "ha lasciato " + (isPositive ? "un \"mi piace\"" : "un \"non mi piace\"");
+            else {
+                descr = editTextDescription.getText().toString();
+                descr = descr.replaceAll("'", "''");
+            }
+            RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idList + "&title=" + "\0" + "&description=" + descr + "&val=" + (isPositive ? "1.0" : "0.0") + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=LIST", this, getContext(), "addReview");
+            getActivity().onBackPressed();
+        });
 
         return root;
     }

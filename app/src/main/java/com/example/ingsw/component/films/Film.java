@@ -68,7 +68,7 @@ public class Film {
     }
 
     public Film(String imageUrl) {
-        new Film(imageUrl,"");
+        new Film(imageUrl, "");
     }
 
     public Film() {
@@ -146,7 +146,7 @@ public class Film {
         this.cast = cast;
     }
 
-    public int getCounter(){
+    public int getCounter() {
         return this.counter;
     }
 }

@@ -37,9 +37,9 @@ public class ReviewScreen extends Fragment implements RetrofitListInterface {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.review_fragment, container, false);
-        ((ToolBarActivity)requireActivity()).triggerProgessBar();
+        ((ToolBarActivity) requireActivity()).triggerProgessBar();
         recyclerViewReviews = root.findViewById(R.id.recyclerViewReviews);
-        RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idFilm + "&insert=false&typeOfReview=FILM",this,requireContext(),"getReview");
+        RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idFilm + "&insert=false&typeOfReview=FILM", this, requireContext(), "getReview");
 
 
         Button bottone = root.findViewById(R.id.buttonwritereview);
@@ -69,10 +69,9 @@ public class ReviewScreen extends Fragment implements RetrofitListInterface {
             recyclerViewReviews.setItemViewCacheSize(newList.size());
             recyclerViewReviews.addItemDecoration(dividerItemDecoration);
             recyclerViewReviews.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             System.out.println("Devo inserire il text error");
         }
-        ((ToolBarActivity)requireActivity()).stopProgressBar();
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

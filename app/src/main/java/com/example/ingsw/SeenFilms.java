@@ -30,7 +30,7 @@ public class SeenFilms extends Fragment implements RetrofitListInterface {
         View root = inflater.inflate(R.layout.fragment_seen_films, container, false);
         recyclerView = root.findViewById(R.id.recyclerViewUserSeen);
         ((ToolBarActivity) requireActivity()).triggerProgessBar();
-        RetrofitResponse.getResponse("Type=PostRequest&idList="+((ToolBarActivity)requireContext()).getContaiinerItem().get("WATCH"),this, getContext(),"getFilmInList");
+        RetrofitResponse.getResponse("Type=PostRequest&idList=" + ((ToolBarActivity) requireContext()).getContaiinerItem().get("WATCH"), this, getContext(), "getFilmInList");
         return root;
     }
 

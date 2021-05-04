@@ -33,11 +33,11 @@ public class FriendProfile extends Fragment implements RetrofitListInterface {
 
     private final String friendId;
     private CircleImageView friendPic;
-    private TextView textError,friendNick;
+    private TextView textError, friendNick;
     private RecyclerView friendRecyclerView;
 
     public FriendProfile(String friendId) {
-        this.friendId=friendId;
+        this.friendId = friendId;
     }
 
     @Nullable
@@ -67,19 +67,18 @@ public class FriendProfile extends Fragment implements RetrofitListInterface {
             }
         });
 
-        RetrofitResponse.getResponse("Type=PostRequest&idUser="+friendId+"&custom=true&idFilm=-1",FriendProfile.this,getContext(),"getList");
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + friendId + "&custom=true&idFilm=-1", FriendProfile.this, getContext(), "getList");
 
         return root;
     }
 
     @Override
     public void setList(List<?> newList) {
-        if (newList.size() != 0){
+        if (newList.size() != 0) {
             friendRecyclerView.setAdapter(new CustomListsAdapter((List<UserLists>) newList, this.getClass(), this));
             friendRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             friendRecyclerView.setHasFixedSize(false);
             friendRecyclerView.setItemViewCacheSize(newList.size());
-        }
-        else textError.setText("Il tuo amico non ha alcuna lista :(");
+        } else textError.setText("Il tuo amico non ha alcuna lista :(");
     }
 }

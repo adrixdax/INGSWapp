@@ -11,12 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ingsw.component.db.classes.Contact;
-import com.example.ingsw.component.db.classes.Notify;
-import com.example.ingsw.controllers.retrofit.RetrofitResponse;
 import com.example.ingsw.R;
 import com.example.ingsw.ToolBarActivity;
+import com.example.ingsw.component.db.classes.Contact;
+import com.example.ingsw.component.db.classes.Notify;
 import com.example.ingsw.component.db.classes.User;
+import com.example.ingsw.controllers.retrofit.RetrofitResponse;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.ArrayList;
@@ -27,10 +27,10 @@ import static com.bumptech.glide.Glide.with;
 
 public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.UsersViewHolder> {
 
+    final Context context;
     private final ArrayList<User> userlist;
     private final ArrayList<Contact> areFriends;
     private final ArrayList<Notify> isFriendRequestSent;
-    final Context context;
 
     public UsersListAdapter(Context context, ArrayList<User> userlist, ArrayList<Contact> areFriends, ArrayList<Notify> isFriendRequestSent) {
         this.context = context;
@@ -79,14 +79,14 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         }
         if (!areFriend) {
             holder.addButton.setOnClickListener((v) -> {
-                    {
-                        RetrofitResponse.getResponse("Type=PostRequest&id_sender=" + ((ToolBarActivity)context).getUid() + "&id_receiver=" + userlist.get(position).getIdUser() + "&type=FRIENDSHIP_REQUEST&id_recordref=0&sendNotify=true", this, context, "createNotify");
-                        holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
-                    }
-                });
+                {
+                    RetrofitResponse.getResponse("Type=PostRequest&id_sender=" + ((ToolBarActivity) context).getUid() + "&id_receiver=" + userlist.get(position).getIdUser() + "&type=FRIENDSHIP_REQUEST&id_recordref=0&sendNotify=true", this, context, "createNotify");
+                    holder.addButton.setImageResource(R.drawable.icons8_expand_arrow_48px);
+                }
+            });
 
-            }
         }
+    }
 
 
     @Override

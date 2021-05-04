@@ -36,7 +36,7 @@ public class Reviews {
         this.val = val;
         this.idRecordRef = idRecordRef;
         this.iduser = iduser;
-        this.typeOfReview=typeOfReview;
+        this.typeOfReview = typeOfReview;
     }
 
     public int getId_review() {

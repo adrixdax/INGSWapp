@@ -14,13 +14,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ingsw.ChooseActionDialog;
-import com.example.ingsw.component.db.classes.UserLists;
 import com.example.ingsw.DialogCustomlList;
 import com.example.ingsw.FilmInCustomList;
 import com.example.ingsw.FriendProfile;
 import com.example.ingsw.MyLists;
 import com.example.ingsw.R;
 import com.example.ingsw.ToolBarActivity;
+import com.example.ingsw.component.db.classes.UserLists;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.util.List;
@@ -33,11 +33,10 @@ import static com.bumptech.glide.Glide.with;
 @SuppressWarnings("ALL")
 public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.ViewHolder> {
     private static List<UserLists> listofdata;
-
+    private final Fragment startFragment;
     private Class css;
     private View listItem;
     private List<UserLists> selectedList = null;
-    private final Fragment startFragment;
 
 
     public CustomListsAdapter(List<UserLists> list, Class css, List<UserLists> selectedList) {
@@ -59,7 +58,7 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         if (Objects.equals(css, MyLists.class) || Objects.equals(css, FriendProfile.class)) {
             listItem = layoutInflater.inflate(R.layout.lists_of_lists, parent, false);
-        } else if (Objects.equals(css, DialogCustomlList.class) ) {
+        } else if (Objects.equals(css, DialogCustomlList.class)) {
             listItem = layoutInflater.inflate(R.layout.list_custom_list_selected, parent, false);
         }
         return new CustomListsAdapter.ViewHolder(listItem, css);
@@ -86,8 +85,7 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        else if(Objects.equals(css, MyLists.class) || Objects.equals(css, FriendProfile.class)) {
+        } else if (Objects.equals(css, MyLists.class) || Objects.equals(css, FriendProfile.class)) {
             holder.circleList.setText(listofdata.get(position).getTitle());
             holder.circleList.setOnClickListener(v -> {
                 FilmInCustomList nextFragment = new FilmInCustomList(listofdata.get(position));
@@ -98,7 +96,7 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
                 transaction.commit();
             });
             holder.circleList.setOnLongClickListener(v -> {
-                ChooseActionDialog dlg = new ChooseActionDialog(true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle(),startFragment);
+                ChooseActionDialog dlg = new ChooseActionDialog(true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle(), startFragment);
                 dlg.show(((ToolBarActivity) v.getContext()).getSupportFragmentManager(), "Choose action");
                 return true;
             });
@@ -121,6 +119,15 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
     }
 
     @SuppressWarnings("rawtypes")
+    public Class getCss() {
+        return css;
+    }
+
+    public void setCss(Class css) {
+        this.css = css;
+    }
+
+    @SuppressWarnings("rawtypes")
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public RelativeLayout relativeLayout;
         public TextView textView;
@@ -135,21 +142,12 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutAddInCustomList);
                 this.selectItem = itemView.findViewById(R.id.AddList);
                 this.textView = itemView.findViewById(R.id.NameOfCustomList);
-            } else if (Objects.equals(css.getCanonicalName(), MyLists.class.getCanonicalName()) || Objects.equals(css, FriendProfile.class) ) {
+            } else if (Objects.equals(css.getCanonicalName(), MyLists.class.getCanonicalName()) || Objects.equals(css, FriendProfile.class)) {
                 this.circleList = itemView.findViewById(R.id.CircolarCustomList);
                 relativeLayout = itemView.findViewById(R.id.relativeLayoutShowCustomList);
             }
             PushDownAnim.setPushDownAnimTo(relativeLayout);
         }
-    }
-
-    @SuppressWarnings("rawtypes")
-    public Class getCss() {
-        return css;
-    }
-
-    public void setCss(Class css) {
-        this.css = css;
     }
 
 }

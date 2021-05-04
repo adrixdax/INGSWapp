@@ -12,13 +12,13 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.ingsw.component.db.classes.Contact;
-import com.example.ingsw.component.db.classes.User;
 import com.example.ingsw.DialogFriendsListOfShare;
 import com.example.ingsw.FriendProfile;
 import com.example.ingsw.ListOfFriendsScreen;
 import com.example.ingsw.R;
 import com.example.ingsw.ToolBarActivity;
+import com.example.ingsw.component.db.classes.Contact;
+import com.example.ingsw.component.db.classes.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -52,16 +52,16 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem;
-        if(css.equals(ListOfFriendsScreen.class))
-            listItem = layoutInflater.inflate(R.layout.friend_component_personal_area,parent,false);
+        if (css.equals(ListOfFriendsScreen.class))
+            listItem = layoutInflater.inflate(R.layout.friend_component_personal_area, parent, false);
         else
-            listItem = layoutInflater.inflate(R.layout.list_friend_selected,parent,false);
-        return new ViewHolder(listItem,css);
+            listItem = layoutInflater.inflate(R.layout.list_friend_selected, parent, false);
+        return new ViewHolder(listItem, css);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ContactListAdapter.ViewHolder holder, int position) {
-        if(Objects.equals(css.getCanonicalName(), ListOfFriendsScreen.class.getCanonicalName())){
+        if (Objects.equals(css.getCanonicalName(), ListOfFriendsScreen.class.getCanonicalName())) {
             if (listofdata.get(position).getUser1().equals(((ToolBarActivity) myContext).getUid())) {
                 getUser(listofdata.get(position).getUser2(), holder);
             } else {
@@ -74,8 +74,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 transaction.addToBackStack(null);
                 transaction.commit();
             });
-        }
-        else {
+        } else {
             try {
                 if (listofdata.get(position).getUser1().equals(((ToolBarActivity) myContext).getUid())) {
                     getUser(listofdata.get(position).getUser2(), holder);
@@ -102,7 +101,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     }
 
 
-
     @Override
     public int getItemCount() {
         try {
@@ -125,14 +123,15 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User model = dataSnapshot.getValue(User.class);
                         assert model != null;
-                        if(css.equals(DialogFriendsListOfShare.class)) {
+                        if (css.equals(DialogFriendsListOfShare.class)) {
                             with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.userImage.findViewById(R.id.user_image));
-                        }else if(css.equals(ListOfFriendsScreen.class)){
+                        } else if (css.equals(ListOfFriendsScreen.class)) {
                             with(holder.itemView).load(model.getPropic()).into((CircleImageView) holder.userImage.findViewById(R.id.friend_pic));
                         }
                         holder.userNickView.setText(model.getNickname());
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
@@ -154,20 +153,19 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         public AppCompatCheckBox checkButtonShare;
 
 
-        public ViewHolder(View itemView,Class css) {
+        public ViewHolder(View itemView, Class css) {
             super(itemView);
-            if(css.equals(DialogFriendsListOfShare.class)) {
+            if (css.equals(DialogFriendsListOfShare.class)) {
                 this.userImage = itemView.findViewById(R.id.user_image);
                 this.userNickView = itemView.findViewById(R.id.NickName);
                 this.checkButtonShare = itemView.findViewById(R.id.checkButtonShare);
                 this.relativeLayoutFriend = itemView.findViewById(R.id.relativeLayoutShareWhitFriend);
-            }
-            else if(css.equals(ListOfFriendsScreen.class)){
+            } else if (css.equals(ListOfFriendsScreen.class)) {
                 this.userImage = itemView.findViewById(R.id.friend_pic);
                 this.userNickView = itemView.findViewById(R.id.username_nickView);
                 this.relativeLayoutFriend = itemView.findViewById(R.id.friend_component_personal_area);
             }
-           PushDownAnim.setPushDownAnimTo(relativeLayoutFriend);
+            PushDownAnim.setPushDownAnimTo(relativeLayoutFriend);
         }
     }
 

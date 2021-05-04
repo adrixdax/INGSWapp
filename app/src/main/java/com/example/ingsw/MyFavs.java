@@ -23,6 +23,7 @@ public class MyFavs extends Fragment implements RetrofitListInterface {
 
     RecyclerView recyclerView;
     TextView textFavsError;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,13 +32,13 @@ public class MyFavs extends Fragment implements RetrofitListInterface {
         ((ToolBarActivity) requireActivity()).triggerProgessBar();
         recyclerView = root.findViewById(R.id.recyclerViewUserMyPrefered);
         textFavsError = root.findViewById(R.id.Textview_favsError);
-        RetrofitResponse.getResponse("Type=PostRequest&idList=" +((ToolBarActivity) requireContext()).getContaiinerItem().get("PREFERED"),MyFavs.this,this.getContext(),"getFilmInList");
+        RetrofitResponse.getResponse("Type=PostRequest&idList=" + ((ToolBarActivity) requireContext()).getContaiinerItem().get("PREFERED"), MyFavs.this, this.getContext(), "getFilmInList");
         return root;
     }
 
     @Override
     public void setList(List<?> newList) {
-        if(newList.size() != 0) {
+        if (newList.size() != 0) {
             textFavsError.setText("");
             ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
             adapter.setCss(MyFavs.class);
@@ -46,8 +47,7 @@ public class MyFavs extends Fragment implements RetrofitListInterface {
             recyclerView.setItemViewCacheSize(newList.size());
             recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
             recyclerView.setAdapter(adapter);
-        }
-        else textFavsError.setText("Davvero non hai neanche un film preferito?");
+        } else textFavsError.setText("Davvero non hai neanche un film preferito?");
         ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

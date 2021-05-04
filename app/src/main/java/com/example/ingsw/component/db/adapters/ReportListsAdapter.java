@@ -57,10 +57,10 @@ public class ReportListsAdapter extends RecyclerView.Adapter<ReportListsAdapter.
             holder.relativeLayout.setOnClickListener(v -> {
                 if (!holder.selectItem.isChecked()) {
                     holder.selectItem.setChecked(true);
-                    selectedList.add(ReportType.valueOf(listofdata.get(position).replace('\'','O').replace(' ','_')));
+                    selectedList.add(ReportType.valueOf(listofdata.get(position).replace('\'', 'O').replace(' ', '_')));
                 } else {
                     holder.selectItem.setChecked(false);
-                    selectedList.remove(ReportType.valueOf(listofdata.get(position).replace('\'','O').replace(' ','_')));
+                    selectedList.remove(ReportType.valueOf(listofdata.get(position).replace('\'', 'O').replace(' ', '_')));
                 }
             });
         } catch (Exception e) {

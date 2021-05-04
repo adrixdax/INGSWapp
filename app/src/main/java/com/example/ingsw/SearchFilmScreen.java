@@ -44,6 +44,7 @@ import teaspoon.annotations.OnUi;
 public class SearchFilmScreen extends Fragment implements RetrofitListInterface {
 
 
+    final List<Notify> notifyList = new ArrayList<>();
     private EditText Text_of_search;
     private RecyclerView recyclerViewFilm;
     private RecyclerView recyclerViewFriends;
@@ -53,7 +54,6 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
     private TextView textError;
     private UsersListAdapter useradapter;
     private ListOfFilmAdapter adapter;
-    final List<Notify> notifyList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -105,7 +105,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                     if (recyclerViewFilm != null && recyclerViewFilm.isShown())
                         recyclerViewFilm.setVisibility(View.GONE);
                     ((ToolBarActivity) requireActivity()).triggerProgessBar();
-                    RetrofitResponse.getResponse("Type=PostRequest&name="+Text_of_search.getText().toString(),SearchFilmScreen.this,v.getContext(),"getFilm");
+                    RetrofitResponse.getResponse("Type=PostRequest&name=" + Text_of_search.getText().toString(), SearchFilmScreen.this, v.getContext(), "getFilm");
                 } else {
                     ((ToolBarActivity) requireActivity()).triggerProgessBar();
                     if (recyclerViewFriends != null && recyclerViewFriends.isShown())
@@ -116,7 +116,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                     recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
                     usersInSearchlist = new ArrayList<>();
                     contactsList = new ArrayList<>();
-                    useradapter = new UsersListAdapter(getContext(), usersInSearchlist,contactsList, (ArrayList<Notify>) notifyList);
+                    useradapter = new UsersListAdapter(getContext(), usersInSearchlist, contactsList, (ArrayList<Notify>) notifyList);
                     if (useradapter.getItemCount() == 0) {
                         textError.setText("Nessun Utente trovato ");
                     }
@@ -133,17 +133,18 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             String uid = ((ToolBarActivity) (requireActivity())).getUid();
-                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    User model = dataSnapshot.getValue(User.class);
-                                    model.setIdUser(dataSnapshot.getKey());
-                                    if (!(uid.equals(dataSnapshot.getKey()))) {
-                                        usersInSearchlist.add(model);
-                                        useradapter.notifyDataSetChanged();
-                                    }
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                User model = dataSnapshot.getValue(User.class);
+                                model.setIdUser(dataSnapshot.getKey());
+                                if (!(uid.equals(dataSnapshot.getKey()))) {
+                                    usersInSearchlist.add(model);
+                                    useradapter.notifyDataSetChanged();
                                 }
-                            RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + uid,SearchFilmScreen.this,SearchFilmScreen.this.getContext(),"getFriends");
-                            RetrofitResponse.getResponse(uid,SearchFilmScreen.this,SearchFilmScreen.this.getContext(),"getFriendShipNotify");
+                            }
+                            RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + uid, SearchFilmScreen.this, SearchFilmScreen.this.getContext(), "getFriends");
+                            RetrofitResponse.getResponse(uid, SearchFilmScreen.this, SearchFilmScreen.this.getContext(), "getFriendShipNotify");
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
@@ -190,7 +191,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                     contactsList.addAll((Collection<? extends Contact>) newList);
                 useradapter.notifyDataSetChanged();
             }
-        }else if(playFlag==1){
+        } else if (playFlag == 1) {
             if (newList.isEmpty()) {
                 recyclerViewFilm.setVisibility(View.INVISIBLE);
                 textError.setText("Nessun Film trovato");

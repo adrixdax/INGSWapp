@@ -27,8 +27,8 @@ import java.util.List;
 public class DialogFriendsListOfShare extends AppCompatDialogFragment implements RetrofitListInterface {
 
 
-    private RecyclerView recycler;
     private final List<Contact> selectedLists = new ArrayList<>();
+    private RecyclerView recycler;
     private String film;
     private boolean custom;
     private String idList;
@@ -53,7 +53,7 @@ public class DialogFriendsListOfShare extends AppCompatDialogFragment implements
         dialog.setCancelable(true);
         recycler = dialog.findViewById(R.id.recyclerView);
 
-        RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + ((ToolBarActivity) requireActivity()).getUid(),this,getContext(),"getFriends");
+        RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + ((ToolBarActivity) requireActivity()).getUid(), this, getContext(), "getFriends");
 
 
         Button insertInLists = dialog.getWindow().findViewById(R.id.ShareWithFriends);

@@ -28,9 +28,9 @@ import teaspoon.annotations.OnUi;
 
 public class NotifyPopUp extends AppCompatDialogFragment {
 
-    private RecyclerView recycler;
     private static ArrayList<Notify> notify = new ArrayList<>();
     private static TextView notifyTextError;
+    private RecyclerView recycler;
 
     public NotifyPopUp(ArrayList<Notify> list) {
         notify = new ArrayList<>(list);
@@ -38,6 +38,18 @@ public class NotifyPopUp extends AppCompatDialogFragment {
 
     public NotifyPopUp() {
         new NotifyPopUp(null);
+    }
+
+    @OnUi
+    private static void update() {
+        NotifyUpdater.newUpdate();
+        notifyTextError.setText("Nessuna nuova notifica");
+    }
+
+    public static void noMoreNotify() {
+        if ((notifyTextError != null) && (notify.isEmpty())) {
+            update();
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -54,7 +66,7 @@ public class NotifyPopUp extends AppCompatDialogFragment {
         notifyTextError = dialog.findViewById(R.id.notifyTextError);
         if (notify.isEmpty()) {
             notifyTextError.setText("Nessuna nuova notifica");
-        }else {
+        } else {
             NotifyAdapter adapter = new NotifyAdapter(notify, ToolBarActivity.getReference(), this.getContext(), this);
             recycler.setAdapter(adapter);
             recycler.setItemViewCacheSize(notify.size());
@@ -67,20 +79,9 @@ public class NotifyPopUp extends AppCompatDialogFragment {
 
     @Override
     public void onCancel(@NonNull DialogInterface dialog) {
-        if (recycler.getAdapter() != null) ((NotifyAdapter) Objects.requireNonNull(recycler.getAdapter())).changeStatus();
+        if (recycler.getAdapter() != null)
+            ((NotifyAdapter) Objects.requireNonNull(recycler.getAdapter())).changeStatus();
         super.onCancel(dialog);
-    }
-
-    @OnUi
-    private static void update() {
-        NotifyUpdater.newUpdate();
-        notifyTextError.setText("Nessuna nuova notifica");
-    }
-
-    public static void noMoreNotify() {
-        if ((notifyTextError != null) && (notify.isEmpty())) {
-            update();
-        }
     }
 
 }

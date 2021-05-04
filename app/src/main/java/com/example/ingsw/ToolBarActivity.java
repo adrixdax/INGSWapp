@@ -18,9 +18,9 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.ingsw.component.db.classes.UserLists;
 import com.example.ingsw.component.films.Film;
 import com.example.ingsw.controllers.NotifyUpdater;
+import com.example.ingsw.controllers.UserController;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
-import com.example.ingsw.controllers.UserController;
 import com.example.ingsw.home.HomepageScreen;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,12 +40,25 @@ import teaspoon.annotations.OnUi;
 
 public class ToolBarActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, RetrofitListInterface {
 
+    private static DatabaseReference ref;
+    final Map<String, List<Film>> conteinerList = new HashMap<>();
+    final UserController userController = new UserController();
+    private final Map<String, Object> contaiinerItem = new HashMap<>();
     Fragment activeFragment;
     CircularProgressBar progressBar;
     ConstraintLayout mainLayout;
     ConstraintLayout progressLayout;
-
     float x1, x2, y1, y2;
+    FirebaseAnalytics mFirebaseAnalytics;
+    private boolean loadUser = false;
+    private String uid = "";
+
+    public static DatabaseReference getReference() {
+        if (ref == null) {
+            ref = FirebaseDatabase.getInstance().getReference("Users");
+        }
+        return ref;
+    }
 
     @Override
     protected void onPause() {
@@ -58,14 +71,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         super.onResume();
         NotifyUpdater.newUpdate();
     }
-
-    final Map<String, List<Film>> conteinerList = new HashMap<>();
-    private final Map<String, Object> contaiinerItem = new HashMap<>();
-    private boolean loadUser = false;
-    final UserController userController = new UserController();
-    FirebaseAnalytics mFirebaseAnalytics;
-    private static DatabaseReference ref;
-    private String uid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,8 +143,8 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                                 .commit();
                 }
             } else if (!tag.equals(currentFragment.getTag())) {
-                if (activeFragment == null){
-                    ((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(1).setChecked(true);
+                if (activeFragment == null) {
+                    ((BottomNavigationView) findViewById(R.id.nav_view)).getMenu().getItem(1).setChecked(true);
                 }
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -154,7 +159,7 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     }
 
     @SuppressLint("NonConstantResourceId")
-    private boolean onNavigationItemSelected (MenuItem item, boolean swipe){
+    private boolean onNavigationItemSelected(MenuItem item, boolean swipe) {
         Fragment fragment = null;
         String tag = "";
         switch (item.getItemId()) {
@@ -177,22 +182,17 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         return loadFragment(fragment, tag, swipe);
     }
 
-
-
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return onNavigationItemSelected(item,false);
+        return onNavigationItemSelected(item, false);
     }
-
 
     public Map<String, List<Film>> getConteinerList() {
         return conteinerList;
     }
 
-
     public Map<String, Object> getContaiinerItem() {
         return contaiinerItem;
     }
-
 
     public void getUser() {
         Object obj;
@@ -267,19 +267,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
             this.onBackPressed();
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
     public String getUid() {
         return this.uid;
     }
 
-    public static DatabaseReference getReference() {
-        if (ref == null) {
-            ref = FirebaseDatabase.getInstance().getReference("Users");
-        }
-        return ref;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public boolean onTouchEvent(MotionEvent touchEvent) {
@@ -298,9 +291,9 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                 if (x1 < x2) {
                     switch (Objects.requireNonNull(tag)) {
                         case "1":
-                            return onNavigationItemSelected(((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(0),true);
+                            return onNavigationItemSelected(((BottomNavigationView) findViewById(R.id.nav_view)).getMenu().getItem(0), true);
                         case "2":
-                            return onNavigationItemSelected(((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(1),true);
+                            return onNavigationItemSelected(((BottomNavigationView) findViewById(R.id.nav_view)).getMenu().getItem(1), true);
                         case "3":
                             break;
 
@@ -308,11 +301,11 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
                 } else if (x2 < x1) {
                     switch (Objects.requireNonNull(tag)) {
                         case "1":
-                            return onNavigationItemSelected(((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(2),true);
+                            return onNavigationItemSelected(((BottomNavigationView) findViewById(R.id.nav_view)).getMenu().getItem(2), true);
                         case "2":
                             break;
                         case "3":
-                            return onNavigationItemSelected(((BottomNavigationView)findViewById(R.id.nav_view)).getMenu().getItem(1),true);
+                            return onNavigationItemSelected(((BottomNavigationView) findViewById(R.id.nav_view)).getMenu().getItem(1), true);
                     }
                 }
         }

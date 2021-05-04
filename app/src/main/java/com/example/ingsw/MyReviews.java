@@ -27,8 +27,8 @@ public class MyReviews extends Fragment implements RetrofitListInterface {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_myreviewslist, container, false);
         recyclerView = root.findViewById(R.id.recyclerView);
-        ((ToolBarActivity)requireActivity()).triggerProgessBar();
-        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=false&typeOfReview=FILM",this, getContext(),"getReview");
+        ((ToolBarActivity) requireActivity()).triggerProgessBar();
+        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=false&typeOfReview=FILM", this, getContext(), "getReview");
 
         return root;
     }
@@ -43,6 +43,6 @@ public class MyReviews extends Fragment implements RetrofitListInterface {
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             recyclerView.setAdapter(adapter);
         }
-        ((ToolBarActivity)requireActivity()).stopProgressBar();
+        ((ToolBarActivity) requireActivity()).stopProgressBar();
     }
 }

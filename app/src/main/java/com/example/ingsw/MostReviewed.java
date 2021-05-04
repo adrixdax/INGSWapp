@@ -24,6 +24,7 @@ import java.util.List;
 public class MostReviewed extends Fragment implements RetrofitListInterface {
     TextView title;
     RecyclerView mostReviewedFilm;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,14 +35,14 @@ public class MostReviewed extends Fragment implements RetrofitListInterface {
         ((ToolBarActivity) requireActivity()).triggerProgessBar();
         RetrofitResponse.getResponse(
                 "Type=PostRequest&mostreviewed=true",
-                this,this.getContext(),"getFilm");
+                this, this.getContext(), "getFilm");
 
         return root;
     }
 
     @Override
     public void setList(List<?> newList) {
-        ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList,getContext(),this);
+        ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
         adapter.setCss(MostReviewed.class);
         mostReviewedFilm.setHasFixedSize(false);
         LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);

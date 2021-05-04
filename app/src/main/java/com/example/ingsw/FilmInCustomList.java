@@ -27,8 +27,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class FilmInCustomList extends Fragment implements RetrofitListInterface {
 
-    private RecyclerView filmInCustomList;
     private final UserLists list;
+    private RecyclerView filmInCustomList;
 
     public FilmInCustomList(UserLists idList) {
         this.list = idList;
@@ -49,15 +49,14 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
         title.setText(list.getTitle());
 
         friendsComments.setOnClickListener(v -> {
-            if (list.getIdUser().equals(((ToolBarActivity)(requireActivity())).getUid())){
-                    FriendsListComments nextFragment = new FriendsListComments(true,String.valueOf(list.getIdUserList()));
-                    FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-            }
-            else {
-                FriendsListComments nextFragment = new FriendsListComments(false,String.valueOf(list.getIdUserList()));
+            if (list.getIdUser().equals(((ToolBarActivity) (requireActivity())).getUid())) {
+                FriendsListComments nextFragment = new FriendsListComments(true, String.valueOf(list.getIdUserList()));
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
+                transaction.addToBackStack(null);
+                transaction.commit();
+            } else {
+                FriendsListComments nextFragment = new FriendsListComments(false, String.valueOf(list.getIdUserList()));
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.nav_host_fragment, nextFragment, "listComments");
                 transaction.addToBackStack(null);
