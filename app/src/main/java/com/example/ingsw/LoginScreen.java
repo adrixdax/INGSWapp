@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -90,12 +91,6 @@ public class LoginScreen extends AppCompatActivity {
                     .setDurationRelease(PushDownAnim.DEFAULT_RELEASE_DURATION)
                     .setInterpolatorPush(PushDownAnim.DEFAULT_INTERPOLATOR)
                     .setInterpolatorRelease(PushDownAnim.DEFAULT_INTERPOLATOR);
-            SharedPreferences preferences = getSharedPreferences("access", MODE_PRIVATE);
-            String access = preferences.getString("remember", "");
-            if (access.equals("true")) {
-                Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
-                startActivity(intent);
-            }
             LoginButton.setOnClickListener(v -> {
                 try {
                     startProgresBar();
@@ -158,6 +153,16 @@ public class LoginScreen extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        SharedPreferences preferences = getSharedPreferences("access", MODE_PRIVATE);
+        String access = preferences.getString("remember", "");
+        if (access.equals("true")) {
+            Intent intent = new Intent(LoginScreen.this, ToolBarActivity.class);
+            startActivity(intent);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -252,6 +257,14 @@ public class LoginScreen extends AppCompatActivity {
         circularProgressBar.setVisibility(View.INVISIBLE);
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences preferences = getSharedPreferences("access", MODE_PRIVATE);
+        String access = preferences.getString("remember", "");
+        if (access.equals("true")) {
+            finish();
+        }
+    }
 }
 
