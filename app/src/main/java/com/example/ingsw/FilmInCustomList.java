@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,7 +43,7 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
 
         TextView title = root.findViewById(R.id.customListName);
         filmInCustomList = root.findViewById(R.id.recyclerViewFilmInListCustom);
-        ImageButton friendsComments = root.findViewById(R.id.listcommentsButton);
+        ImageView friendsComments = root.findViewById(R.id.listcommentsButton);
         TextView description = root.findViewById(R.id.listDescription);
         description.setText(list.getDescription());
         description.setMovementMethod(new ScrollingMovementMethod());

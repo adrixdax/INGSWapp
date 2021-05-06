@@ -7,8 +7,10 @@
 
     <TextView
         android:id="@+id/customListName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="60dp"
         android:fontFamily="@font/poppins_bold"
         android:text=""
         android:textAlignment="center"
@@ -18,14 +20,14 @@
         app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/listcommentsButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/listDescription"
-        app:layout_constraintVertical_weight="0.08"/>
+        app:layout_constraintVertical_weight="0.08" />
 
     <TextView
         android:id="@+id/listDescription"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:textAlignment="center"
         android:textColor="@color/White"
@@ -33,12 +35,26 @@
         app:autoSizeMinTextSize="10sp"
         app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/customListName"
+        app:layout_constraintEnd_toStartOf="@id/listcommentsButton"
         app:layout_constraintTop_toBottomOf="@id/customListName"
-        app:layout_constraintBottom_toTopOf="@id/listcommentsButton"
+        app:layout_constraintBottom_toTopOf="@id/recyclerViewFilmInListCustom"
         app:layout_constraintVertical_weight="0.06"/>
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="10dp"
+        android:id="@+id/listcommentsButton"
+        android:background="@drawable/icons8_discussion_forum_50px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/customListName"
+        app:layout_constraintBottom_toBottomOf="@id/listDescription"
+        app:layout_constraintStart_toEndOf="@id/customListName"
+        app:layout_constraintHorizontal_bias="1"/>
+
+
+    <!--
     <ImageButton
         android:id="@+id/listcommentsButton"
         android:layout_width="0dp"
@@ -51,6 +67,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/listDescription"
         app:layout_constraintBottom_toTopOf="@id/recyclerViewFilmInListCustom"/>
+
 
     <TextView
         android:layout_width="0dp"
@@ -68,7 +85,7 @@
         app:layout_constraintEnd_toEndOf="@id/listcommentsButton"
         app:layout_constraintStart_toStartOf="@id/listcommentsButton"
         app:layout_constraintTop_toTopOf="@id/listcommentsButton" />
-
+    -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -80,7 +97,7 @@
         android:id="@+id/recyclerViewFilmInListCustom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

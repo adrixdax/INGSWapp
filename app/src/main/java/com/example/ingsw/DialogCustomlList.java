@@ -46,14 +46,19 @@ public class DialogCustomlList extends AppCompatDialogFragment implements Retrof
         RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&custom=true&idFilm=" + idFilmToInsert, this, this.getContext(), "getList");
 
 
-        Button insertInLists = (Button) dialog.getWindow().findViewById(R.id.InsertInListsbutton);
+        Button insertInLists = dialog.getWindow().findViewById(R.id.InsertInListsbutton);
         PushDownAnim.setPushDownAnimTo(insertInLists);
         insertInLists.setOnClickListener(v -> {
-            for (UserLists singlelist : selectedLists) {
-                RetrofitResponse.getResponse("Type=PostRequest&idList=" + singlelist.getIdUserList() + "&idFilm=" + idFilmToInsert + "&addFilm=true", DialogCustomlList.this, DialogCustomlList.this.getContext(), "addFilm");
+            if (!selectedLists.isEmpty()) {
+                for (UserLists singlelist : selectedLists) {
+                    RetrofitResponse.getResponse("Type=PostRequest&idList=" + singlelist.getIdUserList() + "&idFilm=" + idFilmToInsert + "&addFilm=true", DialogCustomlList.this, DialogCustomlList.this.getContext(), "addFilm");
+                }
+                selectedLists.clear();
+                Toast.makeText(this.getContext(), "Film aggiunto con successo", Toast.LENGTH_LONG).show();
             }
-            selectedLists.clear();
-            Toast.makeText(this.getContext(), "Film aggiunto con successo", Toast.LENGTH_LONG).show();
+            else {
+                Toast.makeText(this.getContext(), "Non hai selezionato alcuna lista", Toast.LENGTH_LONG).show();
+            }
             dialog.closeOptionsMenu();
             dialog.cancel();
             dialog.dismiss();
