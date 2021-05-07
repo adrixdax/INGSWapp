@@ -68,7 +68,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
     public void onBindViewHolder(@NonNull ListOfFilmAdapter.ViewHolder holder, int position) {
         if (Objects.equals(css.getCanonicalName(), HomepageScreen.class.getCanonicalName())) {
             try {
-                with(holder.itemView).load(listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
+                with(holder.itemView).load(listOfData.get(position).getPosterPath() == null ? "https://www.joblo.com/assets/images/joblo/database-specific-img-225x333.jpg" : listOfData.get(position).getPosterPath()).into((ImageView) holder.itemView.findViewById(R.id.userprofilepic_view));
                 holder.relativeLayout.setOnClickListener(v -> {
                     FilmDetails nextFragment = new FilmDetails(listOfData.get(position));
                     FragmentTransaction transaction = startFragment.requireActivity().getSupportFragmentManager().beginTransaction();
