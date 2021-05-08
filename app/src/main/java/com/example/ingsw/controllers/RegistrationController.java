@@ -62,7 +62,8 @@ public class RegistrationController {
                     FirebaseDatabase.getInstance().getReference("Users")
                             .child((Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
                             .setValue(user).addOnSuccessListener(regActivity, aVoid -> {
-                        RetrofitResponse.getResponse("Type=PostRequest&registration=" + FirebaseAuth.getInstance().getCurrentUser().getUid(), regActivity, regActivity, "getRegistration");
+                                FirebaseAuth fba = FirebaseAuth.getInstance();
+                        RetrofitResponse.getResponse("Type=PostRequest&registration=" + fba.getCurrentUser().getUid(), regActivity, regActivity, "getRegistration");
                         ((RegistrationScreen) regActivity).stopProgressBar();
                         Toast.makeText(regActivity, "Utente registrato correttamente", Toast.LENGTH_LONG).show();
                         regActivity.startActivity(new Intent(regActivity, ToolBarActivity.class));
