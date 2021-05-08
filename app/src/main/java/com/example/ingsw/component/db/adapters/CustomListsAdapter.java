@@ -95,12 +95,12 @@ public class CustomListsAdapter extends RecyclerView.Adapter<CustomListsAdapter.
                 transaction.addToBackStack(null);
                 transaction.commit();
             });
+            if (listofdata.get(position).getIdUser().equals(((ToolBarActivity)(startFragment.getActivity())).getUid()))
             holder.circleList.setOnLongClickListener(v -> {
                 ChooseActionDialog dlg = new ChooseActionDialog(true, String.valueOf(listofdata.get(position).getIdUserList()), listofdata.get(position).getTitle(), startFragment);
                 dlg.show(((ToolBarActivity) v.getContext()).getSupportFragmentManager(), "Choose action");
                 return true;
             });
-
 
         }
     }
