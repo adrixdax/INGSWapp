@@ -39,7 +39,8 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
     private final List<Film> listOfData;
     private final Context mContext;
     private final Fragment startFragment;
-    String idList = "";
+    private String idList = "";
+    private String uid;
     private Class css = null;
 
     public ListOfFilmAdapter(List<Film> listOfData, Context mContext, Fragment startFragment) {
@@ -117,6 +118,7 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
                 transaction.commit();
 
             });
+            if (uid.equals(((ToolBarActivity)(mContext)).getUid()))
             holder.relativeLayout.setOnLongClickListener(v -> {
                 new ChooseActionDialog(listOfData.get(position), idList, startFragment).show(((ToolBarActivity) mContext).getSupportFragmentManager(), "Choose action");
                 notifyDataSetChanged();
@@ -181,6 +183,14 @@ public class ListOfFilmAdapter extends RecyclerView.Adapter<ListOfFilmAdapter.Vi
 
     public void setIdList(String idList) {
         this.idList = idList;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

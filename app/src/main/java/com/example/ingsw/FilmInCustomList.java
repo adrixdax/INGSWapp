@@ -78,6 +78,10 @@ public class FilmInCustomList extends Fragment implements RetrofitListInterface 
     public void setList(List<?> newList) {
         if (newList.size() != 0) {
             ListOfFilmAdapter adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), this);
+            if (list.getIdUser().equals(((ToolBarActivity) (requireActivity())).getUid()))
+            {
+                adapter.setUid(list.getIdUser());
+            }
             adapter.setCss(FilmInCustomList.class);
             adapter.setIdList(String.valueOf(list.getIdUserList()));
             filmInCustomList.setHasFixedSize(false);
