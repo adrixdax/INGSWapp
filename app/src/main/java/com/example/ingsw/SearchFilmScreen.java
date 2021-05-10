@@ -98,62 +98,66 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
                         .getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm.isAcceptingText()) {
                     imm.hideSoftInputFromWindow(root.getWindowToken(), 0);
+                }if (Text_of_search.getText().toString().isEmpty()){
+                    Text_of_search.setError("Inserisci qualcosa da cercare");
+                    Text_of_search.requestFocus();
                 }
-                if (playFlag == 1) {
-                    if (recyclerViewFriends != null && recyclerViewFriends.isShown())
-                        recyclerViewFriends.setVisibility(View.GONE);
-                    if (recyclerViewFilm != null && recyclerViewFilm.isShown())
-                        recyclerViewFilm.setVisibility(View.GONE);
-                    ((ToolBarActivity) requireActivity()).triggerProgessBar();
-                    RetrofitResponse.getResponse("Type=PostRequest&name=" + Text_of_search.getText().toString(), SearchFilmScreen.this, v.getContext(), "getFilm");
-                } else {
-                    ((ToolBarActivity) requireActivity()).triggerProgessBar();
-                    if (recyclerViewFriends != null && recyclerViewFriends.isShown())
-                        requireActivity().runOnUiThread(() -> recyclerViewFriends.setVisibility(View.GONE));
-                    if (recyclerViewFilm != null && recyclerViewFilm.isShown())
-                        requireActivity().runOnUiThread(() -> recyclerViewFilm.setVisibility(View.GONE));
-                    recyclerViewFriends.setHasFixedSize(true);
-                    recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
-                    usersInSearchlist = new ArrayList<>();
-                    contactsList = new ArrayList<>();
-                    useradapter = new UsersListAdapter(getContext(), usersInSearchlist, contactsList, (ArrayList<Notify>) notifyList);
-                    if (useradapter.getItemCount() == 0) {
-                        textError.setText("Nessun Utente trovato ");
-                    }
-                    textError.setText("");
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false);
-                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFriends.getContext(),
-                            layoutManager.getOrientation());
-                    recyclerViewFriends.addItemDecoration(dividerItemDecoration);
-                    recyclerViewFriends.setAdapter(useradapter);
-                    recyclerViewFilm.setItemViewCacheSize(usersInSearchlist.size());
-                    Query query = ToolBarActivity.getReference().orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(Text_of_search.getText() + "\uf8ff");
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @SuppressLint("RestrictedApi")
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String uid = ((ToolBarActivity) (requireActivity())).getUid();
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                User model = dataSnapshot.getValue(User.class);
-                                model.setIdUser(dataSnapshot.getKey());
-                                if (!(uid.equals(dataSnapshot.getKey()))) {
-                                    usersInSearchlist.add(model);
-                                    useradapter.notifyDataSetChanged();
+                else {
+                    if (playFlag == 1) {
+                        if (recyclerViewFriends != null && recyclerViewFriends.isShown())
+                            recyclerViewFriends.setVisibility(View.GONE);
+                        if (recyclerViewFilm != null && recyclerViewFilm.isShown())
+                            recyclerViewFilm.setVisibility(View.GONE);
+                        ((ToolBarActivity) requireActivity()).triggerProgessBar();
+                        RetrofitResponse.getResponse("Type=PostRequest&name=" + Text_of_search.getText().toString(), SearchFilmScreen.this, v.getContext(), "getFilm");
+                    } else {
+                        ((ToolBarActivity) requireActivity()).triggerProgessBar();
+                        if (recyclerViewFriends != null && recyclerViewFriends.isShown())
+                            requireActivity().runOnUiThread(() -> recyclerViewFriends.setVisibility(View.GONE));
+                        if (recyclerViewFilm != null && recyclerViewFilm.isShown())
+                            requireActivity().runOnUiThread(() -> recyclerViewFilm.setVisibility(View.GONE));
+                        recyclerViewFriends.setHasFixedSize(true);
+                        recyclerViewFriends.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        usersInSearchlist = new ArrayList<>();
+                        contactsList = new ArrayList<>();
+                        useradapter = new UsersListAdapter(getContext(), usersInSearchlist, contactsList, (ArrayList<Notify>) notifyList);
+                        if (useradapter.getItemCount() == 0) {
+                            textError.setText("Nessun Utente trovato ");
+                        }
+                        textError.setText("");
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(v.getContext(), LinearLayoutManager.VERTICAL, false);
+                        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerViewFriends.getContext(),
+                                layoutManager.getOrientation());
+                        recyclerViewFriends.addItemDecoration(dividerItemDecoration);
+                        recyclerViewFriends.setAdapter(useradapter);
+                        recyclerViewFilm.setItemViewCacheSize(usersInSearchlist.size());
+                        Query query = ToolBarActivity.getReference().orderByChild("nickname").startAt(String.valueOf(Text_of_search.getText())).endAt(Text_of_search.getText() + "\uf8ff");
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @SuppressLint("RestrictedApi")
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String uid = ((ToolBarActivity) (requireActivity())).getUid();
+                                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                    User model = dataSnapshot.getValue(User.class);
+                                    model.setIdUser(dataSnapshot.getKey());
+                                    if (!(uid.equals(dataSnapshot.getKey()))) {
+                                        usersInSearchlist.add(model);
+                                        useradapter.notifyDataSetChanged();
+                                    }
                                 }
+                                RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + uid, SearchFilmScreen.this, SearchFilmScreen.this.getContext(), "getFriends");
+                                RetrofitResponse.getResponse(uid, SearchFilmScreen.this, SearchFilmScreen.this.getContext(), "getFriendShipNotify");
                             }
-                            RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + uid, SearchFilmScreen.this, SearchFilmScreen.this.getContext(), "getFriends");
-                            RetrofitResponse.getResponse(uid, SearchFilmScreen.this, SearchFilmScreen.this.getContext(), "getFriendShipNotify");
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
-                    recyclerViewFriends.setVisibility(View.VISIBLE);
+                            }
+                        });
+                        recyclerViewFriends.setVisibility(View.VISIBLE);
+                    }
                 }
             }
-
         });
 
         Text_of_search = root.findViewById(R.id.Text_of_search);
