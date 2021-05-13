@@ -60,7 +60,10 @@ public class DialogReportList extends AppCompatDialogFragment {
             }
             String report = reportTypes.substring(0, reportTypes.length() - 1);
             selectedLists.clear();
-            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid() + "&id_recordRef=" + idRecordToReport + "&reportType=" + report + "&addReport=true", DialogReportList.this, DialogReportList.this.getContext(), "addReport");
+            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) getActivity()).getUid()
+                    + "&id_recordRef=" + idRecordToReport
+                    + "&reportType=" + report
+                    + "&addReport=true", DialogReportList.this, DialogReportList.this.getContext(), "addReport");
             Toast.makeText(this.getContext(), "Segnalazione inviata con successo", Toast.LENGTH_LONG).show();
             dialog.closeOptionsMenu();
             dialog.cancel();

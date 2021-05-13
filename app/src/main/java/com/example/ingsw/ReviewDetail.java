@@ -53,7 +53,7 @@ public class ReviewDetail extends Fragment {
         ratingBar.setClickable(false);
         ratingBar.setIsIndicator(true);
         Button reportButton = root.findViewById(R.id.ReportButton);
-        reportButton.setOnClickListener(v -> new DialogReportList(review.getId_review()).show(getChildFragmentManager(), "Report"));
+        reportButton.setOnClickListener(v -> new DialogReportList(review.getId_reviews()).show(getChildFragmentManager(), "Report"));
 
 
         return root;

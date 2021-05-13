@@ -65,6 +65,10 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     RetrofitResponse.getResponse(String.valueOf(not.getId_recordref()), this, myContext, "getSingleReview");
                     break;
                 }
+                case "LIST_REVIEW": {
+                    RetrofitResponse.getResponse(String.valueOf(not.getId_recordref()), this, myContext, "getSingleReview");
+                    break;
+                }
                 default:
                     break;
             }
@@ -168,6 +172,8 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                         }
                     }
                 }
+            case "LIST_REVIEW":
+                            holder.notifyText.setText("Ha recensito la tua lista\n");
                 break;
         }
         holder.yes.setOnClickListener(v -> {
@@ -205,7 +211,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     RetrofitResponse.getResponse(String.valueOf(listOfData.get(position).getId_Notify()), this, this.myContext, "setAccepted");
                     Reviews revObj = null;
                     for (Reviews r : reviews) {
-                        if (r.getId_review() == listOfData.get(position).getId_recordref())
+                        if (r.getId_reviews() == listOfData.get(position).getId_recordref())
                             revObj = r;
                     }
                     listOfData.remove(position);

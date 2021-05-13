@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class Reviews {
 
-    @JsonProperty("id_review")
-    private int id_review;
+    @JsonProperty("id_reviews")
+    private int id_reviews;
     @JsonProperty("title")
     private String title;
     @JsonProperty("description")
@@ -20,7 +20,8 @@ public class Reviews {
     private String iduser;
     @JsonProperty("typeOfReview")
     private String typeOfReview;
-
+    @JsonProperty("obscured")
+    private boolean obscured;
 
     @JsonCreator
     public Reviews(@JsonProperty("id_review") int id_review,
@@ -29,23 +30,25 @@ public class Reviews {
                    @JsonProperty("val") double val,
                    @JsonProperty("idRecordRef") int idRecordRef,
                    @JsonProperty("iduser") String iduser,
-                   @JsonProperty("typeOfReview") String typeOfReview) {
-        this.id_review = id_review;
+                   @JsonProperty("typeOfReview") String typeOfReview,
+                   @JsonProperty("obscured") boolean obscured) {
+        this.id_reviews = id_review;
         this.title = title;
         this.description = description;
         this.val = val;
         this.idRecordRef = idRecordRef;
         this.iduser = iduser;
         this.typeOfReview = typeOfReview;
+        this.obscured = obscured;
     }
 
-    public int getId_review() {
-        return id_review;
+    public int getId_reviews() {
+        return id_reviews;
     }
 
-    @JsonSetter("id_review")
-    public void setId_review(int id_review) {
-        this.id_review = id_review;
+    @JsonSetter("id_reviews")
+    public void setId_reviews(int id_reviews) {
+        this.id_reviews = id_reviews;
     }
 
     public String getTitle() {
@@ -101,5 +104,14 @@ public class Reviews {
     @JsonSetter("typeOfReview")
     public void setTypeOfReview(String typeOfReview) {
         this.typeOfReview = typeOfReview;
+    }
+
+    public boolean isObscured() {
+        return obscured;
+    }
+
+    @JsonSetter("obscured")
+    public void setObscured(boolean obscured) {
+        this.obscured = obscured;
     }
 }
