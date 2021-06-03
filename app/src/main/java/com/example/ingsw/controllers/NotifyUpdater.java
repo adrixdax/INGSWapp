@@ -51,7 +51,7 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     public synchronized List<?> getNotify() {
         newUpdate();
         try {
-            wait(250);
+            wait(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
 
     @Override
     @OnUi
-    public void setList(List<?> newList) {
+    public synchronized void setList(List<?> newList) {
         notify = newList;
         if (notify.size() == 0) {
             bell.setImageResource(R.drawable.icons8_notification_30px_1);
@@ -79,8 +79,10 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
                     allSeen = false;
                     break;
                 }
-            if (!allSeen)
+            if (!allSeen) {
                 bell.setImageResource(R.drawable.icons8_notification_30px_1_active);
+                notifyAll();
+            }
             else {
                 bell.setImageResource(R.drawable.icons8_notification_30px_1);
             }
