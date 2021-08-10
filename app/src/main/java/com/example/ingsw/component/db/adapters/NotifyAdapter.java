@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ingsw.FriendsListComments;
 import com.example.ingsw.NotifyPopUp;
 import com.example.ingsw.R;
 import com.example.ingsw.ReviewDetail;
@@ -45,6 +46,7 @@ import static com.bumptech.glide.Glide.with;
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder> implements RetrofitListInterface {
     private final ArrayList<Notify> listOfData;
     private final ArrayList<UserLists> lists = new ArrayList<>();
+    private final ArrayList<UserLists> userLists = new ArrayList<>();
     private final ArrayList<Film> films = new ArrayList<>();
     private final ArrayList<Reviews> reviews = new ArrayList<>();
     private final DatabaseReference ref;
@@ -61,11 +63,8 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 case "LIST":
                     RetrofitResponse.getResponse(String.valueOf(not.getId_recordref()), this, myContext, "getListById");
                     break;
-                case "REVIEW": {
-                    RetrofitResponse.getResponse(String.valueOf(not.getId_recordref()), this, myContext, "getSingleReview");
-                    break;
-                }
-                case "LIST_REVIEW": {
+                case "REVIEW":
+                case "LIST_REVIEW":{
                     RetrofitResponse.getResponse(String.valueOf(not.getId_recordref()), this, myContext, "getSingleReview");
                     break;
                 }
@@ -116,11 +115,18 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 films.addAll(films.size(), (Collection<? extends Film>) newList);
                 notifyDataSetChanged();
             } else if (UserLists.class.equals(newList.get(0).getClass())) {
-                lists.addAll(lists.size(), (Collection<? extends UserLists>) newList);
+                if (((UserLists)newList.get(0)).getIdUser().equals(((ToolBarActivity)(myContext)).getUid()))
+                    userLists.addAll(userLists.size(), (Collection<? extends UserLists>) newList);
+                else
+                    lists.addAll(lists.size(), (Collection<? extends UserLists>) newList);
                 notifyDataSetChanged();
             } else {
                 for (Object r : newList) {
-                    RetrofitResponse.getResponse("Type=PostRequest&filmId=" + ((Reviews) r).getIdRecordRef(), this, this.myContext, "getFilmById");
+                    if (((Reviews) r).getTypeOfReview().equals("FILM")) {
+                        RetrofitResponse.getResponse("Type=PostRequest&filmId=" + ((Reviews) r).getIdRecordRef(), this, this.myContext, "getFilmById");
+                    }
+                    else //getListById
+                        RetrofitResponse.getResponse(String.valueOf(((Reviews) r).getIdRecordRef()), this, this.myContext, "getListById");
                 }
                 reviews.addAll(reviews.size(), (Collection<? extends Reviews>) newList);
                 notifyDataSetChanged();
@@ -164,24 +170,27 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 }
                 break;
             case "REVIEW":
-                for (Reviews r : reviews) {
-                    for (Film f : films) {
-                        if (r.getIdRecordRef() == f.getId_Film()) {
-                            holder.notifyText.setText("vuole farti vedere la recensione riguardo:\n" + f.getFilm_Title());
-                            break;
-                        }
+                for (Film f : films) {
+                    if (listOfData.get(position).getId_recordref() == f.getId_Film()) {
+                        holder.notifyText.setText("vuole farti vedere la recensione riguardo:\n" + f.getFilm_Title());
+                        break;
                     }
                 }
             case "LIST_REVIEW":
-                            holder.notifyText.setText("Ha recensito la tua lista\n");
+                for (Reviews r : reviews) {
+                    for (UserLists u : userLists) {
+                        if (listOfData.get(position).getId_recordref() == r.getId_reviews() && r.getIdRecordRef() == u.getIdUserList())
+                            holder.notifyText.setText("Ha recensito la tua lista:\n" + u.getTitle());
+                    }
+                }
                 break;
         }
         holder.yes.setOnClickListener(v -> {
             holder.newNotify.setVisibility(View.INVISIBLE);
             listOfData.get(position).setState("ACCEPTED");
+            RetrofitResponse.getResponse(String.valueOf(listOfData.get(position).getId_Notify()), this, this.myContext, "setAccepted");
             switch (listOfData.get(position).getType()) {
                 case "FILM": {
-                    RetrofitResponse.getResponse(String.valueOf(listOfData.get(position).getId_Notify()), this, this.myContext, "setAccepted");
                     Toast.makeText(v.getContext(), "Ora questo film è nei tuoi film da vedere :)", Toast.LENGTH_SHORT).show();
                     listOfData.remove(position);
                     notifyItemRemoved(position);
@@ -199,7 +208,6 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     break;
                 }
                 case "LIST": {
-                    RetrofitResponse.getResponse(String.valueOf(listOfData.get(position).getId_Notify()), this, this.myContext, "setAccepted");
                     Toast.makeText(v.getContext(), "Hai una nuova lista", Toast.LENGTH_SHORT).show();
                     listOfData.remove(position);
                     this.notifyItemRemoved(position);
@@ -208,7 +216,6 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     break;
                 }
                 case "REVIEW": {
-                    RetrofitResponse.getResponse(String.valueOf(listOfData.get(position).getId_Notify()), this, this.myContext, "setAccepted");
                     Reviews revObj = null;
                     for (Reviews r : reviews) {
                         if (r.getId_reviews() == listOfData.get(position).getId_recordref())
@@ -225,6 +232,25 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     transaction.commit();
                     dialog.dismiss();
                     break;
+                }
+                case "LIST_REVIEW": {
+                    FragmentTransaction transaction = ((ToolBarActivity) (myContext)).getSupportFragmentManager().beginTransaction();
+                    FriendsListComments rev = null;
+                    for (Reviews r : reviews) {
+                        for (UserLists u : userLists) {
+                            if (listOfData.get(position).getId_recordref() == r.getId_reviews() && r.getIdRecordRef() == u.getIdUserList())
+                                rev = new FriendsListComments(true, String.valueOf(u.getIdUserList()));
+                            transaction.replace(R.id.nav_host_fragment, rev, "FriendsReviews");
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                            listOfData.remove(position);
+                            this.notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, listOfData.size());
+                            NotifyUpdater.newUpdate();
+                            dialog.dismiss();
+                            break;
+                        }
+                    }
                 }
             }
             verifyNoMoreNotify();
