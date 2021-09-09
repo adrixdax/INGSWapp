@@ -89,4 +89,7 @@ public interface RetrofitInterface {
     @POST("/report")
     Call<String> addReport(@Body String body);
 
+    @GET("/online")
+    Call<String> addOnlineMember(@Query("loggingIn") String value );
+
 }

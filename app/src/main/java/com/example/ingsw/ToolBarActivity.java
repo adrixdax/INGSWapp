@@ -62,15 +62,23 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RetrofitResponse.getResponse(String.valueOf(false), this, this.getApplicationContext(), "addOnlineMember");
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         NotifyUpdater.stopUpdate();
+        RetrofitResponse.getResponse(String.valueOf(false), this, this.getApplicationContext(), "addOnlineMember");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         NotifyUpdater.newUpdate();
+        RetrofitResponse.getResponse(String.valueOf(true), this, this.getApplicationContext(), "addOnlineMember");
     }
 
     @Override
@@ -93,7 +101,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         progressLayout.setVisibility(View.INVISIBLE);
         mainLayout = findViewById(R.id.mainLayout);
         mainLayout.setVisibility(View.VISIBLE);
-
         RetrofitResponse.getResponse("Type=PostRequest&idUser=" + uid + "&searchDefaultList=true", this, this.getApplicationContext(), "getDefaultList");
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
