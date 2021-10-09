@@ -179,7 +179,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
             case "LIST_REVIEW":
                 for (Reviews r : reviews) {
                     for (UserLists u : userLists) {
-                        if (listOfData.get(position).getId_recordref() == r.getId_reviews() && r.getIdRecordRef() == u.getIdUserList())
+                        if (listOfData.get(position).getId_recordref() == r.getIdReviews() && r.getIdRecordRef() == u.getIdUserList())
                             holder.notifyText.setText("Ha recensito la tua lista:\n" + u.getTitle());
                     }
                 }
@@ -218,7 +218,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 case "REVIEW": {
                     Reviews revObj = null;
                     for (Reviews r : reviews) {
-                        if (r.getId_reviews() == listOfData.get(position).getId_recordref())
+                        if (r.getIdReviews() == listOfData.get(position).getId_recordref())
                             revObj = r;
                     }
                     listOfData.remove(position);
@@ -238,7 +238,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     FriendsListComments rev = null;
                     for (Reviews r : reviews) {
                         for (UserLists u : userLists) {
-                            if (listOfData.get(position).getId_recordref() == r.getId_reviews() && r.getIdRecordRef() == u.getIdUserList())
+                            if (listOfData.get(position).getId_recordref() == r.getIdReviews() && r.getIdRecordRef() == u.getIdUserList())
                                 rev = new FriendsListComments(true, String.valueOf(u.getIdUserList()));
                             transaction.replace(R.id.nav_host_fragment, rev, "FriendsReviews");
                             transaction.addToBackStack(null);
