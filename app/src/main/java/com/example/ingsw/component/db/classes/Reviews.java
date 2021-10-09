@@ -46,7 +46,7 @@ public class Reviews {
         return idReviews;
     }
 
-    @JsonSetter("id_reviews")
+    @JsonSetter("idReviews")
     public void setIdReviews(int idReviews) {
         this.idReviews = idReviews;
     }
