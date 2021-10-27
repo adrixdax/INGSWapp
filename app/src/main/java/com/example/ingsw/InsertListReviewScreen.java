@@ -15,14 +15,32 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
 
+import java.util.Objects;
+
 public class InsertListReviewScreen extends Fragment {
 
     private final String idList;
+
+    public Boolean getPositive() {
+        return isPositive;
+    }
+
     private Boolean isPositive;
 
     public InsertListReviewScreen(Boolean isPositive, String idList) {
         this.isPositive = isPositive;
         this.idList = idList;
+    }
+
+    public String valutaLista(String text,Boolean isPositive){
+        String descr;
+        if (text.isEmpty())
+            descr = "ha lasciato " + (isPositive ? "un \"mi piace\"" : "un \"non mi piace\"");
+        else {
+            descr = text;
+            descr = descr.replaceAll("'", "''");
+        }
+        return descr;
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -52,15 +70,9 @@ public class InsertListReviewScreen extends Fragment {
             isPositive = false;
         });
         insertReview.setOnClickListener(v -> {
-            String descr;
-            if (editTextDescription.getText().toString().isEmpty())
-                descr = "ha lasciato " + (isPositive ? "un \"mi piace\"" : "un \"non mi piace\"");
-            else {
-                descr = editTextDescription.getText().toString();
-                descr = descr.replaceAll("'", "''");
-            }
+            String descr = valutaLista(editTextDescription.getText().toString(),isPositive);
             RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idList + "&title=" + "\0" + "&description=" + descr + "&val=" + (isPositive ? "1.0" : "0.0") + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=LIST", this, getContext(), "addReview");
-            getActivity().onBackPressed();
+            requireActivity().onBackPressed();
         });
 
         return root;
