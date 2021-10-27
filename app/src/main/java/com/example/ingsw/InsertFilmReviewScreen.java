@@ -32,17 +32,15 @@ public class InsertFilmReviewScreen extends Fragment {
         this.idFilm = idFilm;
     }
 
-    private boolean isNumber(String titolo) throws Exception {
-        try {
-            if ((Float.parseFloat(titolo) != 0.0f || Float.parseFloat(titolo) == 0.0f)
+    private boolean isNumber(String titolo) {
+        try{
+            return (Float.parseFloat(titolo) != 0.0f || Float.parseFloat(titolo) == 0.0f)
                     ||
-                    (Integer.parseInt(titolo) != 0 || Integer.parseInt(titolo) == 0)) {
-                throw new Exception(String.valueOf(IS_NUMBER));
-            }
-        } catch (NumberFormatException ex) {
+                    (Integer.parseInt(titolo) != 0 || Integer.parseInt(titolo) == 0);
+        }
+        catch (NumberFormatException ex){
             return false;
         }
-        return false;
     }
 
     private boolean validTitle(String titolo) throws Exception {

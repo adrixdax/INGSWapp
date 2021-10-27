@@ -58,9 +58,8 @@ public class InsertFilmReviewScreenTest {
     }
 
     @Test
-    public void emptyTitleAndInvalidValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("", 0.0f));
-        assertEquals(TitleException.TOO_SHORT.toString(),exception.getMessage());
+    public void emptyTitleAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("", 0.0f));
     }
 
     @Test
@@ -69,130 +68,109 @@ public class InsertFilmReviewScreenTest {
     }
 
     @Test
-    public void TitleIsANumberAndGoodValutationAtMin(){
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 0.5f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsANumberAndGoodValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 0.5f));
     }
 
     @Test
-    public void TitleIsANumberAndGoodValutationAtMax() throws NumberFormatException {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 0.5f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsANumberAndGoodValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 0.5f));
     }
 
     @Test
-    public void TitleIsANegativeNumberAndGoodValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())*-1), 0.5f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsANegativeNumberAndGoodValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())*-1), 0.5f));
     }
 
     @Test
-    public void TitleIsANegativeNumberAndGoodValutationAtMax() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())*-1), 5.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsANegativeNumberAndGoodValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())*-1), 5.0f));
     }
 
     @Test
-    public void TitleIsZeroAndGoodValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("0", 0.5f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsZeroAndGoodValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("0", 0.5f));
     }
 
     @Test
-    public void TitleIsZeroAndGoodValutationAtMax() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("0", 5.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsZeroAndGoodValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview("0", 5.0f));
     }
 
     @Test
-    public void TitleIsPositiveFloatAndGoodValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs(randomNumber())), 0.5f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsPositiveFloatAndGoodValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())), 0.5f));
     }
 
     @Test
-    public void TitleIsPositiveFloatAndGoodValutationAtMax() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs(randomNumber())), 5.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsPositiveFloatAndGoodValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())), 5.0f));
     }
 
     @Test
-    public void TitleIsNegativeFloatAndGoodValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 0.5f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsNegativeFloatAndGoodValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 0.5f));
     }
 
     @Test
-    public void TitleIsNegativeFloatAndGoodValutationAtMax() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 5.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsNegativeFloatAndGoodValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 5.0f));
     }
 
     @Test
-    public void TitleIsPositiveZeroFloatAndGoodValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("0.0", 0.5f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsPositiveZeroFloatAndGoodValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("0.0", 0.5f));
     }
 
     @Test
-    public void TitleIsPositiveZeroFloatAndGoodValutationAtMax() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("0.0", 5.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsPositiveZeroFloatAndGoodValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview("0.0", 5.0f));
     }
 
     @Test
-    public void TitleIsNegativeZeroFloatAndGoodValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("-0.0", 0.5f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsNegativeZeroFloatAndGoodValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("-0.0", 0.5f));
     }
 
     @Test
-    public void TitleIsNegativeZeroFloatAndGoodValutationAtMax() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("-0.0", 5.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsNegativeZeroFloatAndGoodValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview("-0.0", 5.0f));
     }
 
     @Test
-    public void TitleIsANumberAndInvalidValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 0.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsANumberAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 0.0f));
     }
 
     @Test
-    public void TitleIsANegativeNumberAndInvalidValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())*-1), 0.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsANegativeNumberAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())*-1), 0.0f));
     }
 
     @Test
-    public void TitleIsZeroAndInvalidValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("0", 0.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsZeroAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("0", 0.0f));
     }
 
     @Test
-    public void TitleIsPositiveFloatAndInvalidValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs(randomNumber())), 0.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsPositiveFloatAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())), 0.0f));
     }
 
     @Test
-    public void TitleIsNegativeFloatAndInvalidValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 0.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsNegativeFloatAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 0.0f));
     }
 
 
     @Test
-    public void TitleIsPositiveZeroFloatAndInvalidValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("0.0", 0.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsPositiveZeroFloatAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("0.0", 0.0f));
     }
 
     @Test
-    public void TitleIsNegativeZeroFloatAndInvalidValutationAtMin() {
-        Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("-0.0", 0.0f));
-        assertEquals(TitleException.IS_NUMBER.toString(),exception.getMessage());
+    public void TitleIsNegativeZeroFloatAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("-0.0", 0.0f));
     }
 
 }
