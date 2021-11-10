@@ -7,7 +7,7 @@ public class RegistrationControllerTest {
 
     final RegistrationController registrationController = new RegistrationController(null,"");
 
-    /**TEST DI SUCCESSO**/
+    /**TEST DI VERIFICA DEL SUCCESSO**/
 
 
     @Test
@@ -51,7 +51,7 @@ public class RegistrationControllerTest {
     }
 
 
-    /** TEST FALLIMENTARI **/
+    /** TEST DI VERIFICA DEI FALLIMENI **/
 
 
 

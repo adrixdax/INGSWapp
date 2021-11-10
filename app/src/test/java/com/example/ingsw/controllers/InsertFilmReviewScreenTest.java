@@ -29,6 +29,16 @@ public class InsertFilmReviewScreenTest {
     }
 
     @Test
+    public void validTitleAndInvalidValutationAtMin() throws Exception {
+        Assert.assertFalse(screen.isValidReview("Fantastico", 0.0f));
+    }
+
+    @Test
+    public void validTitleAndInvalidValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview("Lo adoro",5.1f));
+    }
+
+    @Test
     public void emptyTitleAndGoodValutationAtMin() {
         Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("", 0.5f));
         assertEquals(TitleException.TOO_SHORT.toString(),exception.getMessage());
@@ -38,6 +48,16 @@ public class InsertFilmReviewScreenTest {
     public void emptyTitleAndGoodValutationAtMax() {
         Exception exception = assertThrows(Exception.class, ()-> screen.isValidReview("", 5.0f));
         assertEquals(TitleException.TOO_SHORT.toString(),exception.getMessage());
+    }
+
+    @Test
+    public void emptyTitleAndInvalidValutationAtMin() throws Exception {
+        Assert.assertFalse(screen.isValidReview("", 0.0f));
+    }
+
+    @Test
+    public void emptyTitleAndInvalidValutationAtMax() throws Exception {
+        Assert.assertFalse(screen.isValidReview("", 5.1f));
     }
 
     @Test
@@ -53,18 +73,13 @@ public class InsertFilmReviewScreenTest {
     }
 
     @Test
-    public void validTitleAndInvalidValutationAtMin() throws Exception {
-        Assert.assertFalse(screen.isValidReview("Fantastico", 0.0f));
+    public void tooLongTitleAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("Mamma mia sto film è troppo bello", 0.0f));
     }
 
     @Test
-    public void emptyTitleAndInvalidValutationAtMin() throws Exception {
-        assertFalse(screen.isValidReview("", 0.0f));
-    }
-
-    @Test
-    public void shortTitleAndInvalidValutationAtMin() throws Exception {
-        assertFalse(screen.isValidReview("Lo adoro",0.0f));
+    public void tooLongTitleAndInvalidValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview("Mamma mia sto film è troppo bello", 5.1f));
     }
 
     @Test
@@ -74,7 +89,17 @@ public class InsertFilmReviewScreenTest {
 
     @Test
     public void TitleIsANumberAndGoodValutationAtMax() throws Exception {
-        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 0.5f));
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 5.0f));
+    }
+
+    @Test
+    public void TitleIsANumberAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 0.0f));
+    }
+
+    @Test
+    public void TitleIsANumberAndInvalidValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 5.1f));
     }
 
     @Test
@@ -88,6 +113,16 @@ public class InsertFilmReviewScreenTest {
     }
 
     @Test
+    public void TitleIsANegativeNumberAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())*-1), 0.0f));
+    }
+
+    @Test
+    public void TitleIsANegativeNumberAndInvalidValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())*-1), 5.1f));
+    }
+
+    @Test
     public void TitleIsZeroAndGoodValutationAtMin() throws Exception {
         assertFalse(screen.isValidReview("0", 0.5f));
     }
@@ -95,6 +130,16 @@ public class InsertFilmReviewScreenTest {
     @Test
     public void TitleIsZeroAndGoodValutationAtMax() throws Exception {
         assertFalse(screen.isValidReview("0", 5.0f));
+    }
+
+    @Test
+    public void TitleIsZeroAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("0", 0.0f));
+    }
+
+    @Test
+    public void TitleIsZeroAndInvalidValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview("0", 5.1f));
     }
 
     @Test
@@ -108,6 +153,16 @@ public class InsertFilmReviewScreenTest {
     }
 
     @Test
+    public void TitleIsPositiveFloatAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())), 0.0f));
+    }
+
+    @Test
+    public void TitleIsPositiveFloatAndInvalidValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())), 5.1f));
+    }
+
+    @Test
     public void TitleIsNegativeFloatAndGoodValutationAtMin() throws Exception {
         assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 0.5f));
     }
@@ -115,6 +170,16 @@ public class InsertFilmReviewScreenTest {
     @Test
     public void TitleIsNegativeFloatAndGoodValutationAtMax() throws Exception {
         assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 5.0f));
+    }
+
+    @Test
+    public void TitleIsNegativeFloatAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 0.0f));
+    }
+
+    @Test
+    public void TitleIsNegativeFloatAndInvalidValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 5.1f));
     }
 
     @Test
@@ -128,6 +193,16 @@ public class InsertFilmReviewScreenTest {
     }
 
     @Test
+    public void TitleIsPositiveZeroFloatAndInvalidValutationAtMin() throws Exception {
+        assertFalse(screen.isValidReview("0.0", 0.0f));
+    }
+
+    @Test
+    public void TitleIsPositiveZeroFloatAndInvalidValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview("0.0", 5.1f));
+    }
+
+    @Test
     public void TitleIsNegativeZeroFloatAndGoodValutationAtMin() throws Exception {
         assertFalse(screen.isValidReview("-0.0", 0.5f));
     }
@@ -138,39 +213,13 @@ public class InsertFilmReviewScreenTest {
     }
 
     @Test
-    public void TitleIsANumberAndInvalidValutationAtMin() throws Exception {
-        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())), 0.0f));
-    }
-
-    @Test
-    public void TitleIsANegativeNumberAndInvalidValutationAtMin() throws Exception {
-        assertFalse(screen.isValidReview(String.valueOf(Math.abs((int)randomNumber())*-1), 0.0f));
-    }
-
-    @Test
-    public void TitleIsZeroAndInvalidValutationAtMin() throws Exception {
-        assertFalse(screen.isValidReview("0", 0.0f));
-    }
-
-    @Test
-    public void TitleIsPositiveFloatAndInvalidValutationAtMin() throws Exception {
-        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())), 0.0f));
-    }
-
-    @Test
-    public void TitleIsNegativeFloatAndInvalidValutationAtMin() throws Exception {
-        assertFalse(screen.isValidReview(String.valueOf(Math.abs(randomNumber())*-1), 0.0f));
-    }
-
-
-    @Test
-    public void TitleIsPositiveZeroFloatAndInvalidValutationAtMin() throws Exception {
-        assertFalse(screen.isValidReview("0.0", 0.0f));
-    }
-
-    @Test
     public void TitleIsNegativeZeroFloatAndInvalidValutationAtMin() throws Exception {
         assertFalse(screen.isValidReview("-0.0", 0.0f));
+    }
+
+    @Test
+    public void TitleIsNegativeZeroFloatAndInvalidValutationAtMax() throws Exception {
+        assertFalse(screen.isValidReview("-0.0", 5.1f));
     }
 
 }

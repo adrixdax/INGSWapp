@@ -13,7 +13,7 @@ android {
         minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
-        versionName "1.3.2"
+        versionName "1.3.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,8 +56,8 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:7.1.1'
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-database:20.0.2'
-    implementation 'com.google.firebase:firebase-analytics:19.0.2'
-    implementation 'com.google.firebase:firebase-crashlytics:18.2.3'
+    implementation 'com.google.firebase:firebase-analytics:20.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.4'
     testImplementation 'org.junit.jupiter:junit-jupiter'
     androidTestImplementation 'org.testng:testng:6.9.6'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
