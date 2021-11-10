@@ -15,8 +15,6 @@ import androidx.fragment.app.Fragment;
 
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
 
-import java.util.Objects;
-
 public class InsertListReviewScreen extends Fragment {
 
     private final String idList;

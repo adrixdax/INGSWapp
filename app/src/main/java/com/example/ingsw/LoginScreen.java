@@ -208,27 +208,27 @@ public class LoginScreen extends AppCompatActivity {
             editor.putString("remember", "true");
             editor.apply();
             RetrofitResponse.getResponse("Type=PostRequest&google=" + account.getId(), LoginScreen.this, this, "getRegistration");
-            u.nickname = Objects.requireNonNull(account.getEmail()).split("@")[0];
-            u.email = account.getEmail();
+            u.setNickname(Objects.requireNonNull(account.getEmail()).split("@")[0]);
+            u.setEmail(account.getEmail());
             int switchCase = new Random().ints(0, 5).findAny().getAsInt();
             switch (switchCase) {
                 case 0:
-                    u.propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
+                    u.setPropic("https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg");
                     break;
                 case 1:
-                    u.propic = "https://i.pinimg.com/236x/d4/9f/33/d49f3302e2a4e7b5a21ea3aba0cfcf03.jpg";
+                    u.setPropic("https://i.pinimg.com/236x/d4/9f/33/d49f3302e2a4e7b5a21ea3aba0cfcf03.jpg");
                     break;
                 case 2:
-                    u.propic = "https://i.pinimg.com/564x/48/99/65/48996519ea996aa169ca1d61e2a6c6ab.jpg";
+                    u.setPropic("https://i.pinimg.com/564x/48/99/65/48996519ea996aa169ca1d61e2a6c6ab.jpg");
                     break;
                 case 3:
-                    u.propic = "https://i.pinimg.com/236x/fa/60/b8/fa60b89014f5807b5a013e83aba32aab.jpg";
+                    u.setPropic("https://i.pinimg.com/236x/fa/60/b8/fa60b89014f5807b5a013e83aba32aab.jpg");
                     break;
                 case 4:
-                    u.propic = "https://i.pinimg.com/564x/90/15/d9/9015d92696baf129a8b4d273625fbfdd.jpg";
+                    u.setPropic("https://i.pinimg.com/564x/90/15/d9/9015d92696baf129a8b4d273625fbfdd.jpg");
                     break;
                 case 5:
-                    u.propic = "https://i.pinimg.com/564x/5b/71/ab/5b71ab4ea082c3c11e77312a64bba835.jpg";
+                    u.setPropic("https://i.pinimg.com/564x/5b/71/ab/5b71ab4ea082c3c11e77312a64bba835.jpg");
                     break;
             }
             stopProgressBar();

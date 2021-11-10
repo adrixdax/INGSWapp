@@ -202,7 +202,7 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
             } else {
                 textError.setText("");
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-                adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), ((ToolBarActivity) requireActivity()).activeFragment);
+                adapter = new ListOfFilmAdapter((List<Film>) newList, getContext(), ((ToolBarActivity) requireActivity()).getActiveFragment());
                 adapter.setCss(SearchFilmScreen.class);
                 adapter.setStateRestorationPolicy(RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY);
                 recyclerViewFilm.setHasFixedSize(true);

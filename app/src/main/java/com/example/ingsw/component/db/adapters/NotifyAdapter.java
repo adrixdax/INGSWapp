@@ -121,22 +121,21 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                     lists.addAll(lists.size(), (Collection<? extends UserLists>) newList);
                 notifyDataSetChanged();
             } else {
-                for (Object r : newList) {
-                    if (((Reviews) r).getTypeOfReview().equals("FILM")) {
-                        RetrofitResponse.getResponse("Type=PostRequest&filmId=" + ((Reviews) r).getIdRecordRef(), this, this.myContext, "getFilmById");
-                    }
-                    else //getListById
-                        RetrofitResponse.getResponse(String.valueOf(((Reviews) r).getIdRecordRef()), this, this.myContext, "getListById");
-                }
-                reviews.addAll(reviews.size(), (Collection<? extends Reviews>) newList);
+                reviews.addAll((Collection<? extends Reviews>) newList);
                 notifyDataSetChanged();
+                for (Reviews r : reviews) {
+                    if (r.getTypeOfReview().equals("FILM"))
+                        RetrofitResponse.getResponse("Type=PostRequest&filmId=" + ((Reviews) r).getIdRecordRef(), this, this.myContext, "getFilmById");
+                    else //getListById
+                        RetrofitResponse.getResponse(String.valueOf(((Reviews) r).getIdRecordRef()), this, NotifyAdapter.this.myContext, "getListById");
+                }
             }
         }
     }
 
     @NonNull
     @Override
-    public NotifyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public synchronized NotifyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View listItem = layoutInflater.inflate(R.layout.list_notify, parent, false);
         return new ViewHolder(listItem);
@@ -180,6 +179,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 for (Reviews r : reviews) {
                     for (UserLists u : userLists) {
                         if (listOfData.get(position).getId_recordref() == r.getIdReviews() && r.getIdRecordRef() == u.getIdUserList())
+                            System.out.println("Sono qui");
                             holder.notifyText.setText("Ha recensito la tua lista:\n" + u.getTitle());
                     }
                 }

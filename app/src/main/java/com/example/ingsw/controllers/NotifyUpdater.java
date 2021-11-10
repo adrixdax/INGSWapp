@@ -49,12 +49,6 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     }
 
     public synchronized List<?> getNotify() {
-        newUpdate();
-        try {
-            wait(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         return notify;
     }
 
@@ -62,7 +56,7 @@ public class NotifyUpdater extends TimerTask implements RetrofitListInterface {
     public void run() {
         if (timerStatus) {
             RetrofitResponse.getResponse(((ToolBarActivity) activity).getUid(), this, activity, "getNotify");
-            timer.schedule(new NotifyUpdater(timer, bell, activity, notify), 30000);
+            timer.schedule(new NotifyUpdater(timer, bell, activity, notify), 10000);
         }
     }
 

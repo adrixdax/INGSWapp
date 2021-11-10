@@ -58,7 +58,7 @@ public class RegistrationController {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(regActivity, authResult -> {
-                    User user = new User(nickname, email, pic);
+                    User user = new User(nickname, email, pic,false);
                     FirebaseDatabase.getInstance().getReference("Users")
                             .child((Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()))
                             .setValue(user).addOnSuccessListener(regActivity, aVoid -> {

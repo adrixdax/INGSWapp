@@ -69,7 +69,7 @@ public interface RetrofitInterface {
     Call<Boolean> isFilmInList(@Body String body);
 
     @GET("/review")
-    Call<List<Reviews>> getSingleReview(@Query("idReview") String idReview);
+    Call<List<Reviews>> getSingleReview(@Query("idReviews") String idReview);
 
     @POST("/review")
     Call<List<Reviews>> getReview(@Body String body);

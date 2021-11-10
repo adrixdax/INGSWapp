@@ -106,7 +106,7 @@ public class FragmentAvatarScreen extends Fragment implements View.OnClickListen
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     User model = dataSnapshot.getValue(User.class);
                     assert model != null;
-                    model.propic = url;
+                    model.setPropic(url);
                     ToolBarActivity.getReference().child(uid).setValue(model);
                 }
             }
