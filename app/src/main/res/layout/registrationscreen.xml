@@ -36,7 +36,8 @@
             app:layout_constraintTop_toTopOf="@id/propic_image"
             app:layout_constraintVertical_bias="1"
             app:srcCompat="@drawable/pencil"
-            app:tint="@color/colorAccent" />
+            app:tint="@color/colorAccent"
+            android:contentDescription="ImageViewForTheSelectedPropic" />
 
         <view
             android:id="@+id/NickNameView"
@@ -137,7 +138,6 @@
             android:background="@android:color/transparent"
             android:ems="10"
             android:hint="@string/password"
-            android:imeOptions="actionGo"
             android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="@id/passwordView"
             app:layout_constraintEnd_toEndOf="@id/passwordView"
@@ -153,6 +153,7 @@
             android:background="@drawable/rounded_corners"
             android:backgroundTint="#FFFFFF"
             app:hintTextColor="#100E0E"
+            android:imeOptions="actionGo"
             tools:ignore="MissingConstraints"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +174,7 @@
             android:layout_marginEnd="10dp"
             android:background="@android:color/transparent"
             android:ems="10"
-            android:hint="RIpeti la password"
+            android:hint="Ripeti la password"
             android:imeOptions="actionGo"
             android:inputType="textPassword"
             app:layout_constraintStart_toStartOf="@id/repPasswordView"

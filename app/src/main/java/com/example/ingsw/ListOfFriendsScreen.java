@@ -14,6 +14,7 @@ import com.example.ingsw.component.db.adapters.ContactListAdapter;
 import com.example.ingsw.component.db.classes.Contact;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -37,6 +38,10 @@ public class ListOfFriendsScreen extends Fragment implements RetrofitListInterfa
         textFriendsError = root.findViewById(R.id.Textview_friendsError);
         recyclerView = root.findViewById(R.id.recyclerViewUserMyFriends);
         RetrofitResponse.getResponse("Type=PostRequest&isFriends=true&idUser=" + ((ToolBarActivity) requireActivity()).getUid(), ListOfFriendsScreen.this, this.getContext(), "getFriends");
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"ListOfFriends");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("ListOfFriends",bundle);
         return root;
 
     }

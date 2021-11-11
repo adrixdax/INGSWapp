@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class InsertListReviewScreen extends Fragment {
 
@@ -72,6 +73,11 @@ public class InsertListReviewScreen extends Fragment {
             RetrofitResponse.getResponse("Type=PostRequest&idRecordRef=" + idList + "&title=" + "\0" + "&description=" + descr + "&val=" + (isPositive ? "1.0" : "0.0") + "&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=true&typeOfReview=LIST", this, getContext(), "addReview");
             requireActivity().onBackPressed();
         });
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"InsertListReview");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("InsertListReview",bundle);
 
         return root;
     }

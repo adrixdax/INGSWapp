@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 public class AddCustomList extends Fragment {
@@ -40,11 +41,18 @@ public class AddCustomList extends Fragment {
         cancel.setOnClickListener(v -> requireActivity().onBackPressed());
 
         add.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"AddCustomList");
+            bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+            ToolBarActivity.setNewBundle("InsertList",bundle);
             RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&addList=true&listTitle=" + title.getText() + (String.valueOf(description.getText()).length() != 0 ? "&listDescription=" + description.getText() : ""), AddCustomList.this, getContext(), "addList");
             requireActivity().onBackPressed();
 
         });
-
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"AddCustomList");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("AddCustomListScreen",bundle);
         return root;
     }
 

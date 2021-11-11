@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.bumptech.glide.Glide;
 import com.example.ingsw.component.films.Film;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import teaspoon.annotations.OnUi;
@@ -178,6 +179,10 @@ public class FilmDetails extends Fragment {
             fragment.show(getChildFragmentManager(), "CustomList");
         });
 
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"FilmDetail");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("FilmDetail",bundle);
 
         return root;
 

@@ -19,6 +19,7 @@ import com.example.ingsw.component.db.classes.User;
 import com.example.ingsw.component.db.classes.UserLists;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -69,6 +70,10 @@ public class FriendProfile extends Fragment implements RetrofitListInterface {
 
         RetrofitResponse.getResponse("Type=PostRequest&idUser=" + friendId + "&custom=true&idFilm=-1", FriendProfile.this, getContext(), "getList");
 
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"FriendProfile");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("FriendProfile",bundle);
         return root;
     }
 

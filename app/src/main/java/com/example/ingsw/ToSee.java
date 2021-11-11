@@ -17,6 +17,7 @@ import com.example.ingsw.component.films.Film;
 import com.example.ingsw.component.films.ListOfFilmAdapter;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -40,7 +41,10 @@ public class ToSee extends Fragment implements RetrofitListInterface {
         RetrofitResponse.getResponse(
                 "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH"),
                 this, this.getContext(), "getFilmInList");
-
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"ToSee");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("ToSee",bundle);
         return root;
     }
 

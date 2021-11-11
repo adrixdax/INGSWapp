@@ -28,6 +28,7 @@ import com.example.ingsw.component.films.Film;
 import com.example.ingsw.component.films.ListOfFilmAdapter;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -168,7 +169,10 @@ public class SearchFilmScreen extends Fragment implements RetrofitListInterface 
             }
             return false;
         });
-
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"Search");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("Search",bundle);
         return root;
 
     }

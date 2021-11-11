@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import static com.example.ingsw.utility.TitleException.IS_NUMBER;
@@ -90,6 +91,10 @@ public class InsertFilmReviewScreen extends Fragment {
                 }
             }
         });
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"InsertFilmReview");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("InsertFilmReview",bundle);
         return root;
     }
 }

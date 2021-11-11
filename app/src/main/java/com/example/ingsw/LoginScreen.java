@@ -28,6 +28,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -151,6 +152,11 @@ public class LoginScreen extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"Login");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        mFirebaseAnalytics.logEvent("Login",bundle);
     }
 
     @Override
@@ -213,7 +219,7 @@ public class LoginScreen extends AppCompatActivity {
             int switchCase = new Random().ints(0, 5).findAny().getAsInt();
             switch (switchCase) {
                 case 0:
-                    u.setPropic("https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg");
+                    u.setPropic("https://i.pinimg.com/564x/f0/0c/b7/f00cb7716ff739114f49a5ecf12a6b8a.jpg");
                     break;
                 case 1:
                     u.setPropic("https://i.pinimg.com/236x/d4/9f/33/d49f3302e2a4e7b5a21ea3aba0cfcf03.jpg");

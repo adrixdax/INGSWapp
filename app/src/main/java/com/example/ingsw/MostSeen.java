@@ -17,6 +17,7 @@ import com.example.ingsw.component.films.Film;
 import com.example.ingsw.component.films.ListOfFilmAdapter;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -36,7 +37,10 @@ public class MostSeen extends Fragment implements RetrofitListInterface {
         RetrofitResponse.getResponse(
                 "Type=PostRequest&mostviewed=true",
                 this, this.getContext(), "getFilm");
-
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"MostSeen");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("MostSeen",bundle);
         return root;
     }
 

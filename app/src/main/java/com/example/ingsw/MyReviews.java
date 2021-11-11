@@ -13,6 +13,7 @@ import com.example.ingsw.component.db.adapters.ReviewsAdapter;
 import com.example.ingsw.component.db.classes.Reviews;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -29,7 +30,10 @@ public class MyReviews extends Fragment implements RetrofitListInterface {
         recyclerView = root.findViewById(R.id.recyclerView);
         ((ToolBarActivity) requireActivity()).triggerProgessBar();
         RetrofitResponse.getResponse("Type=PostRequest&idUser=" + ((ToolBarActivity) requireActivity()).getUid() + "&insert=false&typeOfReview=FILM", this, getContext(), "getReview");
-
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"MyReviews");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("MyReviews",bundle);
         return root;
     }
 

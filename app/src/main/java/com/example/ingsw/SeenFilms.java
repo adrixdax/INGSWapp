@@ -13,6 +13,7 @@ import com.example.ingsw.component.films.Film;
 import com.example.ingsw.component.films.ListOfFilmAdapter;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -31,6 +32,10 @@ public class SeenFilms extends Fragment implements RetrofitListInterface {
         recyclerView = root.findViewById(R.id.recyclerViewUserSeen);
         ((ToolBarActivity) requireActivity()).triggerProgessBar();
         RetrofitResponse.getResponse("Type=PostRequest&idList=" + ((ToolBarActivity) requireContext()).getContaiinerItem().get("WATCH"), this, getContext(), "getFilmInList");
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"SeenFilms");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("SeenFilms",bundle);
         return root;
     }
 

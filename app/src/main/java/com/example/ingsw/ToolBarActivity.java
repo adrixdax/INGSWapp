@@ -45,12 +45,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
     final Map<String, List<Film>> conteinerList = new HashMap<>();
     final UserController userController = new UserController();
     private final Map<String, Object> contaiinerItem = new HashMap<>();
-    Fragment activeFragment;
-    CircularProgressBar progressBar;
-    ConstraintLayout mainLayout;
-    ConstraintLayout progressLayout;
+    private Fragment activeFragment;
+    private CircularProgressBar progressBar;
+    private ConstraintLayout mainLayout;
+    private ConstraintLayout progressLayout;
     float x1, x2, y1, y2;
-    FirebaseAnalytics mFirebaseAnalytics;
+    private static FirebaseAnalytics mFirebaseAnalytics;
     private boolean loadUser = false;
     private String uid = "";
 
@@ -361,6 +361,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
             }
         }
     }
-}
 
-//account@gmail.com
+    public Fragment getActiveFragment() {
+        return activeFragment;
+    }
+
+    public static void setNewBundle(String event, Bundle b){
+        mFirebaseAnalytics.logEvent(event,b);
+    }
+}

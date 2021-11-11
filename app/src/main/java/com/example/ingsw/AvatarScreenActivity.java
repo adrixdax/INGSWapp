@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.ingsw.controllers.RegistrationController;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -16,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AvatarScreenActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    final String urlIron = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
+    final String urlIron = "https://i.pinimg.com/564x/f0/0c/b7/f00cb7716ff739114f49a5ecf12a6b8a.jpg";
     final String urlSpider = "https://i.pinimg.com/236x/d4/9f/33/d49f3302e2a4e7b5a21ea3aba0cfcf03.jpg";
     final String urlGamora = "https://i.pinimg.com/564x/48/99/65/48996519ea996aa169ca1d61e2a6c6ab.jpg";
     final String urlThanos = "https://i.pinimg.com/236x/fa/60/b8/fa60b89014f5807b5a013e83aba32aab.jpg";
@@ -52,6 +53,11 @@ public class AvatarScreenActivity extends AppCompatActivity implements View.OnCl
         Glide.with(this).load(urlGamora).into(gamora);
         Glide.with(this).load(urlWidow).into(widow);
         Glide.with(this).load(urlWonder).into(wonderwoman);
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"AvatarChangeACT");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        mFirebaseAnalytics.logEvent("AvatarChangeACT",bundle);
     }
 
 

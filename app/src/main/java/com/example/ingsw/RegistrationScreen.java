@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.ingsw.controllers.RegistrationController;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +32,6 @@ import teaspoon.annotations.OnUi;
 
 public class RegistrationScreen extends AppCompatActivity {
 
-    private final String propic = "https://img.favpng.com/11/21/25/iron-man-cartoon-avatar-superhero-icon-png-favpng-jrRBMJQjeUwuteGtBce87yMxz.jpg";
     private Button registerUser;
     private EditText editTextNickName, editTextMail, editTextPassword, repeatPassword;
     private ConstraintLayout mainLayout;
@@ -48,6 +48,7 @@ public class RegistrationScreen extends AppCompatActivity {
         progresLayout = findViewById(R.id.regProgressLayout);
         progressBar = findViewById(R.id.regProgressBar);
 
+        String propic = "https://i.pinimg.com/564x/f0/0c/b7/f00cb7716ff739114f49a5ecf12a6b8a.jpg";
         RegistrationController reg = new RegistrationController(RegistrationScreen.this, propic);
 
         CircleImageView profileImage = findViewById(R.id.propic_image);
@@ -124,7 +125,7 @@ public class RegistrationScreen extends AppCompatActivity {
             };
             queries.addListenerForSingleValueEvent(eventListener);
         });
-        editTextPassword.setOnEditorActionListener((v, actionId, event) -> {
+        repeatPassword.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 registerUser.callOnClick();
                 return true;
@@ -132,6 +133,11 @@ public class RegistrationScreen extends AppCompatActivity {
             return false;
         });
         PushDownAnim.setPushDownAnimTo(registerUser, profileImage);
+        FirebaseAnalytics mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"Registration");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        mFirebaseAnalytics.logEvent("Registration",bundle);
     }
 
     @OnUi

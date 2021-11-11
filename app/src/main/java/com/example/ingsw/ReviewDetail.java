@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.ingsw.component.db.classes.Reviews;
 import com.example.ingsw.component.db.classes.User;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +56,10 @@ public class ReviewDetail extends Fragment {
         Button reportButton = root.findViewById(R.id.ReportButton);
         reportButton.setOnClickListener(v -> new DialogReportList(review.getIdReviews()).show(getChildFragmentManager(), "Report"));
 
-
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"ReviewDetail");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("ReviewDetail",bundle);
         return root;
     }
 

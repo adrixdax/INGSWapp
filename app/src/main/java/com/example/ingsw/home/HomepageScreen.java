@@ -25,6 +25,7 @@ import com.example.ingsw.component.films.ListOfFilmAdapter;
 import com.example.ingsw.controllers.NotifyUpdater;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -108,6 +109,10 @@ public class HomepageScreen extends Fragment implements RetrofitListInterface {
             setList(film);
         }
         bell.setOnClickListener(v -> new NotifyPopUp((ArrayList<Notify>) not.getNotify()).show(requireActivity().getSupportFragmentManager(), "not"));
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"HomePage");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("HomePage",bundle);
         return root;
     }
 

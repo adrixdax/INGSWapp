@@ -16,6 +16,7 @@ import com.example.ingsw.component.db.adapters.ReviewsAdapter;
 import com.example.ingsw.component.db.classes.Reviews;
 import com.example.ingsw.controllers.retrofit.RetrofitListInterface;
 import com.example.ingsw.controllers.retrofit.RetrofitResponse;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
 
@@ -52,7 +53,10 @@ public class ReviewScreen extends Fragment implements RetrofitListInterface {
             transaction.addToBackStack(null);
             transaction.commit();
         });
-
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_NAME,"ReviewScreen");
+        bundle.putString(FirebaseAnalytics.Param.SCREEN_CLASS,this.getClass().getSimpleName());
+        ToolBarActivity.setNewBundle("ReviewScreen",bundle);
         return root;
     }
 
