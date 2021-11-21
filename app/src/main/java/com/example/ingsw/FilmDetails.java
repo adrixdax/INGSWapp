@@ -100,7 +100,7 @@ public class FilmDetails extends Fragment {
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("WATCH")
                                 + "&idFilm=" + film.getId_Film() + "&addFilm=true",
                         FilmDetails.this, getContext(), "addFilm");
-                Toast.makeText(this.getContext(), "Film aggiunto", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), "Film aggiunto ai film visti", Toast.LENGTH_LONG).show();
                 imageButtonWatchblue = true;
             } else {
                 Glide.with(root.getContext()).load(R.drawable.icons8_closed_eye_30px_4).into(imageButtonWatch);
@@ -108,7 +108,7 @@ public class FilmDetails extends Fragment {
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("WATCH")
                                 + "&idFilm=" + film.getId_Film() + "&removeFilm=true",
                         FilmDetails.this, getContext(), "removeFilmInList");
-                Toast.makeText(this.getContext(), "Film rimosso", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), "Film rimosso dai film visti", Toast.LENGTH_LONG).show();
                 imageButtonWatchblue = false;
             }
         });
@@ -120,7 +120,7 @@ public class FilmDetails extends Fragment {
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")
                                 + "&idFilm=" + film.getId_Film() + "&addFilm=true",
                         FilmDetails.this, getContext(), "addFilm");
-                Toast.makeText(this.getContext(), "Film aggiunto", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), "Film aggiunto ai \"da guardare\"", Toast.LENGTH_LONG).show();
                 imageButtonToWatchblue = true;
             } else {
                 Glide.with(root.getContext()).load(R.drawable.icons8_clock_32px).into(imageButtonToWatch);
@@ -128,7 +128,7 @@ public class FilmDetails extends Fragment {
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("TOWATCH")
                                 + "&idFilm=" + film.getId_Film() + "&removeFilm=true",
                         FilmDetails.this, getContext(), "removeFilmInList");
-                Toast.makeText(this.getContext(), "Film rimosso", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), "Film rimosso dai \"da guardare\"", Toast.LENGTH_LONG).show();
                 imageButtonToWatchblue = false;
             }
         });
@@ -141,7 +141,7 @@ public class FilmDetails extends Fragment {
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("PREFERED")
                                 + "&idFilm=" + film.getId_Film() + "&addFilm=true",
                         FilmDetails.this, getContext(), "addFilm");
-                Toast.makeText(this.getContext(), "Film aggiunto", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), "Film aggiunto ai preferiti", Toast.LENGTH_LONG).show();
                 imageButtonFavoritesblue = true;
             } else {
                 Glide.with(root.getContext()).load(R.drawable.icons8_star_26px).into(imageButtonFavorites);
@@ -149,7 +149,7 @@ public class FilmDetails extends Fragment {
                         "Type=PostRequest&idList=" + ((ToolBarActivity) requireActivity()).getContaiinerItem().get("PREFERED")
                                 + "&idFilm=" + film.getId_Film() + "&removeFilm=true",
                         FilmDetails.this, getContext(), "removeFilmInList");
-                Toast.makeText(this.getContext(), "Film rimosso", Toast.LENGTH_LONG).show();
+                Toast.makeText(this.getContext(), "Film rimosso dai preferiti", Toast.LENGTH_LONG).show();
                 imageButtonFavoritesblue = false;
             }
         });
