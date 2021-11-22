@@ -4,8 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.UUID;
-
 public class InsertListReviewScreenTest {
 
     final InsertListReviewScreen positiveScreen = new InsertListReviewScreen(true,String.valueOf(45328));
@@ -17,7 +15,14 @@ public class InsertListReviewScreenTest {
 
     @Before
     public void initString() {
-        generatedString = UUID.randomUUID().toString();
+        char[] array = new char[128];
+        for (int i = 0; i<array.length; i++){
+            char c = (char) ((Math.random() * (122 - 48)) + 48);
+            if (c == '\\')
+                c++;
+            array[i]=c;
+        }
+        generatedString = new String(array);
     }
 
     @Test
