@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -101,7 +102,6 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         progressLayout.setVisibility(View.INVISIBLE);
         mainLayout = findViewById(R.id.mainLayout);
         mainLayout.setVisibility(View.VISIBLE);
-        RetrofitResponse.getResponse("Type=PostRequest&idUser=" + uid + "&searchDefaultList=true", this, this.getApplicationContext(), "getDefaultList");
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         loadFragment(new HomepageScreen(), "1", false);
@@ -109,7 +109,12 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
         BottomNavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setOnNavigationItemSelectedListener(this);
 
-
+        try{
+            Thread.sleep(1500);
+            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + uid + "&searchDefaultList=true", this, ToolBarActivity.this.getApplicationContext(), "getDefaultList");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean loadFragment(Fragment fragment, String tag, boolean swipe) {
@@ -210,13 +215,14 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
             obj = userController.getUserprofile(mFirebaseUser, ref);
             if (obj != null) {
                 contaiinerItem.put("userProfile", obj);
-
+                setLoadUser(true);
             }
         } else {
             obj = userController.getAcct(this);
             if (obj != null) {
                 setUid(((GoogleSignInAccount) obj).getId());
                 contaiinerItem.put("acct", obj);
+                setLoadUser(true);
             }
         }
 
@@ -351,13 +357,18 @@ public class ToolBarActivity extends AppCompatActivity implements BottomNavigati
 
     @Override
     public void setList(List<?> newList) {
-        for (Object singlelist : newList) {
-            if (((UserLists) singlelist).getType().equals("PREFERED")) {
-                contaiinerItem.put("PREFERED", ((UserLists) singlelist).getIdUserList());
-            } else if (((UserLists) singlelist).getType().equals("WATCH")) {
-                contaiinerItem.put("WATCH", ((UserLists) singlelist).getIdUserList());
-            } else {
-                contaiinerItem.put("TOWATCH", ((UserLists) singlelist).getIdUserList());
+        if (newList==null || newList.size()==0){
+            RetrofitResponse.getResponse("Type=PostRequest&idUser=" + uid + "&searchDefaultList=true", this, this.getApplicationContext(), "getDefaultList");
+        }
+        else {
+            for (Object singlelist : newList) {
+                if (((UserLists) singlelist).getType().equals("PREFERED")) {
+                    contaiinerItem.put("PREFERED", ((UserLists) singlelist).getIdUserList());
+                } else if (((UserLists) singlelist).getType().equals("WATCH")) {
+                    contaiinerItem.put("WATCH", ((UserLists) singlelist).getIdUserList());
+                } else {
+                    contaiinerItem.put("TOWATCH", ((UserLists) singlelist).getIdUserList());
+                }
             }
         }
     }

@@ -1,7 +1,10 @@
 package com.example.ingsw.controllers;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Patterns;
 import android.widget.Toast;
 
@@ -66,6 +69,10 @@ public class RegistrationController {
                         RetrofitResponse.getResponse("Type=PostRequest&registration=" + fba.getCurrentUser().getUid(), regActivity, regActivity, "getRegistration");
                         ((RegistrationScreen) regActivity).stopProgressBar();
                         Toast.makeText(regActivity, "Utente registrato correttamente", Toast.LENGTH_LONG).show();
+                        SharedPreferences preferences = regActivity.getSharedPreferences("access", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("remember", "true");
+                        editor.apply();
                         regActivity.startActivity(new Intent(regActivity, ToolBarActivity.class));
                     });
                 }).addOnFailureListener(regActivity, e -> Toast.makeText(regActivity, e.getMessage(), Toast.LENGTH_LONG).show());
